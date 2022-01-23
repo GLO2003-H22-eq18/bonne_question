@@ -13,9 +13,11 @@ import java.time.ZoneId;
 
 @Path("/sellers")
 public class SellerResource {
+
     @POST
     @Path("/{sellerId}")
-    public Response postSeller(@PathParam("sellerId") String sellerId, SellerRequest sellerRequest,
+    public Response postSeller(@PathParam("sellerId") String sellerId,
+                               SellerRequest sellerRequest,
                                @Context UriInfo uri){
         Response response;
         String url = uri.getPath();
@@ -23,18 +25,14 @@ public class SellerResource {
         if (sellerRequest.bio == null || sellerRequest.name == null || sellerRequest.birthDate == null){
             String jsonResponse = "{\n\tcode: MISSING_PARAM,\n\tdescription: un paramètre (URL, header, JSON, etc.) est manquant\n}";
             response = Response.status(400).entity(jsonResponse).build();
-        }
-        else{
+        } else {
             LocalDate birthDate = sellerRequest.birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             int age = Period.between(birthDate, LocalDate.now()).getYears();
 
-            if (age < 18 || sellerRequest.bio.isEmpty() || sellerRequest.name.isEmpty()){
-
+            if (age < 18 || sellerRequest.bio.isEmpty() || sellerRequest.name.isEmpty()) {
                 String jsonResponse = "{\n\tcode: INVALID_PARAM,\n\tdescription: un parametre (URL, header, JSON, etc.) est invalide (vide, negatif, trop long. etc.)\n}";
-
                 response = Response.status(400).entity(jsonResponse).build();
-            }
-            else{
+            } else {
                 response = Response.status(201).header("Location", url).build();
             }
         }
