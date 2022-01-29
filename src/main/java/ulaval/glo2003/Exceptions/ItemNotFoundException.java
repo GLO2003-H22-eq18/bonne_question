@@ -1,3 +1,7 @@
 package ulaval.glo2003.Exceptions;
 
-public class ItemNotFoundException extends RuntimeException{ }
+public abstract class ItemNotFoundException extends RuntimeException {
+    public ItemNotFoundException(String customMsg) {
+        super(customMsg);
+    }
+}
