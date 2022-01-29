@@ -8,24 +8,20 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import ulaval.glo2003.Exceptions.*;
-
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 @Path("/sellers")
 public class SellerResource {
-    private static Collection<Seller> sellers = new ArrayList<>();
+    private static final Collection<Seller> sellers = new ArrayList<>();
 
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-
         Seller seller = sellers.stream().filter(item -> item.id.equals(sellerId)).findAny().orElseThrow(SellerNotFoundException::new);
         String jsonResponse = String.format("{\n\t\"id\": \"%s\",\n\t\"name\": \"%s\",\n\t\"bio\": \"%s\",\n\t\"createdAt\": \"%s\",\n\t\"products\": []\n}",
                 seller.id, seller.name, seller.bio, seller.createdAt.toString());
@@ -39,17 +35,15 @@ public class SellerResource {
                                SellerRequest sellerRequest,
                                @Context UriInfo uri) {
 
-        OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
+        OffsetDateTime creationDate = OffsetDateTime.now(Clock.systemUTC());
 
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
         checkInvalidId(sellerId);
 
-        Seller newSeller = new Seller(sellerId, createdAt, sellerRequest.name, sellerRequest.bio);
-        sellers.add(newSeller);
+        sellers.add(new Seller(sellerId, creationDate, sellerRequest.name, sellerRequest.bio, new ArrayList<String>()));
 
-        String url = uri.getPath();
-        return Response.status(201).header("Location", url).build();
+        return Response.status(201).header("Location", uri.getPath()).build();
     }
 
     private void checkInvalidId(String sellerId) {
@@ -91,9 +85,10 @@ public class SellerResource {
     }
 
     private String removeEmptyChar(String string){
-         return string.replaceAll("\n", "")
-                .replaceAll("\t", "")
-                .replaceAll(" ", "")
-                .replaceAll("0", "");
+         return string
+                 .replaceAll("\n", "")
+                 .replaceAll("\t", "")
+                 .replaceAll(" ", "")
+                 .replaceAll("0", "");
     }
 }
