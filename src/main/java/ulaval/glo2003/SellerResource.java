@@ -8,12 +8,14 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Path("/sellers")
 public class SellerResource {
-    Collection<String> sellerIds = new ArrayList<>();
+    Collection<Seller> sellers = new ArrayList<>();
 
     @GET
     @Path("/{sellerId}")
@@ -26,9 +28,10 @@ public class SellerResource {
     public Response postSeller(@PathParam("sellerId") String sellerId,
                                SellerRequest sellerRequest,
                                @Context UriInfo uri) {
-        String url = uri.getPath();
+        OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
+        sellers.add(new Seller(sellerId, createdAt, sellerRequest.name, sellerRequest.bio));
 
-        sellerIds.add(sellerId);
+        String url = uri.getPath();
         return Response.status(201).header("Location", url).build();
     }
 }
