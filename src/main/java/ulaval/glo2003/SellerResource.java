@@ -29,7 +29,7 @@ public class SellerResource {
                                SellerRequest sellerRequest,
                                @Context UriInfo uri) {
         OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
-        sellers.add(new Seller(sellerId, createdAt, sellerRequest.name, sellerRequest.bio, sellerRequest.birthDate));
+        sellers.add(new Seller(sellerId, createdAt, sellerRequest.name, sellerRequest.bio));
 
         String url = uri.getPath();
         return Response.status(201).header("Location", url).build();
