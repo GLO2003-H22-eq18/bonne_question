@@ -28,4 +28,20 @@ Une nouvelle branche devrait être créée lorsque du travail de développement 
 # Quand faire une demande de changement / d'intégration (pull request / merge request) et sur quelle branche la faire?
 Du développement est effectué sur une branche créée ultérieurement. Une fois que ces changements ont été testés et que tout semble fonctionne sans altérer négativement le reste du programme, le développeur fait une demande de changement (```pull request```) pour que ces changements puisses être vérifier par d'autres personnes dans le projet. Les coéquipiers valident le travail et une fois qu'ils jugent que tout fonctionne correctement, ils font une demande d'intégration (```merge request```) pour que la nouvelle partie du code soit intégrée à branche cible.
 
+Project:
+![Project](https://user-images.githubusercontent.com/73801331/151677316-8d65f752-904e-439d-a61c-16107a61e3d6.PNG)
+
+Milestone:
+![Milestone](https://user-images.githubusercontent.com/73801331/151677321-903db925-d76b-45c6-9616-c06c57df838f.PNG)
+
+Issues:
+![Save seller issue](https://user-images.githubusercontent.com/73801331/151677335-eba46291-12fd-4e61-8a3d-3fb7152b9b6e.PNG)
+![seller get issue](https://user-images.githubusercontent.com/73801331/151677339-c07c3478-3d6a-48ee-9226-76c36ae4ca96.PNG)
+![sellers exception issue](https://user-images.githubusercontent.com/73801331/151677342-14c6baf8-35ef-43cb-b135-bcdb10c8f1ec.PNG)
+
+PR:
+![PR1](https://user-images.githubusercontent.com/73801331/151677302-2bb115d9-444c-4f81-b2fe-7604fabcbb41.PNG)
+![PR2](https://user-images.githubusercontent.com/73801331/151677348-3f3601fb-d3e5-41ca-a698-4cf37c5f0199.PNG)
+![PR3](https://user-images.githubusercontent.com/73801331/151677351-90e9fa0d-d881-40bc-aa4c-f8f0daf8be7e.PNG)
+
 
