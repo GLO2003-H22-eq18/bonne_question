@@ -18,8 +18,6 @@ public class SellerResource {
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        Response response;
-
         return Response.status(200).build();
     }
 
