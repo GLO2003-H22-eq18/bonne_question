@@ -7,9 +7,13 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import ulaval.glo2003.Exceptions.*;
 
 import java.time.Clock;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -20,7 +24,11 @@ public class SellerResource {
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        return Response.status(200).build();
+
+        Seller seller = sellers.stream().filter(item -> item.id.equals(sellerId)).findAny().orElseThrow(SellerNotFoundException::new);
+        String jsonResponse = String.format("{\n\tid: %s,\n\tname: %s,\n\tbio: %3s,\n\tcreatedAt: %s,\n\tproducts: []}",
+                seller.id, seller.name, seller.bio, seller.createdAt.toString());
+        return Response.status(200).entity(jsonResponse).build();
     }
 
     @POST
@@ -28,10 +36,49 @@ public class SellerResource {
     public Response postSeller(@PathParam("sellerId") String sellerId,
                                SellerRequest sellerRequest,
                                @Context UriInfo uri) {
+
         OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
         sellers.add(new Seller(sellerId, createdAt, sellerRequest.name, sellerRequest.bio));
 
         String url = uri.getPath();
         return Response.status(201).header("Location", url).build();
+    }
+
+    private void checkMissingParam(SellerRequest sellerRequest){
+        if(sellerRequest.bio == null)
+            throw new MissingSellerBioException();
+        else if(sellerRequest.birthDate == null)
+            throw new MissingSellerNameException();
+        else if(sellerRequest.name == null)
+            throw new MissingSellerNameException();
+    }
+
+    private void checkInvalidParam(SellerRequest sellerRequest){
+        validateName(sellerRequest.name);
+        validateBio(sellerRequest.bio);
+        validateBirthdate(sellerRequest.birthDate);
+    }
+
+    private void validateName(String name){
+        if(removeEmptyChar(name).isEmpty())
+            throw new InvalidSellerNameException();
+    }
+
+    private void validateBio(String bio){
+        if(removeEmptyChar(bio).isEmpty())
+            throw new InvalidSellerBioException();
+    }
+
+    private String removeEmptyChar(String string){
+         return string.replaceAll("\n", "")
+                .replaceAll("\t", "")
+                .replaceAll(" ", "")
+                .replaceAll("0", "");
+    }
+
+    private void validateBirthdate(LocalDate birthDate){
+        Period period = Period.between(birthDate, LocalDate.now());
+        if(period.getYears() < 18)
+            throw new InvalidSellerBirthdateException();
     }
 }
