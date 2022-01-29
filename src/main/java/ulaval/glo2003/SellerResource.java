@@ -1,5 +1,6 @@
 package ulaval.glo2003;
 
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -13,6 +14,14 @@ import java.util.Collection;
 @Path("/sellers")
 public class SellerResource {
     Collection<String> sellerIds = new ArrayList<>();
+
+    @GET
+    @Path("/{sellerId}")
+    public Response getSeller(@PathParam("sellerId") String sellerId) {
+        Response response;
+
+        return Response.status(200).build();
+    }
 
     @POST
     @Path("/{sellerId}")
