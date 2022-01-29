@@ -16,18 +16,20 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 @Path("/sellers")
 public class SellerResource {
-    Collection<Seller> sellers = new ArrayList<>();
+    private static Collection<Seller> sellers = new ArrayList<>();
 
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
 
         Seller seller = sellers.stream().filter(item -> item.id.equals(sellerId)).findAny().orElseThrow(SellerNotFoundException::new);
-        String jsonResponse = String.format("{\n\tid: %s,\n\tname: %s,\n\tbio: %3s,\n\tcreatedAt: %s,\n\tproducts: []}",
+        String jsonResponse = String.format("{\n\t\"id\": \"%s\",\n\t\"name\": \"%s\",\n\t\"bio\": \"%s\",\n\t\"createdAt\": \"%s\",\n\t\"products\": []\n}",
                 seller.id, seller.name, seller.bio, seller.createdAt.toString());
+
         return Response.status(200).entity(jsonResponse).build();
     }
 
@@ -38,17 +40,30 @@ public class SellerResource {
                                @Context UriInfo uri) {
 
         OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
-        sellers.add(new Seller(sellerId, createdAt, sellerRequest.name, sellerRequest.bio));
+
+        checkMissingParam(sellerRequest);
+        checkInvalidParam(sellerRequest);
+        checkInvalidId(sellerId);
+
+        Seller newSeller = new Seller(sellerId, createdAt, sellerRequest.name, sellerRequest.bio);
+        sellers.add(newSeller);
 
         String url = uri.getPath();
         return Response.status(201).header("Location", url).build();
+    }
+
+    private void checkInvalidId(String sellerId) {
+        sellers.forEach(seller -> {
+            if (seller.id.equals(sellerId))
+                throw new InvalidSellerIdException();
+        });
     }
 
     private void checkMissingParam(SellerRequest sellerRequest){
         if(sellerRequest.bio == null)
             throw new MissingSellerBioException();
         else if(sellerRequest.birthDate == null)
-            throw new MissingSellerNameException();
+            throw new MissingSellerBirthdateException();
         else if(sellerRequest.name == null)
             throw new MissingSellerNameException();
     }
@@ -69,16 +84,16 @@ public class SellerResource {
             throw new InvalidSellerBioException();
     }
 
+    private void validateBirthdate(LocalDate birthDate){
+        Period period = Period.between(birthDate, LocalDate.now());
+        if(period.getYears() < 18)
+            throw new InvalidSellerBirthdateException();
+    }
+
     private String removeEmptyChar(String string){
          return string.replaceAll("\n", "")
                 .replaceAll("\t", "")
                 .replaceAll(" ", "")
                 .replaceAll("0", "");
-    }
-
-    private void validateBirthdate(LocalDate birthDate){
-        Period period = Period.between(birthDate, LocalDate.now());
-        if(period.getYears() < 18)
-            throw new InvalidSellerBirthdateException();
     }
 }
