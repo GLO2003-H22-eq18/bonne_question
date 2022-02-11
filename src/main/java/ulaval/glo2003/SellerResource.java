@@ -24,10 +24,8 @@ public class SellerResource {
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
         Seller seller = sellers.stream().filter(item -> item.id.equals(sellerId)).findAny().orElseThrow(SellerNotFoundException::new);
-        String jsonResponse = String.format("{\n\t\"id\": \"%s\",\n\t\"name\": \"%s\",\n\t\"bio\": \"%s\",\n\t\"createdAt\": \"%s\",\n\t\"products\": []\n}",
-                seller.id, seller.name, seller.bio, seller.createdAt.toString());
 
-        return Response.status(200).entity(jsonResponse).build();
+        return Response.status(200).entity(seller).build();
     }
 
     @POST
