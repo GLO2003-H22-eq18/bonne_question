@@ -18,30 +18,30 @@ import java.util.Collection;
 @Path("/sellers")
 public class SellerResource {
     private static final Collection<Seller> sellers = new ArrayList<>();
+    private static int sellerId = 0;
 
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
         Seller seller = sellers.stream().filter(item -> item.id.equals(sellerId)).findAny().orElseThrow(SellerNotFoundException::new);
-        String jsonResponse = String.format("{\n\t\"id\": \"%s\",\n\t\"name\": \"%s\",\n\t\"bio\": \"%s\",\n\t\"createdAt\": \"%s\",\n\t\"products\": []\n}",
-                seller.id, seller.name, seller.bio, seller.createdAt.toString());
 
-        return Response.status(200).entity(jsonResponse).build();
+        return Response.status(200).entity(seller).build();
     }
 
     @POST
-    @Path("/{sellerId}")
-    public Response postSeller(@PathParam("sellerId") String sellerId,
-                               SellerRequest sellerRequest,
+    public Response postSeller(SellerRequest sellerRequest,
                                @Context UriInfo uri) {
 
         OffsetDateTime creationDate = OffsetDateTime.now(Clock.systemUTC());
+        String newSellerId = String.valueOf(sellerId);
 
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
-        checkInvalidId(sellerId);
+        checkInvalidId(newSellerId);
 
-        sellers.add(new Seller(sellerId, creationDate, sellerRequest.name, sellerRequest.bio, new ArrayList<String>()));
+        sellers.add(new Seller(newSellerId, creationDate, sellerRequest.name, sellerRequest.bio, new ArrayList<String>()));
+
+        sellerId += 1;
 
         return Response.status(201).header("Location", uri.getPath()).build();
     }
