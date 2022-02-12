@@ -18,39 +18,26 @@ import java.util.Collection;
 @Path("/sellers")
 public class SellerResource {
     private static final Collection<Seller> sellers = new ArrayList<>();
-    private static int sellerId = 0;
 
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
         Seller seller = sellers.stream().filter(item -> item.id.equals(sellerId)).findAny().orElseThrow(SellerNotFoundException::new);
+        SellerResponse sellerResponse = new SellerResponse(seller);
 
-        return Response.status(200).entity(seller).build();
+        return Response.status(200).entity(sellerResponse).build();
     }
 
     @POST
     public Response postSeller(SellerRequest sellerRequest,
                                @Context UriInfo uri) {
 
-        OffsetDateTime creationDate = OffsetDateTime.now(Clock.systemUTC());
-        String newSellerId = String.valueOf(sellerId);
-
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
-        checkInvalidId(newSellerId);
 
-        sellers.add(new Seller(newSellerId, creationDate, sellerRequest.name, sellerRequest.bio, new ArrayList<String>()));
-
-        sellerId += 1;
+        sellers.add(new Seller(sellerRequest.name, sellerRequest.bio, new ArrayList<String>()));
 
         return Response.status(201).header("Location", uri.getPath()).build();
-    }
-
-    private void checkInvalidId(String sellerId) {
-        sellers.forEach(seller -> {
-            if (seller.id.equals(sellerId))
-                throw new InvalidSellerIdException();
-        });
     }
 
     private void checkMissingParam(SellerRequest sellerRequest){
