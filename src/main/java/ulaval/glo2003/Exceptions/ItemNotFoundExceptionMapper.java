@@ -7,7 +7,8 @@ public class ItemNotFoundExceptionMapper implements ExceptionMapper<ItemNotFound
 
     @Override
     public Response toResponse(ItemNotFoundException e) {
-        String jsonResponse = "{\n\tcode: ITEM_NOT_FOUND,\n\tdescription: " + e.getMessage() + "\n}";
-        return Response.status(404).entity(jsonResponse).build();
+        String errorDescription = e.getMessage();
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.ITEM_NOT_FOUND, errorDescription);
+        return Response.status(400).entity(errorResponse).build();
     }
 }

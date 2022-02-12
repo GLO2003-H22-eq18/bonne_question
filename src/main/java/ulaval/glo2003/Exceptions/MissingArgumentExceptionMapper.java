@@ -7,7 +7,8 @@ public class MissingArgumentExceptionMapper implements ExceptionMapper<MissingAr
 
     @Override
     public Response toResponse(MissingArgumentException e) {
-        String jsonResponse = "{\n\tcode: MISSING_PARAM,\n\tdescription: " + e.getMessage() + "\n}";
-        return Response.status(400).entity(jsonResponse).build();
+        String errorDescription = e.getMessage();
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.MISSING_PARAMETER, errorDescription);
+        return Response.status(400).entity(errorResponse).build();
     }
 }

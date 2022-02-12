@@ -7,7 +7,8 @@ public class InvalidSellerExceptionMapper implements ExceptionMapper<InvalidArgu
 
     @Override
     public Response toResponse(InvalidArgumentException e) {
-        String jsonResponse = "{\n\tcode: INVALID_PARAM,\n\tdescription: " + e.getMessage() + "\n}";
-        return Response.status(400).entity(jsonResponse).build();
+        String errorDescription = e.getMessage();
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.INVALID_PARAMETER, errorDescription);
+        return Response.status(400).entity(errorResponse).build();
     }
 }
