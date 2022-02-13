@@ -10,11 +10,11 @@ public class SellerResponse {
     public String bio;
     public List<String> products;
 
-    public SellerResponse(Seller seller) {
-        this.id = seller.getId();
-        this.createdAt = seller.getCreatedAt();
-        this.name = seller.getName();
-        this.bio = seller.getBio();
-        this.products = seller.getProducts();
+    public SellerResponse(String id, OffsetDateTime createdAt, String name, String bio, List<String> products) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.name = name;
+        this.bio = bio;
+        this.products = products;
     }
 }
