@@ -16,13 +16,13 @@ import java.util.Collection;
 @Path("/sellers")
 public class SellerResource {
     private static final Collection<Seller> sellers = new ArrayList<>();
+    private static final SellerAssembler sellerAssembler = new SellerAssembler();
 
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
         Seller seller = sellers.stream().filter(item -> item.id.equals(sellerId)).findAny().orElseThrow(SellerNotFoundException::new);
 
-        SellerAssembler sellerAssembler = new SellerAssembler();
         SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 
         return Response.status(200).entity(sellerResponse).build();
