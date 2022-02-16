@@ -4,6 +4,8 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBodyExtractionOptions;
+import jakarta.json.Json;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
@@ -15,7 +17,6 @@ import static io.restassured.RestAssured.*;
 
 import static com.google.common.truth.Truth.*;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 
 class SellerResourceTest {
@@ -25,44 +26,54 @@ class SellerResourceTest {
         Main.main(new String[] {});
     }
 
-
     @Test
-    void givenSeller_whenMakingPostRequestToSellerEndpoint_thenCorrect() {
+    void givenSeller_whenMakingPOSTRequestToSellerEndpoint_thenCorrect() {
         SellerRequest sellerRequest = new SellerRequest();
         sellerRequest.name = "John Cena";
         sellerRequest.bio = "What a chad!";
         sellerRequest.birthDate = "1977-04-23";
 
-        given().contentType(ContentType.JSON)
+        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
                 .when()
                 .post("http://localhost:8080/sellers")
                 .then()
-                .assertThat()
-                .statusCode(201)
-                .header("Location", "http://localhost:8080/sellers/0");
+                .extract();
+
+        int responseStatus = response.statusCode();
+        String headerLocation = response.headers().getValue("Location");
+        String headerLocationId = headerLocation.split("/")[4];
+
+        assertThat(responseStatus).isEqualTo(201);
+        assertThat(headerLocation).isEqualTo("http://localhost:8080/sellers/" + headerLocationId);
     }
 
     @Test
-    void givenSeller_whenMakingPostRequestToSellerEndpointWithMissingField_thenMissingParameterError() {
+    void givenSeller_whenMakingPOSTRequestToSellerEndpointWithMissingField_thenMissingParameterError() {
         SellerRequest sellerRequest = new SellerRequest();
         sellerRequest.name = "John Cena";
         sellerRequest.bio = "What a chad!";
         sellerRequest.birthDate = null;
 
-        given().contentType(ContentType.JSON)
+        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
                 .when()
                 .post("http://localhost:8080/sellers")
                 .then()
-                .assertThat()
-                .statusCode(400)
-                .body("description", notNullValue())
-                .body("errorCode", equalTo("MISSING_PARAMETER"));
+                .extract();
+
+        int responseStatus = response.statusCode();
+        JsonPath responseJson = response.jsonPath();
+        String description = responseJson.get("description");
+        String errorCode = responseJson.get("errorCode");
+
+        assertThat(responseStatus).isEqualTo(400);
+        assertThat(description).isNotEmpty();
+        assertThat(errorCode).isEqualTo("MISSING_PARAMETER");
     }
 
     @Test
-    void givenSeller_whenMakingPostRequestToSellerEndpointWithInvalidField_thenInvalidParameterError() {
+    void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidField_thenInvalidParameterError() {
         SellerRequest sellerRequest = new SellerRequest();
         sellerRequest.name = "John Cena";
         sellerRequest.bio = "\n\t     000";
@@ -84,4 +95,6 @@ class SellerResourceTest {
         assertThat(description).isNotEmpty();
         assertThat(errorCode).isEqualTo("INVALID_PARAMETER");
     }
+
+
 }
