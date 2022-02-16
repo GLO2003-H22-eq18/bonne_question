@@ -96,5 +96,52 @@ class SellerResourceTest {
         assertThat(errorCode).isEqualTo("INVALID_PARAMETER");
     }
 
+    @Test
+    void whenMakingGETRequestToSellerEndpoint_thenCorrect() {
+        SellerRequest sellerRequest = new SellerRequest();
+        sellerRequest.name = "Bob Rogers";
+        sellerRequest.bio = "Not a chad!";
+        sellerRequest.birthDate = "1985-03-22";
+        String headerLocationId = given().contentType(ContentType.JSON)
+                .body(sellerRequest)
+                .when()
+                .post("http://localhost:8080/sellers")
+                .then()
+                .extract()
+                .header("Location")
+                .split("/")[4];
+
+        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
+                .when()
+                .get("http://localhost:8080/sellers/" + headerLocationId)
+                .then()
+                .extract();
+        int responseStatus = response.statusCode();
+        JsonPath responseJson = response.jsonPath();
+        String id = responseJson.get("id");
+        String name = responseJson.get("name");
+        String bio = responseJson.get("bio");
+
+        assertThat(responseStatus).isEqualTo(200);
+        assertThat(id).isEqualTo(headerLocationId);
+        assertThat(name).isEqualTo("Bob Rogers");
+        assertThat(bio).isEqualTo("Not a chad!");
+    }
+
+    @Test
+    void whenMakingGETRequestToSellerEndpointWithAbsentSellerId_thenItemNotFoundError() {
+        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
+                .when()
+                .get("http://localhost:8080/sellers/1290412403")
+                .then()
+                .extract();
+
+        JsonPath responseJson = response.body().jsonPath();
+        String description = responseJson.get("description").toString();
+        String errorCode = responseJson.get("errorCode").toString();
+
+        assertThat(description).isNotEmpty();
+        assertThat(errorCode).isEqualTo("ITEM_NOT_FOUND");
+    }
 
 }
