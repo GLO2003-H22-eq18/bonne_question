@@ -5,21 +5,22 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Product {
-    public String id;
-    public OffsetDateTime createdAt;
-    public String title;
-    public String description;
-    public Double suggestedPrice;
-    public List<String> categories;
-    public String sellerId;
-    public String sellerName;
-    public Double mean; // Amount
-    public Integer count;
+    private final String id;
+    private final OffsetDateTime createdAt;
+    private final String title;
+    private final String description;
+    private final Double suggestedPrice;
+    private final List<String> categories;
+    private final String sellerId;
+    private final String sellerName;
+    private Double mean; // Amount
+    private Integer count;
+
     private static int currentId = 0;
 
 
     public Product(String title, String description, Double suggestedPrice,
-                   List<String> categories, String sellerId, String sellerName){
+                   List<String> categories, String sellerId, String sellerName) {
         this.id = String.valueOf(currentId++);
         this.title = title;
         this.description = description;
@@ -27,7 +28,7 @@ public class Product {
         this.categories = categories;
         this.sellerId = sellerId;
         this.sellerName = sellerName;
-        this.count = 0;
+        this.count = 0; // for TP2 only
 
         this.createdAt = OffsetDateTime.now(Clock.systemUTC());
     }
