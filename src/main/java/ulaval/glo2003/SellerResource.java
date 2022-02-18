@@ -32,50 +32,11 @@ public class SellerResource {
     public Response postSeller(SellerRequest sellerRequest,
                                @Context UriInfo uri) {
 
-        checkMissingParam(sellerRequest);
-        checkInvalidParam(sellerRequest);
+        SellerFactory sellerFactory = new SellerFactory();
+        Seller mySeller = sellerFactory.create(sellerRequest);
 
-        sellers.add(new Seller(sellerRequest.name, sellerRequest.bio, new ArrayList<String>()));
+        sellers.add(mySeller);
 
-        return Response.status(201).header("Location", uri.getPath()).build();
-    }
-
-    private void checkMissingParam(SellerRequest sellerRequest){
-        if(sellerRequest.bio == null)
-            throw new MissingSellerBioException();
-        else if(sellerRequest.birthDate == null)
-            throw new MissingSellerBirthdateException();
-        else if(sellerRequest.name == null)
-            throw new MissingSellerNameException();
-    }
-
-    private void checkInvalidParam(SellerRequest sellerRequest){
-        validateName(sellerRequest.name);
-        validateBio(sellerRequest.bio);
-        validateBirthdate(sellerRequest.birthDate);
-    }
-
-    private void validateName(String name){
-        if(removeEmptyChar(name).isEmpty())
-            throw new InvalidSellerNameException();
-    }
-
-    private void validateBio(String bio){
-        if(removeEmptyChar(bio).isEmpty())
-            throw new InvalidSellerBioException();
-    }
-
-    private void validateBirthdate(LocalDate birthDate){
-        Period period = Period.between(birthDate, LocalDate.now());
-        if(period.getYears() < 18)
-            throw new InvalidSellerBirthdateException();
-    }
-
-    private String removeEmptyChar(String string){
-         return string
-                 .replaceAll("\n", "")
-                 .replaceAll("\t", "")
-                 .replaceAll(" ", "")
-                 .replaceAll("0", "");
+        return Response.status(201).header("Location", uri.getPath() + "/" + mySeller.getId()).build();
     }
 }
