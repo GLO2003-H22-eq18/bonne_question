@@ -15,7 +15,8 @@ public class ProductResource {
                                 @HeaderParam("X-Seller-Id") String sellerId,
                                 @Context UriInfo uri){
 
-        Product myProduct = ProductFactory.create(productRequest, sellerId);
+        ProductFactory productFactory = new ProductFactory();
+        Product myProduct = productFactory.create(productRequest, sellerId);
         // TODO : ProductRepository.save(myProduct);
 
         return Response.status(201).header("Location", uri.getPath() + "/" + myProduct.id).build();
