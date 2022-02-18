@@ -1,4 +1,4 @@
-package ulaval.glo2003;
+package ulaval.glo2003.Seller.Domain;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -15,10 +15,10 @@ public class Seller {
 
     private static int currentId = 0;
 
-    public Seller(String name, String bio, String birthDate, List<String> products) {
+    public Seller(String name, String bio, OffsetDateTime createdAt, LocalDate birthDate, List<String> products) {
         this.id = String.valueOf(currentId++);
-        this.createdAt = OffsetDateTime.now(Clock.systemUTC());
-        this.birthDate = LocalDate.parse(birthDate);
+        this.createdAt = createdAt;
+        this.birthDate = birthDate;
         this.name = name;
         this.bio = bio;
         this.products = products;

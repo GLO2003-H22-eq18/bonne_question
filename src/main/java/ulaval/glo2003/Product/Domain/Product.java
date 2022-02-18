@@ -1,4 +1,4 @@
-package ulaval.glo2003;
+package ulaval.glo2003.Product.Domain;
 
 import java.time.Clock;
 import java.time.OffsetDateTime;
@@ -66,7 +66,9 @@ public class Product {
     }
 
     public Double getMean() {
-        return mean;
+        return null;
+//        TODO:Livrable3
+//        return mean;
     }
 
     public Integer getCount(){ 

@@ -1,7 +1,11 @@
-package ulaval.glo2003;
+package ulaval.glo2003.Product.Domain;
 
-import ulaval.glo2003.Exceptions.*;
+import ulaval.glo2003.Product.Exceptions.*;
+import ulaval.glo2003.Product.UI.ProductRequest;
+import ulaval.glo2003.Seller.Domain.Seller;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +16,7 @@ public class ProductFactory {
         checkInvalidParam(productRequest);
 
         // TODO: replace with Seller productSeller = SellerRepository.find(sellerId);
-        Seller productSeller = new Seller("John Doe", "This is my bio", "2000-01-01", new ArrayList<>());
+        Seller productSeller = new Seller("John Doe", "This is my bio", OffsetDateTime.now(), LocalDate.parse("2000-01-01"), new ArrayList<>());
 
         return new Product(
                 productRequest.title,

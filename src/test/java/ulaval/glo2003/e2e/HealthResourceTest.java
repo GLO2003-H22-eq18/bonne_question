@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import ulaval.glo2003.Main;
-import ulaval.glo2003.SellerRequest;
 
 import java.io.IOException;
 

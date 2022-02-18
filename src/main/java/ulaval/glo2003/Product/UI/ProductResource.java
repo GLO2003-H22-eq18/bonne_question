@@ -1,9 +1,11 @@
-package ulaval.glo2003;
+package ulaval.glo2003.Product.UI;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import ulaval.glo2003.Product.Domain.Product;
+import ulaval.glo2003.Product.Domain.ProductFactory;
 
 @Path("/products")
 public class ProductResource {
@@ -18,7 +20,7 @@ public class ProductResource {
         Product myProduct = productFactory.create(productRequest, sellerId);
         // TODO : ProductRepository.save(myProduct);
 
-        return Response.status(201).header("Location", uri.getPath() + "/" + myProduct.id).build();
+        return Response.status(201).header("Location", uri.getPath() + "/" + myProduct.getId()).build();
     }
 
     @GET
