@@ -48,9 +48,13 @@ public class Product {
         return description;
     }
 
-    public Double getSuggestedPrice() { return suggestedPrice; }
+    public Double getSuggestedPrice() {
+        return suggestedPrice; 
+    }
 
-    public List<String> getCategories(){ return categories; }
+    public List<String> getCategories(){ 
+        return categories; 
+    }
 
     public String getSellerId() {
         return sellerId;
@@ -64,5 +68,7 @@ public class Product {
         return mean;
     }
 
-    public Integer getCount(){ return count; }
+    public Integer getCount(){ 
+        return count; 
+    }
 }
