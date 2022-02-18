@@ -1,15 +1,16 @@
 package ulaval.glo2003;
 
 import ulaval.glo2003.Exceptions.*;
+import ulaval.glo2003.Utils.StringUtil;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 
 public class SellerFactory {
+    StringUtil stringUtil = new StringUtil();
 
     public Seller create(SellerRequest sellerRequest) {
-
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
 
@@ -32,12 +33,12 @@ public class SellerFactory {
     }
 
     private void validateName(String name){
-        if(removeEmptyChar(name).isEmpty())
+        if(stringUtil.removeEmptyChar(name).isEmpty())
             throw new InvalidSellerNameException();
     }
 
     private void validateBio(String bio){
-        if(removeEmptyChar(bio).isEmpty())
+        if(stringUtil.removeEmptyChar(bio).isEmpty())
             throw new InvalidSellerBioException();
     }
 
@@ -45,13 +46,5 @@ public class SellerFactory {
         Period period = Period.between(birthDate, LocalDate.now());
         if(period.getYears() < 18)
             throw new InvalidSellerBirthdateException();
-    }
-
-    private String removeEmptyChar(String string){
-        return string
-                .replaceAll("\n", "")
-                .replaceAll("\t", "")
-                .replaceAll(" ", "")
-                .replaceAll("0", "");
     }
 }

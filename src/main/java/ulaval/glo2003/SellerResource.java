@@ -31,7 +31,6 @@ public class SellerResource {
     @POST
     public Response postSeller(SellerRequest sellerRequest,
                                @Context UriInfo uri) {
-
         SellerFactory sellerFactory = new SellerFactory();
         Seller mySeller = sellerFactory.create(sellerRequest);
 
