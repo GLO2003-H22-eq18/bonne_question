@@ -35,9 +35,10 @@ public class SellerResource {
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
 
-        sellers.add(new Seller(sellerRequest.name, sellerRequest.bio, new ArrayList<String>()));
+        Seller newSeller = new Seller(sellerRequest.name, sellerRequest.bio, sellerRequest.birthDate, new ArrayList<String>());
+        sellers.add(newSeller);
 
-        return Response.status(201).header("Location", uri.getPath()).build();
+        return Response.status(201).header("Location", uri.getPath() + String.format("/%s", newSeller.getId())).build();
     }
 
     private void checkMissingParam(SellerRequest sellerRequest){
@@ -52,7 +53,7 @@ public class SellerResource {
     private void checkInvalidParam(SellerRequest sellerRequest){
         validateName(sellerRequest.name);
         validateBio(sellerRequest.bio);
-        validateBirthdate(sellerRequest.birthDate);
+        validateBirthdateString(sellerRequest.birthDate);
     }
 
     private void validateName(String name){
@@ -65,7 +66,8 @@ public class SellerResource {
             throw new InvalidSellerBioException();
     }
 
-    private void validateBirthdate(LocalDate birthDate){
+    private void validateBirthdateString(String birthDateString){
+        LocalDate birthDate = LocalDate.parse(birthDateString);
         Period period = Period.between(birthDate, LocalDate.now());
         if(period.getYears() < 18)
             throw new InvalidSellerBirthdateException();

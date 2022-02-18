@@ -1,20 +1,24 @@
 package ulaval.glo2003;
 
 import java.time.Clock;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Seller {
     public String id;
     public OffsetDateTime createdAt;
+    public LocalDate birthDate;
     public String name;
     public String bio;
     public List<String> products;
+
     private static int currentId = 0;
 
-    public Seller(String name, String bio, List<String> products) {
+    public Seller(String name, String bio, String birthDate, List<String> products) {
         this.id = String.valueOf(currentId++);
-        this.createdAt = OffsetDateTime.now(Clock.systemUTC());;
+        this.createdAt = OffsetDateTime.now(Clock.systemUTC());
+        this.birthDate = LocalDate.parse(birthDate);
         this.name = name;
         this.bio = bio;
         this.products = products;
@@ -27,6 +31,8 @@ public class Seller {
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
+
+    public LocalDate getBirthDate() { return birthDate; }
 
     public String getName() {
         return name;
