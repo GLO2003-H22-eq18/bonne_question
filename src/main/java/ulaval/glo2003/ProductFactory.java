@@ -12,7 +12,7 @@ public class ProductFactory {
         checkInvalidParam(productRequest);
 
         // TODO: replace with Seller productSeller = SellerRepository.find(sellerId);
-        Seller productSeller = new Seller("John Doe", "This is my bio", new ArrayList<>());
+        Seller productSeller = new Seller("John Doe", "This is my bio", new ArrayList<String>());
 
         return new Product(
                 productRequest.title,
