@@ -31,53 +31,11 @@ public class SellerResource {
     @POST
     public Response postSeller(SellerRequest sellerRequest,
                                @Context UriInfo uri) {
+        SellerFactory sellerFactory = new SellerFactory();
+        Seller mySeller = sellerFactory.create(sellerRequest);
 
-        checkMissingParam(sellerRequest);
-        checkInvalidParam(sellerRequest);
+        sellers.add(mySeller);
 
-        Seller newSeller = new Seller(sellerRequest.name, sellerRequest.bio, sellerRequest.birthDate, new ArrayList<String>());
-        sellers.add(newSeller);
-
-        return Response.status(201).header("Location", uri.getPath() + String.format("/%s", newSeller.getId())).build();
-    }
-
-    private void checkMissingParam(SellerRequest sellerRequest){
-        if(sellerRequest.bio == null)
-            throw new MissingSellerBioException();
-        else if(sellerRequest.birthDate == null)
-            throw new MissingSellerBirthdateException();
-        else if(sellerRequest.name == null)
-            throw new MissingSellerNameException();
-    }
-
-    private void checkInvalidParam(SellerRequest sellerRequest){
-        validateName(sellerRequest.name);
-        validateBio(sellerRequest.bio);
-        validateBirthdateString(sellerRequest.birthDate);
-    }
-
-    private void validateName(String name){
-        if(removeEmptyChar(name).isEmpty())
-            throw new InvalidSellerNameException();
-    }
-
-    private void validateBio(String bio){
-        if(removeEmptyChar(bio).isEmpty())
-            throw new InvalidSellerBioException();
-    }
-
-    private void validateBirthdateString(String birthDateString){
-        LocalDate birthDate = LocalDate.parse(birthDateString);
-        Period period = Period.between(birthDate, LocalDate.now());
-        if(period.getYears() < 18)
-            throw new InvalidSellerBirthdateException();
-    }
-
-    private String removeEmptyChar(String string){
-         return string
-                 .replaceAll("\n", "")
-                 .replaceAll("\t", "")
-                 .replaceAll(" ", "")
-                 .replaceAll("0", "");
+        return Response.status(201).header("Location", uri.getPath() + "/" + mySeller.getId()).build();
     }
 }
