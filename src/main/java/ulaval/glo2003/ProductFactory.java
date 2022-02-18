@@ -1,13 +1,15 @@
 package ulaval.glo2003;
 
+import ulaval.glo2003.Exceptions.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductFactory {
-    public static Product create(ProductRequest productRequest, String sellerId) {
+    public Product create(ProductRequest productRequest, String sellerId) {
 
-        //checkMissingParam(productRequest);
-        //checkInvalidParam(productRequest);
+        checkMissingParam(productRequest);
+        checkInvalidParam(productRequest);
 
         // TODO: replace with Seller productSeller = SellerRepository.find(sellerId);
         Seller productSeller = new Seller("John Doe", "This is my bio", new ArrayList<>());
@@ -27,18 +29,14 @@ public class ProductFactory {
     }
 
     private void checkMissingParam(ProductRequest productRequest){
-        // TODO: create products missing exceptions (and uncomment this block)
-        /**
          if(productRequest.title == null)
-         throw new MissingProductTitleException();
+            throw new MissingProductTitleException();
          else if(productRequest.description == null)
-         throw new MissingProductDescriptionException();
+            throw new MissingProductDescriptionException();
          else if(productRequest.suggestedPrice == null)
-         throw new MissingProductSuggestedPriceException();
+            throw new MissingProductSuggestedPriceException();
          else if(productRequest.categories == null)
-         throw new MissingProductCategoriesException();
-         */
-
+            throw new MissingProductCategoriesException();
     }
 
     private void checkInvalidParam(ProductRequest productRequest){
@@ -50,13 +48,13 @@ public class ProductFactory {
 
     private void validateTitle(String title) {
         if(removeEmptyChar(title).isEmpty()){
-            //throw new InvalidProductTitleException();
+            throw new InvalidProductTitleException();
         }
     }
 
     private void validateDescription(String description) {
         if(removeEmptyChar(description).isEmpty()){
-            //throw new InvalidProductDescriptionException();
+            throw new InvalidProductDescriptionException();
         }
     }
 
@@ -66,7 +64,7 @@ public class ProductFactory {
 
     private static void validateSuggestedPrice(Double suggestedPrice) {
         if(suggestedPrice < 1.00d){
-            //throw new InvalidProductSuggestedPriceException();
+            throw new InvalidProductSuggestedPriceException();
         }
     }
 
