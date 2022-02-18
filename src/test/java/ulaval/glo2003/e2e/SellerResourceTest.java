@@ -4,12 +4,10 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBodyExtractionOptions;
-import jakarta.json.Json;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
-import ulaval.glo2003.SellerRequest;
+import ulaval.glo2003.Seller.UI.SellerRequest;
 
 import java.io.IOException;
 

@@ -1,4 +1,6 @@
-package ulaval.glo2003;
+package ulaval.glo2003.Product.UI;
+
+import ulaval.glo2003.Product.Domain.Product;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -17,6 +19,7 @@ public class ProductAssembler {
         Double mean = product.getMean();
         Integer count = product.getCount();
 
-        return new ProductResponse(...);
+        return new ProductResponse(id, createdAt, title, description, suggestedPrice,
+                                    categories, sellerId, sellerName, mean, count);
     }
 }

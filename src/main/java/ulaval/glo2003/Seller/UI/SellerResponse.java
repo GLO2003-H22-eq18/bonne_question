@@ -1,4 +1,4 @@
-package ulaval.glo2003;
+package ulaval.glo2003.Seller.UI;
 
 import java.time.OffsetDateTime;
 import java.util.List;
