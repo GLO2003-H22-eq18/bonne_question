@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductFactory {
-    public Product create(ProductRequest productRequest, String sellerId) {
+    public static Product create(ProductRequest productRequest, String sellerId) {
 
         //checkMissingParam(productRequest);
         //checkInvalidParam(productRequest);
