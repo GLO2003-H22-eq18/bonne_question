@@ -1,11 +1,11 @@
 package ulaval.glo2003.Exceptions;
 
 public class ErrorResponse {
-    public ErrorCode errorCode;
+    public ErrorCode code;
     public String description;
 
     public ErrorResponse (ErrorCode errorCode, String description) {
-        this.errorCode = errorCode;
+        this.code = errorCode;
         this.description = description;
     }
 }
