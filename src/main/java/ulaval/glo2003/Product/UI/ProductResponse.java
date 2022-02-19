@@ -10,10 +10,8 @@ public class ProductResponse {
     public String description;
     public Double suggestedPrice;
     public List<String> categories;
-    public String sellerId;
-    public String sellerName;
-    public Double mean;
-    public Integer count;
+    public ProductSellerResponse seller;
+    public ProductOffersResponse offers;
 
     public ProductResponse(String id, OffsetDateTime createdAt, String title, String description, Double suggestedPrice,
                            List<String> categories, String sellerId, String sellerName, Double mean, Integer count) {
@@ -23,9 +21,7 @@ public class ProductResponse {
         this.description = description;
         this.suggestedPrice = suggestedPrice;
         this.categories = categories;
-        this.sellerId = sellerId;
-        this.sellerName = sellerName;
-        this.mean = mean;
-        this.count = count;
+        this.seller = new ProductSellerResponse(sellerName, sellerId);
+        this.offers = new ProductOffersResponse(count, mean);
     }
 }

@@ -37,14 +37,6 @@ public class ProductResource {
         Product product = productRepository.find(productId);
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
-        System.out.println(productResponse.id);
-        System.out.println(productResponse.count);
-        System.out.println(productResponse.description);
-        System.out.println(productResponse.sellerId);
-        System.out.println(productResponse.mean);
-        System.out.println(productResponse.sellerName);
-        System.out.println(productResponse.suggestedPrice);
-        System.out.println(productResponse.createdAt);
 
         return Response.status(200).entity(productResponse).build();
     }

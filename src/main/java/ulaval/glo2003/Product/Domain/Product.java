@@ -13,7 +13,7 @@ public class Product {
     private final List<String> categories;
     private final String sellerId;
     private final String sellerName;
-    private Double mean; // Amount
+    private Double mean;
     private Integer count;
 
     private static int currentId = 0;
@@ -67,7 +67,7 @@ public class Product {
 
     public Double getMean() {
         return null;
-//        TODO:Livrable3
+//        TODO: livrable3
 //        return mean;
     }
 
