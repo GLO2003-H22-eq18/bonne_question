@@ -19,5 +19,9 @@ public class SellerRepository {
         String sellerId = seller.getId();
         sellers.put(sellerId, seller);
     }
+
+    public Map<String, Seller> getSellers() {
+        return sellers;
+    }
 }
 
