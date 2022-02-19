@@ -21,9 +21,19 @@ import java.net.URI;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        SellerRepository sellerRepository = new SellerRepository();
+        SellerFactory sellerFactory = new SellerFactory();
+        SellerAssembler sellerAssembler = new SellerAssembler();
+        SellerResource sellerResource = new SellerResource(sellerRepository, sellerFactory, sellerAssembler);
+
+        ProductRepository productRepository = new ProductRepository();
+        ProductFactory productFactory = new ProductFactory(sellerRepository);
+        ProductAssembler productAssembler = new ProductAssembler();
+        ProductResource productResource = new ProductResource(productRepository, productFactory, productAssembler);
+
         ResourceConfig resourceConfig = new ResourceConfig()
-                .register(new SellerResource(new SellerRepository(), new SellerFactory(), new SellerAssembler()))
-                .register(new ProductResource(new ProductRepository(), new ProductFactory(), new ProductAssembler()))
+                .register(sellerResource)
+                .register(productResource)
                 .register(new InvalidArgumentExceptionMapper())
                 .register(new MissingArgumentExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())

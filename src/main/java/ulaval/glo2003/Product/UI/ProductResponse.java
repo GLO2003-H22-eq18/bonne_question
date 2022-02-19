@@ -21,7 +21,7 @@ public class ProductResponse {
         this.description = description;
         this.suggestedPrice = suggestedPrice;
         this.categories = categories;
-        this.seller = new ProductSellerResponse(sellerName, sellerId);
+        this.seller = new ProductSellerResponse(sellerId, sellerName);
         this.offers = new ProductOffersResponse(count, mean);
     }
 }

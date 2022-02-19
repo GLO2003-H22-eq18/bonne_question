@@ -3,24 +3,27 @@ package ulaval.glo2003.Product.Domain;
 import ulaval.glo2003.Product.Exceptions.*;
 import ulaval.glo2003.Product.UI.ProductRequest;
 import ulaval.glo2003.Seller.Domain.Seller;
+import ulaval.glo2003.Seller.Domain.SellerRepository;
+import ulaval.glo2003.Utils.StringUtil;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static ulaval.glo2003.Product.Domain.ProductCategory.toCategoriesList;
 
 public class ProductFactory {
-    public Product create(ProductRequest productRequest, String sellerId) {
+    private final SellerRepository sellerRepository;
 
+    public ProductFactory(SellerRepository sellerRepository) {
+        this.sellerRepository = sellerRepository;
+    }
+
+    public Product create(ProductRequest productRequest, String sellerId) {
         checkMissingParam(productRequest);
         checkInvalidParam(productRequest);
 
+        Seller productSeller = sellerRepository.find(sellerId);
         List<ProductCategory> categories = createProductCategoryList(productRequest.categories);
-
-        // TODO: replace with Seller productSeller = SellerRepository.find(sellerId);
-        Seller productSeller = new Seller("John Doe", "This is my bio", OffsetDateTime.now(), LocalDate.parse("2000-01-01"), new ArrayList<>());
 
         return new Product(
                 productRequest.title,
@@ -53,13 +56,13 @@ public class ProductFactory {
     }
 
     private void validateTitle(String title) {
-        if(removeEmptyChar(title).isEmpty()){
+        if(StringUtil.removeEmptyChar(title).isEmpty()){
             throw new InvalidProductTitleException();
         }
     }
 
     private void validateDescription(String description) {
-        if(removeEmptyChar(description).isEmpty()){
+        if(StringUtil.removeEmptyChar(description).isEmpty()){
             throw new InvalidProductDescriptionException();
         }
     }
@@ -88,13 +91,4 @@ public class ProductFactory {
             return new ArrayList<>();
         }
     }
-
-    private static String removeEmptyChar(String string){
-        return string
-                .replaceAll("\n", "")
-                .replaceAll("\t", "")
-                .replaceAll(" ", "")
-                .replaceAll("0", "");
-    }
 }
-
