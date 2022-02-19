@@ -39,8 +39,6 @@ public class ProductFactory {
             throw new MissingProductDescriptionException();
          else if(productRequest.suggestedPrice == null)
             throw new MissingProductSuggestedPriceException();
-         else if(productRequest.categories == null)
-            throw new MissingProductCategoriesException();
     }
 
     private void checkInvalidParam(ProductRequest productRequest){
@@ -63,7 +61,12 @@ public class ProductFactory {
     }
 
     private static void validateCategories(List<String> categories) {
-        // TODO: validate categories
+        if (categories != null && !categories.isEmpty()){
+            categories.forEach((category) -> {
+                if(removeEmptyChar(category).isEmpty()){
+                    throw new InvalidProductCategoriesException();
+                }});
+        }
     }
 
     private static void validateSuggestedPrice(Double suggestedPrice) {
@@ -72,7 +75,7 @@ public class ProductFactory {
         }
     }
 
-    private String removeEmptyChar(String string){
+    private static String removeEmptyChar(String string){
         return string
                 .replaceAll("\n", "")
                 .replaceAll("\t", "")

@@ -1,5 +1,7 @@
 package ulaval.glo2003.Product.Domain;
 
+import ulaval.glo2003.Product.Exceptions.ProductNotFoundException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -11,8 +13,14 @@ public class ProductRepository {
         products = new HashMap<>();
     }
 
-    public Optional<Product> find(String productId) {
-        return Optional.ofNullable(products.get(productId));
+    public Product find(String productId) {
+        Product product = products.get(productId);
+        if (product != null){
+            return product;
+        }
+        else {
+            throw new ProductNotFoundException();
+        }
     }
 
     public void save(Product product) {
