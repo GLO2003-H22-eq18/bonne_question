@@ -3,20 +3,23 @@ package ulaval.glo2003.Product.Domain;
 import ulaval.glo2003.Product.Exceptions.*;
 import ulaval.glo2003.Product.UI.ProductRequest;
 import ulaval.glo2003.Seller.Domain.Seller;
+import ulaval.glo2003.Seller.Domain.SellerRepository;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductFactory {
+    SellerRepository sellerRepository;
+
+    public ProductFactory(SellerRepository sellerRepository) {
+        this.sellerRepository = sellerRepository;
+    }
+
     public Product create(ProductRequest productRequest, String sellerId) {
 
         checkMissingParam(productRequest);
         checkInvalidParam(productRequest);
 
-        // TODO: replace with Seller productSeller = SellerRepository.find(sellerId);
-        Seller productSeller = new Seller("John Doe", "This is my bio", OffsetDateTime.now(), LocalDate.parse("2000-01-01"), new ArrayList<>());
+        Seller productSeller = sellerRepository.find(sellerId);
 
         return new Product(
                 productRequest.title,

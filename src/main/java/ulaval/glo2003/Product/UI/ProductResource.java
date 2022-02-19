@@ -8,6 +8,9 @@ import ulaval.glo2003.Product.Domain.Product;
 import ulaval.glo2003.Product.Domain.ProductFactory;
 import ulaval.glo2003.Product.Domain.ProductRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Path("/products")
 public class ProductResource {
     private final ProductAssembler productAssembler;
@@ -39,5 +42,26 @@ public class ProductResource {
         ProductResponse productResponse = productAssembler.createProductResponse(product);
 
         return Response.status(200).entity(productResponse).build();
+    }
+
+    @GET
+    public Response getFilteredProducts(@QueryParam("sellerId") String sellerId,
+            @QueryParam("title") String title,
+            @QueryParam("categories") List<String> categories,
+            @QueryParam("minPrice") Double minPrice,
+            @QueryParam("maxPrice") Double maxPrice) {
+
+        List<Product> filteredProducts = productRepository.getFilteredProducts(sellerId, title, categories, minPrice, maxPrice);
+
+        List<ProductResponse> filteredProductsResponseList = filteredProducts
+                .stream()
+                .map(productAssembler::createProductResponse)
+                .collect(Collectors.toList());
+
+        FilteredProductsResponse filteredProductsResponse = new FilteredProductsResponse(filteredProductsResponseList);
+
+
+
+        return Response.status(200).entity(filteredProductsResponse).build();
     }
 }
