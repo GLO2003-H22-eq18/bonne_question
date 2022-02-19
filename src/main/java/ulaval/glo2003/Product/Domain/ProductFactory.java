@@ -9,11 +9,15 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ulaval.glo2003.Product.Domain.ProductCategory.toCategoriesList;
+
 public class ProductFactory {
     public Product create(ProductRequest productRequest, String sellerId) {
 
         checkMissingParam(productRequest);
         checkInvalidParam(productRequest);
+
+        List<ProductCategory> categories = createProductCategoryList(productRequest.categories);
 
         // TODO: replace with Seller productSeller = SellerRepository.find(sellerId);
         Seller productSeller = new Seller("John Doe", "This is my bio", OffsetDateTime.now(), LocalDate.parse("2000-01-01"), new ArrayList<>());
@@ -22,7 +26,7 @@ public class ProductFactory {
                 productRequest.title,
                 productRequest.description,
                 productRequest.suggestedPrice,
-                productRequest.categories,
+                categories,
                 productSeller.getId(),
                 productSeller.getName());
     }
@@ -60,18 +64,28 @@ public class ProductFactory {
         }
     }
 
-    private static void validateCategories(List<String> categories) {
-        if (categories != null && !categories.isEmpty()){
-            categories.forEach((category) -> {
-                if(removeEmptyChar(category).isEmpty()){
+    private static void validateCategories(List<String> names) {
+        if (names != null && !names.isEmpty()){
+            for (String name: names) {
+                if (!ProductCategory.contains(name)){
                     throw new InvalidProductCategoriesException();
-                }});
+                }
+            }
         }
     }
 
     private static void validateSuggestedPrice(Double suggestedPrice) {
         if(suggestedPrice < 1.00d){
             throw new InvalidProductSuggestedPriceException();
+        }
+    }
+
+    private static List<ProductCategory> createProductCategoryList(List<String> categories){
+        if (categories != null) {
+            return toCategoriesList(categories);
+        }
+        else{
+            return new ArrayList<>();
         }
     }
 
