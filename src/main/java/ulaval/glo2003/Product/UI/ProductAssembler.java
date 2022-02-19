@@ -5,6 +5,8 @@ import ulaval.glo2003.Product.Domain.Product;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import static ulaval.glo2003.Product.Domain.ProductCategory.toStringList;
+
 public class ProductAssembler {
 
     public ProductResponse createProductResponse(Product product) {
@@ -13,7 +15,7 @@ public class ProductAssembler {
         String title = product.getTitle();
         String description = product.getDescription();
         Double suggestedPrice = product.getSuggestedPrice();
-        List<String> categories = product.getCategories();
+        List<String> categories = toStringList(product.getCategories());
         String sellerId = product.getSellerId();
         String sellerName = product.getSellerName();
         Double mean = product.getMean();
