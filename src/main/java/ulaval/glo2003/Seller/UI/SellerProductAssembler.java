@@ -1,4 +1,4 @@
-package ulaval.glo2003.Product.UI;
+package ulaval.glo2003.Seller.UI;
 
 import ulaval.glo2003.Product.Domain.Product;
 
@@ -7,21 +7,18 @@ import java.util.List;
 
 import static ulaval.glo2003.Product.Domain.ProductCategory.toStringList;
 
-public class ProductAssembler {
+public class SellerProductAssembler {
 
-    public static ProductResponse createProductResponse(Product product) {
+    public static SellerProductResponse createSellerProductResponse(Product product) {
         String id = product.getId();
         OffsetDateTime createdAt = product.getCreatedAt();
         String title = product.getTitle();
         String description = product.getDescription();
         Double suggestedPrice = product.getSuggestedPrice();
-        List<String> categories = toStringList(product.getCategories());
-        String sellerId = product.getSellerId();
-        String sellerName = product.getSellerName();
         Double mean = product.getMean();
         Integer count = product.getCount();
 
-        return new ProductResponse(id, createdAt, title, description, suggestedPrice,
-                                    categories, sellerId, sellerName, mean, count);
+        return new SellerProductResponse(id, createdAt, title, description, suggestedPrice,
+                mean, count);
     }
 }

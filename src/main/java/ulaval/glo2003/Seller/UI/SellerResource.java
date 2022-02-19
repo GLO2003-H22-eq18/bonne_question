@@ -17,14 +17,12 @@ import java.util.Collection;
 
 @Path("/sellers")
 public class SellerResource {
-    private final SellerAssembler sellerAssembler;
     private final SellerRepository sellerRepository;
     private final SellerFactory sellerFactory;
 
-    public SellerResource(SellerRepository sellerRepository, SellerFactory sellerFactory, SellerAssembler sellerAssembler) {
+    public SellerResource(SellerRepository sellerRepository, SellerFactory sellerFactory) {
         this.sellerRepository = sellerRepository;
         this.sellerFactory = sellerFactory;
-        this.sellerAssembler = sellerAssembler;
     }
 
     @GET
@@ -37,7 +35,7 @@ public class SellerResource {
                 .orElseThrow(SellerNotFoundException::new)
                 .getValue();
 
-        SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
+        SellerResponse sellerResponse = SellerAssembler.createSellerResponse(seller);
 
         return Response.status(200).entity(sellerResponse).build();
     }

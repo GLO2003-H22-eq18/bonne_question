@@ -8,9 +8,9 @@ public class SellerResponse {
     public OffsetDateTime createdAt;
     public String name;
     public String bio;
-    public List<String> products;
+    public List<SellerProductResponse> products;
 
-    public SellerResponse(String id, OffsetDateTime createdAt, String name, String bio, List<String> products) {
+    public SellerResponse(String id, OffsetDateTime createdAt, String name, String bio, List<SellerProductResponse> products) {
         this.id = id;
         this.createdAt = createdAt;
         this.name = name;

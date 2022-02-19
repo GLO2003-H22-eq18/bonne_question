@@ -25,18 +25,17 @@ public class ProductFactory {
         Seller productSeller = sellerRepository.find(sellerId);
         List<ProductCategory> categories = createProductCategoryList(productRequest.categories);
 
-        return new Product(
+        Product product = new Product(
                 productRequest.title,
                 productRequest.description,
                 productRequest.suggestedPrice,
                 categories,
                 productSeller.getId(),
                 productSeller.getName());
-    }
 
-    private Seller getSeller(String sellerId){
-        // TODO: connect with SellerRepository by using find(sellerId) method
-        return null;
+        productSeller.addProduct(product);
+
+        return product;
     }
 
     private void checkMissingParam(ProductRequest productRequest){

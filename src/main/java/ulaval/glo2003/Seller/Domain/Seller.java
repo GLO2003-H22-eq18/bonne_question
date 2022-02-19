@@ -1,6 +1,7 @@
 package ulaval.glo2003.Seller.Domain;
 
-import java.time.Clock;
+import ulaval.glo2003.Product.Domain.Product;
+
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -11,11 +12,11 @@ public class Seller {
     public LocalDate birthDate;
     public String name;
     public String bio;
-    public List<String> products;
+    public List<Product> products;
 
     private static int currentId = 0;
 
-    public Seller(String name, String bio, OffsetDateTime createdAt, LocalDate birthDate, List<String> products) {
+    public Seller(String name, String bio, OffsetDateTime createdAt, LocalDate birthDate, List<Product> products) {
         this.id = String.valueOf(currentId++);
         this.createdAt = createdAt;
         this.birthDate = birthDate;
@@ -42,7 +43,11 @@ public class Seller {
         return bio;
     }
 
-    public List<String> getProducts() {
+    public List<Product> getProducts() {
         return products;
+    }
+
+    public void addProduct(Product product) {
+        this.products.add(product);
     }
 }
