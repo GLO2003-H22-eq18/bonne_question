@@ -3,7 +3,7 @@ package ulaval.glo2003.Exceptions;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 
-public class InvalidSellerExceptionMapper implements ExceptionMapper<InvalidArgumentException> {
+public class InvalidArgumentExceptionMapper implements ExceptionMapper<InvalidArgumentException> {
 
     @Override
     public Response toResponse(InvalidArgumentException e) {
