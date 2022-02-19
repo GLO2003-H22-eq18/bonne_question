@@ -13,14 +13,13 @@ import java.util.stream.Collectors;
 
 @Path("/products")
 public class ProductResource {
-    private final ProductAssembler productAssembler;
     private final ProductFactory productFactory;
     private final ProductRepository productRepository;
 
-    public ProductResource(ProductRepository productRepository, ProductFactory productFactory, ProductAssembler productAssembler) {
+    public ProductResource(ProductRepository productRepository,
+                           ProductFactory productFactory) {
         this.productRepository = productRepository;
         this.productFactory = productFactory;
-        this.productAssembler = productAssembler;
     }
 
     @POST
@@ -39,7 +38,7 @@ public class ProductResource {
     public Response getProduct(@PathParam("productId") String productId) {
         Product product = productRepository.find(productId);
 
-        ProductResponse productResponse = productAssembler.createProductResponse(product);
+        ProductResponse productResponse = ProductAssembler.createProductResponse(product);
 
         return Response.status(200).entity(productResponse).build();
     }
@@ -55,7 +54,7 @@ public class ProductResource {
 
         List<ProductResponse> filteredProductsResponseList = filteredProducts
                 .stream()
-                .map(productAssembler::createProductResponse)
+                .map(ProductAssembler::createProductResponse)
                 .collect(Collectors.toList());
 
         FilteredProductsResponse filteredProductsResponse = new FilteredProductsResponse(filteredProductsResponseList);
