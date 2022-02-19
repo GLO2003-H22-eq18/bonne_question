@@ -4,16 +4,16 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public class ProductResponse {
-    String id;
-    OffsetDateTime createdAt;
-    String title;
-    String description;
-    Double suggestedPrice;
-    List<String> categories;
-    String sellerId;
-    String sellerName;
-    Double mean;
-    Integer count;
+    public String id;
+    public OffsetDateTime createdAt;
+    public String title;
+    public String description;
+    public Double suggestedPrice;
+    public List<String> categories;
+    public String sellerId;
+    public String sellerName;
+    public Double mean;
+    public Integer count;
 
     public ProductResponse(String id, OffsetDateTime createdAt, String title, String description, Double suggestedPrice,
                            List<String> categories, String sellerId, String sellerName, Double mean, Integer count) {
