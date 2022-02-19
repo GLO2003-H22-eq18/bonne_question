@@ -12,7 +12,7 @@ import java.util.List;
 import static ulaval.glo2003.Product.Domain.ProductCategory.toCategoriesList;
 
 public class ProductFactory {
-    SellerRepository sellerRepository;
+    private final SellerRepository sellerRepository;
 
     public ProductFactory(SellerRepository sellerRepository) {
         this.sellerRepository = sellerRepository;

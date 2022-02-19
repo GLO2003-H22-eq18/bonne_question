@@ -5,10 +5,8 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import ulaval.glo2003.Product.Domain.Product;
-import ulaval.glo2003.Product.Domain.ProductCategory;
 import ulaval.glo2003.Product.Domain.ProductFactory;
 import ulaval.glo2003.Product.Domain.ProductRepository;
-import ulaval.glo2003.Product.Exceptions.InvalidProductCategoriesException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,8 +59,6 @@ public class ProductResource {
                 .collect(Collectors.toList());
 
         FilteredProductsResponse filteredProductsResponse = new FilteredProductsResponse(filteredProductsResponseList);
-
-
 
         return Response.status(200).entity(filteredProductsResponse).build();
     }
