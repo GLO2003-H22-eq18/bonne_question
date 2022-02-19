@@ -4,8 +4,12 @@ import ulaval.glo2003.Product.Exceptions.*;
 import ulaval.glo2003.Product.UI.ProductRequest;
 import ulaval.glo2003.Seller.Domain.Seller;
 import ulaval.glo2003.Seller.Domain.SellerRepository;
+import ulaval.glo2003.Utils.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static ulaval.glo2003.Product.Domain.ProductCategory.toCategoriesList;
 
 public class ProductFactory {
     SellerRepository sellerRepository;
@@ -15,17 +19,17 @@ public class ProductFactory {
     }
 
     public Product create(ProductRequest productRequest, String sellerId) {
-
         checkMissingParam(productRequest);
         checkInvalidParam(productRequest);
 
         Seller productSeller = sellerRepository.find(sellerId);
+        List<ProductCategory> categories = createProductCategoryList(productRequest.categories);
 
         return new Product(
                 productRequest.title,
                 productRequest.description,
                 productRequest.suggestedPrice,
-                productRequest.categories,
+                categories,
                 productSeller.getId(),
                 productSeller.getName());
     }
@@ -52,23 +56,24 @@ public class ProductFactory {
     }
 
     private void validateTitle(String title) {
-        if(removeEmptyChar(title).isEmpty()){
+        if(StringUtil.removeEmptyChar(title).isEmpty()){
             throw new InvalidProductTitleException();
         }
     }
 
     private void validateDescription(String description) {
-        if(removeEmptyChar(description).isEmpty()){
+        if(StringUtil.removeEmptyChar(description).isEmpty()){
             throw new InvalidProductDescriptionException();
         }
     }
 
-    private static void validateCategories(List<String> categories) {
-        if (categories != null && !categories.isEmpty()){
-            categories.forEach((category) -> {
-                if(removeEmptyChar(category).isEmpty()){
+    private static void validateCategories(List<String> names) {
+        if (names != null && !names.isEmpty()){
+            for (String name: names) {
+                if (!ProductCategory.contains(name)){
                     throw new InvalidProductCategoriesException();
-                }});
+                }
+            }
         }
     }
 
@@ -78,12 +83,12 @@ public class ProductFactory {
         }
     }
 
-    private static String removeEmptyChar(String string){
-        return string
-                .replaceAll("\n", "")
-                .replaceAll("\t", "")
-                .replaceAll(" ", "")
-                .replaceAll("0", "");
+    private static List<ProductCategory> createProductCategoryList(List<String> categories){
+        if (categories != null) {
+            return toCategoriesList(categories);
+        }
+        else{
+            return new ArrayList<>();
+        }
     }
 }
-

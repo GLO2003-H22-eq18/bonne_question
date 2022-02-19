@@ -12,8 +12,6 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class SellerFactory {
-    StringUtil stringUtil = new StringUtil();
-
     public Seller create(SellerRequest sellerRequest) {
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
@@ -38,12 +36,12 @@ public class SellerFactory {
     }
 
     private void validateName(String name){
-        if(stringUtil.removeEmptyChar(name).isEmpty())
+        if(StringUtil.removeEmptyChar(name).isEmpty())
             throw new InvalidSellerNameException();
     }
 
     private void validateBio(String bio){
-        if(stringUtil.removeEmptyChar(bio).isEmpty())
+        if(StringUtil.removeEmptyChar(bio).isEmpty())
             throw new InvalidSellerBioException();
     }
 

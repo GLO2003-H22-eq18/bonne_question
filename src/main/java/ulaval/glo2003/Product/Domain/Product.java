@@ -10,7 +10,7 @@ public class Product {
     private final String title;
     private final String description;
     private final Double suggestedPrice;
-    private final List<String> categories;
+    private final List<ProductCategory> categories;
     private final String sellerId;
     private final String sellerName;
     private Double mean;
@@ -20,7 +20,7 @@ public class Product {
 
 
     public Product(String title, String description, Double suggestedPrice,
-                   List<String> categories, String sellerId, String sellerName) {
+                   List<ProductCategory> categories, String sellerId, String sellerName) {
         this.id = String.valueOf(currentId++);
         this.title = title;
         this.description = description;
@@ -53,9 +53,7 @@ public class Product {
         return suggestedPrice; 
     }
 
-    public List<String> getCategories(){ 
-        return categories; 
-    }
+    public List<ProductCategory> getCategories(){ return categories; }
 
     public String getSellerId() {
         return sellerId;

@@ -1,5 +1,6 @@
 package ulaval.glo2003.Product.Domain;
 
+import ulaval.glo2003.Product.Exceptions.InvalidProductCategoriesException;
 import ulaval.glo2003.Product.Exceptions.ProductNotFoundException;
 import ulaval.glo2003.Product.UI.ProductResponse;
 
@@ -29,45 +30,66 @@ public class ProductRepository {
     }
 
     public List<Product> getFilteredProducts(String sellerId, String title, List<String> categories, Double minPrice, Double maxPrice) {
-//        TODO CHANGE CATEGORIES TYPE WHEN IT IS CREATED
-        List<Product> filteredProductsList = new ArrayList<>(products.values());
-
+        List<Product> filteredProductsList;
         if (sellerId != null) {
-            filteredProductsList = products.values()
-                    .stream()
-                    .filter(product -> product.getSellerId().equals(sellerId))
-                    .collect(Collectors.toList());
+            filteredProductsList = getSellerIdFilteredProducts(sellerId);
+        } else {
+            filteredProductsList = new ArrayList<>(products.values());
         }
 
         if (title != null) {
-            final String lowerCaseTitle = title.toLowerCase(Locale.ROOT);
-            filteredProductsList = filteredProductsList
-                    .stream()
-                    .filter(product -> product.getTitle().contains(lowerCaseTitle))
-                    .collect(Collectors.toList());
+            filteredProductsList = getTitleFilteredProducts(filteredProductsList, title);
         }
 
         if (!categories.isEmpty()) {
-            filteredProductsList = filteredProductsList
-                    .stream()
-                    .filter(product -> !Collections.disjoint(product.getCategories(), categories))
-                    .collect(Collectors.toList());
+            filteredProductsList = getCategoriesFilteredProducts(filteredProductsList, categories);
         }
 
         if (minPrice != null) {
-            filteredProductsList = filteredProductsList
-                    .stream()
-                    .filter(product -> product.getSuggestedPrice() >= minPrice)
-                    .collect(Collectors.toList());
+            filteredProductsList = getMinPriceFilteredProducts(filteredProductsList, minPrice);
         }
 
         if (maxPrice != null) {
-            filteredProductsList = filteredProductsList
-                    .stream()
-                    .filter(product -> product.getSuggestedPrice() <= maxPrice)
-                    .collect(Collectors.toList());
+            filteredProductsList = getMaxPriceFilteredProducts(filteredProductsList, maxPrice);
         }
 
         return filteredProductsList;
+    }
+
+    public List<Product> getSellerIdFilteredProducts (String sellerId) {
+        return products.values()
+                .stream()
+                .filter(product -> product.getSellerId().equals(sellerId))
+                .collect(Collectors.toList());
+    }
+
+    public List<Product> getTitleFilteredProducts (List<Product> filteredProductsList, String title) {
+        final String lowerCaseTitle = title.toLowerCase(Locale.ROOT);
+         return filteredProductsList
+                .stream()
+                .filter(product -> product.getTitle().contains(lowerCaseTitle))
+                .collect(Collectors.toList());
+    }
+
+    public List<Product> getCategoriesFilteredProducts (List<Product> filteredProductsList, List<String> categories) {
+        List<ProductCategory> productCategories = ProductCategory.toCategoriesList(categories);
+        return filteredProductsList
+                .stream()
+                .filter(product -> !Collections.disjoint(product.getCategories(), productCategories))
+                .collect(Collectors.toList());
+    }
+
+    public List<Product> getMinPriceFilteredProducts (List<Product> filteredProductsList, Double minPrice) {
+        return filteredProductsList
+                .stream()
+                .filter(product -> product.getSuggestedPrice() >= minPrice)
+                .collect(Collectors.toList());
+    }
+
+    public List<Product> getMaxPriceFilteredProducts (List<Product> filteredProductsList, Double maxPrice) {
+        return filteredProductsList
+                .stream()
+                .filter(product -> product.getSuggestedPrice() <= maxPrice)
+                .collect(Collectors.toList());
     }
 }
