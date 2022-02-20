@@ -95,6 +95,30 @@ class SellerResourceTest {
     }
 
     @Test
+    void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidBirthdateField_thenInvalidParameterError(){
+        SellerRequest sellerRequest = new SellerRequest();
+        sellerRequest.name = "John Cena";
+        sellerRequest.bio = "Sick bio!";
+        sellerRequest.birthDate = "2015-01-01";
+
+        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
+                .body(sellerRequest)
+                .when()
+                .post("http://localhost:8080/sellers")
+                .then()
+                .extract();
+
+        int responseStatus = response.statusCode();
+        JsonPath responseJson = response.jsonPath();
+        String description = responseJson.get("description");
+        String errorCode = responseJson.get("code");
+
+        assertThat(responseStatus).isEqualTo(400);
+        assertThat(description).isNotEmpty();
+        assertThat(errorCode).isEqualTo("INVALID_PARAMETER");
+    }
+
+    @Test
     void whenMakingGETRequestToSellerEndpointWithAbsentSellerId_thenItemNotFoundError() {
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .when()
@@ -102,10 +126,12 @@ class SellerResourceTest {
                 .then()
                 .extract();
 
+        int responseStatus = response.statusCode();
         JsonPath responseJson = response.body().jsonPath();
         String description = responseJson.get("description").toString();
         String errorCode = responseJson.get("code").toString();
 
+        assertThat(responseStatus).isEqualTo(404);
         assertThat(description).isNotEmpty();
         assertThat(errorCode).isEqualTo("ITEM_NOT_FOUND");
     }
