@@ -63,7 +63,7 @@ class SellerResourceTest {
         int responseStatus = response.statusCode();
         JsonPath responseJson = response.jsonPath();
         String description = responseJson.get("description");
-        String errorCode = responseJson.get("errorCode");
+        String errorCode = responseJson.get("code");
 
         assertThat(responseStatus).isEqualTo(400);
         assertThat(description).isNotEmpty();
@@ -87,11 +87,27 @@ class SellerResourceTest {
         int responseStatus = response.statusCode();
         JsonPath responseJson = response.jsonPath();
         String description = responseJson.get("description");
-        String errorCode = responseJson.get("errorCode");
+        String errorCode = responseJson.get("code");
 
         assertThat(responseStatus).isEqualTo(400);
         assertThat(description).isNotEmpty();
         assertThat(errorCode).isEqualTo("INVALID_PARAMETER");
+    }
+
+    @Test
+    void whenMakingGETRequestToSellerEndpointWithAbsentSellerId_thenItemNotFoundError() {
+        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
+                .when()
+                .get("http://localhost:8080/sellers/1290412403")
+                .then()
+                .extract();
+
+        JsonPath responseJson = response.body().jsonPath();
+        String description = responseJson.get("description").toString();
+        String errorCode = responseJson.get("code").toString();
+
+        assertThat(description).isNotEmpty();
+        assertThat(errorCode).isEqualTo("ITEM_NOT_FOUND");
     }
 
     @Test
@@ -124,22 +140,6 @@ class SellerResourceTest {
         assertThat(id).isEqualTo(headerLocationId);
         assertThat(name).isEqualTo("Bob Rogers");
         assertThat(bio).isEqualTo("Not a chad!");
-    }
-
-    @Test
-    void whenMakingGETRequestToSellerEndpointWithAbsentSellerId_thenItemNotFoundError() {
-        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
-                .when()
-                .get("http://localhost:8080/sellers/1290412403")
-                .then()
-                .extract();
-
-        JsonPath responseJson = response.body().jsonPath();
-        String description = responseJson.get("description").toString();
-        String errorCode = responseJson.get("errorCode").toString();
-
-        assertThat(description).isNotEmpty();
-        assertThat(errorCode).isEqualTo("ITEM_NOT_FOUND");
     }
 
 }
