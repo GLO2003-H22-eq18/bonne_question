@@ -25,7 +25,6 @@ public class Main {
         SellerResource sellerResource = new SellerResource(sellerRepository);
 
         ProductRepository productRepository = new ProductRepository();
-        ProductFactory productFactory = new ProductFactory();
         ProductResource productResource = new ProductResource(sellerRepository, productRepository);
 
         ResourceConfig resourceConfig = new ResourceConfig()
