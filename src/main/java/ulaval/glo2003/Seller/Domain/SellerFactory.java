@@ -12,7 +12,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class SellerFactory {
-    public Seller create(SellerRequest sellerRequest) {
+    public static Seller create(SellerRequest sellerRequest) {
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
 
@@ -20,7 +20,7 @@ public class SellerFactory {
                             LocalDate.parse(sellerRequest.birthDate), new ArrayList<>());
     }
 
-    private void checkMissingParam(SellerRequest sellerRequest){
+    private static void checkMissingParam(SellerRequest sellerRequest){
         if(sellerRequest.bio == null)
             throw new MissingSellerBioException();
         else if(sellerRequest.birthDate == null)
@@ -29,23 +29,23 @@ public class SellerFactory {
             throw new MissingSellerNameException();
     }
 
-    private void checkInvalidParam(SellerRequest sellerRequest){
+    private static void checkInvalidParam(SellerRequest sellerRequest){
         validateName(sellerRequest.name);
         validateBio(sellerRequest.bio);
         validateBirthdate(sellerRequest.birthDate);
     }
 
-    private void validateName(String name){
+    private static void validateName(String name){
         if(StringUtil.removeEmptyChar(name).isEmpty())
             throw new InvalidSellerNameException();
     }
 
-    private void validateBio(String bio){
+    private static void validateBio(String bio){
         if(StringUtil.removeEmptyChar(bio).isEmpty())
             throw new InvalidSellerBioException();
     }
 
-    private void validateBirthdate(String date){
+    private static void validateBirthdate(String date){
         LocalDate birthDate;
         try {
             birthDate = LocalDate.parse(date);

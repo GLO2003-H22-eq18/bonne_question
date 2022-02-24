@@ -22,12 +22,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         SellerRepository sellerRepository = new SellerRepository();
-        SellerFactory sellerFactory = new SellerFactory();
-        SellerResource sellerResource = new SellerResource(sellerRepository, sellerFactory);
+        SellerResource sellerResource = new SellerResource(sellerRepository);
 
         ProductRepository productRepository = new ProductRepository();
-        ProductFactory productFactory = new ProductFactory(sellerRepository);
-        ProductResource productResource = new ProductResource(productRepository, productFactory);
+        ProductResource productResource = new ProductResource(sellerRepository, productRepository);
 
         ResourceConfig resourceConfig = new ResourceConfig()
                 .register(sellerResource)
