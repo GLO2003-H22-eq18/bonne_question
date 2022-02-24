@@ -1,14 +1,9 @@
 package ulaval.glo2003.e2e;
 
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.junit.BeforeClass;
 import ulaval.glo2003.Product.UI.ProductRequest;
 import ulaval.glo2003.Seller.UI.SellerRequest;
 
@@ -18,6 +13,8 @@ import java.util.List;
 import static io.restassured.RestAssured.*;
 
 public class End2EndUtils {
+
+    private static final String SELLER_HEADER_NAME = "X-Seller-Id";
 
     public static int getHealth(){
         return given().contentType(ContentType.JSON)
@@ -34,6 +31,17 @@ public class End2EndUtils {
         sellerRequest.birthDate = "1977-04-23";
         return sellerRequest;
     }
+
+    public static String createSellerGetId(){
+        SellerRequest sellerRequest = createSeller();
+        ExtractableResponse<Response> response = createResource("/sellers", sellerRequest);
+        return response.header("Location").split("/")[4];
+    }
+
+    public static ExtractableResponse<Response> createSellerResource(SellerRequest sellerRequest){
+        return createResource("/sellers", sellerRequest);
+    }
+
     public static ProductRequest createProduct() {
         ProductRequest productRequest = new ProductRequest();
         productRequest.title = "My Product";
@@ -43,11 +51,12 @@ public class End2EndUtils {
         return productRequest;
     }
 
-    public static String createSellerGetId(){
-        SellerRequest sellerRequest = createSeller();
-        ExtractableResponse<Response> response = createResource("/sellers", sellerRequest);
-        return response.header("Location").split("/")[4];
+    public static ExtractableResponse<Response> createProductResource(ProductRequest productRequest, String sellerId){
+        Header productSeller = new Header(SELLER_HEADER_NAME, sellerId);
+        return createResource("/products", productSeller, productRequest);
     }
+
+
 
     public static ExtractableResponse<Response> createResource(String path, Object bodyPayload) {
         return given()
@@ -58,7 +67,7 @@ public class End2EndUtils {
                 .then()
                 .extract();
     }
-    public static ExtractableResponse<Response> createResource(String path, Header header, Object bodyPayload) {
+    private static ExtractableResponse<Response> createResource(String path, Header header, Object bodyPayload) {
         return given()
                 .contentType(ContentType.JSON)
                 .header(header)
@@ -69,13 +78,18 @@ public class End2EndUtils {
                 .extract();
     }
 
-    public static ExtractableResponse<Response> getResource(String locationHeader) {
+    private static ExtractableResponse<Response> getResource(String locationHeader) {
         return given()
                 .contentType(ContentType.JSON)
                 .when()
                 .get(locationHeader)
                 .then()
                 .extract();
+    }
+
+    public static String extractId(ExtractableResponse<Response> response){
+        String location = response.header("Location");
+        return location.substring(location.lastIndexOf("/") + 1);
     }
     }
 

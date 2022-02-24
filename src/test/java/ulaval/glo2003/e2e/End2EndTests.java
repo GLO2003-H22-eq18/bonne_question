@@ -23,8 +23,6 @@ import static ulaval.glo2003.e2e.End2EndUtils.*;
 
 class End2EndTests {
 
-    private static final String SELLER_HEADER_NAME = "X-Seller-Id";
-
     @BeforeAll
     public static void setup() throws IOException {
         Main.main(new String[] {});
@@ -41,25 +39,22 @@ class End2EndTests {
     void canCreateSellerHasLocationHeader() {
         SellerRequest sellerRequest = createSeller();
 
-        ExtractableResponse<Response> sellerResponse = createResource("/sellers", sellerRequest);
-        String sellerId = sellerResponse.header("Location").split("/")[4];
+        ExtractableResponse<Response> response = createSellerResource(sellerRequest);
 
-        assertThat(sellerResponse.statusCode()).isEqualTo(201);
-        assertThat(sellerId).isNotNull();
-        assertThat(sellerId).isNotEmpty();
+        assertThat(response.statusCode()).isEqualTo(201);
+        assertThat(extractId(response)).isNotNull();
+        assertThat(extractId(response)).isNotEmpty();
     }
 
     @Test
     void canCreateProductIsAddedToSeller() {
         ProductRequest productRequest = createProduct();
-        Header productSeller = new Header(SELLER_HEADER_NAME, createSellerGetId());
 
-        ExtractableResponse<Response> productResponse = createResource("/products", productSeller, productRequest);
-        String productId = productResponse.header("Location").split("/")[4];
+        ExtractableResponse<Response> response = createProductResource(productRequest, createSellerGetId());
 
-        assertThat(productResponse.statusCode()).isEqualTo(201);
-        assertThat(productId).isNotNull();
-        assertThat(productId).isNotEmpty();
+        assertThat(response.statusCode()).isEqualTo(201);
+        assertThat(extractId(response)).isNotNull();
+        assertThat(extractId(response)).isNotEmpty();
     }
 
 }
