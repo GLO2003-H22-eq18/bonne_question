@@ -6,6 +6,7 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.junit.Before;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,14 +45,6 @@ public class ProductResourceTest {
         return productRequest;
     }
 
-    SellerRequest createSellerRequest(){
-        SellerRequest sellerRequest = new SellerRequest();
-        sellerRequest.name = "name";
-        sellerRequest.bio =  "bio";
-        sellerRequest.birthDate = "1977-04-23";
-        return sellerRequest;
-    }
-
     String name = "John Cena";
     String bio = "You can't see me, my time is now.";
     OffsetDateTime createdAt = OffsetDateTime.now();
@@ -59,33 +52,79 @@ public class ProductResourceTest {
     List<Product> products = new ArrayList<>();
     Seller seller = new Seller(name, bio, createdAt, birthDate, products);
 
-
-    /*@BeforeAll
-    public static void setup(){
-        SellerRepository sellerRepository = new SellerRepository();
-        SellerFactory sellerFactory = new SellerFactory();
-        SellerResource sellerResource = new SellerResource(sellerRepository, sellerFactory);
-
-        //RestAssured.basePath = "/products";
-    }*/
-
     @BeforeAll
     public static void startServer() throws IOException {
         Main.main(new String[] {});
     }
 
+
+
+   /* @BeforeAll
+    public void createDefaultSeller (){
+        SellerRequest sellerRequest = new SellerRequest();
+        sellerRequest.name = "name";
+        sellerRequest.bio =  "bio";
+        sellerRequest.birthDate = "1977-04-23";
+
+        String headerLocationId = given().contentType(ContentType.JSON)
+                .body(sellerRequest)
+                .when()
+                .post("http://localhost:8080/sellers")
+                .then()
+                .extract()
+                .header("Location")
+                .split("/")[4];
+
+        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
+                .when()
+                .get("http://localhost:8080/sellers/" + headerLocationId)
+                .then()
+                .extract();
+
+        JsonPath responseJson = response.jsonPath();
+        String id = responseJson.get("id");
+    }*/
+
+
+
+
     @Test
     void givenProduct_whenMakingPOSTRequestToProductEndpoint_thenCorrect(){
+    //TODO ADD X-Seller-ID in header
+        /*SellerRequest sellerRequest = createSellerRequest();*/
+
+        SellerRequest sellerRequest = new SellerRequest();
+        sellerRequest.name = "name";
+        sellerRequest.bio =  "bio";
+        sellerRequest.birthDate = "1977-04-23";
+
+        String headerLocationIdSeller = given().contentType(ContentType.JSON)
+                .body(sellerRequest)
+                .when()
+                .post("http://localhost:8080/sellers")
+                .then()
+                .extract()
+                .header("Location")
+                .split("/")[4];
+
+        ExtractableResponse<Response> response1 = given().contentType(ContentType.JSON)
+                .when()
+                .get("http://localhost:8080/sellers/" + headerLocationIdSeller)
+                .then()
+                .extract();
+
+        JsonPath responseJson = response1.jsonPath();
+        String id = responseJson.get("id");
+
+
         ProductRequest productRequest = createProductRequest("Clever title",
                 "Clever description",
                 5.0,
                 new ArrayList<>());
 
-        SellerRequest sellerRequest = createSellerRequest();
-
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
-                .header("X-Seller-Id", seller.getId()) //TODO sellerRequest.getID();
+                .header("X-Seller-Id", id) //TODO sellerRequest.getID();
                 .and()
                 .body(productRequest)
                 .when()
@@ -95,10 +134,15 @@ public class ProductResourceTest {
 
         int responseStatus = response.statusCode();
         String headerLocation = response.headers().getValue("Location");
-        //String headerLocationId = headerLocation.split("/")[4];
+        String headerLocationId = headerLocation.split("/")[4];
 
         assertThat(responseStatus).isEqualTo(201);
-        //assertThat(headerLocation).isEqualTo("http://localhost:8080/products" + headerLocationId);
+        assertThat(headerLocation).isEqualTo("http://localhost:8080/products/" + headerLocationId);
+    }
+
+    @Test
+    void whenMakingGETResquestToProductEndpoint_thenCorrect(){
+        //TODO 200
     }
 
 
@@ -110,11 +154,6 @@ public class ProductResourceTest {
     @Test
     void givenProduct_whenMakingPOSTRequestToProductEndpointWithInvalidField_thenInvalidParameterError() {
         //TODO
-    }
-
-    @Test
-    void whenMakingGETResquestToProductEndpoint_thenCorrect(){
-        //TODO 200
     }
 
     @Test
