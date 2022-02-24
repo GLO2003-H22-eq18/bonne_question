@@ -32,10 +32,10 @@ class SellerAssemblerTest {
 
         SellerResponse sellerResponse = SellerAssembler.createSellerResponse(seller);
 
-        assertThat(sellerResponse.id).isEqualTo(seller.id);
-        assertThat(sellerResponse.createdAt).isEqualTo(seller.createdAt);
-        assertThat(sellerResponse.name).isEqualTo(seller.name);
-        assertThat(sellerResponse.bio).isEqualTo(seller.bio);
-        assertThat(sellerResponse.products).isEqualTo(seller.products);
+        assertThat(sellerResponse.id).isEqualTo(seller.getId());
+        assertThat(sellerResponse.createdAt).isEqualTo(seller.getCreatedAt());
+        assertThat(sellerResponse.name).isEqualTo(seller.getName());
+        assertThat(sellerResponse.bio).isEqualTo(seller.getBio());
+        assertThat(sellerResponse.products).isEqualTo(seller.getProducts());
     }
 }
