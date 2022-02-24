@@ -8,11 +8,9 @@ import ulaval.glo2003.Exceptions.MissingArgumentExceptionMapper;
 import ulaval.glo2003.Exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.Product.Domain.ProductFactory;
 import ulaval.glo2003.Product.Domain.ProductRepository;
-import ulaval.glo2003.Product.UI.ProductAssembler;
 import ulaval.glo2003.Product.UI.ProductResource;
 import ulaval.glo2003.Seller.Domain.SellerFactory;
 import ulaval.glo2003.Seller.Domain.SellerRepository;
-import ulaval.glo2003.Seller.UI.SellerAssembler;
 import ulaval.glo2003.Seller.UI.SellerResource;
 
 import java.io.IOException;
