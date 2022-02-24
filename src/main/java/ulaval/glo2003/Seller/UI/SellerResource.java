@@ -12,17 +12,13 @@ import ulaval.glo2003.Seller.Domain.SellerFactory;
 import ulaval.glo2003.Seller.Domain.SellerRepository;
 import ulaval.glo2003.Seller.Exceptions.SellerNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Path("/sellers")
 public class SellerResource {
     private final SellerRepository sellerRepository;
-    private final SellerFactory sellerFactory;
 
-    public SellerResource(SellerRepository sellerRepository, SellerFactory sellerFactory) {
+    public SellerResource(SellerRepository sellerRepository) {
         this.sellerRepository = sellerRepository;
-        this.sellerFactory = sellerFactory;
     }
 
     @GET
@@ -43,7 +39,7 @@ public class SellerResource {
     @POST
     public Response postSeller(SellerRequest sellerRequest,
                                @Context UriInfo uri) {
-        Seller mySeller = sellerFactory.create(sellerRequest);
+        Seller mySeller = SellerFactory.create(sellerRequest);
         sellerRepository.save(mySeller);
 
         return Response.status(201).header("Location", uri.getPath() + "/" + mySeller.getId()).build();
