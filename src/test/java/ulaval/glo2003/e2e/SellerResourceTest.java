@@ -14,10 +14,17 @@ import java.io.IOException;
 import static io.restassured.RestAssured.*;
 
 import static com.google.common.truth.Truth.*;
-import static org.hamcrest.CoreMatchers.notNullValue;
 
 
 class SellerResourceTest {
+
+    SellerRequest createSellerRequest(String name, String bio, String birthDate){
+        SellerRequest sellerRequest = new SellerRequest();
+        sellerRequest.name = name;
+        sellerRequest.bio = bio;
+        sellerRequest.birthDate = birthDate;
+        return sellerRequest;
+    }
 
     @BeforeAll
     public static void startServer() throws IOException {
@@ -26,10 +33,7 @@ class SellerResourceTest {
 
     @Test
     void givenSeller_whenMakingPOSTRequestToSellerEndpoint_thenCorrect() {
-        SellerRequest sellerRequest = new SellerRequest();
-        sellerRequest.name = "John Cena";
-        sellerRequest.bio = "What a chad!";
-        sellerRequest.birthDate = "1977-04-23";
+        SellerRequest sellerRequest = createSellerRequest("John Cena", "What a chad!", "1977-04-23");
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
@@ -48,10 +52,7 @@ class SellerResourceTest {
 
     @Test
     void givenSeller_whenMakingPOSTRequestToSellerEndpointWithMissingField_thenMissingParameterError() {
-        SellerRequest sellerRequest = new SellerRequest();
-        sellerRequest.name = "John Cena";
-        sellerRequest.bio = "What a chad!";
-        sellerRequest.birthDate = null;
+        SellerRequest sellerRequest = createSellerRequest("John Cena", "What a chad!", null);
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
@@ -72,10 +73,7 @@ class SellerResourceTest {
 
     @Test
     void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidField_thenInvalidParameterError() {
-        SellerRequest sellerRequest = new SellerRequest();
-        sellerRequest.name = "John Cena";
-        sellerRequest.bio = "\n\t     000";
-        sellerRequest.birthDate = "2000-01-01";
+        SellerRequest sellerRequest = createSellerRequest("John Cena", "\n\t     000", "2000-01-01");
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
@@ -96,10 +94,7 @@ class SellerResourceTest {
 
     @Test
     void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidBirthdateField_thenInvalidParameterError(){
-        SellerRequest sellerRequest = new SellerRequest();
-        sellerRequest.name = "John Cena";
-        sellerRequest.bio = "Sick bio!";
-        sellerRequest.birthDate = "2015-01-01";
+        SellerRequest sellerRequest = createSellerRequest("John Cena", "Sick bio!", "2015-01-01");
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
@@ -138,10 +133,8 @@ class SellerResourceTest {
 
     @Test
     void whenMakingGETRequestToSellerEndpoint_thenCorrect() {
-        SellerRequest sellerRequest = new SellerRequest();
-        sellerRequest.name = "Bob Rogers";
-        sellerRequest.bio = "Not a chad!";
-        sellerRequest.birthDate = "1985-03-22";
+        SellerRequest sellerRequest = createSellerRequest("Bob Rogers", "Not a chad!", "1985-03-22");
+
         String headerLocationId = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
                 .when()
@@ -156,6 +149,7 @@ class SellerResourceTest {
                 .get("http://localhost:8080/sellers/" + headerLocationId)
                 .then()
                 .extract();
+
         int responseStatus = response.statusCode();
         JsonPath responseJson = response.jsonPath();
         String id = responseJson.get("id");
