@@ -3,7 +3,6 @@ package ulaval.glo2003.Product.Domain;
 import ulaval.glo2003.Product.Exceptions.*;
 import ulaval.glo2003.Product.UI.ProductRequest;
 import ulaval.glo2003.Seller.Domain.Seller;
-import ulaval.glo2003.Seller.Domain.SellerRepository;
 import ulaval.glo2003.Utils.StringUtil;
 
 import java.util.ArrayList;
@@ -12,17 +11,11 @@ import java.util.List;
 import static ulaval.glo2003.Product.Domain.ProductCategory.toCategoriesList;
 
 public class ProductFactory {
-    private final SellerRepository sellerRepository;
 
-    public ProductFactory(SellerRepository sellerRepository) {
-        this.sellerRepository = sellerRepository;
-    }
-
-    public Product create(ProductRequest productRequest, String sellerId) {
+    public static Product create(Seller productSeller, ProductRequest productRequest) {
         checkMissingParam(productRequest);
         checkInvalidParam(productRequest);
 
-        Seller productSeller = sellerRepository.find(sellerId);
         List<ProductCategory> categories = createProductCategoryList(productRequest.categories);
 
         Product product = new Product(
@@ -38,7 +31,7 @@ public class ProductFactory {
         return product;
     }
 
-    private void checkMissingParam(ProductRequest productRequest){
+    private static void checkMissingParam(ProductRequest productRequest){
          if(productRequest.title == null)
             throw new MissingProductTitleException();
          else if(productRequest.description == null)
@@ -47,20 +40,20 @@ public class ProductFactory {
             throw new MissingProductSuggestedPriceException();
     }
 
-    private void checkInvalidParam(ProductRequest productRequest){
+    private static void checkInvalidParam(ProductRequest productRequest){
         validateTitle(productRequest.title);
         validateDescription(productRequest.description);
         validateSuggestedPrice(productRequest.suggestedPrice);
         validateCategories(productRequest.categories);
     }
 
-    private void validateTitle(String title) {
+    private static void validateTitle(String title) {
         if(StringUtil.removeEmptyChar(title).isEmpty()){
             throw new InvalidProductTitleException();
         }
     }
 
-    private void validateDescription(String description) {
+    private static void validateDescription(String description) {
         if(StringUtil.removeEmptyChar(description).isEmpty()){
             throw new InvalidProductDescriptionException();
         }
