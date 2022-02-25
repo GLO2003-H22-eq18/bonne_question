@@ -9,7 +9,7 @@ import static ulaval.glo2003.Product.Domain.ProductCategory.toStringList;
 
 public class ProductAssembler {
 
-    public static ProductResponse createProductResponse(Product product) {
+    public ProductResponse createProductResponse(Product product) {
         String id = product.getId();
         OffsetDateTime createdAt = product.getCreatedAt();
         String title = product.getTitle();

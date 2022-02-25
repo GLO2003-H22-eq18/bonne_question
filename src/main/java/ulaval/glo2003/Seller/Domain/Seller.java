@@ -7,12 +7,12 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Seller {
-    public String id;
-    public OffsetDateTime createdAt;
-    public LocalDate birthDate;
-    public String name;
-    public String bio;
-    public List<Product> products;
+    private String id;
+    private OffsetDateTime createdAt;
+    private LocalDate birthDate;
+    private String name;
+    private String bio;
+    private List<Product> products;
 
     private static int currentId = 0;
 
