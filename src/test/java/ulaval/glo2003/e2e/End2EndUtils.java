@@ -24,7 +24,7 @@ public class End2EndUtils {
                 .extract().statusCode();
     }
 
-    public static SellerRequest createSeller() {
+    public static SellerRequest createValidSeller() {
         SellerRequest sellerRequest = new SellerRequest();
         sellerRequest.name = "John Cena";
         sellerRequest.bio = "What a chad!";
@@ -32,8 +32,24 @@ public class End2EndUtils {
         return sellerRequest;
     }
 
+    public static SellerRequest createMissingParamSeller() {
+        SellerRequest sellerRequest = new SellerRequest();
+        sellerRequest.name = "John Cena";
+        sellerRequest.bio = "What a chad!";
+        sellerRequest.birthDate = null;
+        return sellerRequest;
+    }
+
+    public static SellerRequest createInvalidParamSeller() {
+        SellerRequest sellerRequest = new SellerRequest();
+        sellerRequest.name = "    \n  \t \n ";
+        sellerRequest.bio = "What a chad!";
+        sellerRequest.birthDate = "1977-04-23";
+        return sellerRequest;
+    }
+
     public static String createSellerGetId(){
-        SellerRequest sellerRequest = createSeller();
+        SellerRequest sellerRequest = createValidSeller();
         ExtractableResponse<Response> response = createResource("/sellers", sellerRequest);
         return response.header("Location").split("/")[4];
     }
@@ -87,7 +103,7 @@ public class End2EndUtils {
                 .extract();
     }
 
-    public static String extractId(ExtractableResponse<Response> response){
+    public static String extractLocationId(ExtractableResponse<Response> response){
         String location = response.header("Location");
         return location.substring(location.lastIndexOf("/") + 1);
     }

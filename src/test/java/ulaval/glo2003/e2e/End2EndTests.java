@@ -37,13 +37,33 @@ class End2EndTests {
 
     @Test
     void canCreateSellerHasLocationHeader() {
-        SellerRequest sellerRequest = createSeller();
+        SellerRequest sellerRequest = createValidSeller();
 
         ExtractableResponse<Response> response = createSellerResource(sellerRequest);
 
         assertThat(response.statusCode()).isEqualTo(201);
-        assertThat(extractId(response)).isNotNull();
-        assertThat(extractId(response)).isNotEmpty();
+        assertThat(extractLocationId(response)).isNotNull();
+        assertThat(extractLocationId(response)).isNotEmpty();
+    }
+
+    @Test
+    void givenSellerRequestWithMissingParam_whenCreatingSeller_thenError400() {
+        SellerRequest sellerRequest = createMissingParamSeller();
+
+        ExtractableResponse<Response> response = createSellerResource(sellerRequest);
+
+        assertThat(response.statusCode()).isEqualTo(400);
+        assertThat(response.body()).isNotNull();
+    }
+
+    @Test
+    void givenSellerRequestWithInvalidParam_whenCreatingSeller_thenError400() {
+        SellerRequest sellerRequest = createInvalidParamSeller();
+
+        ExtractableResponse<Response> response = createSellerResource(sellerRequest);
+
+        assertThat(response.statusCode()).isEqualTo(400);
+        assertThat(response.body()).isNotNull();
     }
 
     @Test
@@ -53,8 +73,8 @@ class End2EndTests {
         ExtractableResponse<Response> response = createProductResource(productRequest, createSellerGetId());
 
         assertThat(response.statusCode()).isEqualTo(201);
-        assertThat(extractId(response)).isNotNull();
-        assertThat(extractId(response)).isNotEmpty();
+        assertThat(extractLocationId(response)).isNotNull();
+        assertThat(extractLocationId(response)).isNotEmpty();
     }
 
 }
