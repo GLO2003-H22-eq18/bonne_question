@@ -1,6 +1,5 @@
 package ulaval.glo2003.unit;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Product.Domain.Product;
 import ulaval.glo2003.Seller.Domain.Seller;

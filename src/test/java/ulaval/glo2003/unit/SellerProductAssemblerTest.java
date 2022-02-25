@@ -3,14 +3,9 @@ package ulaval.glo2003.unit;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Product.Domain.Product;
 import ulaval.glo2003.Product.Domain.ProductCategory;
-import ulaval.glo2003.Seller.Domain.Seller;
-import ulaval.glo2003.Seller.UI.SellerAssembler;
 import ulaval.glo2003.Seller.UI.SellerProductAssembler;
 import ulaval.glo2003.Seller.UI.SellerProductResponse;
-import ulaval.glo2003.Seller.UI.SellerResponse;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

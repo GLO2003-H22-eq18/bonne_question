@@ -32,7 +32,7 @@ public class Main {
                 .register(new MissingArgumentExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())
                 .packages("ulaval.glo2003");
-        URI uri = URI.create("http://localhost:8080/");
+        URI uri = URI.create("http://localhost:8081/");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();
