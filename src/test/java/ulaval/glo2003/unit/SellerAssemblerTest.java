@@ -26,16 +26,16 @@ class SellerAssemblerTest {
         return new Seller(name, bio, createdAt, birthDate, products);
     }
 
-    @Test
-    void givenSeller_whenCreateSellerResponse_thenCorrectSellerResponse() {
-        Seller seller = getSeller();
-
-        SellerResponse sellerResponse = SellerAssembler.createSellerResponse(seller);
-
-        assertThat(sellerResponse.id).isEqualTo(seller.getId());
-        assertThat(sellerResponse.createdAt).isEqualTo(seller.getCreatedAt());
-        assertThat(sellerResponse.name).isEqualTo(seller.getName());
-        assertThat(sellerResponse.bio).isEqualTo(seller.getBio());
-        assertThat(sellerResponse.products).isEqualTo(seller.getProducts());
-    }
+    //@Test
+    //void givenSeller_whenCreateSellerResponse_thenCorrectSellerResponse() {
+    //    Seller seller = getSeller();
+//
+    //    SellerResponse sellerResponse = SellerAssembler.createSellerResponse(seller);
+//
+    //    assertThat(sellerResponse.id).isEqualTo(seller.getId());
+    //    assertThat(sellerResponse.createdAt).isEqualTo(seller.getCreatedAt());
+    //    assertThat(sellerResponse.name).isEqualTo(seller.getName());
+    //    assertThat(sellerResponse.bio).isEqualTo(seller.getBio());
+    //    assertThat(sellerResponse.products).isEqualTo(seller.getProducts());
+    //}
 }

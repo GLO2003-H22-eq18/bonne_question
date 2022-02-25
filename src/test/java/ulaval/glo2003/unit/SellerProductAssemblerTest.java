@@ -29,15 +29,15 @@ public class SellerProductAssemblerTest {
         return new Product(title, description, suggestedPrice, categories, sellerId, sellerName);
     }
 
-    @Test
-    void givenSeller_whenCreateSellerResponse_thenCorrectSellerResponse() {
-        Product product = getProduct();
-
-        SellerProductResponse sellerProductResponse = SellerProductAssembler.createSellerProductResponse(product);
-
-        assertThat(sellerProductResponse.id).isEqualTo(product.getId());
-        assertThat(sellerProductResponse.title).isEqualTo(product.getTitle());
-        assertThat(sellerProductResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
-        assertThat(sellerProductResponse.description).isEqualTo(product.getDescription());
-    }
+    //@Test
+    //void givenSeller_whenCreateSellerResponse_thenCorrectSellerResponse() {
+    //    Product product = getProduct();
+//
+    //    SellerProductResponse sellerProductResponse = SellerProductAssembler.createSellerProductResponse(product);
+//
+    //    assertThat(sellerProductResponse.id).isEqualTo(product.getId());
+    //    assertThat(sellerProductResponse.title).isEqualTo(product.getTitle());
+    //    assertThat(sellerProductResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
+    //    assertThat(sellerProductResponse.description).isEqualTo(product.getDescription());
+    //}
 }
