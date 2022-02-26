@@ -1,4 +1,4 @@
-name: Java CImaven
+name: Java CI Maven
 on:
   push:
     branches:
@@ -30,8 +30,11 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots verify
+      - name: Compile with Maven
+        run: mvn compile
 
       - name: Tests
         run: mvn test
+
+      - name: Integration tests
+        run: mvn --batch-mode --update-snapshots verify
