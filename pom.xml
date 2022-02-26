@@ -90,6 +90,14 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <googleJavaFormatOptions>
+                        <aosp>true</aosp>
+                        <fixImportsOnly>false</fixImportsOnly>
+                        <skipSortingImports>false</skipSortingImports>
+                        <skipRemovingUnusedImports>false</skipRemovingUnusedImports>
+                    </googleJavaFormatOptions>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
