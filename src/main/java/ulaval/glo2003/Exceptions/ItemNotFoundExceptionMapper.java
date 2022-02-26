@@ -5,9 +5,10 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 
 public class ItemNotFoundExceptionMapper implements ExceptionMapper<ItemNotFoundException> {
 
-    @Override
-    public Response toResponse(ItemNotFoundException e) {
-        String jsonResponse = "{\n\tcode: ITEM_NOT_FOUND,\n\tdescription: " + e.getMessage() + "\n}";
-        return Response.status(404).entity(jsonResponse).build();
-    }
+  @Override
+  public Response toResponse(ItemNotFoundException e) {
+    String errorDescription = e.getMessage();
+    ErrorResponse errorResponse = new ErrorResponse(ErrorCode.ITEM_NOT_FOUND, errorDescription);
+    return Response.status(404).entity(errorResponse).build();
+  }
 }
