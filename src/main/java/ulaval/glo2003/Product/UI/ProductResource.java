@@ -17,11 +17,17 @@ import java.util.stream.Collectors;
 public class ProductResource {
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
+    private final ProductFactory productFactory;
+    private final ProductAssembler productAssembler;
 
     public ProductResource( SellerRepository sellerRepository,
-                            ProductRepository productRepository) {
+                            ProductRepository productRepository,
+                            ProductFactory productFactory,
+                            ProductAssembler productAssembler) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
+        this.productFactory = productFactory;
+        this.productAssembler = productAssembler;
     }
 
     @POST
@@ -30,7 +36,7 @@ public class ProductResource {
                                 @Context UriInfo uri) {
 
         Seller productSeller = sellerRepository.find(sellerId);
-        Product myProduct = ProductFactory.create(productSeller, productRequest);
+        Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
         productRepository.save(myProduct);
 
@@ -42,7 +48,7 @@ public class ProductResource {
     public Response getProduct(@PathParam("productId") String productId) {
         Product product = productRepository.find(productId);
 
-        ProductResponse productResponse = ProductAssembler.createProductResponse(product);
+        ProductResponse productResponse = productAssembler.createProductResponse(product);
 
         return Response.status(200).entity(productResponse).build();
     }
@@ -58,7 +64,7 @@ public class ProductResource {
 
         List<ProductResponse> filteredProductsResponseList = filteredProducts
                 .stream()
-                .map(ProductAssembler::createProductResponse)
+                .map(productAssembler::createProductResponse)
                 .collect(Collectors.toList());
 
         FilteredProductsResponse filteredProductsResponse = new FilteredProductsResponse(filteredProductsResponseList);

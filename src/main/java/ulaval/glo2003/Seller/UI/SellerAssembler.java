@@ -10,7 +10,12 @@ import java.util.stream.Collectors;
 
 public class SellerAssembler {
 
-    public static SellerResponse createSellerResponse(Seller seller) {
+    private final SellerProductAssembler sellerProductAssembler;
+    public SellerAssembler(SellerProductAssembler sellerProductAssembler) {
+        this.sellerProductAssembler = sellerProductAssembler;
+    }
+
+    public SellerResponse createSellerResponse(Seller seller) {
         String id = seller.getId();
         OffsetDateTime createdAt = seller.getCreatedAt();
         String name = seller.getName();
@@ -19,7 +24,7 @@ public class SellerAssembler {
 
         List<SellerProductResponse> productsResponse = products
                 .stream()
-                .map(SellerProductAssembler::createSellerProductResponse)
+                .map(sellerProductAssembler::createSellerProductResponse)
                 .collect(Collectors.toList());
 
         return new SellerResponse(id, createdAt, name, bio, productsResponse);

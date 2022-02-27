@@ -16,9 +16,13 @@ import ulaval.glo2003.Seller.Exceptions.SellerNotFoundException;
 @Path("/sellers")
 public class SellerResource {
     private final SellerRepository sellerRepository;
+    private final SellerFactory sellerFactory;
+    private final SellerAssembler sellerAssembler;
 
-    public SellerResource(SellerRepository sellerRepository) {
+    public SellerResource(SellerRepository sellerRepository, SellerFactory sellerFactory, SellerAssembler sellerAssembler) {
         this.sellerRepository = sellerRepository;
+        this.sellerFactory = sellerFactory;
+        this.sellerAssembler = sellerAssembler;
     }
 
     @GET
@@ -31,7 +35,7 @@ public class SellerResource {
                 .orElseThrow(SellerNotFoundException::new)
                 .getValue();
 
-        SellerResponse sellerResponse = SellerAssembler.createSellerResponse(seller);
+        SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 
         return Response.status(200).entity(sellerResponse).build();
     }
@@ -39,7 +43,7 @@ public class SellerResource {
     @POST
     public Response postSeller(SellerRequest sellerRequest,
                                @Context UriInfo uri) {
-        Seller mySeller = SellerFactory.create(sellerRequest);
+        Seller mySeller = sellerFactory.create(sellerRequest);
         sellerRepository.save(mySeller);
 
         return Response.status(201).header("Location", uri.getPath() + "/" + mySeller.getId()).build();
