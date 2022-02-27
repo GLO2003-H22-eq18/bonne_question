@@ -1,8 +1,12 @@
 package ulaval.glo2003.Product.UI;
 
 public class ProductSellerResponse {
-    public final String id;
-    public final String name;
+    public String id;
+    public String name;
+
+    public ProductSellerResponse() {
+        super();
+    }
 
     public ProductSellerResponse(String id, String name) {
         this.id = id;

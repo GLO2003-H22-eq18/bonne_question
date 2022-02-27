@@ -15,10 +15,10 @@ public class SellerProductAssembler {
         String title = product.getTitle();
         String description = product.getDescription();
         Double suggestedPrice = product.getSuggestedPrice();
-        //Double mean = product.getMean(); ajouter pour TP3
         Integer count = product.getCount();
+        //TODO: Double mean = product.getMean(); --> AJOUTER POUR TP3
 
         return new SellerProductResponse(id, createdAt, title, description, suggestedPrice,
-                count); // ajouter mean pour TP3
+                count);
     }
 }

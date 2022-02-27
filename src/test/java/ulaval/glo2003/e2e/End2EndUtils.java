@@ -66,7 +66,7 @@ public class End2EndUtils {
         return createResource("/sellers", sellerRequest);
     }
 
-    public static ExtractableResponse<Response> getSellerById(String sellerId) {
+    public static Response getSellerById(String sellerId) {
         return getResourceById("/sellers/{sellerId}", sellerId);
 }
 
@@ -90,7 +90,7 @@ public class End2EndUtils {
         return extractLocationId(response);
     }
 
-    public static ExtractableResponse<Response> getProductById(String productId) {
+    public static Response getProductById(String productId) {
         return getResourceById("/products/{productId}", productId);
     }
 
@@ -118,13 +118,14 @@ public class End2EndUtils {
                 .response();
     }
 
-    private static ExtractableResponse<Response> getResourceById(String pathParam, String resourceId) {
+    private static Response getResourceById(String pathParam, String resourceId) {
         return given()
                 .contentType(ContentType.JSON)
                 .when()
                 .get(pathParam, resourceId)
                 .then()
-                .extract();
+                .extract()
+                .response();
     }
 
     public static String extractLocationId(Response response){

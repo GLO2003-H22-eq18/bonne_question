@@ -60,12 +60,12 @@ class End2EndTests {
     void givenProductId_whenGettingProduct_thenProductReturned() {
         String productId = createProductGetId(); //POST à sellers + POST à products, retourne id
 
-        ExtractableResponse<Response> response = getProductById(productId);
+        Response response = getProductById(productId);
         System.out.println(response.body().asPrettyString());
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
         ProductResponse productResponse = response.body().as(ProductResponse.class);
-        assertThat(productResponse).isNotNull();
+        assertThat(productResponse.categories.get(0)).isEqualTo("beauty");
     }
 
     @Test
@@ -73,7 +73,7 @@ class End2EndTests {
         String sellerId = createSellerGetId();
         String productId = addProductToSellerGetId(sellerId);
 
-        ExtractableResponse<Response> response = getSellerById(sellerId);
+        Response response = getSellerById(sellerId);
         System.out.println(response.body().asPrettyString());
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
