@@ -14,65 +14,68 @@ import ulaval.glo2003.Seller.Domain.SellerRepository;
 
 @Path("/products")
 public class ProductResource {
-  private final SellerRepository sellerRepository;
-  private final ProductRepository productRepository;
-  private final ProductFactory productFactory;
-  private final ProductAssembler productAssembler;
+    private final SellerRepository sellerRepository;
+    private final ProductRepository productRepository;
+    private final ProductFactory productFactory;
+    private final ProductAssembler productAssembler;
 
-  public ProductResource(
-      SellerRepository sellerRepository,
-      ProductRepository productRepository,
-      ProductFactory productFactory,
-      ProductAssembler productAssembler) {
-    this.sellerRepository = sellerRepository;
-    this.productRepository = productRepository;
-    this.productFactory = productFactory;
-    this.productAssembler = productAssembler;
-  }
+    public ProductResource(
+            SellerRepository sellerRepository,
+            ProductRepository productRepository,
+            ProductFactory productFactory,
+            ProductAssembler productAssembler) {
+        this.sellerRepository = sellerRepository;
+        this.productRepository = productRepository;
+        this.productFactory = productFactory;
+        this.productAssembler = productAssembler;
+    }
 
-  @POST
-  public Response postProduct(
-      ProductRequest productRequest,
-      @HeaderParam("X-Seller-Id") String sellerId,
-      @Context UriInfo uri) {
+    @POST
+    public Response postProduct(
+            ProductRequest productRequest,
+            @HeaderParam("X-Seller-Id") String sellerId,
+            @Context UriInfo uri) {
 
-    Seller productSeller = sellerRepository.find(sellerId);
-    Product myProduct = productFactory.create(productSeller, productRequest);
-    productSeller.addProduct(myProduct);
-    productRepository.save(myProduct);
+        Seller productSeller = sellerRepository.find(sellerId);
+        Product myProduct = productFactory.create(productSeller, productRequest);
+        productSeller.addProduct(myProduct);
+        productRepository.save(myProduct);
 
-    return Response.status(201).header("Location", uri.getPath() + "/" + myProduct.getId()).build();
-  }
+        return Response.status(201)
+                .header("Location", uri.getPath() + "/" + myProduct.getId())
+                .build();
+    }
 
-  @GET
-  @Path("/{productId}")
-  public Response getProduct(@PathParam("productId") String productId) {
-    Product product = productRepository.find(productId);
+    @GET
+    @Path("/{productId}")
+    public Response getProduct(@PathParam("productId") String productId) {
+        Product product = productRepository.find(productId);
 
-    ProductResponse productResponse = productAssembler.createProductResponse(product);
+        ProductResponse productResponse = productAssembler.createProductResponse(product);
 
-    return Response.status(200).entity(productResponse).build();
-  }
+        return Response.status(200).entity(productResponse).build();
+    }
 
-  @GET
-  public Response getFilteredProducts(
-      @QueryParam("sellerId") String sellerId,
-      @QueryParam("title") String title,
-      @QueryParam("categories") List<String> categories,
-      @QueryParam("minPrice") Double minPrice,
-      @QueryParam("maxPrice") Double maxPrice) {
+    @GET
+    public Response getFilteredProducts(
+            @QueryParam("sellerId") String sellerId,
+            @QueryParam("title") String title,
+            @QueryParam("categories") List<String> categories,
+            @QueryParam("minPrice") Double minPrice,
+            @QueryParam("maxPrice") Double maxPrice) {
 
-    List<Product> filteredProducts =
-        productRepository.getFilteredProducts(sellerId, title, categories, minPrice, maxPrice);
+        List<Product> filteredProducts =
+                productRepository.getFilteredProducts(
+                        sellerId, title, categories, minPrice, maxPrice);
 
-    List<ProductResponse> filteredProductsResponseList =
-        filteredProducts.stream()
-            .map(productAssembler::createProductResponse)
-            .collect(Collectors.toList());
+        List<ProductResponse> filteredProductsResponseList =
+                filteredProducts.stream()
+                        .map(productAssembler::createProductResponse)
+                        .collect(Collectors.toList());
 
-    FilteredProductsResponse filteredProductsResponse =
-        new FilteredProductsResponse(filteredProductsResponseList);
+        FilteredProductsResponse filteredProductsResponse =
+                new FilteredProductsResponse(filteredProductsResponseList);
 
-    return Response.status(200).entity(filteredProductsResponse).build();
-  }
+        return Response.status(200).entity(filteredProductsResponse).build();
+    }
 }
