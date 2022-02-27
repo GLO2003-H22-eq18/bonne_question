@@ -1,19 +1,18 @@
 package ulaval.glo2003.unit;
 
+import static com.google.common.truth.Truth.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Product.Domain.Product;
 import ulaval.glo2003.Seller.Domain.Seller;
 import ulaval.glo2003.Seller.Domain.SellerRepository;
 import ulaval.glo2003.Seller.Exceptions.SellerNotFoundException;
-
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.truth.Truth.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SellerRepositoryTest {
 
