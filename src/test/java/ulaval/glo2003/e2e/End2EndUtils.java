@@ -1,9 +1,9 @@
 package ulaval.glo2003.e2e;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
+import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +16,10 @@ import static io.restassured.RestAssured.*;
 public class End2EndUtils {
 
     private static final String SELLER_HEADER_NAME = "X-Seller-Id";
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static int getHealth(){
-        return given().contentType(ContentType.JSON)
+        return given()
+                .log().all()
                 .when()
                 .get("/health")
                 .then()
@@ -58,17 +58,16 @@ public class End2EndUtils {
 
 
     public static String addProductToSellerGetId(String sellerId){
-       Response productAdded = createProductResource(createValidProduct(), sellerId);
-       return extractLocationId(productAdded);
+        Response response = createProductResource(createValidProduct(), sellerId);
+        return extractLocationId(response);
     }
 
     public static Response createSellerResource(SellerRequest sellerRequest){
         return createResource("/sellers", sellerRequest);
     }
 
-    public static Response getSellerById(String sellerId) throws JsonProcessingException {
-        Response sellerResponse = getResourceById("/sellers/{sellerId}", sellerId);
-        return sellerResponse;
+    public static ExtractableResponse<Response> getSellerById(String sellerId) {
+        return getResourceById("/sellers/{sellerId}", sellerId);
 }
 
     public static ProductRequest createValidProduct() {
@@ -91,27 +90,27 @@ public class End2EndUtils {
         return extractLocationId(response);
     }
 
-    public static Response getProductById(String productId) throws JsonProcessingException {
-        Response productResponse = getResourceById("/products/{productId}", productId);
-
-        return productResponse;
+    public static ExtractableResponse<Response> getProductById(String productId) {
+        return getResourceById("/products/{productId}", productId);
     }
 
-    public static Response createResource(String path, Object bodyPayload) {
+    public static Response createResource(String path, Object request) {
         return given()
                 .contentType(ContentType.JSON)
-                .body(bodyPayload)
+                .log().all()
+                .body(request)
                 .when()
                 .post(path)
                 .then()
                 .extract()
                 .response();
     }
-    private static Response createResource(String path, Header header, Object bodyPayload) {
+    private static Response createResource(String path, Header header, Object request) {
         return given()
                 .contentType(ContentType.JSON)
+                .log().all()
                 .header(header)
-                .body(bodyPayload)
+                .body(request)
                 .when()
                 .post(path)
                 .then()
@@ -119,18 +118,17 @@ public class End2EndUtils {
                 .response();
     }
 
-    private static Response getResourceById(String pathParam, String resourceId) {
+    private static ExtractableResponse<Response> getResourceById(String pathParam, String resourceId) {
         return given()
                 .contentType(ContentType.JSON)
                 .when()
                 .get(pathParam, resourceId)
                 .then()
-                .extract()
-                .response();
+                .extract();
     }
 
     public static String extractLocationId(Response response){
-        String location = response.path("id");
+        String location = response.header("Location");
         return location.substring(location.lastIndexOf("/") + 1);
     }
 

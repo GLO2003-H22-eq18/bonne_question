@@ -14,7 +14,7 @@ public class ProductRepository {
         products = new HashMap<>();
     }
 
-    public Product find(String productId) {
+    public Product findById(String productId) {
         Product product = products.get(productId);
         if (product != null){
             return product;

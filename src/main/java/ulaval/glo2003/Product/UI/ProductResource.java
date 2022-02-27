@@ -36,7 +36,7 @@ public class ProductResource {
     @GET
     @Path("/{productId}")
     public Response getProduct(@PathParam("productId") String productId) {
-        Product product = productRepository.find(productId);
+        Product product = productRepository.findById(productId);
 
         ProductResponse productResponse = ProductAssembler.createProductResponse(product);
 

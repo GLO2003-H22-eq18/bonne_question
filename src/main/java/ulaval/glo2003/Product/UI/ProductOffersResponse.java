@@ -1,11 +1,11 @@
 package ulaval.glo2003.Product.UI;
 
 public class ProductOffersResponse {
-    public Integer count;
-    public Double mean;
+    public final Integer count;
+    //public final Double mean; pour TP3
 
-    public ProductOffersResponse(Integer count, Double mean) {
+    public ProductOffersResponse(Integer count) {
         this.count = count;
-        this.mean = mean;
+        //this.mean = mean; pour TP3
     }
 }

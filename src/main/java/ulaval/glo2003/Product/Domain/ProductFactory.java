@@ -22,7 +22,7 @@ public class ProductFactory {
         checkMissingParam(productRequest);
         checkInvalidParam(productRequest);
 
-        Seller productSeller = sellerRepository.find(sellerId);
+        Seller productSeller = sellerRepository.findById(sellerId);
         List<ProductCategory> categories = createProductCategoryList(productRequest.categories);
 
         Product product = new Product(

@@ -12,7 +12,7 @@ public class SellerRepository {
         sellers = new HashMap<>();
     }
 
-    public Seller find(String sellerId) {
+    public Seller findById(String sellerId) {
         Seller seller = sellers.get(sellerId);
         if (seller != null){
             return seller;
