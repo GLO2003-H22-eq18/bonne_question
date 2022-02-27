@@ -1,9 +1,8 @@
 package ulaval.glo2003.Product.Domain;
 
-import ulaval.glo2003.Product.Exceptions.ProductNotFoundException;
-
 import java.util.*;
 import java.util.stream.Collectors;
+import ulaval.glo2003.Product.Exceptions.ProductNotFoundException;
 
 public class ProductRepository {
     private final Map<String, Product> products;
@@ -65,8 +64,8 @@ public class ProductRepository {
                 .collect(Collectors.toList());
     }
 
-
-    private List<Product> getTitleFilteredProducts (List<Product> filteredProductsList, String title) {
+    private List<Product> getTitleFilteredProducts(
+            List<Product> filteredProductsList, String title) {
         final String lowerCaseTitle = title.toLowerCase(Locale.ROOT);
         return filteredProductsList.stream()
                 .filter(product -> product.getTitle().contains(lowerCaseTitle))
