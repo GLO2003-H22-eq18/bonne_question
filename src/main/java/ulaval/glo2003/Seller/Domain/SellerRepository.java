@@ -1,9 +1,8 @@
 package ulaval.glo2003.Seller.Domain;
 
-import ulaval.glo2003.Seller.Exceptions.SellerNotFoundException;
-
 import java.util.HashMap;
 import java.util.Map;
+import ulaval.glo2003.Seller.Exceptions.SellerNotFoundException;
 
 public class SellerRepository {
     private final Map<String, Seller> sellers;
@@ -14,10 +13,9 @@ public class SellerRepository {
 
     public Seller find(String sellerId) {
         Seller seller = sellers.get(sellerId);
-        if (seller != null){
+        if (seller != null) {
             return seller;
-        }
-        else {
+        } else {
             throw new SellerNotFoundException();
         }
     }
@@ -31,4 +29,3 @@ public class SellerRepository {
         return sellers;
     }
 }
-

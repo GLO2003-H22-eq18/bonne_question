@@ -18,9 +18,13 @@ public class Product {
 
     private static int currentId = 0;
 
-
-    public Product(String title, String description, Double suggestedPrice,
-                   List<ProductCategory> categories, String sellerId, String sellerName) {
+    public Product(
+            String title,
+            String description,
+            Double suggestedPrice,
+            List<ProductCategory> categories,
+            String sellerId,
+            String sellerName) {
         this.id = String.valueOf(currentId++);
         this.title = title;
         this.description = description;
@@ -50,10 +54,12 @@ public class Product {
     }
 
     public Double getSuggestedPrice() {
-        return suggestedPrice; 
+        return suggestedPrice;
     }
 
-    public List<ProductCategory> getCategories(){ return categories; }
+    public List<ProductCategory> getCategories() {
+        return categories;
+    }
 
     public String getSellerId() {
         return sellerId;
@@ -65,11 +71,11 @@ public class Product {
 
     public Double getMean() {
         return null;
-//        TODO: livrable3
-//        return mean;
+        //        TODO: livrable3
+        //        return mean;
     }
 
-    public Integer getCount(){ 
-        return count; 
+    public Integer getCount() {
+        return count;
     }
 }

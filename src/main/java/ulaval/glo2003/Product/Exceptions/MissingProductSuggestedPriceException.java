@@ -7,4 +7,3 @@ public class MissingProductSuggestedPriceException extends MissingArgumentExcept
         super("Product suggested price is missing");
     }
 }
-

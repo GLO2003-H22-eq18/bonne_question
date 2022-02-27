@@ -7,4 +7,3 @@ public class MissingProductDescriptionException extends MissingArgumentException
         super("Product description is missing");
     }
 }
-

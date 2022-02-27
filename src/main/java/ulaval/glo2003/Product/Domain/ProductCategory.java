@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum ProductCategory {
-    SPORTS ("sports"),
-    ELECTRONICS ("electronics"),
-    APPAREL ("apparel"),
-    BEAUTY ("beauty"),
-    HOUSING ("housing"),
-    OTHER ("other");
+    SPORTS("sports"),
+    ELECTRONICS("electronics"),
+    APPAREL("apparel"),
+    BEAUTY("beauty"),
+    HOUSING("housing"),
+    OTHER("other");
 
     private final String name;
 
@@ -44,13 +44,13 @@ public enum ProductCategory {
         return null;
     }
 
-    public static List<ProductCategory> toCategoriesList(List<String> names){
+    public static List<ProductCategory> toCategoriesList(List<String> names) {
         List<ProductCategory> categories = new ArrayList<>();
         names.forEach((name) -> categories.add(findByName(name)));
         return categories;
     }
 
-    public static List<String> toStringList(List<ProductCategory> categories){
+    public static List<String> toStringList(List<ProductCategory> categories) {
         List<String> names = new ArrayList<>();
         categories.forEach((category) -> names.add(category.toString()));
         return names;

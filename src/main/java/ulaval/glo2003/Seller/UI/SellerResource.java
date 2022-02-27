@@ -12,14 +12,16 @@ import ulaval.glo2003.Seller.Domain.SellerFactory;
 import ulaval.glo2003.Seller.Domain.SellerRepository;
 import ulaval.glo2003.Seller.Exceptions.SellerNotFoundException;
 
-
 @Path("/sellers")
 public class SellerResource {
     private final SellerRepository sellerRepository;
     private final SellerFactory sellerFactory;
     private final SellerAssembler sellerAssembler;
 
-    public SellerResource(SellerRepository sellerRepository, SellerFactory sellerFactory, SellerAssembler sellerAssembler) {
+    public SellerResource(
+            SellerRepository sellerRepository,
+            SellerFactory sellerFactory,
+            SellerAssembler sellerAssembler) {
         this.sellerRepository = sellerRepository;
         this.sellerFactory = sellerFactory;
         this.sellerAssembler = sellerAssembler;
@@ -28,12 +30,12 @@ public class SellerResource {
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        Seller seller = sellerRepository.getSellers().entrySet()
-                .stream()
-                .filter(map -> map.getKey().equals(sellerId))
-                .findAny()
-                .orElseThrow(SellerNotFoundException::new)
-                .getValue();
+        Seller seller =
+                sellerRepository.getSellers().entrySet().stream()
+                        .filter(map -> map.getKey().equals(sellerId))
+                        .findAny()
+                        .orElseThrow(SellerNotFoundException::new)
+                        .getValue();
 
         SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 
@@ -41,11 +43,12 @@ public class SellerResource {
     }
 
     @POST
-    public Response postSeller(SellerRequest sellerRequest,
-                               @Context UriInfo uri) {
+    public Response postSeller(SellerRequest sellerRequest, @Context UriInfo uri) {
         Seller mySeller = sellerFactory.create(sellerRequest);
         sellerRepository.save(mySeller);
 
-        return Response.status(201).header("Location", uri.getPath() + "/" + mySeller.getId()).build();
+        return Response.status(201)
+                .header("Location", uri.getPath() + "/" + mySeller.getId())
+                .build();
     }
 }

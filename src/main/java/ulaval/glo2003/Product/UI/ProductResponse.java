@@ -13,8 +13,17 @@ public class ProductResponse {
     public ProductSellerResponse seller;
     public ProductOffersResponse offers;
 
-    public ProductResponse(String id, OffsetDateTime createdAt, String title, String description, Double suggestedPrice,
-                           List<String> categories, String sellerId, String sellerName, Double mean, Integer count) {
+    public ProductResponse(
+            String id,
+            OffsetDateTime createdAt,
+            String title,
+            String description,
+            Double suggestedPrice,
+            List<String> categories,
+            String sellerId,
+            String sellerName,
+            Double mean,
+            Integer count) {
         this.id = id;
         this.createdAt = createdAt;
         this.title = title;
