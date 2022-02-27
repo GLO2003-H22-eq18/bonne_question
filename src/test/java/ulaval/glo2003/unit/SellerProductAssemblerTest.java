@@ -1,16 +1,15 @@
 package ulaval.glo2003.unit;
 
+import static com.google.common.truth.Truth.assertThat;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Product.Domain.Product;
 import ulaval.glo2003.Product.Domain.ProductCategory;
 import ulaval.glo2003.Seller.UI.SellerProductAssembler;
 import ulaval.glo2003.Seller.UI.SellerProductResponse;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
 
 public class SellerProductAssemblerTest {
 
@@ -36,7 +35,8 @@ public class SellerProductAssemblerTest {
     void givenSeller_whenCreateSellerResponse_thenCorrectSellerResponse() {
         Product product = getProduct();
 
-        SellerProductResponse sellerProductResponse = sellerProductAssembler.createSellerProductResponse(product);
+        SellerProductResponse sellerProductResponse =
+                sellerProductAssembler.createSellerProductResponse(product);
 
         assertThat(sellerProductResponse.id).isEqualTo(product.getId());
         assertThat(sellerProductResponse.createdAt).isEqualTo(product.getCreatedAt());

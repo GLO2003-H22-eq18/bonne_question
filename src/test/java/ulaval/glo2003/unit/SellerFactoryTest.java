@@ -1,16 +1,15 @@
 package ulaval.glo2003.unit;
 
+import static com.google.common.truth.Truth.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Seller.Domain.Seller;
 import ulaval.glo2003.Seller.Domain.SellerFactory;
-import ulaval.glo2003.Seller.UI.SellerRequest;
 import ulaval.glo2003.Seller.Exceptions.*;
-
-import java.time.LocalDate;
-
-import static com.google.common.truth.Truth.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import ulaval.glo2003.Seller.UI.SellerRequest;
 
 public class SellerFactoryTest {
 
@@ -29,7 +28,7 @@ public class SellerFactoryTest {
         sellerFactory = new SellerFactory();
     }
 
-    public SellerRequest createSellerRequest(String name, String bio, String birthdate){
+    public SellerRequest createSellerRequest(String name, String bio, String birthdate) {
         SellerRequest sellerRequest = new SellerRequest();
         sellerRequest.name = name;
         sellerRequest.bio = bio;
@@ -39,7 +38,7 @@ public class SellerFactoryTest {
     }
 
     @Test
-    public void givenSeller_whenCreatingSeller_thenCorrectSeller(){
+    public void givenSeller_whenCreatingSeller_thenCorrectSeller() {
         SellerRequest sellerRequest = createSellerRequest(NAME, BIO, BIRTHDATE);
 
         Seller seller = sellerFactory.create(sellerRequest);
@@ -50,55 +49,57 @@ public class SellerFactoryTest {
     }
 
     @Test
-    public void givenSellerRequestWithMissingName_whenCreatingSeller_thenMissingSellerNameException(){
+    public void
+            givenSellerRequestWithMissingName_whenCreatingSeller_thenMissingSellerNameException() {
         SellerRequest sellerRequest = createSellerRequest(null, BIO, BIRTHDATE);
 
-        assertThrows(MissingSellerNameException.class,
-                () -> sellerFactory.create(sellerRequest));
+        assertThrows(MissingSellerNameException.class, () -> sellerFactory.create(sellerRequest));
     }
 
     @Test
-    public void givenSellerRequestWithMissingBio_whenCreatingSeller_thenMissingSellerBioException(){
+    public void
+            givenSellerRequestWithMissingBio_whenCreatingSeller_thenMissingSellerBioException() {
         SellerRequest sellerRequest = createSellerRequest(NAME, null, BIRTHDATE);
 
-        assertThrows(MissingSellerBioException.class,
-                () -> sellerFactory.create(sellerRequest));
+        assertThrows(MissingSellerBioException.class, () -> sellerFactory.create(sellerRequest));
     }
 
     @Test
-    public void givenSellerRequestWithMissingBirthdate_whenCreatingSeller_thenMissingSellerBirthdateException(){
+    public void
+            givenSellerRequestWithMissingBirthdate_whenCreatingSeller_thenMissingSellerBirthdateException() {
         SellerRequest sellerRequest = createSellerRequest(NAME, BIO, null);
 
-        assertThrows(MissingSellerBirthdateException.class,
-                () -> sellerFactory.create(sellerRequest));
+        assertThrows(
+                MissingSellerBirthdateException.class, () -> sellerFactory.create(sellerRequest));
     }
 
     @Test
-    public void givenSellerRequestWithMissingName_whenCreatingSeller_thenInvalidSellerNameException(){
+    public void
+            givenSellerRequestWithMissingName_whenCreatingSeller_thenInvalidSellerNameException() {
         SellerRequest sellerRequest = createSellerRequest(INVALID_NAME, BIO, BIRTHDATE);
 
-        assertThrows(InvalidSellerNameException.class,
-                () -> sellerFactory.create(sellerRequest));
+        assertThrows(InvalidSellerNameException.class, () -> sellerFactory.create(sellerRequest));
     }
 
     @Test
-    public void givenSellerRequestWithMissingBio_whenCreatingSeller_thenInvalidSellerBioException(){
+    public void
+            givenSellerRequestWithMissingBio_whenCreatingSeller_thenInvalidSellerBioException() {
         SellerRequest sellerRequest = createSellerRequest(NAME, INVALID_BIO, BIRTHDATE);
 
-        assertThrows(InvalidSellerBioException.class,
-                () -> sellerFactory.create(sellerRequest));
+        assertThrows(InvalidSellerBioException.class, () -> sellerFactory.create(sellerRequest));
     }
 
     @Test
-    public void givenSellerRequestWithMissingBirthdate_whenCreatingSeller_thenInvalidSellerBirthdateException(){
+    public void
+            givenSellerRequestWithMissingBirthdate_whenCreatingSeller_thenInvalidSellerBirthdateException() {
         SellerRequest sellerRequest = createSellerRequest(NAME, BIO, INVALID_BIRTHDATE);
 
-        assertThrows(InvalidSellerBirthdateException.class,
-                () -> sellerFactory.create(sellerRequest));
+        assertThrows(
+                InvalidSellerBirthdateException.class, () -> sellerFactory.create(sellerRequest));
     }
 
     @Test
-    public void givenTwoSellerRequest_whenCreatingSellers_thenCorrectSellerWithDifferentId(){
+    public void givenTwoSellerRequest_whenCreatingSellers_thenCorrectSellerWithDifferentId() {
         SellerRequest sellerRequest1 = createSellerRequest(NAME, BIO, BIRTHDATE);
         SellerRequest sellerRequest2 = createSellerRequest(NAME, BIO, BIRTHDATE);
 
