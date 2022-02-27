@@ -1,6 +1,6 @@
 package ulaval.glo2003.unit;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Product.Domain.Product;
 import ulaval.glo2003.Seller.Domain.Seller;
@@ -17,10 +17,10 @@ import static com.google.common.truth.Truth.*;
 
 class SellerAssemblerTest {
 
-    private SellerAssembler sellerAssembler;
+    private static SellerAssembler sellerAssembler;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    public static void setUp() {
         SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
         sellerAssembler = new SellerAssembler(sellerProductAssembler);
     }
