@@ -12,7 +12,7 @@ public class ProductCategoryTest {
     private static final List<ProductCategory> CATEGORIES_LIST =
             List.of(ProductCategory.SPORTS, ProductCategory.BEAUTY, ProductCategory.OTHER);
     private static final String VALID_STRING_CATEGORY = "sports";
-    private static final String INVALID_STRING_CATEGORY = "not a category";
+    private static final String INVALID_STRING_CATEGORY = "not a valid category";
 
     @Test
     void givenProductCategory_whenChangeToString_thenReturnCorrectString() {
