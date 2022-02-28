@@ -29,10 +29,13 @@ public class ProductFactory {
     }
 
     private void checkMissingParam(ProductRequest productRequest) {
-        if (productRequest.title == null) throw new MissingProductTitleException();
-        else if (productRequest.description == null) throw new MissingProductDescriptionException();
-        else if (productRequest.suggestedPrice == null)
+        if (productRequest.title == null) {
+            throw new MissingProductTitleException();
+        } else if (productRequest.description == null) {
+            throw new MissingProductDescriptionException();
+        } else if (productRequest.suggestedPrice == null) {
             throw new MissingProductSuggestedPriceException();
+        }
     }
 
     private void checkInvalidParam(ProductRequest productRequest) {
