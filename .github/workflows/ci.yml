@@ -35,8 +35,3 @@ jobs:
 
       - name: Integration tests
         run: mvn --batch-mode --update-snapshots verify
-        
-      - name: Formatting auto-commit
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Automatic formatting
