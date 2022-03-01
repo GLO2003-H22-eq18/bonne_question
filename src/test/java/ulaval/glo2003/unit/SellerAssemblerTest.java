@@ -26,7 +26,7 @@ class SellerAssemblerTest {
 
         SellerResponse sellerResponse = SellerAssembler.createSellerResponse(seller);
         String responseId = sellerResponse.id;
-        OffsetDateTime responseCreatedAt = sellerResponse.createdAt;
+        String responseCreatedAt = sellerResponse.createdAt;
         String responseName = sellerResponse.name;
         String responseBio = sellerResponse.bio;
         List<SellerProductResponse> responseProducts = sellerResponse.products;

@@ -1,11 +1,12 @@
 package ulaval.glo2003.Seller.UI;
 
-import java.time.OffsetDateTime;
+import io.restassured.response.Response;
+
 import java.util.List;
 
 public class SellerResponse {
     public String id;
-    public OffsetDateTime createdAt;
+    public String createdAt;
     public String name;
     public String bio;
     public List<SellerProductResponse> products;
@@ -14,7 +15,7 @@ public class SellerResponse {
         super();
     }
 
-    public SellerResponse(String id, OffsetDateTime createdAt, String name, String bio, List<SellerProductResponse> products) {
+    public SellerResponse(String id, String createdAt, String name, String bio, List<SellerProductResponse> products) {
         this.id = id;
         this.createdAt = createdAt;
         this.name = name;

@@ -1,27 +1,18 @@
 package ulaval.glo2003.e2e;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
 import ulaval.glo2003.Product.Domain.Product;
 import ulaval.glo2003.Product.UI.ProductRequest;
 import ulaval.glo2003.Seller.Domain.Seller;
-import ulaval.glo2003.Seller.Domain.SellerFactory;
-import ulaval.glo2003.Seller.Domain.SellerRepository;
 import ulaval.glo2003.Seller.UI.SellerRequest;
-import ulaval.glo2003.Seller.UI.SellerResource;
 
 import java.io.IOException;
-import java.time.Clock;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;

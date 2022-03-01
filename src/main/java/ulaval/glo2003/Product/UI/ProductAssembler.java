@@ -2,7 +2,6 @@ package ulaval.glo2003.Product.UI;
 
 import ulaval.glo2003.Product.Domain.Product;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 import static ulaval.glo2003.Product.Domain.ProductCategory.toStringList;
@@ -13,7 +12,7 @@ public class ProductAssembler {
 
     public static ProductResponse createProductResponse(Product product) {
         String id = product.getId();
-        OffsetDateTime createdAt = product.getCreatedAt();
+        String createdAt = product.getCreatedAt().toString();
         String title = product.getTitle();
         String description = product.getDescription();
         Double suggestedPrice = product.getSuggestedPrice();

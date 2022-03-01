@@ -44,7 +44,8 @@ public class ProductResource {
     }
 
     @GET
-    public Response getFilteredProducts(@QueryParam("sellerId") String sellerId,
+    public Response getFilteredProducts(
+            @QueryParam("sellerId") String sellerId,
             @QueryParam("title") String title,
             @QueryParam("categories") List<String> categories,
             @QueryParam("minPrice") Double minPrice,

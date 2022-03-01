@@ -15,12 +15,9 @@ import ulaval.glo2003.Seller.UI.SellerResource;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
 
-    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     public static final String BASE_URI = "http://localhost:8080/";
 
     public static HttpServer startServer() {
@@ -41,8 +38,6 @@ public class Main {
                 .register(new ItemNotFoundExceptionMapper())
                 .packages("ulaval.glo2003");
 
-        LOGGER.info("Starting Server........");
-
         final HttpServer httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), resourceConfig);
 
         return httpServer;
@@ -52,7 +47,5 @@ public class Main {
             final HttpServer server = startServer();
 
             server.start();
-
-            LOGGER.info("[HttpServer] Running @ " + BASE_URI);
     }
 }
