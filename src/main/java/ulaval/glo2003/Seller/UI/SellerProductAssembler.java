@@ -16,7 +16,6 @@ public class SellerProductAssembler {
         List<String> categories = toStringList(product.getCategories());
         Integer count = product.getCount();
 
-        return new SellerProductResponse(
-                id, createdAt, title, description, suggestedPrice, categories, count);
+        return new SellerProductResponse(id, createdAt, title, description, suggestedPrice, categories, count);
     }
 }

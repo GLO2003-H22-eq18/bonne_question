@@ -16,8 +16,13 @@ public class SellerProductResponse {
         super();
     }
 
-    public SellerProductResponse(String id, String createdAt, String title, String description,
-                                 Double suggestedPrice, List<String> categories, Integer count) {
+    public SellerProductResponse(String id,
+                                 String createdAt,
+                                 String title,
+                                 String description,
+                                 Double suggestedPrice,
+                                 List<String> categories,
+                                 Integer count) {
         this.id = id;
         this.createdAt = createdAt;
         this.title = title;

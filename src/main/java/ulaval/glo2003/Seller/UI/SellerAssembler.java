@@ -20,10 +20,9 @@ public class SellerAssembler {
         String bio = seller.getBio();
         List<Product> products = seller.getProducts();
 
-        List<SellerProductResponse> productsResponse =
-                products.stream()
-                        .map(sellerProductAssembler::createSellerProductResponse)
-                        .collect(Collectors.toList());
+        List<SellerProductResponse> productsResponse = products.stream()
+                .map(sellerProductAssembler::createSellerProductResponse)
+                .collect(Collectors.toList());
 
         return new SellerResponse(id, createdAt, name, bio, productsResponse);
     }

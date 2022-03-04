@@ -28,15 +28,13 @@ public class Main {
         SellerFactory sellerFactory = new SellerFactory();
         SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
         SellerAssembler sellerAssembler = new SellerAssembler(sellerProductAssembler);
-        SellerResource sellerResource =
-                new SellerResource(sellerRepository, sellerFactory, sellerAssembler);
+        SellerResource sellerResource = new SellerResource(sellerRepository, sellerFactory, sellerAssembler);
 
         ProductRepository productRepository = new ProductRepository();
         ProductFactory productFactory = new ProductFactory();
         ProductAssembler productAssembler = new ProductAssembler();
-        ProductResource productResource =
-                new ProductResource(
-                        sellerRepository, productRepository, productFactory, productAssembler);
+        ProductResource productResource = new ProductResource(
+                sellerRepository, productRepository, productFactory, productAssembler);
 
         final ResourceConfig resourceConfig = new ResourceConfig()
                 .register(sellerResource)
@@ -46,10 +44,7 @@ public class Main {
                 .register(new ItemNotFoundExceptionMapper())
                 .packages("ulaval.glo2003");
 
-        final HttpServer httpServer =
-                GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), resourceConfig);
-
-        return httpServer;
+        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), resourceConfig);
     }
 
     public static void main(String[] args) throws IOException {

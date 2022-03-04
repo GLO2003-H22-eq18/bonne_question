@@ -16,11 +16,9 @@ public class ProductAssembler {
         String description = product.getDescription();
         Double suggestedPrice = product.getSuggestedPrice();
         List<String> categories = toStringList(product.getCategories());
-        ProductSellerResponse seller =
-                createProductSellerResponse(product.getSellerId(), product.getSellerName());
+        ProductSellerResponse seller = createProductSellerResponse(product.getSellerId(), product.getSellerName());
         ProductOffersResponse offers = createProductOffersResponse(product.getCount());
 
-        return new ProductResponse(id, createdAt, title, description, suggestedPrice,
-                categories, seller, offers);
+        return new ProductResponse(id, createdAt, title, description, suggestedPrice, categories, seller, offers);
     }
 }

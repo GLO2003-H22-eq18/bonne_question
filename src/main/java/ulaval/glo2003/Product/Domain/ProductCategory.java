@@ -47,12 +47,14 @@ public enum ProductCategory {
     public static List<ProductCategory> toCategoriesList(List<String> names) {
         List<ProductCategory> categories = new ArrayList<>();
         names.forEach((name) -> categories.add(findByName(name)));
+
         return categories;
     }
 
     public static List<String> toStringList(List<ProductCategory> categories) {
         List<String> names = new ArrayList<>();
         categories.forEach((category) -> names.add(category.toString()));
+
         return names;
     }
 }

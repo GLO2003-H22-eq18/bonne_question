@@ -8,8 +8,8 @@ public class InvalidArgumentExceptionMapper implements ExceptionMapper<InvalidAr
     @Override
     public Response toResponse(InvalidArgumentException e) {
         String errorDescription = e.getMessage();
-        ErrorResponse errorResponse =
-                new ErrorResponse(ErrorCode.INVALID_PARAMETER, errorDescription);
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.INVALID_PARAMETER, errorDescription);
+
         return Response.status(400).entity(errorResponse).build();
     }
 }
