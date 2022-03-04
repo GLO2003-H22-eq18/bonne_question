@@ -2,10 +2,15 @@
 
 ### Métriques mesurées
 **1.** Depuis sa création ou en terme d'heures travaillées dessus? En moyenne, l'équipe prenait ...
+
 **2.** En moyenne, l'équipe prenait 30 minutes pour intégrer une pull-request, pour un maximum d'une heure et un minimum de 15 minutes.
+
 **3.** En moyenne, deux personnes travaillaient sur chaque issue, pour un minimum d'une personne et un maximum de quatre personnes.
+
 **4.** En moyenne, deux personnes _reviewaient_ chaque pull request, pour un minimum  d'une personne et un maximum de trois.
+
 **5.** En moyenne, trois issues étaient en cours d'implémentation en même temps, pour un minimum de deux et un maximum de cinq.
+
 **6.** En moyenne, une seule pull-request était en cours de _review_ à tout moment, pour un minimum de zéro et un maximum de deux.
 
 ### Rétrospective sur le processus
