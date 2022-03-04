@@ -72,7 +72,7 @@ public class ProductFactoryTest {
 
     @Test
     void
-            givenProductRequestWithMissingTitle_whenCreatingProduct_thenMissingProductTitleException() {
+    givenProductRequestWithMissingTitle_whenCreatingProduct_thenMissingProductTitleException() {
         ProductRequest productRequest =
                 createProductRequest(null, DESCRIPTION, SUGGESTED_PRICE, CATEGORIES);
 
@@ -83,7 +83,7 @@ public class ProductFactoryTest {
 
     @Test
     void
-            givenProductRequestWithMissingDescription_whenCreatingProduct_thenMissingProductDescriptionException() {
+    givenProductRequestWithMissingDescription_whenCreatingProduct_thenMissingProductDescriptionException() {
         ProductRequest productRequest =
                 createProductRequest(TITLE, null, SUGGESTED_PRICE, CATEGORIES);
 
@@ -94,7 +94,7 @@ public class ProductFactoryTest {
 
     @Test
     void
-            givenProductRequestWithMissingSuggestedPrice_whenCreatingProduct_thenMissingProductSuggestedPriceException() {
+    givenProductRequestWithMissingSuggestedPrice_whenCreatingProduct_thenMissingProductSuggestedPriceException() {
         ProductRequest productRequest = createProductRequest(TITLE, DESCRIPTION, null, CATEGORIES);
 
         assertThrows(
@@ -104,7 +104,7 @@ public class ProductFactoryTest {
 
     @Test
     void
-            givenProductRequestWithInvalidTitle_whenCreatingProduct_thenInvalidProductTitleException() {
+    givenProductRequestWithInvalidTitle_whenCreatingProduct_thenInvalidProductTitleException() {
         ProductRequest productRequest =
                 createProductRequest(INVALID_TITLE, DESCRIPTION, SUGGESTED_PRICE, CATEGORIES);
 
@@ -115,7 +115,7 @@ public class ProductFactoryTest {
 
     @Test
     void
-            givenProductRequestWithInvalidDescription_whenCreatingProduct_thenInvalidProductDescriptionException() {
+    givenProductRequestWithInvalidDescription_whenCreatingProduct_thenInvalidProductDescriptionException() {
         ProductRequest productRequest =
                 createProductRequest(TITLE, INVALID_DESCRIPTION, SUGGESTED_PRICE, CATEGORIES);
 
@@ -126,7 +126,7 @@ public class ProductFactoryTest {
 
     @Test
     void
-            givenProductRequestWithInvalidSuggestedPrice_whenCreatingProduct_thenInvalidProductSuggestedPriceException() {
+    givenProductRequestWithInvalidSuggestedPrice_whenCreatingProduct_thenInvalidProductSuggestedPriceException() {
         ProductRequest productRequest =
                 createProductRequest(TITLE, DESCRIPTION, INVALID_SUGGESTED_PRICE, CATEGORIES);
 
@@ -137,7 +137,7 @@ public class ProductFactoryTest {
 
     @Test
     void
-            givenProductRequestWithInvalidCategories_whenCreatingProduct_thenInvalidProductCategoriesException() {
+    givenProductRequestWithInvalidCategories_whenCreatingProduct_thenInvalidProductCategoriesException() {
         ProductRequest productRequest =
                 createProductRequest(TITLE, DESCRIPTION, SUGGESTED_PRICE, INVALID_CATEGORIES);
 
