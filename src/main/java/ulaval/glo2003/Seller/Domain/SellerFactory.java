@@ -24,9 +24,13 @@ public class SellerFactory {
     }
 
     private void checkMissingParam(SellerRequest sellerRequest) {
-        if (sellerRequest.bio == null) throw new MissingSellerBioException();
-        else if (sellerRequest.birthDate == null) throw new MissingSellerBirthdateException();
-        else if (sellerRequest.name == null) throw new MissingSellerNameException();
+        if (sellerRequest.bio == null) {
+            throw new MissingSellerBioException();
+        } else if (sellerRequest.birthDate == null) {
+            throw new MissingSellerBirthdateException();
+        } else if (sellerRequest.name == null) {
+            throw new MissingSellerNameException();
+        }
     }
 
     private void checkInvalidParam(SellerRequest sellerRequest) {
@@ -36,11 +40,15 @@ public class SellerFactory {
     }
 
     private void validateName(String name) {
-        if (StringUtil.removeEmptyChar(name).isEmpty()) throw new InvalidSellerNameException();
+        if (StringUtil.removeEmptyChar(name).isEmpty()) {
+            throw new InvalidSellerNameException();
+        }
     }
 
     private void validateBio(String bio) {
-        if (StringUtil.removeEmptyChar(bio).isEmpty()) throw new InvalidSellerBioException();
+        if (StringUtil.removeEmptyChar(bio).isEmpty()) {
+            throw new InvalidSellerBioException();
+        }
     }
 
     private void validateBirthdate(String date) {
@@ -51,6 +59,8 @@ public class SellerFactory {
             throw new InvalidSellerBirthdateException();
         }
         Period period = Period.between(birthDate, LocalDate.now());
-        if (period.getYears() < 18) throw new InvalidSellerBirthdateException();
+        if (period.getYears() < 18) {
+            throw new InvalidSellerBirthdateException();
+        }
     }
 }
