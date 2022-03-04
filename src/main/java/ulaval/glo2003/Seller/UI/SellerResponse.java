@@ -13,7 +13,10 @@ public class SellerResponse {
         super();
     }
 
-    public SellerResponse(String id, String createdAt, String name, String bio,
+    public SellerResponse(String id,
+                          String createdAt,
+                          String name,
+                          String bio,
                           List<SellerProductResponse> products) {
         this.id = id;
         this.createdAt = createdAt;

@@ -16,16 +16,13 @@ public class ProductFactory {
 
         List<ProductCategory> categories = createProductCategoryList(productRequest.categories);
 
-        Product product =
-                new Product(
-                        productRequest.title,
-                        productRequest.description,
-                        productRequest.suggestedPrice,
-                        categories,
-                        productSeller.getId(),
-                        productSeller.getName());
-
-        return product;
+        return new Product(
+                productRequest.title,
+                productRequest.description,
+                productRequest.suggestedPrice,
+                categories,
+                productSeller.getId(),
+                productSeller.getName());
     }
 
     private void checkMissingParam(ProductRequest productRequest) {

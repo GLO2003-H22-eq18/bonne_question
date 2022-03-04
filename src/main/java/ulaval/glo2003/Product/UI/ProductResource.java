@@ -69,14 +69,13 @@ public class ProductResource {
             @QueryParam("minPrice") Double minPrice,
             @QueryParam("maxPrice") Double maxPrice) {
 
-        List<Product> filteredProducts =
-                productRepository.getFilteredProducts(
-                        sellerId, title, categories, minPrice, maxPrice);
+        List<Product> filteredProducts = productRepository
+                .getFilteredProducts(sellerId, title, categories, minPrice, maxPrice);
 
-        List<ProductResponse> filteredProductsResponseList =
-                filteredProducts.stream()
-                        .map(productAssembler::createProductResponse)
-                        .collect(Collectors.toList());
+        List<ProductResponse> filteredProductsResponseList = filteredProducts
+                .stream()
+                .map(productAssembler::createProductResponse)
+                .collect(Collectors.toList());
 
         FilteredProductsResponse filteredProductsResponse =
                 new FilteredProductsResponse(filteredProductsResponseList);

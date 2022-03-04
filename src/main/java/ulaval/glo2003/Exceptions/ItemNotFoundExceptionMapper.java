@@ -9,6 +9,7 @@ public class ItemNotFoundExceptionMapper implements ExceptionMapper<ItemNotFound
     public Response toResponse(ItemNotFoundException e) {
         String errorDescription = e.getMessage();
         ErrorResponse errorResponse = new ErrorResponse(ErrorCode.ITEM_NOT_FOUND, errorDescription);
+
         return Response.status(404).entity(errorResponse).build();
     }
 }
