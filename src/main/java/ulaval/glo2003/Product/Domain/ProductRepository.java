@@ -1,6 +1,11 @@
 package ulaval.glo2003.Product.Domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 import ulaval.glo2003.Product.Exceptions.ProductNotFoundException;
 
@@ -16,7 +21,7 @@ public class ProductRepository {
         products.put(productId, product);
     }
 
-    public Product find(String productId) {
+    public Product findById(String productId) {
         Product product = products.get(productId);
         if (product != null) {
             return product;

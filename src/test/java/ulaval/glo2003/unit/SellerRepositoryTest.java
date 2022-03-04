@@ -37,7 +37,7 @@ public class SellerRepositoryTest {
     void whenSearchingNullSellerInRepository_thenSellerNotFoundException() {
         Seller seller = getSeller();
 
-        assertThrows(SellerNotFoundException.class, () -> sellerRepository.find(seller.getId()));
+        assertThrows(SellerNotFoundException.class, () -> sellerRepository.findById(seller.getId()));
     }
 
     @Test
@@ -45,6 +45,6 @@ public class SellerRepositoryTest {
         Seller seller = getSeller();
         sellerRepository.save(seller);
 
-        assertThat(sellerRepository.find(seller.getId())).isEqualTo(seller);
+        assertThat(sellerRepository.findById(seller.getId())).isEqualTo(seller);
     }
 }

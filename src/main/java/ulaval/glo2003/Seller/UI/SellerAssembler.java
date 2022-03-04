@@ -1,6 +1,5 @@
 package ulaval.glo2003.Seller.UI;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import ulaval.glo2003.Product.Domain.Product;
@@ -16,7 +15,7 @@ public class SellerAssembler {
 
     public SellerResponse createSellerResponse(Seller seller) {
         String id = seller.getId();
-        OffsetDateTime createdAt = seller.getCreatedAt();
+        String createdAt = seller.getCreatedAt().toString();
         String name = seller.getName();
         String bio = seller.getBio();
         List<Product> products = seller.getProducts();

@@ -20,7 +20,10 @@ import ulaval.glo2003.Seller.UI.SellerResource;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static final String BASE_URI = "http://localhost:8080/";
+
+    public static HttpServer startServer() {
+
         SellerRepository sellerRepository = new SellerRepository();
         SellerFactory sellerFactory = new SellerFactory();
         SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
@@ -35,17 +38,23 @@ public class Main {
                 new ProductResource(
                         sellerRepository, productRepository, productFactory, productAssembler);
 
-        ResourceConfig resourceConfig =
-                new ResourceConfig()
-                        .register(sellerResource)
-                        .register(productResource)
-                        .register(new InvalidArgumentExceptionMapper())
-                        .register(new MissingArgumentExceptionMapper())
-                        .register(new ItemNotFoundExceptionMapper())
-                        .packages("ulaval.glo2003");
-        URI uri = URI.create("http://localhost:8080/");
+        final ResourceConfig resourceConfig = new ResourceConfig()
+                .register(sellerResource)
+                .register(productResource)
+                .register(new InvalidArgumentExceptionMapper())
+                .register(new MissingArgumentExceptionMapper())
+                .register(new ItemNotFoundExceptionMapper())
+                .packages("ulaval.glo2003");
 
-        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
+        final HttpServer httpServer =
+                GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), resourceConfig);
+
+        return httpServer;
+    }
+
+    public static void main(String[] args) throws IOException {
+        final HttpServer server = startServer();
+
         server.start();
     }
 }

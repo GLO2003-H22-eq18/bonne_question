@@ -57,14 +57,14 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1);
         productRepository.save(product);
 
-        Product gottenProduct = productRepository.find(product.getId());
+        Product gottenProduct = productRepository.findById(product.getId());
 
         assertThat(gottenProduct).isEqualTo(product);
     }
 
     @Test
     void givenProductId_whenProductDoesntExists_thenThrowProductNotFoundException() {
-        assertThrows(ProductNotFoundException.class, () -> productRepository.find(INVALID_ID));
+        assertThrows(ProductNotFoundException.class, () -> productRepository.findById(INVALID_ID));
     }
 
     @Test

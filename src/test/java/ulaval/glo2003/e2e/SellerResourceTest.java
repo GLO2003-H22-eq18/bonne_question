@@ -8,6 +8,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import java.io.IOException;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
@@ -16,9 +18,17 @@ import ulaval.glo2003.Seller.UI.SellerRequest;
 
 class SellerResourceTest {
 
+    public static HttpServer server;
+
     @BeforeAll
     public static void startServer() throws IOException {
-        Main.main(new String[] {});
+        server = Main.startServer();
+        server.start();
+    }
+
+    @AfterAll
+    public static void closeServer() {
+        server.shutdownNow();
     }
 
     SellerRequest createSellerRequest(String name, String bio, String birthDate) {

@@ -1,6 +1,6 @@
 package ulaval.glo2003.unit;
 
-import static com.google.common.truth.Truth.*;
+import static com.google.common.truth.Truth.assertThat;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -41,7 +41,7 @@ class SellerAssemblerTest {
         SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 
         assertThat(sellerResponse.id).isEqualTo(seller.getId());
-        assertThat(sellerResponse.createdAt).isEqualTo(seller.getCreatedAt());
+        assertThat(sellerResponse.createdAt).isEqualTo(seller.getCreatedAt().toString());
         assertThat(sellerResponse.name).isEqualTo(seller.getName());
         assertThat(sellerResponse.bio).isEqualTo(seller.getBio());
         assertThat(sellerResponse.products).isEqualTo(seller.getProducts());

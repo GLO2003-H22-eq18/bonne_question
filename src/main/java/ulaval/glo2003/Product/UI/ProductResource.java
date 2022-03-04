@@ -1,6 +1,11 @@
 package ulaval.glo2003.Product.UI;
 
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.HeaderParam;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
@@ -36,7 +41,7 @@ public class ProductResource {
             @HeaderParam("X-Seller-Id") String sellerId,
             @Context UriInfo uri) {
 
-        Seller productSeller = sellerRepository.find(sellerId);
+        Seller productSeller = sellerRepository.findById(sellerId);
         Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
         productRepository.save(myProduct);
@@ -49,7 +54,7 @@ public class ProductResource {
     @GET
     @Path("/{productId}")
     public Response getProduct(@PathParam("productId") String productId) {
-        Product product = productRepository.find(productId);
+        Product product = productRepository.findById(productId);
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
 
