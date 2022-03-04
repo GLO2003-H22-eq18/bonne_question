@@ -16,12 +16,11 @@ public class SellerFactoryTest {
     private static final String NAME = "Beau Nom";
     private static final String BIO = "Belle Bio";
     private static final String BIRTHDATE = "1979-12-12";
-    private static final String INVALID_NAME = "";
-    private static final String INVALID_BIO = "";
+    private static final String INVALID_NAME = "\n\t";
+    private static final String INVALID_BIO = "\n\t";
     private static final String INVALID_BIRTHDATE = "2015-12-12";
 
     private static SellerFactory sellerFactory;
-    private static Seller seller;
 
     @BeforeAll
     public static void setUp() {
