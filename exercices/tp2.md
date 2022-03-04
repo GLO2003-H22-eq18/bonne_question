@@ -16,6 +16,8 @@
 ### Rétrospective sur le processus
 
 **1.** Selon nous, les issues prenaient un temps raisonnable à être réalisées puisque leur charge de travail était convenable: elles n'étaient ni trop grosses, ni trop petites. Nous concluons que le temps idéal approximatif pour la réalisation d'une issue est de une heure.
+
 **2.**
+
 **3.** Amélioration du processus
 - Uniformisation du code: lors des prochains livrables, il serait pertinent de s'assurer que le code est uniforme et ce, tout au long du travail. Par exemple, durant l'écriture des tests, il aurait été judicieux que chaque membre se base davantage sur les tests des autres pour ne pas avoir à uniformiser le code à la toute fin.
