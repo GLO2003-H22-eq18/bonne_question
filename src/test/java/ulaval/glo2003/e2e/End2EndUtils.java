@@ -29,6 +29,7 @@ import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.truth.Truth.assertThat;
 import static io.restassured.RestAssured.*;
+import static ulaval.glo2003.Utils.StringUtil.randomizeUpperAndLowerCase;
 
 public class End2EndUtils {
 
@@ -41,7 +42,7 @@ public class End2EndUtils {
     public static final String A_INVALID_SELLER_NAME = "    \n  \t \n ";
     public static final String A_INVALID_SELLER_BIO = "    \n  \t \n ";
     public static final String A_INVALID_SELLER_BIRTHDATE = "2100-11-01";
-    public static final String A_VALID_PRODUCT_TITLE = "Foo Bar";
+    public static final String A_VALID_PRODUCT_TITLE = "Foobar";
     public static final String A_VALID_PRODUCT_DESCRIPTION = "An awesome generic product!";
     public static final Double A_VALID_PRODUCT_SUGGESTED_PRICE = 5.0;
     public static final List<String> A_VALID_PRODUCT_CATEGORIES = new ArrayList(List.of("beauty", "electronics"));
@@ -86,16 +87,13 @@ public class End2EndUtils {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate()
                 .toString();
-        System.out.println(sellerRequest.name);
-        System.out.println(sellerRequest.bio);
-        System.out.println(sellerRequest.birthDate);
+        System.out.println("Seller's name: " + sellerRequest.name + "\n");
         return sellerRequest;
     }
 
     public static String createRandomSellerGetId(){
         SellerRequest sellerRequest = createRandomSeller();
         Response response = createResource("/sellers", sellerRequest);
-        System.out.println(response.asPrettyString());
         return extractLocationId(response);
     }
 
@@ -171,9 +169,16 @@ public class End2EndUtils {
         return productRequest;
     }
 
-    public static String createRandomProductGetTitle(String sellerId){
-       return null;
+    public static void createRandomProductsFromRandomSellersWithTitle(String title, int numberOfProducts){
+
+      for(int i = 0; i < numberOfProducts; i++){
+          ProductRequest productRequest = createRandomProduct();
+          productRequest.title = randomizeUpperAndLowerCase(faker.letterify("??? " + title + " ???"));
+          System.out.println("Product's title: " + productRequest.title);
+          createProductResource(productRequest, createRandomSellerGetId());
+      }
     }
+
 
 
     public static ProductRequest createValidProductWithoutCategories() {

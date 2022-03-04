@@ -8,6 +8,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import ulaval.glo2003.Main;
 import ulaval.glo2003.Product.UI.FilteredProductsResponse;
@@ -206,8 +208,15 @@ class End2EndTests {
     }
 
     @Test
-    void whenFilteringProductsByTitle_thenFilteredProductsReturnedWithStatus200(){
+    void givenProductsThatShareCommonTitle_whenFilteringProductsByTitle_thenFilteredProductsReturnedWithStatus200(){
+        String title = randomizeUpperAndLowerCase(A_VALID_PRODUCT_TITLE);
+        createRandomProductsFromRandomSellersWithTitle(title, NUMBER_OF_PRODUCTS);
 
+        Response response = getProductsByTitle(title.toLowerCase());
+        System.out.println("Filtering by title: " + title.toLowerCase());
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+        FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
+        assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);
     }
     @Test
     void whenFilteringProductsByCategories_thenFilteredProductsReturnedWithStatus200(){

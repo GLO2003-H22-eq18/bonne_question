@@ -39,37 +39,37 @@ public class ProductRepository {
 
         List<Product> filteredProductsList;
         if (sellerId != null) {
-            filteredProductsList = getSellerIdFilteredProducts(sellerId);
+            filteredProductsList = getProductsFilterBySellerId(sellerId);
         } else {
             filteredProductsList = new ArrayList<>(products.values());
         }
 
         if (title != null) {
-            filteredProductsList = getTitleFilteredProducts(filteredProductsList, title);
+            filteredProductsList = getProductsFilterByTitle(filteredProductsList, title);
         }
 
         if (!categories.isEmpty()) {
-            filteredProductsList = getCategoriesFilteredProducts(filteredProductsList, categories);
+            filteredProductsList = getProductsFilterByCategories(filteredProductsList, categories);
         }
 
         if (minPrice != null) {
-            filteredProductsList = getMinPriceFilteredProducts(filteredProductsList, minPrice);
+            filteredProductsList = getProductsFilterByMinPrice(filteredProductsList, minPrice);
         }
 
         if (maxPrice != null) {
-            filteredProductsList = getMaxPriceFilteredProducts(filteredProductsList, maxPrice);
+            filteredProductsList = getProductsFilterByMaxPrice(filteredProductsList, maxPrice);
         }
 
         return filteredProductsList;
     }
 
-    public List<Product> getSellerIdFilteredProducts(String sellerId) {
+    public List<Product> getProductsFilterBySellerId(String sellerId) {
         return products.values().stream()
                 .filter(product -> product.getSellerId().equals(sellerId))
                 .collect(Collectors.toList());
     }
 
-    private List<Product> getTitleFilteredProducts(
+    private List<Product> getProductsFilterByTitle(
             List<Product> filteredProductsList, String title) {
         final String lowerCaseTitle = title.toLowerCase(Locale.ROOT);
         return filteredProductsList.stream()
@@ -77,7 +77,7 @@ public class ProductRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<Product> getCategoriesFilteredProducts(
+    public List<Product> getProductsFilterByCategories(
             List<Product> filteredProductsList, List<String> categories) {
         List<ProductCategory> productCategories = ProductCategory.toCategoriesList(categories);
         return filteredProductsList.stream()
@@ -87,14 +87,14 @@ public class ProductRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<Product> getMinPriceFilteredProducts(
+    public List<Product> getProductsFilterByMinPrice(
             List<Product> filteredProductsList, Double minPrice) {
         return filteredProductsList.stream()
                 .filter(product -> product.getSuggestedPrice() >= minPrice)
                 .collect(Collectors.toList());
     }
 
-    public List<Product> getMaxPriceFilteredProducts(
+    public List<Product> getProductsFilterByMaxPrice(
             List<Product> filteredProductsList, Double maxPrice) {
         return filteredProductsList.stream()
                 .filter(product -> product.getSuggestedPrice() <= maxPrice)
