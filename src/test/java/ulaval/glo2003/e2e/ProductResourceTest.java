@@ -4,6 +4,8 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
@@ -27,6 +29,19 @@ public class ProductResourceTest {
     private Seller defaultSeller;
     private int sellerId;
 
+    public static HttpServer server;
+
+    @BeforeAll
+    public static void startServer() throws IOException {
+        server = Main.startServer();
+        server.start();
+    }
+
+    @AfterAll
+    public static void closeServer() {
+        server.shutdownNow();
+    }
+
     ProductRequest createProductRequest(String title, String description, Double suggestedPrice, List<String> categories){
         ProductRequest productRequest = new ProductRequest();
         productRequest.title = title;
@@ -42,11 +57,6 @@ public class ProductResourceTest {
     LocalDate birthDate = LocalDate.parse("1977-04-23");
     List<Product> products = new ArrayList<>();
     Seller seller = new Seller(name, bio, createdAt, birthDate, products);
-
-    @BeforeAll
-    public static void startServer() throws IOException {
-        Main.main(new String[] {});
-    }
 
 
 

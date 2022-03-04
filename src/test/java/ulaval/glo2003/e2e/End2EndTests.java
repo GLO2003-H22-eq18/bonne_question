@@ -3,6 +3,8 @@ package ulaval.glo2003.e2e;
 
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
@@ -20,10 +22,17 @@ import static ulaval.glo2003.e2e.End2EndUtils.*;
 
 class End2EndTests {
 
+    public static HttpServer server;
+
     @BeforeAll
     public static void startServer() throws IOException {
-        Main.main(new String[0]);
+        server = Main.startServer();
+        server.start();
+    }
 
+    @AfterAll
+    public static void closeServer() {
+        server.shutdownNow();
     }
 
     @Test

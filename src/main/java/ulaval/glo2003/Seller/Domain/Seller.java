@@ -1,22 +1,26 @@
 package ulaval.glo2003.Seller.Domain;
 
-import ulaval.glo2003.Product.Domain.Product;
-
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
+import ulaval.glo2003.Product.Domain.Product;
 
 public class Seller {
-    public String id;
-    public OffsetDateTime createdAt;
-    public LocalDate birthDate;
-    public String name;
-    public String bio;
-    public List<Product> products;
+    private String id;
+    private OffsetDateTime createdAt;
+    private LocalDate birthDate;
+    private String name;
+    private String bio;
+    private List<Product> products;
 
     private static int currentId = 0;
 
-    public Seller(String name, String bio, OffsetDateTime createdAt, LocalDate birthDate, List<Product> products) {
+    public Seller(
+            String name,
+            String bio,
+            OffsetDateTime createdAt,
+            LocalDate birthDate,
+            List<Product> products) {
         this.id = String.valueOf(currentId++);
         this.createdAt = createdAt;
         this.birthDate = birthDate;
@@ -33,7 +37,9 @@ public class Seller {
         return createdAt;
     }
 
-    public LocalDate getBirthDate() { return birthDate; }
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
 
     public String getName() {
         return name;

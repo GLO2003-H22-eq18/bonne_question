@@ -1,7 +1,5 @@
 package ulaval.glo2003.Seller.UI;
 
-import io.restassured.response.Response;
-
 import java.util.List;
 
 public class SellerResponse {
@@ -15,7 +13,8 @@ public class SellerResponse {
         super();
     }
 
-    public SellerResponse(String id, String createdAt, String name, String bio, List<SellerProductResponse> products) {
+    public SellerResponse(String id, String createdAt, String name, String bio,
+                          List<SellerProductResponse> products) {
         this.id = id;
         this.createdAt = createdAt;
         this.name = name;

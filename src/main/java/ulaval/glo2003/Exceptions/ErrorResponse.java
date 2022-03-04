@@ -8,7 +8,7 @@ public class ErrorResponse {
         super();
     }
 
-    public ErrorResponse (ErrorCode errorCode, String description) {
+    public ErrorResponse(ErrorCode errorCode, String description) {
         this.code = errorCode;
         this.description = description;
     }

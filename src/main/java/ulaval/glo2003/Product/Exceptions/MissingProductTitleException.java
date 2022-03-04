@@ -7,4 +7,3 @@ public class MissingProductTitleException extends MissingArgumentException {
         super("Product title is missing");
     }
 }
-
