@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 import ulaval.glo2003.Main;
+import ulaval.glo2003.Product.UI.FilteredProductsResponse;
 import ulaval.glo2003.Product.UI.ProductRequest;
 
 import ulaval.glo2003.Product.UI.ProductResponse;
@@ -17,6 +18,7 @@ import ulaval.glo2003.Seller.UI.SellerRequest;
 import ulaval.glo2003.Seller.UI.SellerResponse;
 
 import static com.google.common.truth.Truth.assertThat;
+import static ulaval.glo2003.Utils.StringUtil.randomizeUpperAndLowerCase;
 import static ulaval.glo2003.e2e.End2EndUtils.*;
 
 
@@ -186,6 +188,38 @@ class End2EndTests {
         Response response = getProductById(A_INVALID_ID);
 
         assertThatResponseIsItemNotFoundError(response);
+    }
+
+    @Test
+    void givenTwoSellerWithProducts_whenFilteringProductsByCaseInsensitiveSellerId_thenProductsFromSpecifiedSellerIdReturnedWithStatus200(){
+        String sellerId = createValidSellerGetId();
+        String otherSellerId = createRandomSellerGetId();
+        addRandomProductsToSeller(sellerId, NUMBER_OF_PRODUCTS);
+        addRandomProductsToSeller(otherSellerId, NUMBER_OF_PRODUCTS - 1);
+
+        Response response = getProductsBySellerId(sellerId);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+        FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
+        assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);
+        assertThatAllProductsHaveTheSameSellerId(filteredProductsResponse.products, sellerId);
+    }
+
+    @Test
+    void whenFilteringProductsByTitle_thenFilteredProductsReturnedWithStatus200(){
+
+    }
+    @Test
+    void whenFilteringProductsByCategories_thenFilteredProductsReturnedWithStatus200(){
+
+    }
+    @Test
+    void whenFilteringProductsByMinPrice_thenFilteredProductsReturnedWithStatus200(){
+
+    }
+    @Test
+    void whenFilteringProductsByMaxPrice_thenFilteredProductsReturnedWithStatus200(){
+
     }
 
 

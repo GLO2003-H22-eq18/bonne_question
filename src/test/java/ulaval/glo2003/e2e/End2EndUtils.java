@@ -1,19 +1,24 @@
 package ulaval.glo2003.e2e;
 
 
+import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import java.util.stream.IntStream;
+
 
 import org.apache.http.HttpStatus;
 import ulaval.glo2003.Exceptions.ErrorCode;
 import ulaval.glo2003.Exceptions.ErrorResponse;
+import ulaval.glo2003.Product.Domain.ProductCategory;
 import ulaval.glo2003.Product.UI.ProductRequest;
 import ulaval.glo2003.Product.UI.ProductResponse;
 import ulaval.glo2003.Seller.UI.SellerProductResponse;
@@ -26,8 +31,10 @@ import static com.google.common.truth.Truth.assertThat;
 import static io.restassured.RestAssured.*;
 
 public class End2EndUtils {
+
+    public final static Faker faker = new Faker();
+    public final static int NUMBER_OF_PRODUCTS = 16;
     public static final String A_INVALID_ID = "13200298A";
-    public static final String SELLER_HEADER_NAME = "X-Seller-Id";
     public static final String A_VALID_SELLER_NAME = "John Cena";
     public static final String A_VALID_SELLER_BIO = "What a chad!";
     public static final String A_VALID_SELLER_BIRTHDATE = "1997-04-23";
@@ -51,9 +58,9 @@ public class End2EndUtils {
                 .extract().statusCode();
     }
 
-    public static String extractLocationId(Response response){
-        String location = response.header("Location");
-        return location.substring(location.lastIndexOf("/") + 1);
+
+    public static Response createSellerResource(SellerRequest sellerRequest){
+        return createResource("/sellers", sellerRequest);
     }
 
     public static SellerRequest createValidSeller() {
@@ -62,6 +69,34 @@ public class End2EndUtils {
         sellerRequest.bio = A_VALID_SELLER_BIO;
         sellerRequest.birthDate = A_VALID_SELLER_BIRTHDATE;
         return sellerRequest;
+    }
+
+    public static String createValidSellerGetId(){
+        SellerRequest sellerRequest = createValidSeller();
+        Response response = createResource("/sellers", sellerRequest);
+        return extractLocationId(response);
+    }
+
+    public static SellerRequest createRandomSeller(){
+        SellerRequest sellerRequest = new SellerRequest();
+        sellerRequest.name = faker.harryPotter().character();
+        sellerRequest.bio = faker.harryPotter().quote();
+        sellerRequest.birthDate = faker.date().birthday()
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+                .toString();
+        System.out.println(sellerRequest.name);
+        System.out.println(sellerRequest.bio);
+        System.out.println(sellerRequest.birthDate);
+        return sellerRequest;
+    }
+
+    public static String createRandomSellerGetId(){
+        SellerRequest sellerRequest = createRandomSeller();
+        Response response = createResource("/sellers", sellerRequest);
+        System.out.println(response.asPrettyString());
+        return extractLocationId(response);
     }
 
     public static SellerRequest createSellerWithMissingParams() {
@@ -89,25 +124,26 @@ public class End2EndUtils {
         return sellerRequest;
     }
 
-    public static String createValidSellerGetId(){
-        SellerRequest sellerRequest = createValidSeller();
-        Response response = createResource("/sellers", sellerRequest);
-        return extractLocationId(response);
-    }
-
 
     public static String addProductToSellerGetId(String sellerId){
         Response response = createProductResource(createValidProduct(), sellerId);
         return extractLocationId(response);
     }
 
-    public static Response createSellerResource(SellerRequest sellerRequest){
-        return createResource("/sellers", sellerRequest);
+    public static void addRandomProductsToSeller(String sellerId, int numberOfProducts){
+        IntStream.range(0, numberOfProducts).forEach(
+                i -> createProductResource(createRandomProduct(), sellerId));
     }
+
 
     public static Response getSellerById(String sellerId) {
         return getResourceById("/sellers/{sellerId}", sellerId);
-}
+    }
+
+    public static Response createProductResource(ProductRequest productRequest, String sellerId){
+        Headers productSeller = new Headers(new Header("X-Seller-Id", sellerId));
+        return createResource("/products", productRequest, productSeller);
+    }
 
     public static ProductRequest createValidProduct() {
         ProductRequest productRequest = new ProductRequest();
@@ -118,6 +154,27 @@ public class End2EndUtils {
 
         return productRequest;
     }
+
+    public static String createValidProductGetId(String sellerId){
+        ProductRequest productRequest = createValidProduct();
+        Response response = createProductResource(productRequest, sellerId);
+        return extractLocationId(response);
+    }
+
+    public static ProductRequest createRandomProduct(){
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.title = faker.commerce().productName();
+        productRequest.description = faker.lorem().sentence();
+        productRequest.suggestedPrice = Double.parseDouble(faker.commerce().price(1, 100));
+        productRequest.categories = ProductCategory.getRandomCategories();
+
+        return productRequest;
+    }
+
+    public static String createRandomProductGetTitle(String sellerId){
+       return null;
+    }
+
 
     public static ProductRequest createValidProductWithoutCategories() {
         ProductRequest productRequest = createValidProduct();
@@ -157,44 +214,33 @@ public class End2EndUtils {
         return productRequest;
     }
 
-    public static Response createProductResource(ProductRequest productRequest, String sellerId){
-        Headers productSeller = new Headers(new Header(SELLER_HEADER_NAME, sellerId));
-        return createResource("/products", productRequest, productSeller);
-    }
-
-    public static String createValidProductGetId(String sellerId){
-        ProductRequest productRequest = createValidProduct();
-        Response response = createProductResource(productRequest, sellerId);
-        return extractLocationId(response);
-    }
-
     public static Response getProductById(String productId) {
         return getResourceById("/products/{productId}", productId);
     }
 
     public static Response getProductsBySellerId(String sellerId) {
-        Map<String, String> filter = new HashMap<>(Map.of("", ""));
-        return null;//getResourceByFilter();
+       String filterName = "sellerId";
+        return getResourceByFilter("/products", filterName, sellerId);
     }
 
     public static Response getProductsByTitle(String title) {
-        Map<String, String> filter = new HashMap<>(Map.of("", ""));
-        return null;//getResourceByFilter();
+        String filterName = "title";
+        return getResourceByFilter("/products", filterName, title);
     }
 
     public static Response getProductsByCategories(List<String> categories){
-        Map<String, String> filter = new HashMap<>(Map.of("", ""));
-        return null;//getResourceByFilter();
+        String filterName = "categories";
+        return getResourceByFilter("/products", filterName, categories);
     }
 
     public static Response getProductsByMinPrice(Double minPrice){
-        Map<String, String> filter = new HashMap<>(Map.of("", ""));
-        return null;//getResourceByFilter();
+        String filterName = "minPrice";
+        return getResourceByFilter("/products", filterName, minPrice);
     }
 
     public static Response getProductsByMaxPrice(Double maxPrice){
-        Map<String, String> filter = new HashMap<>(Map.of("", ""));
-        return null;//getResourceByFilter();
+        String filterName = "maxPrice";
+        return getResourceByFilter("/products", filterName, maxPrice);
     }
 
     public static void assertThatPostResponseIsValid(Response postResponse){
@@ -236,6 +282,11 @@ public class End2EndUtils {
         assertThat(productResponse.offers.count).isEqualTo(0);
     }
 
+    public static void assertThatAllProductsHaveTheSameSellerId(List<ProductResponse> filteredProducts, String sellerId){
+        for(ProductResponse product : filteredProducts){
+            assertThat(product.seller.id).isEqualTo(sellerId);
+        }
+    }
 
     public static void assertThatResponseIsItemNotFoundError(Response response){
         assertThatErrorResponseIsValid(response, HttpStatus.SC_NOT_FOUND, ErrorCode.ITEM_NOT_FOUND);
@@ -289,9 +340,9 @@ public class End2EndUtils {
                 .response();
     }
 
-    private static Response getResourceByFilter(String path, Map<String, String> filters) {
+    private static Response getResourceByFilter(String path, String filterName, Object filterValue) {
         return given()
-                .queryParams(filters)
+                .param(filterName, filterValue)
                 .contentType(ContentType.JSON)
                 .when()
                 .get(path)
@@ -299,5 +350,11 @@ public class End2EndUtils {
                 .extract()
                 .response();
     }
+
+    private static String extractLocationId(Response response){
+        String location = response.header("Location");
+        return location.substring(location.lastIndexOf("/") + 1);
+    }
+
     }
 

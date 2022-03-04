@@ -17,6 +17,7 @@ import ulaval.glo2003.Product.Domain.ProductRepository;
 import ulaval.glo2003.Seller.Domain.Seller;
 import ulaval.glo2003.Seller.Domain.SellerRepository;
 
+
 @Path("/products")
 public class ProductResource {
     private final SellerRepository sellerRepository;

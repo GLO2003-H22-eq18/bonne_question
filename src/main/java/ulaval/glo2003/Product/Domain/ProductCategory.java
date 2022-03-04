@@ -1,7 +1,11 @@
 package ulaval.glo2003.Product.Domain;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public enum ProductCategory {
     SPORTS("sports"),
@@ -12,6 +16,9 @@ public enum ProductCategory {
     OTHER("other");
 
     private final String name;
+    private static final List<ProductCategory> VALUES = Arrays.asList(ProductCategory.values());
+    private static final Random RANDOM = new Random();
+    private static final int SIZE = VALUES.size();
 
     ProductCategory(String category) {
         name = category;
@@ -20,6 +27,7 @@ public enum ProductCategory {
     private boolean equalsName(String otherName) {
         return name.equals(otherName);
     }
+
 
     @Override
     public String toString() {
@@ -42,6 +50,14 @@ public enum ProductCategory {
             }
         }
         return null;
+    }
+
+    public static List<String> getRandomCategories(){
+        List<ProductCategory> randomCategories = new ArrayList<>();
+        for (int i=0; i < RANDOM.nextInt(6); i++){
+            randomCategories.add(VALUES.get(RANDOM.nextInt(SIZE)));
+        }
+        return toStringList(randomCategories);
     }
 
     public static List<ProductCategory> toCategoriesList(List<String> names) {
