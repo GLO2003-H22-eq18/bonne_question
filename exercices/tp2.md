@@ -10,24 +10,11 @@
 | Issues en implémentation en même temps | 3       | 2       | 5       |
 | PR en _review_ à tout moment           | 1       | 0       | 2       |
 
-**1.** En moyenne, l'équipe prenait une heure et demi pour implémenter une issue, pour un minimum de 30 minutes et maximum de trois heures.
-
-**2.** En moyenne, l'équipe prenait 30 minutes pour intégrer une pull-request, pour un minimum de 15 minutes et un maximum d'une heure.
-
-**3.** En moyenne, deux personnes travaillaient sur chaque issue, pour un minimum d'une personne et un maximum de quatre personnes.
-
-**4.** En moyenne, deux personnes _reviewaient_ chaque pull request, pour un minimum  d'une personne et un maximum de trois personnes.
-
-**5.** En moyenne, trois issues étaient en cours d'implémentation en même temps, pour un minimum de deux et un maximum de cinq.
-
-**6.** En moyenne, une seule pull-request était en cours de _review_ à tout moment, pour un minimum de zéro et un maximum de deux.
 
 ### Rétrospective sur le processus
 
-**1.** Selon nous, les issues prenaient un temps raisonnable à être réalisées puisque leur charge de travail était convenable: elles n'étaient ni trop grosses, ni trop petites. En moyenne, elles prenaient 1h30 à être complétées. Ainsi, nous concluons que le temps idéal approximatif pour la réalisation d'une issue est d'environ 1h30. E
-
-**2.** 
-
+**1.** Selon nous, les issues prenaient un temps raisonnable à être réalisées puisque leur charge de travail était convenable: elles n'étaient ni trop grosses, ni trop petites. En moyenne, elles prenaient 1h30 à être complétées. Ainsi, nous concluons que le temps idéal approximatif pour la réalisation d'une issue est d'environ 1h30. Du côté des pull-requests, elles prenaient elles aussi un temps raisonnable à être complétées. En moyenne, elles permettaient de fermer deux issues, ce qui est raisonnable. Ainsi, nous jugeons que le temps approximatif pour chaque pull-request est d'environ trois heures de travail et de 30 minutes pour son intégration.
+**2.** Plus une issue/pull-request est d'une grande taille, plus elle est longue à terminer. Comme déjà mentionné, la taille de nos issues et pull-requests était convenable. Chaque pull-request permettait de fermer en moyenne 2 issues.
 **3.** Amélioration du processus
 - Uniformisation du code: lors des prochains livrables, il serait pertinent de s'assurer que le code est uniforme et ce, tout au long du travail. Par exemple, durant l'écriture des tests, il aurait été judicieux que chaque membre se base davantage sur les tests des autres pour ne pas avoir à uniformiser le code à la toute fin.
 - Certaines pull-requests contenaient trop de changements. Ceci était majoritairement causé par des _commits_ trop lourds. À l'avenir, il faut que chaque membre de l'équipe pense à _commit_ ses changements plus fréquemment et créer les pull-requests lorsque nécessaire.
