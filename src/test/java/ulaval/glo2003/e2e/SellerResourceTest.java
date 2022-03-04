@@ -30,7 +30,7 @@ class SellerResourceTest {
     }
 
     @Test
-    void givenSeller_whenMakingPOSTRequestToSellerEndpoint_thenCorrect() {
+    void givenSellerRequest_whenMakingPOSTRequestToSellerEndpoint_thenCorrect() {
         SellerRequest sellerRequest =
                 createSellerRequest("John Cena", "What a chad!", "1977-04-23");
 
@@ -40,7 +40,6 @@ class SellerResourceTest {
                 .post("http://localhost:8080/sellers")
                 .then()
                 .extract();
-
         int responseStatus = response.statusCode();
         String headerLocation = response.headers().getValue("Location");
         String headerLocationId = headerLocation.split("/")[4];
@@ -50,7 +49,7 @@ class SellerResourceTest {
     }
 
     @Test
-    void givenSeller_whenMakingPOSTRequestToSellerEndpointWithMissingField_thenMissingParameterError() {
+    void givenSellerRequest_whenMakingPOSTRequestToSellerEndpointWithMissingField_thenMissingParameterError() {
         SellerRequest sellerRequest = createSellerRequest("John Cena", "What a chad!", null);
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
@@ -59,7 +58,6 @@ class SellerResourceTest {
                 .post("http://localhost:8080/sellers")
                 .then()
                 .extract();
-
         int responseStatus = response.statusCode();
         JsonPath responseJson = response.jsonPath();
         String description = responseJson.get("description");
@@ -81,7 +79,6 @@ class SellerResourceTest {
                 .post("http://localhost:8080/sellers")
                 .then()
                 .extract();
-
         int responseStatus = response.statusCode();
         JsonPath responseJson = response.jsonPath();
         String description = responseJson.get("description");
@@ -102,7 +99,6 @@ class SellerResourceTest {
                 .post("http://localhost:8080/sellers")
                 .then()
                 .extract();
-
         int responseStatus = response.statusCode();
         JsonPath responseJson = response.jsonPath();
         String description = responseJson.get("description");
@@ -120,7 +116,6 @@ class SellerResourceTest {
                 .get("http://localhost:8080/sellers/1290412403")
                 .then()
                 .extract();
-
         int responseStatus = response.statusCode();
         JsonPath responseJson = response.body().jsonPath();
         String description = responseJson.get("description").toString();
@@ -135,7 +130,6 @@ class SellerResourceTest {
     void whenMakingGETRequestToSellerEndpoint_thenCorrect() {
         SellerRequest sellerRequest =
                 createSellerRequest("Bob Rogers", "Not a chad!", "1985-03-22");
-
         String headerLocationId = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
                 .when()
@@ -150,7 +144,6 @@ class SellerResourceTest {
                 .get("http://localhost:8080/sellers/" + headerLocationId)
                 .then()
                 .extract();
-
         int responseStatus = response.statusCode();
         JsonPath responseJson = response.jsonPath();
         String id = responseJson.get("id");
