@@ -71,9 +71,9 @@ public class ProductRepository {
 
     private List<Product> getProductsFilterByTitle(
             List<Product> filteredProductsList, String title) {
-        final String lowerCaseTitle = title.toLowerCase(Locale.ROOT);
+        final String lowerCaseTitle = title.toLowerCase();
         return filteredProductsList.stream()
-                .filter(product -> product.getTitle().contains(lowerCaseTitle))
+                .filter(product -> product.getTitle().toLowerCase().contains(lowerCaseTitle))
                 .collect(Collectors.toList());
     }
 

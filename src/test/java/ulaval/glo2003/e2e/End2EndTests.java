@@ -212,8 +212,8 @@ class End2EndTests {
         String title = randomizeUpperAndLowerCase(A_VALID_PRODUCT_TITLE);
         createRandomProductsFromRandomSellersWithTitle(title, NUMBER_OF_PRODUCTS);
 
-        Response response = getProductsByTitle(title.toLowerCase());
-        System.out.println("Filtering by title: " + title.toLowerCase());
+        Response response = getProductsByTitle(A_VALID_PRODUCT_TITLE);
+
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
         FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
         assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);

@@ -87,7 +87,6 @@ public class End2EndUtils {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate()
                 .toString();
-        System.out.println("Seller's name: " + sellerRequest.name + "\n");
         return sellerRequest;
     }
 
@@ -174,7 +173,6 @@ public class End2EndUtils {
       for(int i = 0; i < numberOfProducts; i++){
           ProductRequest productRequest = createRandomProduct();
           productRequest.title = randomizeUpperAndLowerCase(faker.letterify("??? " + title + " ???"));
-          System.out.println("Product's title: " + productRequest.title);
           createProductResource(productRequest, createRandomSellerGetId());
       }
     }
