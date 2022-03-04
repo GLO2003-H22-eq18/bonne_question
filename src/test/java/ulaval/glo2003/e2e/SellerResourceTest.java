@@ -1,24 +1,27 @@
 package ulaval.glo2003.e2e;
 
+import static com.google.common.truth.Truth.assertThat;
+import static io.restassured.RestAssured.given;
+
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.io.IOException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
 import ulaval.glo2003.Seller.UI.SellerRequest;
 
-import java.io.IOException;
-
-import static io.restassured.RestAssured.*;
-
-import static com.google.common.truth.Truth.*;
-
 
 class SellerResourceTest {
 
-    SellerRequest createSellerRequest(String name, String bio, String birthDate){
+    @BeforeAll
+    public static void startServer() throws IOException {
+        Main.main(new String[] {});
+    }
+
+    SellerRequest createSellerRequest(String name, String bio, String birthDate) {
         SellerRequest sellerRequest = new SellerRequest();
         sellerRequest.name = name;
         sellerRequest.bio = bio;
@@ -26,14 +29,10 @@ class SellerResourceTest {
         return sellerRequest;
     }
 
-    @BeforeAll
-    public static void startServer() throws IOException {
-        Main.main(new String[] {});
-    }
-
     @Test
     void givenSeller_whenMakingPOSTRequestToSellerEndpoint_thenCorrect() {
-        SellerRequest sellerRequest = createSellerRequest("John Cena", "What a chad!", "1977-04-23");
+        SellerRequest sellerRequest =
+                createSellerRequest("John Cena", "What a chad!", "1977-04-23");
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
@@ -73,7 +72,8 @@ class SellerResourceTest {
 
     @Test
     void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidField_thenInvalidParameterError() {
-        SellerRequest sellerRequest = createSellerRequest("John Cena", "\n\t     000", "2000-01-01");
+        SellerRequest sellerRequest =
+                createSellerRequest("John Cena", "\n\t     000", "2000-01-01");
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
@@ -93,7 +93,7 @@ class SellerResourceTest {
     }
 
     @Test
-    void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidBirthdateField_thenInvalidParameterError(){
+    void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidBirthdateField_thenInvalidParameterError() {
         SellerRequest sellerRequest = createSellerRequest("John Cena", "Sick bio!", "2015-01-01");
 
         ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
@@ -133,7 +133,8 @@ class SellerResourceTest {
 
     @Test
     void whenMakingGETRequestToSellerEndpoint_thenCorrect() {
-        SellerRequest sellerRequest = createSellerRequest("Bob Rogers", "Not a chad!", "1985-03-22");
+        SellerRequest sellerRequest =
+                createSellerRequest("Bob Rogers", "Not a chad!", "1985-03-22");
 
         String headerLocationId = given().contentType(ContentType.JSON)
                 .body(sellerRequest)
@@ -161,5 +162,4 @@ class SellerResourceTest {
         assertThat(name).isEqualTo("Bob Rogers");
         assertThat(bio).isEqualTo("Not a chad!");
     }
-
 }
