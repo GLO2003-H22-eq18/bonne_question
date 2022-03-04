@@ -11,6 +11,11 @@ public class ProductRepository {
         products = new HashMap<>();
     }
 
+    public void save(Product product) {
+        String productId = product.getId();
+        products.put(productId, product);
+    }
+
     public Product find(String productId) {
         Product product = products.get(productId);
         if (product != null) {
@@ -20,17 +25,13 @@ public class ProductRepository {
         }
     }
 
-    public void save(Product product) {
-        String productId = product.getId();
-        products.put(productId, product);
-    }
-
     public List<Product> getFilteredProducts(
             String sellerId,
             String title,
             List<String> categories,
             Double minPrice,
             Double maxPrice) {
+
         List<Product> filteredProductsList;
         if (sellerId != null) {
             filteredProductsList = getSellerIdFilteredProducts(sellerId);
@@ -63,7 +64,7 @@ public class ProductRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<Product> getTitleFilteredProducts(
+    private List<Product> getTitleFilteredProducts(
             List<Product> filteredProductsList, String title) {
         final String lowerCaseTitle = title.toLowerCase(Locale.ROOT);
         return filteredProductsList.stream()

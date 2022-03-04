@@ -17,7 +17,7 @@ public enum ProductCategory {
         name = category;
     }
 
-    public boolean equalsName(String otherName) {
+    private boolean equalsName(String otherName) {
         return name.equals(otherName);
     }
 
