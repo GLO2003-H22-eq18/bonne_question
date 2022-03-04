@@ -14,7 +14,9 @@
 ### Rétrospective sur le processus
 
 **1.** Selon nous, les issues prenaient un temps raisonnable à être réalisées puisque leur charge de travail était convenable: elles n'étaient ni trop grosses, ni trop petites. En moyenne, elles prenaient 1h30 à être complétées. Ainsi, nous concluons que le temps idéal approximatif pour la réalisation d'une issue est d'environ 1h30. Du côté des pull-requests, elles prenaient elles aussi un temps raisonnable à être complétées. En moyenne, elles permettaient de fermer deux issues, ce qui est raisonnable. Ainsi, nous jugeons que le temps approximatif pour chaque pull-request est d'environ trois heures de travail et de 30 minutes pour son intégration.
+
 **2.** Plus une issue/pull-request est d'une grande taille, plus elle est longue à terminer. Comme déjà mentionné, la taille de nos issues et pull-requests était convenable. Chaque pull-request permettait de fermer en moyenne 2 issues.
+
 **3.** Amélioration du processus
 - Uniformisation du code: lors des prochains livrables, il serait pertinent de s'assurer que le code est uniforme et ce, tout au long du travail. Par exemple, durant l'écriture des tests, il aurait été judicieux que chaque membre se base davantage sur les tests des autres pour ne pas avoir à uniformiser le code à la toute fin.
 - Certaines pull-requests contenaient trop de changements. Ceci était majoritairement causé par des _commits_ trop lourds. À l'avenir, il faut que chaque membre de l'équipe pense à _commit_ ses changements plus fréquemment et créer les pull-requests lorsque nécessaire.
