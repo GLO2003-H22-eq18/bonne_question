@@ -295,7 +295,7 @@ public class ProductRepositoryTest {
 
         List<Product> products =
                 productRepository.getFilteredProducts(
-                        null, null, new ArrayList<>(), MIDDLE_PRICE, null);
+                        null, null, new ArrayList<>(), Double.toString(MIDDLE_PRICE), null);
 
         assertThat(verifyProductsHaveHigherOrEqualPriceThanMinPrice(products, MIDDLE_PRICE))
                 .isTrue();
@@ -322,7 +322,7 @@ public class ProductRepositoryTest {
 
         List<Product> products =
                 productRepository.getFilteredProducts(
-                        null, null, new ArrayList<>(), SUGGESTED_PRICE_1, null);
+                        null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
         assertThat(verifyProductsHaveHigherOrEqualPriceThanMinPrice(products, SUGGESTED_PRICE_1))
                 .isTrue();
@@ -349,7 +349,7 @@ public class ProductRepositoryTest {
 
         List<Product> products =
                 productRepository.getFilteredProducts(
-                        null, null, new ArrayList<>(), null, MIDDLE_PRICE);
+                        null, null, new ArrayList<>(), null, Double.toString(MIDDLE_PRICE));
 
         assertThat(verifyProductsHaveLowerOrEqualPriceThanMaxPrice(products, MIDDLE_PRICE))
                 .isTrue();
@@ -376,7 +376,7 @@ public class ProductRepositoryTest {
 
         List<Product> products =
                 productRepository.getFilteredProducts(
-                        null, null, new ArrayList<>(), SUGGESTED_PRICE_1, null);
+                        null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
         assertThat(verifyProductsHaveHigherOrEqualPriceThanMinPrice(products, SUGGESTED_PRICE_1))
                 .isTrue();
