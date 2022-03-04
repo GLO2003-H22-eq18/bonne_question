@@ -10,7 +10,12 @@ public class SellerResponse {
     public String bio;
     public List<SellerProductResponse> products;
 
-    public SellerResponse(String id, OffsetDateTime createdAt, String name, String bio, List<SellerProductResponse> products) {
+    public SellerResponse(
+            String id,
+            OffsetDateTime createdAt,
+            String name,
+            String bio,
+            List<SellerProductResponse> products) {
         this.id = id;
         this.createdAt = createdAt;
         this.name = name;
