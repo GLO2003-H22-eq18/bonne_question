@@ -70,6 +70,8 @@ public class ProductResource {
             @QueryParam("minPrice") Double minPrice,
             @QueryParam("maxPrice") Double maxPrice) {
 
+
+
         List<Product> filteredProducts =
                 productRepository.getFilteredProducts(
                         sellerId, title, categories, minPrice, maxPrice);

@@ -8,8 +8,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 import ulaval.glo2003.Main;
 import ulaval.glo2003.Product.UI.FilteredProductsResponse;
@@ -20,7 +18,6 @@ import ulaval.glo2003.Seller.UI.SellerRequest;
 import ulaval.glo2003.Seller.UI.SellerResponse;
 
 import static com.google.common.truth.Truth.assertThat;
-import static ulaval.glo2003.Utils.StringUtil.randomizeUpperAndLowerCase;
 import static ulaval.glo2003.e2e.End2EndUtils.*;
 
 
@@ -56,7 +53,7 @@ class End2EndTests {
     }
 
     @Test
-    void givenSellerRequestWithMissingParam_whenCreatingSeller_thenReturnsError400() {
+    void givenSellerRequestWithMissingParams_whenCreatingSeller_thenReturnsError400() {
         SellerRequest sellerRequest = createSellerWithMissingParams();
 
         Response response = createSellerResource(sellerRequest);
@@ -83,7 +80,7 @@ class End2EndTests {
     }
 
     @Test
-    void givenSellerRequestWithInvalidBirthDate_whenCreatingSeller_thenReturnsError400() {
+    void givenSellerRequestWithInvalidAge_whenCreatingSeller_thenReturnsError400() {
         SellerRequest sellerRequest = createSellerWithInvalidAge();
 
         Response response = createSellerResource(sellerRequest);
@@ -97,9 +94,9 @@ class End2EndTests {
         String productId = addProductToSellerGetId(sellerId);
 
         Response response = getSellerById(sellerId);
+        SellerResponse sellerResponse = response.as(SellerResponse.class);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-        SellerResponse sellerResponse = response.as(SellerResponse.class);
         assertThatSellerResponseFieldsAreValid(sellerResponse, sellerId, productId);
     }
 
@@ -179,9 +176,9 @@ class End2EndTests {
         String productId = createValidProductGetId(sellerId);
 
         Response response = getProductById(productId);
+        ProductResponse productResponse = response.body().as(ProductResponse.class);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-        ProductResponse productResponse = response.body().as(ProductResponse.class);
         assertThatProductResponseFieldsAreValid(productResponse, productId, sellerId);
     }
 
@@ -193,35 +190,66 @@ class End2EndTests {
     }
 
     @Test
-    void givenTwoSellerWithProducts_whenFilteringProductsByCaseInsensitiveSellerId_thenProductsFromSpecifiedSellerIdReturnedWithStatus200(){
+    void givenSellerWithProducts_whenFilteringProductsBySellerId_thenProductsFromSpecifiedSellerReturnedWithStatus200(){
         String sellerId = createValidSellerGetId();
-        String otherSellerId = createRandomSellerGetId();
         addRandomProductsToSeller(sellerId, NUMBER_OF_PRODUCTS);
-        addRandomProductsToSeller(otherSellerId, NUMBER_OF_PRODUCTS - 1);
 
         Response response = getProductsBySellerId(sellerId);
+        FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-        FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
         assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);
         assertThatAllProductsHaveTheSameSellerId(filteredProductsResponse.products, sellerId);
     }
 
     @Test
-    void givenProductsThatShareCommonTitle_whenFilteringProductsByTitle_thenFilteredProductsReturnedWithStatus200(){
-        String title = randomizeUpperAndLowerCase(A_VALID_PRODUCT_TITLE);
-        createRandomProductsFromRandomSellersWithTitle(title, NUMBER_OF_PRODUCTS);
+    void givenSellerWithNoProducts_whenFilteringProductsBySellerId_thenNoProductsReturnedWithStatus200(){
+        String sellerWithoutProductsId = createValidSellerGetId();
+        createRandomProductsFromRandomSellers(NUMBER_OF_PRODUCTS);
 
-        Response response = getProductsByTitle(A_VALID_PRODUCT_TITLE);
+        Response response = getProductsBySellerId(sellerWithoutProductsId);
+        FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+        assertThat(filteredProductsResponse.products.size()).isEqualTo(0);
+    }
+
+    @Test
+    void givenProductsWithCommonTitle_whenFilteringProductsByTitle_thenProductsWithTitleIncludedReturnedWithStatus200(){
+        String title = A_RANDOM_VALID_PRODUCT_TITLE;
+        createRandomProductsFromRandomSellersWithTitle(title, NUMBER_OF_PRODUCTS);
+
+        Response response = getProductsByTitle(title);
         FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
         assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);
     }
-    @Test
-    void whenFilteringProductsByCategories_thenFilteredProductsReturnedWithStatus200(){
 
+    @Test
+    void givenProductsWithCommonCategories_whenFilteringProductsByCategory_thenProductsWithCategoryIncludedReturnedWithStatus200(){
+        createRandomProductsFromRandomSellersWithCategories(VALID_PRODUCT_CATEGORIES, NUMBER_OF_PRODUCTS);
+
+        Response response = getProductsByCategories(VALID_PRODUCT_CATEGORIES);
+        FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
+        System.out.println(response.asPrettyString());
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+        assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);
     }
+
+    @Test
+    void givenProductsWithCategories_whenFilteringProductsByEmptyCategory_thenNoProductsReturnedWithStatus200(){
+        createRandomProductsFromRandomSellersWithCategories(VALID_PRODUCT_CATEGORIES, NUMBER_OF_PRODUCTS);
+
+        Response response = getProductsByCategories(VALID_PRODUCT_CATEGORIES);
+        FilteredProductsResponse filteredProductsResponse = response.as(FilteredProductsResponse.class);
+        System.out.println(response.asPrettyString());
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+        assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);
+    }
+
     @Test
     void whenFilteringProductsByMinPrice_thenFilteredProductsReturnedWithStatus200(){
 

@@ -1,11 +1,6 @@
 package ulaval.glo2003.Product.Domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import ulaval.glo2003.Product.Exceptions.ProductNotFoundException;
 
@@ -57,6 +52,7 @@ public class ProductRepository {
         }
 
         if (maxPrice != null) {
+
             filteredProductsList = getProductsFilterByMaxPrice(filteredProductsList, maxPrice);
         }
 
@@ -86,6 +82,19 @@ public class ProductRepository {
                                 !Collections.disjoint(product.getCategories(), productCategories))
                 .collect(Collectors.toList());
     }
+
+/*
+    public List<Product> getProductsFilterByCategories(
+            List<Product> filteredProductsList, List<String> categories) {
+        List<ProductCategory> productCategories = ProductCategory.toCategoriesList(categories);
+        return filteredProductsList.stream()
+                .filter(
+                        product ->
+                                product.getCategories().stream()
+                                        .anyMatch(new HashSet<>(productCategories)::contains))
+                .collect(Collectors.toList());
+    }
+*/
 
     public List<Product> getProductsFilterByMinPrice(
             List<Product> filteredProductsList, Double minPrice) {

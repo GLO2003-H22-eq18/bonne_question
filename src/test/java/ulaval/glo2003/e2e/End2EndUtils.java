@@ -8,13 +8,8 @@ import io.restassured.http.Headers;
 import io.restassured.response.Response;
 
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 import java.util.stream.IntStream;
-
-
 import org.apache.http.HttpStatus;
 import ulaval.glo2003.Exceptions.ErrorCode;
 import ulaval.glo2003.Exceptions.ErrorResponse;
@@ -29,11 +24,12 @@ import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.truth.Truth.assertThat;
 import static io.restassured.RestAssured.*;
-import static ulaval.glo2003.Utils.StringUtil.randomizeUpperAndLowerCase;
+import static ulaval.glo2003.Utils.StringUtil.mixUpperAndLowerCase;
 
 public class End2EndUtils {
 
-    public final static Faker faker = new Faker();
+    public final static Faker FAKER = new Faker();
+    private static final Random RANDOM = new Random();
     public final static int NUMBER_OF_PRODUCTS = 16;
     public static final String A_INVALID_ID = "13200298A";
     public static final String A_VALID_SELLER_NAME = "John Cena";
@@ -43,14 +39,19 @@ public class End2EndUtils {
     public static final String A_INVALID_SELLER_BIO = "    \n  \t \n ";
     public static final String A_INVALID_SELLER_BIRTHDATE = "2100-11-01";
     public static final String A_VALID_PRODUCT_TITLE = "Foobar";
+    public static final String A_RANDOM_VALID_PRODUCT_TITLE = FAKER.commerce().productName();
     public static final String A_VALID_PRODUCT_DESCRIPTION = "An awesome generic product!";
     public static final Double A_VALID_PRODUCT_SUGGESTED_PRICE = 5.0;
-    public static final List<String> A_VALID_PRODUCT_CATEGORIES = new ArrayList(List.of("beauty", "electronics"));
+    public static final List<String> VALID_PRODUCT_CATEGORIES = new ArrayList(List.of("beauty", "electronics"));
     public static final String A_INVALID_PRODUCT_TITLE = "    \n  \t \n ";
     public static final String A_INVALID_PRODUCT_DESCRIPTION = "    \n  \t \n ";
     public static final Double A_INVALID_PRODUCT_SUGGESTED_PRICE = 0.99;
     public static final List<String> A_INVALID_PRODUCT_CATEGORIES = new ArrayList(List.of("BeAuTy", "JavaBaby", "electronics"));
-
+    private static final List<ProductCategory> PRODUCT_CATEGORIES_ENUM_VALUES = Arrays.asList(ProductCategory.values());
+    private static final int MAXIMUM_NUMBER_OF_CATEGORIES = 5;
+    private static final double MINIMUM_PRODUCT_PRICE = 1;
+    private static final double MAXIMUM_PRODUCT_PRICE = 10000;
+    
     public static int getHealth(){
         return given()
                 .when()
@@ -58,7 +59,6 @@ public class End2EndUtils {
                 .then()
                 .extract().statusCode();
     }
-
 
     public static Response createSellerResource(SellerRequest sellerRequest){
         return createResource("/sellers", sellerRequest);
@@ -80,9 +80,9 @@ public class End2EndUtils {
 
     public static SellerRequest createRandomSeller(){
         SellerRequest sellerRequest = new SellerRequest();
-        sellerRequest.name = faker.harryPotter().character();
-        sellerRequest.bio = faker.harryPotter().quote();
-        sellerRequest.birthDate = faker.date().birthday()
+        sellerRequest.name = FAKER.harryPotter().character();
+        sellerRequest.bio = FAKER.harryPotter().quote();
+        sellerRequest.birthDate = FAKER.date().birthday()
                 .toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate()
@@ -147,7 +147,7 @@ public class End2EndUtils {
         productRequest.title = A_VALID_PRODUCT_TITLE;
         productRequest.description = A_VALID_PRODUCT_DESCRIPTION;
         productRequest.suggestedPrice = A_VALID_PRODUCT_SUGGESTED_PRICE;
-        productRequest.categories = A_VALID_PRODUCT_CATEGORIES;
+        productRequest.categories = VALID_PRODUCT_CATEGORIES;
 
         return productRequest;
     }
@@ -160,28 +160,44 @@ public class End2EndUtils {
 
     public static ProductRequest createRandomProduct(){
         ProductRequest productRequest = new ProductRequest();
-        productRequest.title = faker.commerce().productName();
-        productRequest.description = faker.lorem().sentence();
-        productRequest.suggestedPrice = Double.parseDouble(faker.commerce().price(1, 100));
-        productRequest.categories = ProductCategory.getRandomCategories();
+        productRequest.title = FAKER.commerce().productName();
+        productRequest.description = FAKER.lorem().sentence();
+        productRequest.suggestedPrice = Double.parseDouble(FAKER.commerce().price(MINIMUM_PRODUCT_PRICE, MAXIMUM_PRODUCT_PRICE));
+        productRequest.categories = getRandomCategories(MAXIMUM_NUMBER_OF_CATEGORIES);
 
         return productRequest;
     }
 
     public static void createRandomProductsFromRandomSellersWithTitle(String title, int numberOfProducts){
-
       for(int i = 0; i < numberOfProducts; i++){
           ProductRequest productRequest = createRandomProduct();
-          productRequest.title = randomizeUpperAndLowerCase(faker.letterify("??? " + title + " ???"));
+          productRequest.title = mixUpperAndLowerCase(FAKER.letterify("??? " + title + " ???"));
           createProductResource(productRequest, createRandomSellerGetId());
       }
+    }
+
+    public static void createRandomProductsFromRandomSellersWithCategories(List<String> categories, int numberOfProducts){
+        for(int i = 0; i < numberOfProducts; i++){
+            ProductRequest productRequest = createRandomProduct();
+            productRequest.categories = getRandomCategories(MAXIMUM_NUMBER_OF_CATEGORIES);
+            productRequest.categories.add(categories.get(RANDOM.nextInt(categories.size())));
+
+            createProductResource(productRequest, createRandomSellerGetId());
+        }
+    }
+
+    public static void createRandomProductsFromRandomSellers(int numberOfProducts){
+        for(int i = 0; i < numberOfProducts; i++){
+            ProductRequest productRequest = createRandomProduct();
+            createProductResource(productRequest, createRandomSellerGetId());
+        }
     }
 
 
 
     public static ProductRequest createValidProductWithoutCategories() {
         ProductRequest productRequest = createValidProduct();
-        productRequest.categories = A_VALID_PRODUCT_CATEGORIES;
+        productRequest.categories = VALID_PRODUCT_CATEGORIES;
         return productRequest;
     }
 
@@ -268,7 +284,7 @@ public class End2EndUtils {
         assertThat(productResponse.title).isEqualTo (A_VALID_PRODUCT_TITLE);
         assertThat(productResponse.description).isEqualTo (A_VALID_PRODUCT_DESCRIPTION);
         assertThat(productResponse.suggestedPrice).isEqualTo (A_VALID_PRODUCT_SUGGESTED_PRICE);
-        assertThat(productResponse.categories).isEqualTo(A_VALID_PRODUCT_CATEGORIES);
+        assertThat(productResponse.categories).isEqualTo(VALID_PRODUCT_CATEGORIES);
         assertThat(productResponse.offers.count).isEqualTo(0);
     }
 
@@ -281,7 +297,7 @@ public class End2EndUtils {
         assertThat(productResponse.title).isEqualTo (A_VALID_PRODUCT_TITLE);
         assertThat(productResponse.description).isEqualTo (A_VALID_PRODUCT_DESCRIPTION);
         assertThat(productResponse.suggestedPrice).isEqualTo (A_VALID_PRODUCT_SUGGESTED_PRICE);
-        assertThat(productResponse.categories).isEqualTo(A_VALID_PRODUCT_CATEGORIES);
+        assertThat(productResponse.categories).isEqualTo(VALID_PRODUCT_CATEGORIES);
         assertThat(productResponse.offers.count).isEqualTo(0);
     }
 
@@ -345,7 +361,18 @@ public class End2EndUtils {
 
     private static Response getResourceByFilter(String path, String filterName, Object filterValue) {
         return given()
-                .param(filterName, filterValue)
+                .queryParam(filterName, filterValue)
+                .contentType(ContentType.JSON)
+                .when()
+                .get(path)
+                .then()
+                .extract()
+                .response();
+    }
+
+    private static Response getResourceByFilter(String path, String filterName, Collection filterValue) {
+        return given()
+                .queryParam(filterName, filterValue)
                 .contentType(ContentType.JSON)
                 .when()
                 .get(path)
@@ -357,6 +384,16 @@ public class End2EndUtils {
     private static String extractLocationId(Response response){
         String location = response.header("Location");
         return location.substring(location.lastIndexOf("/") + 1);
+    }
+
+
+    private static List<String> getRandomCategories(int maximumNumberOfCategories){
+        List<ProductCategory> randomCategories = new ArrayList<>();
+        for (int i=0; i < RANDOM.nextInt(maximumNumberOfCategories); i++){
+            randomCategories.add(PRODUCT_CATEGORIES_ENUM_VALUES.
+                    get(RANDOM.nextInt(PRODUCT_CATEGORIES_ENUM_VALUES.size())));
+        }
+        return ProductCategory.toStringList(randomCategories);
     }
 
     }

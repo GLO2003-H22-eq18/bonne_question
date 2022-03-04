@@ -8,7 +8,7 @@ public class StringUtil {
                 .replaceAll("0", "");
     }
 
-    public static String randomizeUpperAndLowerCase(String string){
+    public static String mixUpperAndLowerCase(String string){
         char[] letters = string.toCharArray();
         StringBuilder randomizedString = new StringBuilder(letters.length);
         for (int i = 0; i < letters.length; i++) {
