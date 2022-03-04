@@ -2,7 +2,7 @@
 
 ### Métriques mesurées
 | Métrique mesurée                       | Moyenne | Minimum | Maximum |
-| -------------------------------------- |:-------:| -------:| ------- |
+| -------------------------------------- |:-------:|:-------:|:-------:|
 | Implémenter une issue                  | 1h30min | 30min   | 3h      |
 | Intégrer une PR                        | 30min   | 15min   | 1h      |
 | Nb. de personnes sur une issue         | 2       | 1       | 3       |
