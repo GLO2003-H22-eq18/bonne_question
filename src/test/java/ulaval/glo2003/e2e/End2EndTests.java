@@ -356,4 +356,7 @@ class End2EndTests {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
         assertThat(filteredProductsResponse.products).isEmpty();
     }
+
+    @Test
+    void givenProductThatMatchGivenFilters_whenFilteringProducts_then
 }
