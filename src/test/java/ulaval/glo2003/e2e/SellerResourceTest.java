@@ -1,21 +1,36 @@
 package ulaval.glo2003.e2e;
 
 import static com.google.common.truth.Truth.assertThat;
-import static io.restassured.RestAssured.given;
+import static ulaval.glo2003.e2e.End2EndUtils.A_INVALID_ID;
+import static ulaval.glo2003.e2e.End2EndUtils.addProductToSellerGetId;
+import static ulaval.glo2003.e2e.End2EndUtils.assertThatPostResponseIsValid;
+import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsInvalidParamError;
+import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsItemNotFoundError;
+import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsMissingParamError;
+import static ulaval.glo2003.e2e.End2EndUtils.assertThatSellerResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.End2EndUtils.createSellerResource;
+import static ulaval.glo2003.e2e.End2EndUtils.createSellerWithInvalidAge;
+import static ulaval.glo2003.e2e.End2EndUtils.createSellerWithInvalidBio;
+import static ulaval.glo2003.e2e.End2EndUtils.createSellerWithInvalidName;
+import static ulaval.glo2003.e2e.End2EndUtils.createSellerWithMissingParams;
+import static ulaval.glo2003.e2e.End2EndUtils.createValidSeller;
+import static ulaval.glo2003.e2e.End2EndUtils.createValidSellerGetId;
+import static ulaval.glo2003.e2e.End2EndUtils.getSellerById;
 
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import java.io.IOException;
+import org.apache.http.HttpStatus;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
 import ulaval.glo2003.Seller.UI.SellerRequest;
+import ulaval.glo2003.Seller.UI.SellerResponse;
 
-
+@DisplayName("Seller Resource")
 class SellerResourceTest {
 
     public static HttpServer server;
@@ -31,138 +46,99 @@ class SellerResourceTest {
         server.shutdownNow();
     }
 
-    SellerRequest createSellerRequest(String name, String bio, String birthDate) {
-        SellerRequest sellerRequest = new SellerRequest();
-        sellerRequest.name = name;
-        sellerRequest.bio = bio;
-        sellerRequest.birthDate = birthDate;
-        return sellerRequest;
+    @Nested
+    @DisplayName("WHEN creating seller")
+    class WhenCreatingSeller {
+        @DisplayName("GIVEN valid request THEN returns with status 201")
+        @Test
+        void givenValidSellerRequest_whenCreatingSeller_thenSellerCreatedWithStatus201() {
+            SellerRequest sellerRequest = createValidSeller();
+
+            Response response = createSellerResource(sellerRequest);
+
+            assertThatPostResponseIsValid(response);
+        }
+
+        @DisplayName("GIVEN missing params THEN returns error 400")
+        @Test
+        void givenSellerRequestWithMissingParams_whenCreatingSeller_thenReturnsError400() {
+            SellerRequest sellerRequest = createSellerWithMissingParams();
+
+            Response response = createSellerResource(sellerRequest);
+
+            assertThatResponseIsMissingParamError(response);
+        }
+
+        @DisplayName("GIVEN invalid name THEN returns error 400")
+        @Test
+        void givenSellerRequestWithInvalidName_whenCreatingSeller_thenReturnsError400() {
+            SellerRequest sellerRequest = createSellerWithInvalidName();
+
+            Response response = createSellerResource(sellerRequest);
+
+            assertThatResponseIsInvalidParamError(response);
+        }
+
+        @DisplayName("GIVEN invalid bio THEN returns error 400")
+        @Test
+        void givenSellerRequestWithInvalidBio_whenCreatingSeller_thenReturnsError400() {
+            SellerRequest sellerRequest = createSellerWithInvalidBio();
+
+            Response response = createSellerResource(sellerRequest);
+
+            assertThatResponseIsInvalidParamError(response);
+        }
+
+        @DisplayName("GIVEN invalid age THEN returns error 400")
+        @Test
+        void givenSellerRequestWithInvalidAge_whenCreatingSeller_thenReturnsError400() {
+            SellerRequest sellerRequest = createSellerWithInvalidAge();
+
+            Response response = createSellerResource(sellerRequest);
+
+            assertThatResponseIsInvalidParamError(response);
+        }
     }
 
-    @Test
-    void givenSellerRequest_whenMakingPOSTRequestToSellerEndpoint_thenCorrect() {
-        SellerRequest sellerRequest =
-                createSellerRequest("John Cena", "What a chad!", "1977-04-23");
+    @Nested
+    @DisplayName("WHEN getting seller")
+    class WhenGettingSeller {
+        @DisplayName("GIVEN invalid id THEN returns error 404")
+        @Test
+        void givenInvalidSellerId_whenGettingSeller_thenReturnsError404() {
+            Response response = getSellerById(A_INVALID_ID);
 
-        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
-                .body(sellerRequest)
-                .when()
-                .post("http://localhost:8080/sellers")
-                .then()
-                .extract();
-        int responseStatus = response.statusCode();
-        String headerLocation = response.headers().getValue("Location");
-        String headerLocationId = headerLocation.split("/")[4];
+            assertThatResponseIsItemNotFoundError(response);
+        }
 
-        assertThat(responseStatus).isEqualTo(201);
-        assertThat(headerLocation).isEqualTo("http://localhost:8080/sellers/" + headerLocationId);
+        @DisplayName("GIVEN valid id THEN returns seller with status 200")
+        @Test
+        void givenValidSellerId_whenGettingSeller_thenReturnsWithStatus200() {
+            String sellerId = createValidSellerGetId();
+
+            Response response = getSellerById(sellerId);
+            SellerResponse sellerResponse = response.as(SellerResponse.class);
+
+            assertThatSellerResponseFieldsAreValid(sellerResponse, sellerId);
+
+        }
     }
 
-    @Test
-    void givenSellerRequest_whenMakingPOSTRequestToSellerEndpointWithMissingField_thenMissingParameterError() {
-        SellerRequest sellerRequest = createSellerRequest("John Cena", "What a chad!", null);
+    @Nested
+    @DisplayName("WHEN adding a new product to seller")
+    class WhenAddingProductToSeller {
+        @DisplayName("THEN returns seller with created product and status 200")
+        @Test
+        void givenValidSellerIdWithProduct_whenGettingSeller_thenReturnsSellerWithProductAndStatus200() {
+            String sellerId = createValidSellerGetId();
+            String productId = addProductToSellerGetId(sellerId);
 
-        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
-                .body(sellerRequest)
-                .when()
-                .post("http://localhost:8080/sellers")
-                .then()
-                .extract();
-        int responseStatus = response.statusCode();
-        JsonPath responseJson = response.jsonPath();
-        String description = responseJson.get("description");
-        String errorCode = responseJson.get("code");
+            Response response = getSellerById(sellerId);
+            SellerResponse sellerResponse = response.as(SellerResponse.class);
 
-        assertThat(responseStatus).isEqualTo(400);
-        assertThat(description).isNotEmpty();
-        assertThat(errorCode).isEqualTo("MISSING_PARAMETER");
-    }
-
-    @Test
-    void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidField_thenInvalidParameterError() {
-        SellerRequest sellerRequest =
-                createSellerRequest("John Cena", "\n\t     000", "2000-01-01");
-
-        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
-                .body(sellerRequest)
-                .when()
-                .post("http://localhost:8080/sellers")
-                .then()
-                .extract();
-        int responseStatus = response.statusCode();
-        JsonPath responseJson = response.jsonPath();
-        String description = responseJson.get("description");
-        String errorCode = responseJson.get("code");
-
-        assertThat(responseStatus).isEqualTo(400);
-        assertThat(description).isNotEmpty();
-        assertThat(errorCode).isEqualTo("INVALID_PARAMETER");
-    }
-
-    @Test
-    void givenSeller_whenMakingPOSTRequestToSellerEndpointWithInvalidBirthdateField_thenInvalidParameterError() {
-        SellerRequest sellerRequest = createSellerRequest("John Cena", "Sick bio!", "2015-01-01");
-
-        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
-                .body(sellerRequest)
-                .when()
-                .post("http://localhost:8080/sellers")
-                .then()
-                .extract();
-        int responseStatus = response.statusCode();
-        JsonPath responseJson = response.jsonPath();
-        String description = responseJson.get("description");
-        String errorCode = responseJson.get("code");
-
-        assertThat(responseStatus).isEqualTo(400);
-        assertThat(description).isNotEmpty();
-        assertThat(errorCode).isEqualTo("INVALID_PARAMETER");
-    }
-
-    @Test
-    void whenMakingGETRequestToSellerEndpointWithAbsentSellerId_thenItemNotFoundError() {
-        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
-                .when()
-                .get("http://localhost:8080/sellers/1290412403")
-                .then()
-                .extract();
-        int responseStatus = response.statusCode();
-        JsonPath responseJson = response.body().jsonPath();
-        String description = responseJson.get("description").toString();
-        String errorCode = responseJson.get("code").toString();
-
-        assertThat(responseStatus).isEqualTo(404);
-        assertThat(description).isNotEmpty();
-        assertThat(errorCode).isEqualTo("ITEM_NOT_FOUND");
-    }
-
-    @Test
-    void whenMakingGETRequestToSellerEndpoint_thenCorrect() {
-        SellerRequest sellerRequest =
-                createSellerRequest("Bob Rogers", "Not a chad!", "1985-03-22");
-        String headerLocationId = given().contentType(ContentType.JSON)
-                .body(sellerRequest)
-                .when()
-                .post("http://localhost:8080/sellers")
-                .then()
-                .extract()
-                .header("Location")
-                .split("/")[4];
-
-        ExtractableResponse<Response> response = given().contentType(ContentType.JSON)
-                .when()
-                .get("http://localhost:8080/sellers/" + headerLocationId)
-                .then()
-                .extract();
-        int responseStatus = response.statusCode();
-        JsonPath responseJson = response.jsonPath();
-        String id = responseJson.get("id");
-        String name = responseJson.get("name");
-        String bio = responseJson.get("bio");
-
-        assertThat(responseStatus).isEqualTo(200);
-        assertThat(id).isEqualTo(headerLocationId);
-        assertThat(name).isEqualTo("Bob Rogers");
-        assertThat(bio).isEqualTo("Not a chad!");
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            End2EndUtils.assertThatSellerWithProductResponseFieldsAreValid(sellerResponse,
+                    sellerId, productId);
+        }
     }
 }

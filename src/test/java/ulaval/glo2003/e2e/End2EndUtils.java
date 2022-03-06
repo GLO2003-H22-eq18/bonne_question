@@ -308,16 +308,21 @@ public class End2EndUtils {
         assertThat(isNullOrEmpty(postResponse.body().asString())).isTrue();
     }
 
+    public static void assertThatSellerWithProductResponseFieldsAreValid(SellerResponse sellerResponse,
+                                                                         String expectedSellerId,
+                                                                         String expectedProductId) {
+        assertThatSellerResponseFieldsAreValid(sellerResponse, expectedSellerId);
+
+        SellerProductResponse sellerProductResponse = sellerResponse.products.get(0);
+        assertThatSellerProductResponseFieldsAreValid(sellerProductResponse, expectedProductId);
+    }
+
     public static void assertThatSellerResponseFieldsAreValid(SellerResponse sellerResponse,
-                                                              String expectedSellerId,
-                                                              String expectedProductId) {
+                                                                         String expectedSellerId) {
         assertThat(sellerResponse.id).isEqualTo(expectedSellerId);
         assertThat(sellerResponse.name).isEqualTo(A_VALID_SELLER_NAME);
         assertThat(sellerResponse.bio).isEqualTo(A_VALID_SELLER_BIO);
         OffsetDateTimeSubject.assertThat(sellerResponse.createdAt).isWithinExpectedRange();
-
-        SellerProductResponse sellerProductResponse = sellerResponse.products.get(0);
-        assertThatSellerProductResponseFieldsAreValid(sellerProductResponse, expectedProductId);
     }
 
     public static void assertThatSellerProductResponseFieldsAreValid(
