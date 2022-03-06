@@ -10,6 +10,7 @@ public class InvalidArgumentExceptionMapper implements ExceptionMapper<InvalidAr
         String errorDescription = e.getMessage();
         ErrorResponse errorResponse =
                 new ErrorResponse(ErrorCode.INVALID_PARAMETER, errorDescription);
+
         return Response.status(400).entity(errorResponse).build();
     }
 }

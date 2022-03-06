@@ -20,7 +20,7 @@ public class ProductAssembler {
                 createProductSellerResponse(product.getSellerId(), product.getSellerName());
         ProductOffersResponse offers = createProductOffersResponse(product.getCount());
 
-        return new ProductResponse(id, createdAt, title, description, suggestedPrice,
-                categories, seller, offers);
+        return new ProductResponse(id, createdAt, title, description, suggestedPrice, categories,
+                seller, offers);
     }
 }

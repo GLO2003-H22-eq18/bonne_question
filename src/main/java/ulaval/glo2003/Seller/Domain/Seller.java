@@ -6,12 +6,12 @@ import java.util.List;
 import ulaval.glo2003.Product.Domain.Product;
 
 public class Seller {
-    private String id;
-    private OffsetDateTime createdAt;
-    private LocalDate birthDate;
-    private String name;
-    private String bio;
-    private List<Product> products;
+    private final String id;
+    private final OffsetDateTime createdAt;
+    private final LocalDate birthDate;
+    private final String name;
+    private final String bio;
+    private final List<Product> products;
 
     private static int currentId = 0;
 

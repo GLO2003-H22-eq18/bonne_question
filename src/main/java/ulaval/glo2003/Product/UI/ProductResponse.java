@@ -16,9 +16,13 @@ public class ProductResponse {
         super();
     }
 
-    public ProductResponse(String id, String createdAt, String title, String description,
+    public ProductResponse(String id,
+                           String createdAt,
+                           String title,
+                           String description,
                            Double suggestedPrice,
-                           List<String> categories, ProductSellerResponse seller,
+                           List<String> categories,
+                           ProductSellerResponse seller,
                            ProductOffersResponse offers) {
         this.id = id;
         this.createdAt = createdAt;

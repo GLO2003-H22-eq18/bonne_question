@@ -13,8 +13,7 @@ public class Product {
     private final List<ProductCategory> categories;
     private final String sellerId;
     private final String sellerName;
-    private Double mean;
-    private Integer count;
+    private final Integer count;
 
     private static int currentId = 0;
 
@@ -32,7 +31,7 @@ public class Product {
         this.categories = categories;
         this.sellerId = sellerId;
         this.sellerName = sellerName;
-        this.count = 0; // for TP2 only
+        this.count = 0;
 
         this.createdAt = OffsetDateTime.now(Clock.systemUTC());
     }
@@ -67,12 +66,6 @@ public class Product {
 
     public String getSellerName() {
         return sellerName;
-    }
-
-    public Double getMean() {
-        return null;
-        //        TODO: livrable3
-        //        return mean;
     }
 
     public Integer getCount() {
