@@ -1,8 +1,8 @@
 package ulaval.glo2003.Product.Domain;
 
-import org.apache.commons.lang3.RandomUtils;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public enum ProductCategory {
     SPORTS("sports"),
