@@ -41,13 +41,13 @@ public class ProductCategoryTest {
     void givenCategoryList_whenConvertToListOfString_thenCorrectList() {
         List<String> stringCategoryList = ProductCategory.toStringList(CATEGORIES_LIST);
 
-        assertThat(stringCategoryList).isEqualTo(STRINGS_LIST);
+        assertThat(stringCategoryList).containsExactlyElementsIn(STRINGS_LIST);
     }
 
     @Test
     void givenStringList_whenConvertToListOfCategory_thenCorrectList() {
         List<ProductCategory> categoryList = ProductCategory.toCategoriesList(STRINGS_LIST);
 
-        assertThat(categoryList).isEqualTo(CATEGORIES_LIST);
+        assertThat(categoryList).containsExactlyElementsIn(CATEGORIES_LIST);
     }
 }
