@@ -179,11 +179,6 @@ public class ProductResourceTest {
         @Nested
         class WhenFilteringProduct {
 
-            @BeforeEach
-            public void test() {
-                System.out.println("hello world");
-            }
-
             @DisplayName("GIVEN all filters THEN returns products that include specified filters " +
                     "and status 200 ok")
             @Test
@@ -306,8 +301,6 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                /*assertThat(filteredProductsResponse.products.size()).isEqualTo
-                (NUMBER_OF_PRODUCTS);*/
                     assertThatAllProductsHaveAtLeastOneCategoryFromGivenCategories(
                             filteredProductsResponse.products, VALID_PRODUCT_CATEGORIES);
                 }
@@ -324,7 +317,6 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                    /* assertThat(filteredProductsResponse.products).isEmpty();*/
                 }
             }
 
@@ -344,8 +336,6 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                   /* assertThat(filteredProductsResponse.products.size()).isEqualTo(
-                            NUMBER_OF_PRODUCTS);*/
                     assertThatAllProductsPriceIsGreaterOrEqualToMinPrice(
                             filteredProductsResponse.products, A_VALID_PRODUCT_SUGGESTED_PRICE);
                 }
@@ -364,7 +354,6 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                    /* assertThat(filteredProductsResponse.products).isEmpty();*/
                 }
             }
 
@@ -386,8 +375,6 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                   /* assertThat(filteredProductsResponse.products.size()).isEqualTo(
-                            NUMBER_OF_PRODUCTS);*/
                     assertThatAllProductsPriceIsLesserOrEqualToMaxPrice(
                             filteredProductsResponse.products, A_VALID_PRODUCT_SUGGESTED_PRICE);
                 }
@@ -406,7 +393,6 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                    /*assertThat(filteredProductsResponse.products).isEmpty();*/
                 }
             }
         }
