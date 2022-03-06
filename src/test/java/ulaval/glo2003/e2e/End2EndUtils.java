@@ -15,7 +15,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.IntStream;
 import org.apache.http.HttpStatus;
@@ -33,6 +35,11 @@ public class End2EndUtils {
 
     public final static Faker FAKER = new Faker();
     public final static int NUMBER_OF_PRODUCTS = 16;
+    public final static String PRODUCT_FILTER_SELLER_ID = "sellerId";
+    public final static String PRODUCT_FILTER_TITLE = "title";
+    public final static String PRODUCT_FILTER_CATEGORIES = "categories";
+    public final static String PRODUCT_FILTER_MIN_PRICE = "minPrice";
+    public final static String PRODUCT_FILTER_MAX_PRICE = "maxPrice";
     public static final String A_INVALID_ID = "13200298A";
     public static final String A_VALID_SELLER_NAME = "John Cena";
     public static final String A_VALID_SELLER_BIO = "What a chad!";
@@ -176,6 +183,38 @@ public class End2EndUtils {
         return productRequest;
     }
 
+    public static String createRandomProductGetId() {
+        String sellerId = createRandomSellerGetId();
+        ProductRequest productRequest = createRandomProduct();
+
+        Response response = createProductResource(productRequest, sellerId);
+
+        return extractLocationId(response);
+    }
+
+    public static ProductResponse createRandomProductGetResponse() {
+        String productId = createRandomProductGetId();
+
+        Response response = getProductById(productId);
+
+        return response.as(ProductResponse.class);
+    }
+
+    public static Map<String, String> getCorrespondingFilters(ProductResponse productResponse) {
+        Map<String, String> correspondingFilters = new HashMap<>();
+        correspondingFilters.put(PRODUCT_FILTER_SELLER_ID, productResponse.seller.id);
+        correspondingFilters.put(PRODUCT_FILTER_TITLE, productResponse.title);
+        correspondingFilters.put(PRODUCT_FILTER_MIN_PRICE,
+                productResponse.suggestedPrice.toString());
+        correspondingFilters.put(PRODUCT_FILTER_MAX_PRICE,
+                productResponse.suggestedPrice.toString());
+        for (String category : productResponse.categories) {
+            correspondingFilters.put(PRODUCT_FILTER_CATEGORIES, category);
+        }
+
+        return correspondingFilters;
+    }
+
     public static void createRandomProductsFromRandomSellersWithTitle(String title,
                                                                       int numberOfProducts) {
         for (int i = 0; i < numberOfProducts; i++) {
@@ -273,6 +312,14 @@ public class End2EndUtils {
         return productRequest;
     }
 
+    public static Response getProducts() {
+        return getResourceByFilter("/products", "", "");
+    }
+
+    public static Response getProducts(Map<String, String> filters) {
+        return getResourceByFilter("/products", filters);
+    }
+
     public static Response getProductById(String productId) {
         return getResourceById("/products/{productId}", productId);
     }
@@ -308,9 +355,10 @@ public class End2EndUtils {
         assertThat(isNullOrEmpty(postResponse.body().asString())).isTrue();
     }
 
-    public static void assertThatSellerWithProductResponseFieldsAreValid(SellerResponse sellerResponse,
-                                                                         String expectedSellerId,
-                                                                         String expectedProductId) {
+    public static void assertThatSellerWithProductResponseFieldsAreValid(
+            SellerResponse sellerResponse,
+            String expectedSellerId,
+            String expectedProductId) {
         assertThatSellerResponseFieldsAreValid(sellerResponse, expectedSellerId);
 
         SellerProductResponse sellerProductResponse = sellerResponse.products.get(0);
@@ -318,7 +366,7 @@ public class End2EndUtils {
     }
 
     public static void assertThatSellerResponseFieldsAreValid(SellerResponse sellerResponse,
-                                                                         String expectedSellerId) {
+                                                              String expectedSellerId) {
         assertThat(sellerResponse.id).isEqualTo(expectedSellerId);
         assertThat(sellerResponse.name).isEqualTo(A_VALID_SELLER_NAME);
         assertThat(sellerResponse.bio).isEqualTo(A_VALID_SELLER_BIO);
@@ -453,6 +501,17 @@ public class End2EndUtils {
                                                 Collection filterValue) {
         return given()
                 .queryParam(filterName, filterValue)
+                .contentType(ContentType.JSON)
+                .when()
+                .get(path)
+                .then()
+                .extract()
+                .response();
+    }
+
+    private static Response getResourceByFilter(String path, Map<String, String> filters) {
+        return given()
+                .queryParams(filters)
                 .contentType(ContentType.JSON)
                 .when()
                 .get(path)

@@ -22,6 +22,7 @@ import static ulaval.glo2003.e2e.End2EndUtils.createProductWithInvalidDescriptio
 import static ulaval.glo2003.e2e.End2EndUtils.createProductWithInvalidPrice;
 import static ulaval.glo2003.e2e.End2EndUtils.createProductWithInvalidTitle;
 import static ulaval.glo2003.e2e.End2EndUtils.createProductWithMissingParams;
+import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductGetResponse;
 import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductsFromRandomSellers;
 import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductsFromRandomSellersWithMaxPrice;
 import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductsFromRandomSellersWithMinPrice;
@@ -32,7 +33,9 @@ import static ulaval.glo2003.e2e.End2EndUtils.createValidProduct;
 import static ulaval.glo2003.e2e.End2EndUtils.createValidProductGetId;
 import static ulaval.glo2003.e2e.End2EndUtils.createValidProductWithoutCategories;
 import static ulaval.glo2003.e2e.End2EndUtils.createValidSellerGetId;
+import static ulaval.glo2003.e2e.End2EndUtils.getCorrespondingFilters;
 import static ulaval.glo2003.e2e.End2EndUtils.getProductById;
+import static ulaval.glo2003.e2e.End2EndUtils.getProducts;
 import static ulaval.glo2003.e2e.End2EndUtils.getProductsByCategories;
 import static ulaval.glo2003.e2e.End2EndUtils.getProductsByMaxPrice;
 import static ulaval.glo2003.e2e.End2EndUtils.getProductsByMinPrice;
@@ -44,7 +47,9 @@ import java.io.IOException;
 import org.apache.http.HttpStatus;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -62,6 +67,7 @@ public class ProductResourceTest {
     public static void startServer() throws IOException {
         server = Main.startServer();
         server.start();
+
     }
 
     @AfterAll
@@ -173,12 +179,47 @@ public class ProductResourceTest {
         @Nested
         class WhenFilteringProduct {
 
+            @BeforeEach
+            public void test() {
+                System.out.println("hello world");
+            }
+
+            @DisplayName("GIVEN all filters THEN returns products that include specified filters " +
+                    "and status 200 ok")
+            @Test
+            void givenProductThatMatchesAllFilters_whenFilteringProducts_thenReturnsTheProductThatMatchGivenFiltersWithStatus200() {
+                ProductResponse expectedProduct = createRandomProductGetResponse();
+
+                Response response = getProducts(getCorrespondingFilters(expectedProduct));
+                ProductResponse actualProduct =
+                        response.as(FilteredProductsResponse.class).products.get(0);
+
+                assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                assertThat(actualProduct.id).isEqualTo(expectedProduct.id);
+            }
+
+
+            @DisplayName("GIVEN no filters THEN returns all products from all sellers and status " +
+                    "200 ok")
+            @Test
+            void givenRandomProducts_whenFilteringProductsWithoutFilter_thenAllProductsFromAllSellersReturnedWithStatus200() {
+                createRandomProductsFromRandomSellers(NUMBER_OF_PRODUCTS);
+
+                Response response = getProducts();
+                FilteredProductsResponse filteredProductsResponse =
+                        response.as(FilteredProductsResponse.class);
+
+                assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                assertThat(filteredProductsResponse.products).isNotEmpty();
+            }
+
             @DisplayName("BY Seller ID")
             @Nested
             class BySellerId {
 
                 @DisplayName(
-                        "GIVEN a seller with products THEN returns all products from specified seller and status 200 ok")
+                        "GIVEN a seller with products THEN returns all products from specified " +
+                                "seller and status 200 ok")
                 @Test
                 void givenSellerWithProducts_whenFilteringProductsBySellerId_thenProductsFromSpecifiedSellerReturnedWithStatus200() {
                     String sellerId = createValidSellerGetId();
@@ -189,13 +230,15 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                    assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);
+                    assertThat(filteredProductsResponse.products.size()).isEqualTo(
+                            NUMBER_OF_PRODUCTS);
                     assertThatAllProductsHaveTheSameSellerId(filteredProductsResponse.products,
                             sellerId);
                 }
 
-                @DisplayName("GIVEN a seller without products THEN returns no products with status " +
-                        "200 ok")
+                @DisplayName(
+                        "GIVEN a seller without products THEN returns no product with status " +
+                                "200 ok")
                 @Test
                 void givenSellerWithNoProducts_whenFilteringProductsBySellerId_thenNoProductsReturnedWithStatus200() {
                     String sellerWithoutProductsId = createValidSellerGetId();
@@ -209,13 +252,17 @@ public class ProductResourceTest {
                     assertThat(filteredProductsResponse.products.size()).isEqualTo(0);
                 }
 
-                @DisplayName("GIVEN invalid id THEN returns error 400")
+                @DisplayName("GIVEN invalid id THEN returns no product with status 200 ok")
                 @Test
                 void givenInvalidSellerId_whenFilteringProductsBySellerId_thenReturnsError400() {
                     String sellerId = A_INVALID_ID;
 
                     Response response = getProductsBySellerId(A_INVALID_ID);
-                    System.out.println(response.asPrettyString());
+                    FilteredProductsResponse filteredProductsResponse =
+                            response.as(FilteredProductsResponse.class);
+
+                    assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                    assertThat(filteredProductsResponse.products.size()).isEqualTo(0);
 
                 }
             }
@@ -225,7 +272,8 @@ public class ProductResourceTest {
             class ByTitle {
 
                 @DisplayName(
-                        "GIVEN products with title THEN returns products with title included and status 200 ok")
+                        "GIVEN products with title THEN returns products with title included and " +
+                                "status 200 ok")
                 @Test
                 void givenProductsWithCommonTitle_whenFilteringProductsByTitle_thenProductsWithTitleIncludedReturnedWithStatus200() {
                     String title = A_RANDOM_VALID_PRODUCT_TITLE;
@@ -236,7 +284,8 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                    assertThat(filteredProductsResponse.products.size()).isEqualTo(NUMBER_OF_PRODUCTS);
+                    assertThat(filteredProductsResponse.products.size()).isEqualTo(
+                            NUMBER_OF_PRODUCTS);
                 }
             }
 
@@ -244,10 +293,12 @@ public class ProductResourceTest {
             @Nested
             class ByCategories {
                 @DisplayName(
-                        "GIVEN products with categories THEN returns products with at least one category included and status 200 ok")
+                        "GIVEN products with categories THEN returns products with at least one " +
+                                "category included and status 200 ok")
                 @Test
                 void givenProductsWithCommonCategories_whenFilteringProductsByCategory_thenProductsWithCategoryIncludedReturnedWithStatus200() {
-                    createRandomProductsWithCommonCategoriesFromRandomSellers(VALID_PRODUCT_CATEGORIES,
+                    createRandomProductsWithCommonCategoriesFromRandomSellers(
+                            VALID_PRODUCT_CATEGORIES,
                             NUMBER_OF_PRODUCTS);
 
                     Response response = getProductsByCategories(VALID_PRODUCT_CATEGORIES);
@@ -262,7 +313,8 @@ public class ProductResourceTest {
                 }
 
                 @DisplayName(
-                        "GIVEN products without categories THEN returns no products and status 200 ok")
+                        "GIVEN products without categories THEN returns no products and status " +
+                                "200 ok")
                 @Test
                 void givenProductsWithoutCategories_whenFilteringProductsByCategory_thenNoProductsReturnedWithStatus200() {
                     createRandomProductsWithoutCategoriesFromRandomSellers(NUMBER_OF_PRODUCTS);
@@ -279,7 +331,8 @@ public class ProductResourceTest {
             @DisplayName("By Minimum Price")
             @Nested
             class ByMinPrice {
-                @DisplayName("GIVEN products with price greater or equal to minimum THEN returns all products and status 200 ok")
+                @DisplayName("GIVEN products with price greater or equal to minimum THEN returns " +
+                        "all products and status 200 ok")
                 @Test
                 void givenProductsWithPriceGreaterOrEqualToMinPrice_whenFilteringProductsByMinPrice_thenAllProductsReturnedWithStatus200() {
                     createRandomProductsFromRandomSellersWithMinPrice(
@@ -297,8 +350,9 @@ public class ProductResourceTest {
                             filteredProductsResponse.products, A_VALID_PRODUCT_SUGGESTED_PRICE);
                 }
 
-                @DisplayName("GIVEN products with price lesser than minimum THEN returns no product " +
-                        "and status 200 ok")
+                @DisplayName(
+                        "GIVEN products with price lesser than minimum THEN returns no product " +
+                                "and status 200 ok")
                 @Test
                 void givenProductsWithPriceLesserThanMinPrice_whenFilteringProductsByMinPrice_thenNoProductsReturnedWithStatus200() {
                     createRandomProductsFromRandomSellersWithMaxPrice(
@@ -318,8 +372,9 @@ public class ProductResourceTest {
             @Nested
             class ByMaxPrice {
 
-                @DisplayName("GIVEN products with price lesser or equal to maximum THEN returns all " +
-                        "products and status 200 ok")
+                @DisplayName(
+                        "GIVEN products with price lesser or equal to maximum THEN returns all " +
+                                "products and status 200 ok")
                 @Test
                 void givenProductsWithPriceLesserOrEqualToMaxPrice_whenFilteringProductsByMaxPrice_thenAllProductsReturnedWithStatus200() {
                     createRandomProductsFromRandomSellersWithMaxPrice(
@@ -337,8 +392,9 @@ public class ProductResourceTest {
                             filteredProductsResponse.products, A_VALID_PRODUCT_SUGGESTED_PRICE);
                 }
 
-                @DisplayName("GIVEN products with price greater than maximum THEN returns no product " +
-                        "and status 200 ok")
+                @DisplayName(
+                        "GIVEN products with price greater than maximum THEN returns no product " +
+                                "and status 200 ok")
                 @Test
                 void givenProductsWithPriceGreaterThanMaxPrice_whenFilteringProductsByMaxPrice_thenNoProductsReturnedWithStatus200() {
                     createRandomProductsFromRandomSellersWithMinPrice(
