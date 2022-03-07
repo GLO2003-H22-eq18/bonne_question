@@ -1,10 +1,16 @@
 # TP2
 
+### Stratégie des branches et _commits_ 
+Nous avons décidé en équipe de choisir la stratégie **_Git flow_** afin de séparer nos différentes branches selon nos _features_ à développer. Notre branche principale est ``dev`` qu'on _merge_ à notre branche ``main`` lors des remises (_jalons_).
+
+![BranchAndCommitStrategy](https://uploads.toptal.io/blog/image/129305/toptal-blog-image-1551794424851-b3d5928bc33edfc954ef460062e5cbcc.png)
+(ref: https://www.toptal.com/software/trunk-based-development-git-flow)
+
 ### Métriques mesurées
 | Métrique mesurée                       | Moyenne | Minimum | Maximum |
 | -------------------------------------- |:-------:|:-------:|:-------:|
-| Implémenter une issue                  | 1h30min | 30min   | 3h      |
-| Intégrer une PR                        | 30min   | 15min   | 1h      |
+| Implémenter une issue                  | 1h30 min | 30 min   | 3 h      |
+| Intégrer une PR                        | 30 min   | 15 min   | 1 h      |
 | Nb. de personnes sur une issue         | 2       | 1       | 3       |
 | Nb. de personnes pour _review_ une PR  | 2       | 1       | 3       |
 | Issues en implémentation en même temps | 3       | 2       | 5       |
@@ -25,13 +31,13 @@
 
 ### Planification du travail sur Github
 
-Project:
+#### Project:
 ![Project](https://user-images.githubusercontent.com/73801331/156835979-b0ed4660-0f92-478b-9faf-81b78f44e8b9.PNG)
 
-Milestone:
+#### Milestone:
 ![Milestone](https://user-images.githubusercontent.com/73801331/156836003-fc464524-8903-4dce-9b89-e42412be22ce.PNG)
 
-Issues:
+#### Issues:
 #1
 ![Issues1](https://user-images.githubusercontent.com/73801331/156836041-e8d886cb-97bb-4163-9e7b-589136098826.PNG)
 
@@ -41,7 +47,7 @@ Issues:
 #3
 ![Issues3](https://user-images.githubusercontent.com/73801331/156836093-2aa4c538-523a-402b-b3db-0d87aef8aa28.PNG)
 
-Pull Request (PR):
+#### Pull Request (PR):
 #1
 ![PullRequest1 0](https://user-images.githubusercontent.com/73801331/156836138-a112ddf3-48fd-4eeb-b51b-244c5f3a53bd.PNG)
 ![PullRequest1 1](https://user-images.githubusercontent.com/73801331/156836155-a9e9de47-f604-44be-ba9e-dd2f74e4e7ce.PNG)
@@ -54,5 +60,5 @@ Pull Request (PR):
 ![PullRequest3 0](https://user-images.githubusercontent.com/73801331/156836208-0bede0ec-e757-4675-9d6d-4783ffa8d90d.PNG)
 ![PullRequest3 1](https://user-images.githubusercontent.com/73801331/156836211-c6ef1d45-0f4b-41b0-98d5-441d8bf666d4.PNG)
 
-Arbre des commits et de branche:
+#### Arbre des commits et de branches :
 ![Branch_tree](https://user-images.githubusercontent.com/73801331/156836283-bc0a3d3e-1881-4de7-afe1-d4a061363845.png)
