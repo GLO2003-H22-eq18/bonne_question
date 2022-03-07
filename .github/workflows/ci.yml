@@ -32,7 +32,10 @@ jobs:
         run: mvn compile
 
       - name: Unit tests
-        run: mvn test
+        run: mvn test -Dtest=glo2003/unit/*
 
       - name: Integration tests
         run: mvn integration-test
+
+      - name: System tests
+        run: mvn test -Dtest=glo2003/e2e/*
