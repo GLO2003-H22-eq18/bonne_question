@@ -5,18 +5,18 @@ import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import ulaval.glo2003.Exceptions.InvalidArgumentExceptionMapper;
-import ulaval.glo2003.Exceptions.ItemNotFoundExceptionMapper;
-import ulaval.glo2003.Exceptions.MissingArgumentExceptionMapper;
-import ulaval.glo2003.Product.Domain.ProductFactory;
-import ulaval.glo2003.Product.Domain.ProductRepository;
-import ulaval.glo2003.Product.UI.ProductAssembler;
-import ulaval.glo2003.Product.UI.ProductResource;
-import ulaval.glo2003.Seller.Domain.SellerFactory;
-import ulaval.glo2003.Seller.Domain.SellerRepository;
-import ulaval.glo2003.Seller.UI.SellerAssembler;
-import ulaval.glo2003.Seller.UI.SellerProductAssembler;
-import ulaval.glo2003.Seller.UI.SellerResource;
+import ulaval.glo2003.exceptions.InvalidArgumentExceptionMapper;
+import ulaval.glo2003.exceptions.ItemNotFoundExceptionMapper;
+import ulaval.glo2003.exceptions.MissingArgumentExceptionMapper;
+import ulaval.glo2003.product.domain.ProductFactory;
+import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.ui.ProductAssembler;
+import ulaval.glo2003.product.ui.ProductResource;
+import ulaval.glo2003.seller.domain.SellerFactory;
+import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.seller.ui.SellerAssembler;
+import ulaval.glo2003.seller.ui.SellerProductAssembler;
+import ulaval.glo2003.seller.ui.SellerResource;
 
 public class Main {
 

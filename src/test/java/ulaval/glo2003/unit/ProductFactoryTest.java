@@ -2,7 +2,7 @@ package ulaval.glo2003.unit;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static ulaval.glo2003.Product.Domain.ProductCategory.toStringList;
+import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -11,17 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.Product.Domain.Product;
-import ulaval.glo2003.Product.Domain.ProductFactory;
-import ulaval.glo2003.Product.Exceptions.InvalidProductCategoriesException;
-import ulaval.glo2003.Product.Exceptions.InvalidProductDescriptionException;
-import ulaval.glo2003.Product.Exceptions.InvalidProductSuggestedPriceException;
-import ulaval.glo2003.Product.Exceptions.InvalidProductTitleException;
-import ulaval.glo2003.Product.Exceptions.MissingProductDescriptionException;
-import ulaval.glo2003.Product.Exceptions.MissingProductSuggestedPriceException;
-import ulaval.glo2003.Product.Exceptions.MissingProductTitleException;
-import ulaval.glo2003.Product.UI.ProductRequest;
-import ulaval.glo2003.Seller.Domain.Seller;
+import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.product.domain.ProductFactory;
+import ulaval.glo2003.product.exceptions.InvalidProductCategoriesException;
+import ulaval.glo2003.product.exceptions.InvalidProductDescriptionException;
+import ulaval.glo2003.product.exceptions.InvalidProductSuggestedPriceException;
+import ulaval.glo2003.product.exceptions.InvalidProductTitleException;
+import ulaval.glo2003.product.exceptions.MissingProductDescriptionException;
+import ulaval.glo2003.product.exceptions.MissingProductSuggestedPriceException;
+import ulaval.glo2003.product.exceptions.MissingProductTitleException;
+import ulaval.glo2003.product.ui.ProductRequest;
+import ulaval.glo2003.seller.domain.Seller;
 
 public class ProductFactoryTest {
 
@@ -50,7 +50,7 @@ public class ProductFactoryTest {
                         new ArrayList<>());
     }
 
-    ProductRequest createProductRequest(
+    public ProductRequest createProductRequest(
             String title, String description, Double suggestedPrice, List<String> categories) {
         ProductRequest productRequest = new ProductRequest();
         productRequest.title = title;

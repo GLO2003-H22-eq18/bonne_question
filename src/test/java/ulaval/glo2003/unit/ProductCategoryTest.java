@@ -4,7 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.Product.Domain.ProductCategory;
+import ulaval.glo2003.product.domain.ProductCategory;
 
 public class ProductCategoryTest {
 

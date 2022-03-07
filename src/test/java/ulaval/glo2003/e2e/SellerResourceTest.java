@@ -27,8 +27,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
-import ulaval.glo2003.Seller.UI.SellerRequest;
-import ulaval.glo2003.Seller.UI.SellerResponse;
+import ulaval.glo2003.seller.ui.SellerRequest;
+import ulaval.glo2003.seller.ui.SellerResponse;
 
 @DisplayName("Seller Resource")
 class SellerResourceTest {

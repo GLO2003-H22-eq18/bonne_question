@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.Product.Domain.Product;
-import ulaval.glo2003.Seller.Domain.Seller;
-import ulaval.glo2003.Seller.UI.SellerAssembler;
-import ulaval.glo2003.Seller.UI.SellerProductAssembler;
-import ulaval.glo2003.Seller.UI.SellerResponse;
+import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.seller.domain.Seller;
+import ulaval.glo2003.seller.ui.SellerAssembler;
+import ulaval.glo2003.seller.ui.SellerProductAssembler;
+import ulaval.glo2003.seller.ui.SellerResponse;
 
 class SellerAssemblerTest {
 

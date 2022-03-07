@@ -4,19 +4,19 @@ import static com.google.common.truth.Truth.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.Product.Domain.Product;
-import ulaval.glo2003.Product.Domain.ProductCategory;
-import ulaval.glo2003.Seller.UI.SellerProductAssembler;
-import ulaval.glo2003.Seller.UI.SellerProductResponse;
+import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.product.domain.ProductCategory;
+import ulaval.glo2003.seller.ui.SellerProductAssembler;
+import ulaval.glo2003.seller.ui.SellerProductResponse;
 
 public class SellerProductAssemblerTest {
 
-    private SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
+    private static SellerProductAssembler sellerProductAssembler;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    public static void setUp() {
         sellerProductAssembler = new SellerProductAssembler();
     }
 

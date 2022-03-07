@@ -4,7 +4,7 @@ package ulaval.glo2003.e2e;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.truth.Truth.assertThat;
 import static io.restassured.RestAssured.given;
-import static ulaval.glo2003.Utils.StringUtil.mixUpperAndLowerCase;
+import static ulaval.glo2003.utils.StringUtil.mixUpperAndLowerCase;
 
 import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
@@ -21,14 +21,14 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.IntStream;
 import org.apache.http.HttpStatus;
-import ulaval.glo2003.Exceptions.ErrorCode;
-import ulaval.glo2003.Exceptions.ErrorResponse;
-import ulaval.glo2003.Product.Domain.ProductCategory;
-import ulaval.glo2003.Product.UI.ProductRequest;
-import ulaval.glo2003.Product.UI.ProductResponse;
-import ulaval.glo2003.Seller.UI.SellerProductResponse;
-import ulaval.glo2003.Seller.UI.SellerRequest;
-import ulaval.glo2003.Seller.UI.SellerResponse;
+import ulaval.glo2003.exceptions.ErrorCode;
+import ulaval.glo2003.exceptions.ErrorResponse;
+import ulaval.glo2003.product.domain.ProductCategory;
+import ulaval.glo2003.product.ui.ProductRequest;
+import ulaval.glo2003.product.ui.ProductResponse;
+import ulaval.glo2003.seller.ui.SellerProductResponse;
+import ulaval.glo2003.seller.ui.SellerRequest;
+import ulaval.glo2003.seller.ui.SellerResponse;
 import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class End2EndUtils {

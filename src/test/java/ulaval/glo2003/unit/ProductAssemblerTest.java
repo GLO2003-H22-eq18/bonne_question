@@ -1,17 +1,17 @@
 package ulaval.glo2003.unit;
 
 import static com.google.common.truth.Truth.assertThat;
-import static ulaval.glo2003.Product.Domain.ProductCategory.toCategoriesList;
-import static ulaval.glo2003.Product.Domain.ProductCategory.toStringList;
+import static ulaval.glo2003.product.domain.ProductCategory.toCategoriesList;
+import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.Product.Domain.Product;
-import ulaval.glo2003.Product.Domain.ProductCategory;
-import ulaval.glo2003.Product.UI.ProductAssembler;
-import ulaval.glo2003.Product.UI.ProductResponse;
+import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.product.domain.ProductCategory;
+import ulaval.glo2003.product.ui.ProductAssembler;
+import ulaval.glo2003.product.ui.ProductResponse;
 
 class ProductAssemblerTest {
 

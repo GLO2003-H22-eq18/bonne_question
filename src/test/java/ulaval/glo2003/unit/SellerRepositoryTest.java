@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.Product.Domain.Product;
-import ulaval.glo2003.Seller.Domain.Seller;
-import ulaval.glo2003.Seller.Domain.SellerRepository;
-import ulaval.glo2003.Seller.Exceptions.SellerNotFoundException;
+import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.seller.domain.Seller;
+import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 
 public class SellerRepositoryTest {
 

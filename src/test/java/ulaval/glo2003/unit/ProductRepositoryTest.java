@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.Product.Domain.Product;
-import ulaval.glo2003.Product.Domain.ProductCategory;
-import ulaval.glo2003.Product.Domain.ProductRepository;
-import ulaval.glo2003.Product.Exceptions.ProductNotFoundException;
+import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.product.domain.ProductCategory;
+import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.exceptions.ProductNotFoundException;
 
 public class ProductRepositoryTest {
     private static final String INVALID_ID = "-1";
