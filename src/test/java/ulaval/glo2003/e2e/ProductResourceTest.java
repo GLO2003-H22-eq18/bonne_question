@@ -1,7 +1,6 @@
 package ulaval.glo2003.e2e;
 
 import static com.google.common.truth.Truth.assertThat;
-import static ulaval.glo2003.e2e.End2EndUtils.ALL_PRODUCT_CATEGORIES;
 import static ulaval.glo2003.e2e.End2EndUtils.A_INVALID_ID;
 import static ulaval.glo2003.e2e.End2EndUtils.A_RANDOM_VALID_PRODUCT_TITLE;
 import static ulaval.glo2003.e2e.End2EndUtils.A_VALID_PRODUCT_SUGGESTED_PRICE;
@@ -29,7 +28,6 @@ import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductsFromRandomSell
 import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductsFromRandomSellersWithMinPrice;
 import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductsFromRandomSellersWithTitle;
 import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductsWithCommonCategoriesFromRandomSellers;
-import static ulaval.glo2003.e2e.End2EndUtils.createRandomProductsWithoutCategoriesFromRandomSellers;
 import static ulaval.glo2003.e2e.End2EndUtils.createValidProduct;
 import static ulaval.glo2003.e2e.End2EndUtils.createValidProductGetId;
 import static ulaval.glo2003.e2e.End2EndUtils.createValidProductWithoutCategories;
@@ -45,14 +43,10 @@ import static ulaval.glo2003.e2e.End2EndUtils.getProductsByTitle;
 
 import io.restassured.response.Response;
 import java.io.IOException;
-import java.util.ArrayList;
 import org.apache.http.HttpStatus;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

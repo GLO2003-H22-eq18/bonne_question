@@ -18,15 +18,6 @@ public enum ProductCategory {
         name = category;
     }
 
-    private boolean equalsName(String otherName) {
-        return name.equals(otherName);
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
     public static boolean contains(String category) {
         for (ProductCategory productCategory : values()) {
             if (productCategory.equalsName(category)) {
@@ -59,5 +50,14 @@ public enum ProductCategory {
 
         return new ArrayList<>(
                 new HashSet<>(names));
+    }
+
+    private boolean equalsName(String otherName) {
+        return name.equals(otherName);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

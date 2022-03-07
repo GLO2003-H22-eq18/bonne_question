@@ -1,6 +1,6 @@
 package ulaval.glo2003.unit;
 
-import static com.google.common.truth.Truth.*;
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
@@ -37,7 +37,8 @@ public class SellerRepositoryTest {
     void whenSearchingNullSellerInRepository_thenSellerNotFoundException() {
         Seller seller = getSeller();
 
-        assertThrows(SellerNotFoundException.class, () -> sellerRepository.findById(seller.getId()));
+        assertThrows(SellerNotFoundException.class,
+                () -> sellerRepository.findById(seller.getId()));
     }
 
     @Test

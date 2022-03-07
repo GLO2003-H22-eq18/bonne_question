@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Product {
+    private static int currentId = 0;
     private final String id;
     private final OffsetDateTime createdAt;
     private final String title;
@@ -14,8 +15,6 @@ public class Product {
     private final String sellerId;
     private final String sellerName;
     private final Integer count;
-
-    private static int currentId = 0;
 
     public Product(
             String title,

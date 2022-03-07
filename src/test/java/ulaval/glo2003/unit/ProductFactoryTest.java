@@ -1,6 +1,6 @@
 package ulaval.glo2003.unit;
 
-import static com.google.common.truth.Truth.*;
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ulaval.glo2003.Product.Domain.ProductCategory.toStringList;
 
@@ -13,7 +13,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Product.Domain.Product;
 import ulaval.glo2003.Product.Domain.ProductFactory;
-import ulaval.glo2003.Product.Exceptions.*;
+import ulaval.glo2003.Product.Exceptions.InvalidProductCategoriesException;
+import ulaval.glo2003.Product.Exceptions.InvalidProductDescriptionException;
+import ulaval.glo2003.Product.Exceptions.InvalidProductSuggestedPriceException;
+import ulaval.glo2003.Product.Exceptions.InvalidProductTitleException;
+import ulaval.glo2003.Product.Exceptions.MissingProductDescriptionException;
+import ulaval.glo2003.Product.Exceptions.MissingProductSuggestedPriceException;
+import ulaval.glo2003.Product.Exceptions.MissingProductTitleException;
 import ulaval.glo2003.Product.UI.ProductRequest;
 import ulaval.glo2003.Seller.Domain.Seller;
 

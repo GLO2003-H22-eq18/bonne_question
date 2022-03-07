@@ -5,7 +5,7 @@ import java.util.List;
 public class FilteredProductsResponse {
     public List<ProductResponse> products;
 
-    public FilteredProductsResponse(){
+    public FilteredProductsResponse() {
         super();
     }
 

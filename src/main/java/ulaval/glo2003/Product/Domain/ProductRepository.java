@@ -52,11 +52,13 @@ public class ProductRepository {
         }
 
         if (minPrice != null) {
-            filteredProductsList = getMinPriceFilteredProducts(filteredProductsList, Double.parseDouble(minPrice));
+            filteredProductsList =
+                    getMinPriceFilteredProducts(filteredProductsList, Double.parseDouble(minPrice));
         }
 
         if (maxPrice != null) {
-            filteredProductsList = getMaxPriceFilteredProducts(filteredProductsList, Double.parseDouble(maxPrice));
+            filteredProductsList =
+                    getMaxPriceFilteredProducts(filteredProductsList, Double.parseDouble(maxPrice));
         }
 
         return filteredProductsList;

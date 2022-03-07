@@ -1,6 +1,6 @@
 package ulaval.glo2003.unit;
 
-import static com.google.common.truth.Truth.*;
+import static com.google.common.truth.Truth.assertThat;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
