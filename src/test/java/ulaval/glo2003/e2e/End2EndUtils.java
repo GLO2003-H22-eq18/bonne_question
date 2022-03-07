@@ -53,6 +53,8 @@ public class End2EndUtils {
     public static final Double A_VALID_PRODUCT_SUGGESTED_PRICE = 5.0;
     public static final List<String> VALID_PRODUCT_CATEGORIES =
             new ArrayList(List.of("beauty", "electronics"));
+    public static final List<String> ALL_PRODUCT_CATEGORIES =
+            new ArrayList(List.of("beauty", "electronics", "other", "sports", "apparel", "housing"));
     public static final String A_INVALID_PRODUCT_TITLE = "    \n  \t \n ";
     public static final String A_INVALID_PRODUCT_DESCRIPTION = "    \n  \t \n ";
     public static final Double A_INVALID_PRODUCT_SUGGESTED_PRICE = 0.99;
