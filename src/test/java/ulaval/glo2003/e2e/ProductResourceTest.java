@@ -1,6 +1,7 @@
 package ulaval.glo2003.e2e;
 
 import static com.google.common.truth.Truth.assertThat;
+import static ulaval.glo2003.e2e.End2EndUtils.ALL_PRODUCT_CATEGORIES;
 import static ulaval.glo2003.e2e.End2EndUtils.A_INVALID_ID;
 import static ulaval.glo2003.e2e.End2EndUtils.A_RANDOM_VALID_PRODUCT_TITLE;
 import static ulaval.glo2003.e2e.End2EndUtils.A_VALID_PRODUCT_SUGGESTED_PRICE;
@@ -44,8 +45,10 @@ import static ulaval.glo2003.e2e.End2EndUtils.getProductsByTitle;
 
 import io.restassured.response.Response;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.apache.http.HttpStatus;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -67,7 +70,6 @@ public class ProductResourceTest {
     public static void startServer() throws IOException {
         server = Main.startServer();
         server.start();
-
     }
 
     @AfterAll
@@ -287,6 +289,7 @@ public class ProductResourceTest {
             @DisplayName("By Categories")
             @Nested
             class ByCategories {
+
                 @DisplayName(
                         "GIVEN products with categories THEN returns products with at least one " +
                                 "category included and status 200 ok")
@@ -303,20 +306,6 @@ public class ProductResourceTest {
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
                     assertThatAllProductsHaveAtLeastOneCategoryFromGivenCategories(
                             filteredProductsResponse.products, VALID_PRODUCT_CATEGORIES);
-                }
-
-                @DisplayName(
-                        "GIVEN products without categories THEN returns no products and status " +
-                                "200 ok")
-                @Test
-                void givenProductsWithoutCategories_whenFilteringProductsByCategory_thenNoProductsReturnedWithStatus200() {
-                    createRandomProductsWithoutCategoriesFromRandomSellers(NUMBER_OF_PRODUCTS);
-
-                    Response response = getProductsByCategories(VALID_PRODUCT_CATEGORIES);
-                    FilteredProductsResponse filteredProductsResponse =
-                            response.as(FilteredProductsResponse.class);
-
-                    assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
                 }
             }
 
@@ -341,7 +330,7 @@ public class ProductResourceTest {
                 }
 
                 @DisplayName(
-                        "GIVEN products with price lesser than minimum THEN returns no product " +
+                        "GIVEN products with price lesser than minimum THEN returns no products " +
                                 "and status 200 ok")
                 @Test
                 void givenProductsWithPriceLesserThanMinPrice_whenFilteringProductsByMinPrice_thenNoProductsReturnedWithStatus200() {
@@ -354,6 +343,8 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                    assertThatAllProductsPriceIsGreaterOrEqualToMinPrice(
+                            filteredProductsResponse.products, A_VALID_PRODUCT_SUGGESTED_PRICE);
                 }
             }
 
@@ -393,6 +384,8 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                    assertThatAllProductsPriceIsLesserOrEqualToMaxPrice(
+                            filteredProductsResponse.products, A_VALID_PRODUCT_SUGGESTED_PRICE);
                 }
             }
         }
