@@ -86,14 +86,14 @@ public class ProductRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<Product> getProductsFilterByMinPrice(
+    public List<Product> getMinPriceFilteredProducts(
             List<Product> filteredProductsList, Double minPrice) {
         return filteredProductsList.stream()
                 .filter(product -> product.getSuggestedPrice() >= minPrice)
                 .collect(Collectors.toList());
     }
 
-    public List<Product> getProductsFilterByMaxPrice(
+    public List<Product> getMaxPriceFilteredProducts(
             List<Product> filteredProductsList, Double maxPrice) {
         return filteredProductsList.stream()
                 .filter(product -> product.getSuggestedPrice() <= maxPrice)
