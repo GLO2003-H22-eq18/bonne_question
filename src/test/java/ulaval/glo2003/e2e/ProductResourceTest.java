@@ -307,22 +307,6 @@ public class ProductResourceTest {
                     assertThatAllProductsHaveAtLeastOneCategoryFromGivenCategories(
                             filteredProductsResponse.products, VALID_PRODUCT_CATEGORIES);
                 }
-
-                @DisplayName(
-                        "GIVEN empty category filter THEN returns no products and status " +
-                                "200 ok")
-                @Test
-                void givenProductsWithoutCategories_whenFilteringProductsWithEmptyCategory_thenNoProductsReturnedWithStatus200() {
-                    createRandomProductsWithoutCategoriesFromRandomSellers(NUMBER_OF_PRODUCTS);
-
-                    Response response = getProductsByCategories(new ArrayList<>());
-                    FilteredProductsResponse filteredProductsResponse =
-                            response.as(FilteredProductsResponse.class);
-
-                    assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                    assertThat(filteredProductsResponse.products).isEmpty();
-
-                }
             }
 
             @DisplayName("By Minimum Price")
