@@ -1,6 +1,7 @@
 package ulaval.glo2003.Product.Domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public enum ProductCategory {
@@ -48,13 +49,15 @@ public enum ProductCategory {
         List<ProductCategory> categories = new ArrayList<>();
         names.forEach((name) -> categories.add(findByName(name)));
 
-        return categories;
+        return new ArrayList<>(
+                new HashSet<>(categories));
     }
 
     public static List<String> toStringList(List<ProductCategory> categories) {
         List<String> names = new ArrayList<>();
         categories.forEach((category) -> names.add(category.toString()));
 
-        return names;
+        return new ArrayList<>(
+                new HashSet<>(names));
     }
 }

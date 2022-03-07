@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import ulaval.glo2003.Product.Exceptions.ProductNotFoundException;
@@ -39,17 +38,17 @@ public class ProductRepository {
 
         List<Product> filteredProductsList;
         if (sellerId != null) {
-            filteredProductsList = getSellerIdFilteredProducts(sellerId);
+            filteredProductsList = getProductsFilterBySellerId(sellerId);
         } else {
             filteredProductsList = new ArrayList<>(products.values());
         }
 
         if (title != null) {
-            filteredProductsList = getTitleFilteredProducts(filteredProductsList, title);
+            filteredProductsList = getProductsFilterByTitle(filteredProductsList, title);
         }
 
         if (!categories.isEmpty()) {
-            filteredProductsList = getCategoriesFilteredProducts(filteredProductsList, categories);
+            filteredProductsList = getProductsFilterByCategories(filteredProductsList, categories);
         }
 
         if (minPrice != null) {
@@ -63,21 +62,21 @@ public class ProductRepository {
         return filteredProductsList;
     }
 
-    public List<Product> getSellerIdFilteredProducts(String sellerId) {
+    public List<Product> getProductsFilterBySellerId(String sellerId) {
         return products.values().stream()
                 .filter(product -> product.getSellerId().equals(sellerId))
                 .collect(Collectors.toList());
     }
 
-    private List<Product> getTitleFilteredProducts(
+    private List<Product> getProductsFilterByTitle(
             List<Product> filteredProductsList, String title) {
-        final String lowerCaseTitle = title.toLowerCase(Locale.ROOT);
+        final String lowerCaseTitle = title.toLowerCase();
         return filteredProductsList.stream()
-                .filter(product -> product.getTitle().contains(lowerCaseTitle))
+                .filter(product -> product.getTitle().toLowerCase().contains(lowerCaseTitle))
                 .collect(Collectors.toList());
     }
 
-    public List<Product> getCategoriesFilteredProducts(
+    public List<Product> getProductsFilterByCategories(
             List<Product> filteredProductsList, List<String> categories) {
         List<ProductCategory> productCategories = ProductCategory.toCategoriesList(categories);
         return filteredProductsList.stream()

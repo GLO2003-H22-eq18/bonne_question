@@ -17,6 +17,7 @@ import ulaval.glo2003.Product.Domain.ProductRepository;
 import ulaval.glo2003.Seller.Domain.Seller;
 import ulaval.glo2003.Seller.Domain.SellerRepository;
 
+
 @Path("/products")
 public class ProductResource {
     private final SellerRepository sellerRepository;
@@ -70,6 +71,7 @@ public class ProductResource {
             @QueryParam("maxPrice") String maxPrice) {
 
         ProductUtil.checkFilteredProductInvalidParam(sellerId, title, categories, minPrice, maxPrice);
+
 
         List<Product> filteredProducts = productRepository
                 .getFilteredProducts(sellerId, title, categories, minPrice, maxPrice);
