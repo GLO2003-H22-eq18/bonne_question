@@ -70,7 +70,7 @@ public class ProductResource {
             @QueryParam("minPrice") String minPrice,
             @QueryParam("maxPrice") String maxPrice) {
 
-        ProductUtil.checkFilteredProductInvalidParam(sellerId, title, categories, minPrice, maxPrice);
+        ProductUtil.checkFilteredProductInvalidParam(title, categories, minPrice, maxPrice);
 
 
         List<Product> filteredProducts = productRepository

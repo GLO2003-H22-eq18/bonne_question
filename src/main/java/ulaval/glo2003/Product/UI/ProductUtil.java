@@ -34,12 +34,9 @@ public class ProductUtil {
         validateCategories(productRequest.categories);
     }
 
-    public static void checkFilteredProductInvalidParam(String sellerId, String title,
+    public static void checkFilteredProductInvalidParam(String title,
                                                         List<String> categories, String minPrice,
                                                         String maxPrice) {
-        if (sellerId != null) {
-            validateString(sellerId, "sellerId");
-        }
         if (title != null) {
             validateString(title, "title");
         }
