@@ -34,8 +34,8 @@ public class ProductRepository {
             String sellerId,
             String title,
             List<String> categories,
-            Double minPrice,
-            Double maxPrice) {
+            String minPrice,
+            String maxPrice) {
 
         List<Product> filteredProductsList;
         if (sellerId != null) {
@@ -53,11 +53,11 @@ public class ProductRepository {
         }
 
         if (minPrice != null) {
-            filteredProductsList = getMinPriceFilteredProducts(filteredProductsList, minPrice);
+            filteredProductsList = getMinPriceFilteredProducts(filteredProductsList, Double.parseDouble(minPrice));
         }
 
         if (maxPrice != null) {
-            filteredProductsList = getMaxPriceFilteredProducts(filteredProductsList, maxPrice);
+            filteredProductsList = getMaxPriceFilteredProducts(filteredProductsList, Double.parseDouble(maxPrice));
         }
 
         return filteredProductsList;
