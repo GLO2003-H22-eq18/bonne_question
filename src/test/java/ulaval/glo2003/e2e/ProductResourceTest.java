@@ -181,11 +181,6 @@ public class ProductResourceTest {
         @Nested
         class WhenFilteringProduct {
 
-            @BeforeEach
-            public void test() {
-                System.out.println("hello world");
-            }
-
             @DisplayName("GIVEN all filters THEN returns products that include specified filters " +
                     "and status 200 ok")
             @Test
@@ -326,6 +321,7 @@ public class ProductResourceTest {
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
                     assertThat(filteredProductsResponse.products).isEmpty();
+
                 }
             }
 

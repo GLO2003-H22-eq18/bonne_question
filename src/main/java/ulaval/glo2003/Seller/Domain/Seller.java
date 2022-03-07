@@ -13,7 +13,7 @@ public class Seller {
     private final String bio;
     private final List<Product> products;
 
-    private static int currentId = 0;
+    private static int currentId = 1;
 
     public Seller(
             String name,
