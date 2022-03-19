@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - dev
+  pull_request:
+    branches:
+      - dev
   workflow_dispatch:
     inputs:
       git-ref:
@@ -29,9 +32,6 @@ jobs:
 
       - name: Unit tests
         run: mvn test -Dtest=glo2003/unit/*
-
-      - name: Integration tests
-        run: mvn integration-test
 
       - name: System tests
         run: mvn test -Dtest=glo2003/e2e/*
