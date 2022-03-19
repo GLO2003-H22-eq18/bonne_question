@@ -1,1 +1,1 @@
-web: java -jar target/floppa-1.0-SNAPSHOT.jar
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* ulaval.glo2003.Main.main
