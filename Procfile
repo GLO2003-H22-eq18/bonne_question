@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* ulaval.glo2003.Main.main
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* src.main.java.ulaval.glo2003.Main.main
