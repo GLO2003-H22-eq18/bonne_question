@@ -1,0 +1,44 @@
+name: Floppa CD
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)
+        required: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        if: github.event.inputs.git-ref == ''
+
+      - name: Checkout (Custom Ref)
+        uses: actions/checkout@v2
+        if: github.event.inputs.git-ref != ''
+        with:
+          ref: ${{ github.event.inputs.git-ref }}
+
+      - name: Compile with Maven
+        run: mvn compile
+
+      - name: Unit tests
+        run: mvn test -Dtest=glo2003/unit/*
+
+      - name: System tests
+        run: mvn test -Dtest=glo2003/e2e/*
+
+      - name: Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "staging-bonne-question"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
