@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp ulaval.glo2003.Main.main --server.port=$PORT target/classes:target/dependency/*
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* ulaval.glo2003.Main.main --server.port=$PORT
