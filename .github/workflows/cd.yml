@@ -43,3 +43,4 @@ jobs:
           heroku_app_name: "staging-bonne-question"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           delay: 5
+          dontuseforce: 1
