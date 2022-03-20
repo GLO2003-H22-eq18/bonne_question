@@ -125,11 +125,11 @@
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
-                        <configuration>
-                            <outputDirectory>
-                                ${project.build.directory}/lib
-                            </outputDirectory>
-                        </configuration>
+<!--                        <configuration>-->
+<!--                            <outputDirectory>-->
+<!--                                ${project.build.directory}/lib-->
+<!--                            </outputDirectory>-->
+<!--                        </configuration>-->
                     </execution>
                 </executions>
             </plugin>
@@ -141,8 +141,8 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <!--                            <classpathPrefix>lib/</classpathPrefix>-->
-                            <!--                            <mainClass>ulaval.glo2003.Main</mainClass>-->
+                            <classpathPrefix>dependency/</classpathPrefix>
+                            <mainClass>ulaval.glo2003.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
