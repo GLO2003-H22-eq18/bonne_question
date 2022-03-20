@@ -2,6 +2,7 @@ package ulaval.glo2003;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Objects;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -22,7 +23,7 @@ public class Main {
 
     public static final String BASE_URI = "http://localhost:";
 
-    public static HttpServer startServer(String port) {
+    public static HttpServer startServer() {
 
         SellerRepository sellerRepository = new SellerRepository();
         SellerFactory sellerFactory = new SellerFactory();
@@ -45,13 +46,14 @@ public class Main {
                 .register(new ItemNotFoundExceptionMapper())
                 .packages("ulaval.glo2003");
 
+        String port = Objects.requireNonNullElse(System.getenv("$PORT"), "8080");
         String uri = BASE_URI + port + "/";
 
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(uri), resourceConfig);
     }
 
     public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer(System.getenv("$PORT"));
+        final HttpServer server = startServer();
 
         server.start();
     }
