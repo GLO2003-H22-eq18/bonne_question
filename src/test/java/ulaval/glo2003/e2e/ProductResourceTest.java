@@ -62,7 +62,7 @@ public class ProductResourceTest {
 
     @BeforeAll
     public static void startServer() throws IOException {
-        server = Main.startServer();
+        server = Main.startServer("8080");
         server.start();
     }
 
