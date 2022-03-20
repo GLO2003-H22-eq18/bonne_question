@@ -21,7 +21,7 @@ import ulaval.glo2003.seller.ui.SellerResource;
 
 public class Main {
 
-    public static final String BASE_URI = "http://localhost:";
+    public static final String BASE_URI = "http://0.0.0.0:";
 
     public static HttpServer startServer() {
 
@@ -46,7 +46,7 @@ public class Main {
                 .register(new ItemNotFoundExceptionMapper())
                 .packages("ulaval.glo2003");
 
-        String port = Objects.requireNonNullElse(System.getenv("$PORT"), "8080");
+        String port = Objects.requireNonNullElse(System.getenv("PORT"), "8080");
         String uri = BASE_URI + port + "/";
 
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(uri), resourceConfig);
