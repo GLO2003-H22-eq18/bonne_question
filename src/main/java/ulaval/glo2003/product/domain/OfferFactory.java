@@ -1,6 +1,11 @@
 package ulaval.glo2003.product.domain;
 
 import java.util.regex.Pattern;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferAmountException;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferEmailException;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferMessageException;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferNameException;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferPhoneNumberException;
 import ulaval.glo2003.product.ui.OfferRequest;
 import ulaval.glo2003.utils.StringUtil;
 
@@ -36,32 +41,32 @@ public class OfferFactory {
 
         Pattern pat = Pattern.compile(emailRegex);
         if (!(pat.matcher(email).matches())) {
-            //TODO : Add exception for Offer
+            throw new InvalidOfferEmailException();
         }
     }
 
     private void validatePhoneNumber(String phoneNumber) {
         if (!(phoneNumber.matches("[0-9]+")) || !(phoneNumber.length() == 11)) {
-            //TODO : Add exception for Offer
+            throw new InvalidOfferPhoneNumberException();
         }
     }
 
     private void validateAmount(Double productSuggestedPrice, Double amount) {
         if (amount < productSuggestedPrice) {
-            //TODO : Add exception for Offer
+            throw new InvalidOfferAmountException();
         }
     }
 
     private void validateMessage(String message) {
         if (StringUtil.removeEmptyChar(message).isEmpty()
                 || message.length() < 100) {
-            //TODO : Add exception for Offer
+            throw new InvalidOfferMessageException();
         }
     }
 
     private void validateName(String name) {
         if (StringUtil.removeEmptyChar(name).isEmpty()) {
-            //TODO : Add exception for Offer
+            throw new InvalidOfferNameException();
         }
     }
 }
