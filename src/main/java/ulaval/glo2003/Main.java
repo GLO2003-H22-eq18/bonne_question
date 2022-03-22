@@ -1,7 +1,5 @@
 package ulaval.glo2003;
 
-import java.io.IOException;
-import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -12,11 +10,19 @@ import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.ui.ProductAssembler;
 import ulaval.glo2003.product.ui.ProductResource;
+import ulaval.glo2003.seller.domain.MongoSellersRepository;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.ui.SellerAssembler;
 import ulaval.glo2003.seller.ui.SellerProductAssembler;
 import ulaval.glo2003.seller.ui.SellerResource;
+
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
+
+import java.io.IOException;
+import java.net.URI;
 
 public class Main {
 
@@ -24,6 +30,7 @@ public class Main {
 
     public static HttpServer startServer() {
 
+        MongoSellersRepository mongoSellersRepository = new MongoSellersRepository();
         SellerRepository sellerRepository = new SellerRepository();
         SellerFactory sellerFactory = new SellerFactory();
         SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
