@@ -13,7 +13,6 @@ import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.ui.ProductAssembler;
 import ulaval.glo2003.product.ui.ProductResource;
-import ulaval.glo2003.seller.domain.MongoSellersRepository;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.ui.SellerAssembler;
@@ -26,7 +25,6 @@ public class Main {
 
     public static HttpServer startServer() {
 
-        MongoSellersRepository mongoSellersRepository = new MongoSellersRepository();
         SellerRepository sellerRepository = new SellerRepository();
         SellerFactory sellerFactory = new SellerFactory();
         SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();

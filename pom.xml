@@ -125,11 +125,11 @@
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
-<!--                        <configuration>-->
-<!--                            <outputDirectory>-->
-<!--                                ${project.build.directory}/lib-->
-<!--                            </outputDirectory>-->
-<!--                        </configuration>-->
+                        <!--                        <configuration>-->
+                        <!--                            <outputDirectory>-->
+                        <!--                                ${project.build.directory}/lib-->
+                        <!--                            </outputDirectory>-->
+                        <!--                        </configuration>-->
                     </execution>
                 </executions>
             </plugin>
