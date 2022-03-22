@@ -1,5 +1,8 @@
 package ulaval.glo2003;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.Objects;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -17,16 +20,9 @@ import ulaval.glo2003.seller.ui.SellerAssembler;
 import ulaval.glo2003.seller.ui.SellerProductAssembler;
 import ulaval.glo2003.seller.ui.SellerResource;
 
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-
-import java.io.IOException;
-import java.net.URI;
-
 public class Main {
 
-    public static final String BASE_URI = "http://localhost:8080/";
+    public static final String BASE_URI = "http://0.0.0.0:";
 
     public static HttpServer startServer() {
 
@@ -52,7 +48,10 @@ public class Main {
                 .register(new ItemNotFoundExceptionMapper())
                 .packages("ulaval.glo2003");
 
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), resourceConfig);
+        String port = Objects.requireNonNullElse(System.getenv("PORT"), "8080");
+        String uri = BASE_URI + port + "/";
+
+        return GrizzlyHttpServerFactory.createHttpServer(URI.create(uri), resourceConfig);
     }
 
     public static void main(String[] args) throws IOException {
