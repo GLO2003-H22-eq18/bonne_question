@@ -39,14 +39,17 @@ public class OfferFactory {
                 "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
                         + "A-Z]{2,7}$";
 
-        Pattern pat = Pattern.compile(emailRegex);
-        if (!(pat.matcher(email).matches())) {
+        Pattern pattern = Pattern.compile(emailRegex);
+        if (!(pattern.matcher(email).matches())) {
             throw new InvalidOfferEmailException();
         }
     }
 
     private void validatePhoneNumber(String phoneNumber) {
-        if (!(phoneNumber.matches("[0-9]+")) || !(phoneNumber.length() == 11)) {
+       String phoneNumberRegex = "^[0-9]{11}$";
+
+        Pattern pattern = Pattern.compile(phoneNumberRegex);
+        if (!(pattern.matcher(phoneNumber).matches())) {
             throw new InvalidOfferPhoneNumberException();
         }
     }
