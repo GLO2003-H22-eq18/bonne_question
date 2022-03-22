@@ -4,7 +4,6 @@ package ulaval.glo2003.e2e;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.truth.Truth.assertThat;
 import static io.restassured.RestAssured.given;
-import static ulaval.glo2003.utils.StringUtil.mixUpperAndLowerCase;
 
 import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
@@ -539,6 +538,19 @@ public class End2EndUtils {
         return ProductCategory.toStringList(randomCategories);
     }
 
+    public static String mixUpperAndLowerCase(String string) {
+        char[] letters = string.toCharArray();
+        StringBuilder randomizedString = new StringBuilder(letters.length);
+        for (int i = 0; i < letters.length; i++) {
+            if (i % 2 == 0) {
+                randomizedString.append(Character.toLowerCase(letters[i]));
+            } else {
+                randomizedString.append(Character.toUpperCase(letters[i]));
+            }
+        }
+
+        return randomizedString.toString();
+    }
 
 }
 
