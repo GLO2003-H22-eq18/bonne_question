@@ -37,71 +37,6 @@ public class ProductRepositoryTest {
     private static final double MIDDLE_PRICE = 10000;
     private ProductRepository productRepository;
 
-    private static boolean verifyProductsHaveSameSellerId(List<Product> products, String sellerId) {
-        boolean areAllValid = true;
-        for (Product product : products) {
-            if (!product.getSellerId().equals(sellerId)) {
-                areAllValid = false;
-                break;
-            }
-        }
-        return areAllValid;
-    }
-
-    private static boolean verifyProductsHaveTitle(List<Product> products, String title) {
-        boolean areAllValid = true;
-        for (Product product : products) {
-            if (!product.getTitle().contains(title)) {
-                areAllValid = false;
-                break;
-            }
-        }
-        return areAllValid;
-    }
-
-    private static boolean verifyProductsHaveAtLeastOneGoodCategory(
-            List<Product> products, List<ProductCategory> productCategories) {
-        boolean areAllValid = true;
-        for (Product product : products) {
-            boolean isCategoryPresent = false;
-            for (ProductCategory category : productCategories) {
-                if (product.getCategories().contains(category)) {
-                    isCategoryPresent = true;
-                    break;
-                }
-            }
-            if (!isCategoryPresent) {
-                areAllValid = false;
-                break;
-            }
-        }
-        return areAllValid;
-    }
-
-    private static boolean verifyProductsHaveHigherOrEqualPriceThanMinPrice(
-            List<Product> products, double minPrice) {
-        boolean areAllValid = true;
-        for (Product product : products) {
-            if (product.getSuggestedPrice() < minPrice) {
-                areAllValid = false;
-                break;
-            }
-        }
-        return areAllValid;
-    }
-
-    private static boolean verifyProductsHaveLowerOrEqualPriceThanMaxPrice(
-            List<Product> products, double minPrice) {
-        boolean areAllValid = true;
-        for (Product product : products) {
-            if (product.getSuggestedPrice() > minPrice) {
-                areAllValid = false;
-                break;
-            }
-        }
-        return areAllValid;
-    }
-
     @BeforeEach
     void setUp() {
         productRepository = new ProductRepository();
@@ -443,4 +378,71 @@ public class ProductRepositoryTest {
         assertThat(verifyProductsHaveHigherOrEqualPriceThanMinPrice(products, SUGGESTED_PRICE_1))
                 .isTrue();
     }
+
+    private static boolean verifyProductsHaveSameSellerId(List<Product> products, String sellerId) {
+        boolean areAllValid = true;
+        for (Product product : products) {
+            if (!product.getSellerId().equals(sellerId)) {
+                areAllValid = false;
+                break;
+            }
+        }
+        return areAllValid;
+    }
+
+    private static boolean verifyProductsHaveTitle(List<Product> products, String title) {
+        boolean areAllValid = true;
+        for (Product product : products) {
+            if (!product.getTitle().contains(title)) {
+                areAllValid = false;
+                break;
+            }
+        }
+        return areAllValid;
+    }
+
+    private static boolean verifyProductsHaveAtLeastOneGoodCategory(
+            List<Product> products, List<ProductCategory> productCategories) {
+        boolean areAllValid = true;
+        for (Product product : products) {
+            boolean isCategoryPresent = false;
+            for (ProductCategory category : productCategories) {
+                if (product.getCategories().contains(category)) {
+                    isCategoryPresent = true;
+                    break;
+                }
+            }
+            if (!isCategoryPresent) {
+                areAllValid = false;
+                break;
+            }
+        }
+        return areAllValid;
+    }
+
+    private static boolean verifyProductsHaveHigherOrEqualPriceThanMinPrice(
+            List<Product> products, double minPrice) {
+        boolean areAllValid = true;
+        for (Product product : products) {
+            if (product.getSuggestedPrice() < minPrice) {
+                areAllValid = false;
+                break;
+            }
+        }
+        return areAllValid;
+    }
+
+    private static boolean verifyProductsHaveLowerOrEqualPriceThanMaxPrice(
+            List<Product> products, double minPrice) {
+        boolean areAllValid = true;
+        for (Product product : products) {
+            if (product.getSuggestedPrice() > minPrice) {
+                areAllValid = false;
+                break;
+            }
+        }
+        return areAllValid;
+    }
+
+
 }
