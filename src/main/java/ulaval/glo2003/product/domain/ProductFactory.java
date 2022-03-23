@@ -6,6 +6,8 @@ import ulaval.glo2003.product.ui.ProductUtil;
 import ulaval.glo2003.seller.domain.Seller;
 
 public class ProductFactory {
+    private static int currentId = 0;
+
     public Product create(Seller productSeller, ProductRequest productRequest) {
         ProductUtil.checkMissingParam(productRequest);
         ProductUtil.checkNewProductInvalidParam(productRequest);
@@ -19,6 +21,7 @@ public class ProductFactory {
                 productRequest.suggestedPrice,
                 categories,
                 productSeller.getId(),
-                productSeller.getName());
+                productSeller.getName(),
+                currentId++);
     }
 }

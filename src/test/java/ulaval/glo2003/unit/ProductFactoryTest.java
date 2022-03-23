@@ -25,6 +25,7 @@ import ulaval.glo2003.seller.domain.Seller;
 
 public class ProductFactoryTest {
 
+    private static int currentSellerId = 0;
     private static final String TITLE = "Une roche";
     private static final String INVALID_TITLE = "";
     private static final String DESCRIPTION = "Un matériau solide";
@@ -47,7 +48,8 @@ public class ProductFactoryTest {
                         "What a chad!",
                         OffsetDateTime.now(Clock.systemUTC()),
                         LocalDate.parse("1977-04-23"),
-                        new ArrayList<>());
+                        new ArrayList<>(),
+                        currentSellerId++);
     }
 
     public ProductRequest createProductRequest(

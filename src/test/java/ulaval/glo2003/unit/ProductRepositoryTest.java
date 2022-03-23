@@ -14,6 +14,8 @@ import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.exceptions.ProductNotFoundException;
 
 public class ProductRepositoryTest {
+
+    private static int currentProductId = 0;
     private static final String INVALID_ID = "-1";
     private static final String INVALID_TITLE = "Noone has this title muahaha!";
     private static final List<String> INVALID_CATEGORIES = Arrays.asList("NOT A CATEGORY", "XD");
@@ -51,7 +53,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1);
+                        SELLER_NAME_1,
+                        currentProductId++);
         productRepository.save(product);
 
         Product gottenProduct = productRepository.findById(product.getId());
@@ -73,7 +76,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -81,7 +85,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(
@@ -99,7 +104,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -107,7 +113,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(
@@ -125,7 +132,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -133,7 +141,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(null, TITLE_1, new ArrayList<>(), null, null);
@@ -150,7 +159,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -158,7 +168,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(
@@ -176,7 +187,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -184,7 +196,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(
@@ -202,7 +215,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -210,7 +224,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_ONLY_IN_1);
         List<Product> products =
@@ -229,7 +244,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -237,7 +253,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_2);
         List<Product> products =
@@ -255,7 +272,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -263,7 +281,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(null, null, INVALID_CATEGORIES, null, null);
@@ -280,7 +299,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -288,7 +308,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(
@@ -307,7 +328,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -315,7 +337,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(
@@ -334,7 +357,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -342,7 +366,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(
@@ -361,7 +386,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        currentProductId++));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -369,7 +395,8 @@ public class ProductRepositoryTest {
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        currentProductId++));
 
         List<Product> products =
                 productRepository.getFilteredProducts(

@@ -1,7 +1,7 @@
 package ulaval.glo2003.e2e;
 
 import static com.google.common.truth.Truth.assertThat;
-import static ulaval.glo2003.e2e.End2EndUtils.getHealth;
+import static ulaval.glo2003.e2e.HealthEnd2EndUtils.getHealth;
 
 import java.io.IOException;
 import org.apache.http.HttpStatus;

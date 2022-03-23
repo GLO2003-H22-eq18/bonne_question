@@ -29,8 +29,9 @@ public class SellerRepositoryTest {
         OffsetDateTime createdAt = OffsetDateTime.now();
         LocalDate birthDate = LocalDate.parse("1977-04-23");
         List<Product> products = new ArrayList<>();
+        int id = 1;
 
-        return new Seller(name, bio, createdAt, birthDate, products);
+        return new Seller(name, bio, createdAt, birthDate, products, id);
     }
 
     @Test

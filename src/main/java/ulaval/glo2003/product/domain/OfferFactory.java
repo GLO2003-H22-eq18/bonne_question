@@ -46,7 +46,7 @@ public class OfferFactory {
     }
 
     private void validatePhoneNumber(String phoneNumber) {
-       String phoneNumberRegex = "^[0-9]{11}$";
+        String phoneNumberRegex = "^[0-9]{11}$";
 
         Pattern pattern = Pattern.compile(phoneNumberRegex);
         if (!(pattern.matcher(phoneNumber).matches())) {

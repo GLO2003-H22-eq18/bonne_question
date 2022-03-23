@@ -13,15 +13,14 @@ public class Seller {
     private final String bio;
     private final List<Product> products;
 
-    private static int currentId = 1;
-
     public Seller(
             String name,
             String bio,
             OffsetDateTime createdAt,
             LocalDate birthDate,
-            List<Product> products) {
-        this.id = String.valueOf(currentId++);
+            List<Product> products,
+            int id) {
+        this.id = String.valueOf(id);
         this.createdAt = createdAt;
         this.birthDate = birthDate;
         this.name = name;
