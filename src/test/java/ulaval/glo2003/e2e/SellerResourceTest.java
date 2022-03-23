@@ -2,20 +2,21 @@ package ulaval.glo2003.e2e;
 
 import static com.google.common.truth.Truth.assertThat;
 import static ulaval.glo2003.e2e.End2EndUtils.A_INVALID_ID;
-import static ulaval.glo2003.e2e.End2EndUtils.addProductToSellerGetId;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatPostResponseIsValid;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsInvalidParamError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsItemNotFoundError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsMissingParamError;
-import static ulaval.glo2003.e2e.End2EndUtils.assertThatSellerResponseFieldsAreValid;
-import static ulaval.glo2003.e2e.End2EndUtils.createSellerResource;
-import static ulaval.glo2003.e2e.End2EndUtils.createSellerWithInvalidAge;
-import static ulaval.glo2003.e2e.End2EndUtils.createSellerWithInvalidBio;
-import static ulaval.glo2003.e2e.End2EndUtils.createSellerWithInvalidName;
-import static ulaval.glo2003.e2e.End2EndUtils.createSellerWithMissingParams;
-import static ulaval.glo2003.e2e.End2EndUtils.createValidSeller;
-import static ulaval.glo2003.e2e.End2EndUtils.createValidSellerGetId;
-import static ulaval.glo2003.e2e.End2EndUtils.getSellerById;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.addProductToSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerWithProductResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerResource;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerWithInvalidAge;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerWithInvalidBio;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerWithInvalidName;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerWithMissingParams;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSeller;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.getSellerById;
 
 import io.restassured.response.Response;
 import java.io.IOException;
@@ -137,7 +138,7 @@ class SellerResourceTest {
             SellerResponse sellerResponse = response.as(SellerResponse.class);
 
             assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-            End2EndUtils.assertThatSellerWithProductResponseFieldsAreValid(sellerResponse,
+            assertThatSellerWithProductResponseFieldsAreValid(sellerResponse,
                     sellerId, productId);
         }
     }
