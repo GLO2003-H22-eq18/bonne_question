@@ -1,6 +1,11 @@
 package ulaval.glo2003.product.domain;
 
 import java.util.regex.Pattern;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferAmountException;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferEmailException;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferMessageException;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferNameException;
+import ulaval.glo2003.product.exceptions.offers.InvalidOfferPhoneNumberException;
 import ulaval.glo2003.product.ui.OfferRequest;
 import ulaval.glo2003.utils.StringUtil;
 
@@ -34,34 +39,37 @@ public class OfferFactory {
                 "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
                         + "A-Z]{2,7}$";
 
-        Pattern pat = Pattern.compile(emailRegex);
-        if (!(pat.matcher(email).matches())) {
-            //TODO : Add exception for Offer
+        Pattern pattern = Pattern.compile(emailRegex);
+        if (!(pattern.matcher(email).matches())) {
+            throw new InvalidOfferEmailException();
         }
     }
 
     private void validatePhoneNumber(String phoneNumber) {
-        if (!(phoneNumber.matches("[0-9]+")) || !(phoneNumber.length() == 11)) {
-            //TODO : Add exception for Offer
+       String phoneNumberRegex = "^[0-9]{11}$";
+
+        Pattern pattern = Pattern.compile(phoneNumberRegex);
+        if (!(pattern.matcher(phoneNumber).matches())) {
+            throw new InvalidOfferPhoneNumberException();
         }
     }
 
     private void validateAmount(Double productSuggestedPrice, Double amount) {
         if (amount < productSuggestedPrice) {
-            //TODO : Add exception for Offer
+            throw new InvalidOfferAmountException();
         }
     }
 
     private void validateMessage(String message) {
         if (StringUtil.removeEmptyChar(message).isEmpty()
                 || message.length() < 100) {
-            //TODO : Add exception for Offer
+            throw new InvalidOfferMessageException();
         }
     }
 
     private void validateName(String name) {
         if (StringUtil.removeEmptyChar(name).isEmpty()) {
-            //TODO : Add exception for Offer
+            throw new InvalidOfferNameException();
         }
     }
 }
