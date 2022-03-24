@@ -1,7 +1,7 @@
-package ulaval.glo2003.seller.ui;
+package ulaval.glo2003.seller.ui.responses;
 
 import java.util.List;
-import ulaval.glo2003.product.ui.ProductOffersResponse;
+import ulaval.glo2003.product.ui.responses.ProductOffersResponse;
 
 public class SellerProductResponse {
     public String id;

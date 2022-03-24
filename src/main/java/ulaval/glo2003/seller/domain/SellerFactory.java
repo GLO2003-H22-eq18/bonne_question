@@ -7,10 +7,12 @@ import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import ulaval.glo2003.seller.exceptions.*;
-import ulaval.glo2003.seller.ui.SellerRequest;
+import ulaval.glo2003.seller.ui.requests.SellerRequest;
 import ulaval.glo2003.utils.StringUtil;
 
 public class SellerFactory {
+    private static int currentId = 1;
+
     public Seller create(SellerRequest sellerRequest) {
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
@@ -20,7 +22,8 @@ public class SellerFactory {
                 sellerRequest.bio,
                 OffsetDateTime.now(Clock.systemUTC()),
                 LocalDate.parse(sellerRequest.birthDate),
-                new ArrayList<>());
+                new ArrayList<>(),
+                currentId++);
     }
 
     private void checkMissingParam(SellerRequest sellerRequest) {

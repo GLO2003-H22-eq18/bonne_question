@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
-import ulaval.glo2003.seller.ui.SellerProductAssembler;
-import ulaval.glo2003.seller.ui.SellerProductResponse;
+import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
+import ulaval.glo2003.seller.ui.responses.SellerProductResponse;
 
 public class SellerProductAssemblerTest {
 
@@ -27,8 +27,9 @@ public class SellerProductAssemblerTest {
         List<ProductCategory> categories = new ArrayList<>();
         String sellerId = "1";
         String sellerName = "John Doe";
+        int id = 0;
 
-        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName);
+        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id);
     }
 
     @Test

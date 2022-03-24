@@ -14,6 +14,11 @@ import java.util.stream.Collectors;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
+import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
+import ulaval.glo2003.product.ui.requests.ProductRequest;
+import ulaval.glo2003.product.ui.responses.FilteredProductsResponse;
+import ulaval.glo2003.product.ui.responses.ProductResponse;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
 
@@ -42,6 +47,7 @@ public class ProductResource {
             @HeaderParam("X-Seller-Id") String sellerId,
             @Context UriInfo uri) {
 
+        productAssembler.checkProductRequestMissingParams(productRequest);
         Seller productSeller = sellerRepository.findById(sellerId);
         Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
@@ -70,11 +76,10 @@ public class ProductResource {
             @QueryParam("minPrice") String minPrice,
             @QueryParam("maxPrice") String maxPrice) {
 
-        ProductUtil.checkFilteredProductInvalidParam(title, categories, minPrice, maxPrice);
-
+        FilteredProductRequest filteredProductRequest = productAssembler.createFilteredProductRequest(sellerId, title, categories, minPrice, maxPrice);
 
         List<Product> filteredProducts = productRepository
-                .getFilteredProducts(sellerId, title, categories, minPrice, maxPrice);
+                .getFilteredProducts(filteredProductRequest);
 
         List<ProductResponse> filteredProductsResponseList = filteredProducts
                 .stream()

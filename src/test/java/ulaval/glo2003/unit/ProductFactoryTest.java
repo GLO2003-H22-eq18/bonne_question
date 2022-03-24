@@ -12,19 +12,18 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.exceptions.InvalidProductCategoriesException;
 import ulaval.glo2003.product.exceptions.InvalidProductDescriptionException;
 import ulaval.glo2003.product.exceptions.InvalidProductSuggestedPriceException;
 import ulaval.glo2003.product.exceptions.InvalidProductTitleException;
-import ulaval.glo2003.product.exceptions.MissingProductDescriptionException;
-import ulaval.glo2003.product.exceptions.MissingProductSuggestedPriceException;
-import ulaval.glo2003.product.exceptions.MissingProductTitleException;
-import ulaval.glo2003.product.ui.ProductRequest;
+import ulaval.glo2003.product.ui.requests.ProductRequest;
 import ulaval.glo2003.seller.domain.Seller;
 
 public class ProductFactoryTest {
 
+    private static int currentSellerId = 0;
     private static final String TITLE = "Une roche";
     private static final String INVALID_TITLE = "";
     private static final String DESCRIPTION = "Un matériau solide";
@@ -47,7 +46,8 @@ public class ProductFactoryTest {
                         "What a chad!",
                         OffsetDateTime.now(Clock.systemUTC()),
                         LocalDate.parse("1977-04-23"),
-                        new ArrayList<>());
+                        new ArrayList<>(),
+                        currentSellerId++);
     }
 
     public ProductRequest createProductRequest(
@@ -74,38 +74,6 @@ public class ProductFactoryTest {
         assertThat(toStringList(product.getCategories())).isEqualTo(CATEGORIES);
         assertThat(product.getSellerId()).isEqualTo(productSeller.getId());
         assertThat(product.getSellerName()).isEqualTo(productSeller.getName());
-    }
-
-    @Test
-    void
-    givenProductRequestWithMissingTitle_whenCreatingProduct_thenMissingProductTitleException() {
-        ProductRequest productRequest =
-                createProductRequest(null, DESCRIPTION, SUGGESTED_PRICE, CATEGORIES);
-
-        assertThrows(
-                MissingProductTitleException.class,
-                () -> productFactory.create(productSeller, productRequest));
-    }
-
-    @Test
-    void
-    givenProductRequestWithMissingDescription_whenCreatingProduct_thenMissingProductDescriptionException() {
-        ProductRequest productRequest =
-                createProductRequest(TITLE, null, SUGGESTED_PRICE, CATEGORIES);
-
-        assertThrows(
-                MissingProductDescriptionException.class,
-                () -> productFactory.create(productSeller, productRequest));
-    }
-
-    @Test
-    void
-    givenProductRequestWithMissingSuggestedPrice_whenCreatingProduct_thenMissingProductSuggestedPriceException() {
-        ProductRequest productRequest = createProductRequest(TITLE, DESCRIPTION, null, CATEGORIES);
-
-        assertThrows(
-                MissingProductSuggestedPriceException.class,
-                () -> productFactory.create(productSeller, productRequest));
     }
 
     @Test

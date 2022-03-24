@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import ulaval.glo2003.product.exceptions.ProductNotFoundException;
+import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 
 public class ProductRepository {
     private final Map<String, Product> products;
@@ -30,35 +31,31 @@ public class ProductRepository {
     }
 
     public List<Product> getFilteredProducts(
-            String sellerId,
-            String title,
-            List<String> categories,
-            String minPrice,
-            String maxPrice) {
+            FilteredProductRequest filteredProductRequest) {
 
         List<Product> filteredProductsList;
-        if (sellerId != null) {
-            filteredProductsList = getProductsFilterBySellerId(sellerId);
+        if (filteredProductRequest.sellerId != null) {
+            filteredProductsList = getProductsFilterBySellerId(filteredProductRequest.sellerId);
         } else {
             filteredProductsList = new ArrayList<>(products.values());
         }
 
-        if (title != null) {
-            filteredProductsList = getProductsFilterByTitle(filteredProductsList, title);
+        if (filteredProductRequest.title != null) {
+            filteredProductsList = getProductsFilterByTitle(filteredProductsList, filteredProductRequest.title);
         }
 
-        if (!categories.isEmpty()) {
-            filteredProductsList = getProductsFilterByCategories(filteredProductsList, categories);
+        if (!filteredProductRequest.categories.isEmpty()) {
+            filteredProductsList = getProductsFilterByCategories(filteredProductsList, filteredProductRequest.categories);
         }
 
-        if (minPrice != null) {
+        if (filteredProductRequest.minPrice != null) {
             filteredProductsList =
-                    getMinPriceFilteredProducts(filteredProductsList, Double.parseDouble(minPrice));
+                    getMinPriceFilteredProducts(filteredProductsList, filteredProductRequest.minPrice);
         }
 
-        if (maxPrice != null) {
+        if (filteredProductRequest.maxPrice != null) {
             filteredProductsList =
-                    getMaxPriceFilteredProducts(filteredProductsList, Double.parseDouble(maxPrice));
+                    getMaxPriceFilteredProducts(filteredProductsList, filteredProductRequest.maxPrice);
         }
 
         return filteredProductsList;
@@ -79,12 +76,11 @@ public class ProductRepository {
     }
 
     public List<Product> getProductsFilterByCategories(
-            List<Product> filteredProductsList, List<String> categories) {
-        List<ProductCategory> productCategories = ProductCategory.toCategoriesList(categories);
+            List<Product> filteredProductsList, List<ProductCategory> categories) {
         return filteredProductsList.stream()
                 .filter(
                         product ->
-                                !Collections.disjoint(product.getCategories(), productCategories))
+                                !Collections.disjoint(product.getCategories(), categories))
                 .collect(Collectors.toList());
     }
 

@@ -5,7 +5,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Product {
-    private static int currentId = 0;
     private final String id;
     private final OffsetDateTime createdAt;
     private final String title;
@@ -22,8 +21,9 @@ public class Product {
             Double suggestedPrice,
             List<ProductCategory> categories,
             String sellerId,
-            String sellerName) {
-        this.id = String.valueOf(currentId++);
+            String sellerName,
+            int currentId) {
+        this.id = String.valueOf(currentId);
         this.title = title;
         this.description = description;
         this.suggestedPrice = suggestedPrice;

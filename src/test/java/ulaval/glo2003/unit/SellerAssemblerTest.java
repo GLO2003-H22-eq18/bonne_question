@@ -10,9 +10,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.seller.domain.Seller;
-import ulaval.glo2003.seller.ui.SellerAssembler;
-import ulaval.glo2003.seller.ui.SellerProductAssembler;
-import ulaval.glo2003.seller.ui.SellerResponse;
+import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
+import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
+import ulaval.glo2003.seller.ui.responses.SellerResponse;
 
 class SellerAssemblerTest {
 
@@ -30,8 +30,9 @@ class SellerAssemblerTest {
         OffsetDateTime createdAt = OffsetDateTime.now();
         LocalDate birthDate = LocalDate.parse("1977-04-23");
         List<Product> products = new ArrayList<>();
+        int id = 1;
 
-        return new Seller(name, bio, createdAt, birthDate, products);
+        return new Seller(name, bio, createdAt, birthDate, products, id);
     }
 
     @Test
