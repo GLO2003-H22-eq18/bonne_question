@@ -46,6 +46,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        if: github.event.inputs.git-ref == ''
+
+      - name: Checkout (Custom Ref)
+        uses: actions/checkout@v2
+        if: github.event.inputs.git-ref != ''
+        with:
+          ref: ${{ github.event.inputs.git-ref }}
+
       - name: Deploy with Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
