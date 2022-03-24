@@ -10,12 +10,12 @@ import ulaval.glo2003.exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.exceptions.MissingArgumentExceptionMapper;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
-import ulaval.glo2003.product.ui.ProductAssembler;
+import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
 import ulaval.glo2003.product.ui.ProductResource;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
-import ulaval.glo2003.seller.ui.SellerAssembler;
-import ulaval.glo2003.seller.ui.SellerProductAssembler;
+import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
+import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
 import ulaval.glo2003.seller.ui.SellerResource;
 
 public class Main {

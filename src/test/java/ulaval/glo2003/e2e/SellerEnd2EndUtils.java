@@ -16,9 +16,9 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProduct;
 import io.restassured.response.Response;
 import java.time.ZoneId;
 import java.util.stream.IntStream;
-import ulaval.glo2003.seller.ui.SellerProductResponse;
-import ulaval.glo2003.seller.ui.SellerRequest;
-import ulaval.glo2003.seller.ui.SellerResponse;
+import ulaval.glo2003.seller.ui.responses.SellerProductResponse;
+import ulaval.glo2003.seller.ui.requests.SellerRequest;
+import ulaval.glo2003.seller.ui.responses.SellerResponse;
 import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class SellerEnd2EndUtils {
