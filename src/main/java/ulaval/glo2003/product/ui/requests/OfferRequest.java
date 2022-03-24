@@ -1,4 +1,4 @@
-package ulaval.glo2003.product.ui;
+package ulaval.glo2003.product.ui.requests;
 
 public class OfferRequest {
     public String name;

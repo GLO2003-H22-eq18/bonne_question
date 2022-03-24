@@ -1,6 +1,7 @@
 package ulaval.glo2003.unit;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ulaval.glo2003.product.domain.ProductCategory.toCategoriesList;
 import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
@@ -10,12 +11,26 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
-import ulaval.glo2003.product.ui.ProductAssembler;
-import ulaval.glo2003.product.ui.ProductResponse;
+import ulaval.glo2003.product.exceptions.MissingProductDescriptionException;
+import ulaval.glo2003.product.exceptions.MissingProductSuggestedPriceException;
+import ulaval.glo2003.product.exceptions.MissingProductTitleException;
+import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
+import ulaval.glo2003.product.ui.requests.ProductRequest;
+import ulaval.glo2003.product.ui.responses.ProductResponse;
 
 class ProductAssemblerTest {
 
     private static ProductAssembler productAssembler;
+
+    private static final String TITLE = "Une roche";
+    private static final String INVALID_TITLE = "";
+    private static final String DESCRIPTION = "Un matériau solide";
+    private static final String INVALID_DESCRIPTION = "  \n\t";
+    private static final Double SUGGESTED_PRICE = 500.0;
+    private static final String INVALID_SUGGESTED_PRICE = "90a";
+    private static final List<String> CATEGORIES = List.of("sports");
+    private static final List<String> EMPTY_CATEGORIES = List.of();
+    private static final List<String> INVALID_CATEGORIES = List.of("sports", "invalid");
 
     @BeforeAll
     public static void setUp() {
@@ -36,6 +51,45 @@ class ProductAssemblerTest {
         List<ProductCategory> categories = toCategoriesList(categoriesString);
 
         return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id);
+    }
+
+    @Test
+    void
+    givenProductRequestWithMissingTitle_whenCreatingProduct_thenMissingProductTitleException() {
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.description = DESCRIPTION;
+        productRequest.categories = CATEGORIES;
+        productRequest.suggestedPrice = SUGGESTED_PRICE;
+
+        assertThrows(
+                MissingProductTitleException.class,
+                () -> productAssembler.checkProductRequestMissingParams(productRequest));
+    }
+
+    @Test
+    void
+    givenProductRequestWithMissingDescription_whenCreatingProduct_thenMissingProductDescriptionException() {
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.title = TITLE;
+        productRequest.categories = CATEGORIES;
+        productRequest.suggestedPrice = SUGGESTED_PRICE;
+
+        assertThrows(
+                MissingProductDescriptionException.class,
+                () -> productAssembler.checkProductRequestMissingParams(productRequest));
+    }
+
+    @Test
+    void
+    givenProductRequestWithMissingSuggestedPrice_whenCreatingProduct_thenMissingProductSuggestedPriceException() {
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.title = TITLE;
+        productRequest.description = DESCRIPTION;
+        productRequest.categories = CATEGORIES;
+
+        assertThrows(
+                MissingProductSuggestedPriceException.class,
+                () -> productAssembler.checkProductRequestMissingParams(productRequest));
     }
 
     @Test

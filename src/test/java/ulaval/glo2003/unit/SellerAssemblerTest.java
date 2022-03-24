@@ -10,9 +10,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.seller.domain.Seller;
-import ulaval.glo2003.seller.ui.SellerAssembler;
-import ulaval.glo2003.seller.ui.SellerProductAssembler;
-import ulaval.glo2003.seller.ui.SellerResponse;
+import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
+import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
+import ulaval.glo2003.seller.ui.responses.SellerResponse;
 
 class SellerAssemblerTest {
 

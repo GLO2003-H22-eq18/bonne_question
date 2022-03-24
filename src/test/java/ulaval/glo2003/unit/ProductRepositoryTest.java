@@ -2,6 +2,7 @@ package ulaval.glo2003.unit;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static ulaval.glo2003.product.domain.ProductCategory.toCategoriesList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +12,9 @@ import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.exceptions.InvalidPriceTypeException;
 import ulaval.glo2003.product.exceptions.ProductNotFoundException;
+import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 
 public class ProductRepositoryTest {
 
@@ -88,9 +91,10 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(SELLER_ID_1, null, new ArrayList<>(), null, null);
+
         List<Product> products =
-                productRepository.getFilteredProducts(
-                        SELLER_ID_1, null, new ArrayList<>(), null, null);
+                productRepository.getFilteredProducts(filteredProductRequest);
 
         assertThat(verifyProductsHaveSameSellerId(products, SELLER_ID_1)).isTrue();
     }
@@ -116,9 +120,10 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(INVALID_ID, null, new ArrayList<>(), null, null);
+
         List<Product> products =
-                productRepository.getFilteredProducts(
-                        INVALID_ID, null, new ArrayList<>(), null, null);
+                productRepository.getFilteredProducts(filteredProductRequest);
 
         assertThat(products).isEmpty();
     }
@@ -144,8 +149,10 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1, new ArrayList<>(), null, null);
+
         List<Product> products =
-                productRepository.getFilteredProducts(null, TITLE_1, new ArrayList<>(), null, null);
+                productRepository.getFilteredProducts(filteredProductRequest);
 
         assertThat(verifyProductsHaveTitle(products, TITLE_1)).isTrue();
     }
@@ -171,9 +178,10 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1_AND_2_IN_COMMON, new ArrayList<>(), null, null);
+
         List<Product> products =
-                productRepository.getFilteredProducts(
-                        null, TITLE_1_AND_2_IN_COMMON, new ArrayList<>(), null, null);
+                productRepository.getFilteredProducts(filteredProductRequest);
 
         assertThat(verifyProductsHaveTitle(products, TITLE_1_AND_2_IN_COMMON)).isTrue();
     }
@@ -199,9 +207,11 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, INVALID_TITLE, new ArrayList<>(), null, null);
+
         List<Product> products =
-                productRepository.getFilteredProducts(
-                        null, INVALID_TITLE, new ArrayList<>(), null, null);
+                productRepository.getFilteredProducts(filteredProductRequest);
+
 
         assertThat(products).isEmpty();
     }
@@ -228,8 +238,11 @@ public class ProductRepositoryTest {
                         currentProductId++));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_ONLY_IN_1);
+
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, categories, null, null);
+
         List<Product> products =
-                productRepository.getFilteredProducts(null, null, categories, null, null);
+                productRepository.getFilteredProducts(filteredProductRequest);
 
         assertThat(verifyProductsHaveAtLeastOneGoodCategory(products, CATEGORIES_ONLY_IN_1))
                 .isTrue();
@@ -257,8 +270,11 @@ public class ProductRepositoryTest {
                         currentProductId++));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_2);
+
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, categories, null, null);
+
         List<Product> products =
-                productRepository.getFilteredProducts(null, null, categories, null, null);
+                productRepository.getFilteredProducts(filteredProductRequest);
 
         assertThat(verifyProductsHaveAtLeastOneGoodCategory(products, CATEGORIES_2)).isTrue();
     }
@@ -284,8 +300,10 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, INVALID_CATEGORIES, null, null);
+
         List<Product> products =
-                productRepository.getFilteredProducts(null, null, INVALID_CATEGORIES, null, null);
+                productRepository.getFilteredProducts(filteredProductRequest);
 
         assertThat(products).isEmpty();
     }
@@ -311,11 +329,12 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
-        List<Product> products =
-                productRepository.getFilteredProducts(
-                        null, null, new ArrayList<>(), Double.toString(MIDDLE_PRICE), null);
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(MIDDLE_PRICE), null);
 
-        assertThat(verifyProductsHaveHigherOrEqualPriceThanMinPrice(products, MIDDLE_PRICE))
+        List<Product> products =
+                productRepository.getFilteredProducts(filteredProductRequest);
+
+        assertThat(verifyProductsPriceIsGreaterThanOrEqualToMinPrice(products, MIDDLE_PRICE))
                 .isTrue();
     }
 
@@ -340,11 +359,12 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
-        List<Product> products =
-                productRepository.getFilteredProducts(
-                        null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
-        assertThat(verifyProductsHaveHigherOrEqualPriceThanMinPrice(products, SUGGESTED_PRICE_1))
+        List<Product> products =
+                productRepository.getFilteredProducts(filteredProductRequest);
+
+        assertThat(verifyProductsPriceIsGreaterThanOrEqualToMinPrice(products, SUGGESTED_PRICE_1))
                 .isTrue();
     }
 
@@ -369,11 +389,12 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         currentProductId++));
 
-        List<Product> products =
-                productRepository.getFilteredProducts(
-                        null, null, new ArrayList<>(), null, Double.toString(MIDDLE_PRICE));
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), null, Double.toString(MIDDLE_PRICE));
 
-        assertThat(verifyProductsHaveLowerOrEqualPriceThanMaxPrice(products, MIDDLE_PRICE))
+        List<Product> products =
+                productRepository.getFilteredProducts(filteredProductRequest);
+
+        assertThat(verifyProductsPriceIsGreaterThanOrEqualToMaxPrice(products, MIDDLE_PRICE))
                 .isTrue();
     }
 
@@ -397,13 +418,44 @@ public class ProductRepositoryTest {
                         SELLER_ID_2,
                         SELLER_NAME_2,
                         currentProductId++));
+        FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
         List<Product> products =
-                productRepository.getFilteredProducts(
-                        null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
+                productRepository.getFilteredProducts(filteredProductRequest);
 
-        assertThat(verifyProductsHaveHigherOrEqualPriceThanMinPrice(products, SUGGESTED_PRICE_1))
+        assertThat(verifyProductsPriceIsGreaterThanOrEqualToMinPrice(products, SUGGESTED_PRICE_1))
                 .isTrue();
+    }
+
+    private static FilteredProductRequest createFilteredProductRequest(String sellerId, String title, List<String> categories, String minPrice, String maxPrice) {
+        FilteredProductRequest filteredProductRequest = new FilteredProductRequest();
+        filteredProductRequest.sellerId = sellerId;
+        filteredProductRequest.title = title;
+        filteredProductRequest.categories = createProductCategoryList(categories);
+        if (minPrice != null) {
+            filteredProductRequest.minPrice = parsePriceToDouble(minPrice);
+        }
+        if (maxPrice != null) {
+            filteredProductRequest.maxPrice = parsePriceToDouble(maxPrice);
+        }
+
+        return filteredProductRequest;
+    }
+
+    private static Double parsePriceToDouble(String price) {
+        try {
+            return Double.parseDouble(price);
+        } catch (NumberFormatException e) {
+            throw new InvalidPriceTypeException();
+        }
+    }
+
+    private static List<ProductCategory> createProductCategoryList(List<String> categories) {
+        if (categories != null) {
+            return toCategoriesList(categories);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     private static boolean verifyProductsHaveSameSellerId(List<Product> products, String sellerId) {
@@ -446,8 +498,9 @@ public class ProductRepositoryTest {
         }
         return areAllValid;
     }
+  
+    private static boolean verifyProductsPriceIsGreaterThanOrEqualToMinPrice(
 
-    private static boolean verifyProductsHaveHigherOrEqualPriceThanMinPrice(
             List<Product> products, double minPrice) {
         boolean areAllValid = true;
         for (Product product : products) {
@@ -459,17 +512,16 @@ public class ProductRepositoryTest {
         return areAllValid;
     }
 
-    private static boolean verifyProductsHaveLowerOrEqualPriceThanMaxPrice(
-            List<Product> products, double minPrice) {
+    private static boolean verifyProductsPriceIsGreaterThanOrEqualToMaxPrice(
+            List<Product> products, double maxPrice) {
         boolean areAllValid = true;
         for (Product product : products) {
-            if (product.getSuggestedPrice() > minPrice) {
+            if (product.getSuggestedPrice() > maxPrice) {
+
                 areAllValid = false;
                 break;
             }
         }
         return areAllValid;
     }
-
-
 }

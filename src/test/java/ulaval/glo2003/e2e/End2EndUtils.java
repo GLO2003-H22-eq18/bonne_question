@@ -7,28 +7,14 @@ import static io.restassured.RestAssured.given;
 
 import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.IntStream;
 import org.apache.http.HttpStatus;
 import ulaval.glo2003.exceptions.ErrorCode;
 import ulaval.glo2003.exceptions.ErrorResponse;
-import ulaval.glo2003.product.domain.ProductCategory;
-import ulaval.glo2003.product.ui.ProductRequest;
-import ulaval.glo2003.product.ui.ProductResponse;
-import ulaval.glo2003.seller.ui.SellerProductResponse;
-import ulaval.glo2003.seller.ui.SellerRequest;
-import ulaval.glo2003.seller.ui.SellerResponse;
-import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class End2EndUtils {
 

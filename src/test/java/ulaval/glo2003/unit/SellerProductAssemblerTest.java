@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
-import ulaval.glo2003.seller.ui.SellerProductAssembler;
-import ulaval.glo2003.seller.ui.SellerProductResponse;
+import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
+import ulaval.glo2003.seller.ui.responses.SellerProductResponse;
 
 public class SellerProductAssemblerTest {
 

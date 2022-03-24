@@ -11,6 +11,9 @@ import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
+import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
+import ulaval.glo2003.seller.ui.requests.SellerRequest;
+import ulaval.glo2003.seller.ui.responses.SellerResponse;
 
 @Path("/sellers")
 public class SellerResource {

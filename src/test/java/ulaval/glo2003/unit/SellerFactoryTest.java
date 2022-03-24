@@ -14,7 +14,7 @@ import ulaval.glo2003.seller.exceptions.InvalidSellerNameException;
 import ulaval.glo2003.seller.exceptions.MissingSellerBioException;
 import ulaval.glo2003.seller.exceptions.MissingSellerBirthdateException;
 import ulaval.glo2003.seller.exceptions.MissingSellerNameException;
-import ulaval.glo2003.seller.ui.SellerRequest;
+import ulaval.glo2003.seller.ui.requests.SellerRequest;
 
 public class SellerFactoryTest {
 

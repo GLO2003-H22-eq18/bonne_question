@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ulaval.glo2003.product.domain.ProductCategory;
-import ulaval.glo2003.product.ui.ProductRequest;
-import ulaval.glo2003.product.ui.ProductResponse;
+import ulaval.glo2003.product.ui.requests.ProductRequest;
+import ulaval.glo2003.product.ui.responses.ProductResponse;
 import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class ProductEnd2EndUtils {
@@ -30,16 +30,12 @@ public class ProductEnd2EndUtils {
     public static final String A_RANDOM_VALID_PRODUCT_TITLE = FAKER.commerce().productName();
     public static final String A_VALID_PRODUCT_DESCRIPTION = "An awesome generic product!";
     public static final Double A_VALID_PRODUCT_SUGGESTED_PRICE = 5.0;
-    public static final List<String> VALID_PRODUCT_CATEGORIES =
-            new ArrayList(List.of("beauty", "electronics"));
-    public static final List<String> ALL_PRODUCT_CATEGORIES =
-            new ArrayList(
-                    List.of("beauty", "electronics", "other", "sports", "apparel", "housing"));
+    public static final List<String> VALID_PRODUCT_CATEGORIES = List.of("beauty", "electronics");
+    public static final List<String> ALL_PRODUCT_CATEGORIES = List.of("beauty", "electronics", "other", "sports", "apparel", "housing");
     public static final String A_INVALID_PRODUCT_TITLE = "    \n  \t \n ";
     public static final String A_INVALID_PRODUCT_DESCRIPTION = "    \n  \t \n ";
     public static final Double A_INVALID_PRODUCT_SUGGESTED_PRICE = 0.99;
-    public static final List<String> A_INVALID_PRODUCT_CATEGORIES =
-            new ArrayList(List.of("BeAuTy", "JavaBaby", "electronics"));
+    public static final List<String> A_INVALID_PRODUCT_CATEGORIES = List.of("BeAuTy", "JavaBaby", "electronics");
     public static final List<ProductCategory> PRODUCT_CATEGORIES_ENUM_VALUES =
             Arrays.asList(ProductCategory.values());
     public static final int MAXIMUM_NUMBER_OF_CATEGORIES = 5;
@@ -128,8 +124,9 @@ public class ProductEnd2EndUtils {
             List<String> categories, int numberOfProducts) {
         for (int i = 0; i < numberOfProducts; i++) {
             ProductRequest productRequest = createRandomProduct();
-            productRequest.categories = getRandomCategories(MAXIMUM_NUMBER_OF_CATEGORIES);
-            productRequest.categories.add(categories.get(RANDOM.nextInt(categories.size())));
+            List<String> productCategories = getRandomCategories(MAXIMUM_NUMBER_OF_CATEGORIES);
+            productCategories.add(categories.get(RANDOM.nextInt(categories.size())));
+            productRequest.categories = productCategories;
 
             createProductResource(productRequest, createRandomSellerGetId());
         }

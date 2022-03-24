@@ -6,7 +6,7 @@ import ulaval.glo2003.product.exceptions.offers.InvalidOfferEmailException;
 import ulaval.glo2003.product.exceptions.offers.InvalidOfferMessageException;
 import ulaval.glo2003.product.exceptions.offers.InvalidOfferNameException;
 import ulaval.glo2003.product.exceptions.offers.InvalidOfferPhoneNumberException;
-import ulaval.glo2003.product.ui.OfferRequest;
+import ulaval.glo2003.product.ui.requests.OfferRequest;
 import ulaval.glo2003.utils.StringUtil;
 
 public class OfferFactory {

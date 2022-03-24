@@ -51,9 +51,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
-import ulaval.glo2003.product.ui.FilteredProductsResponse;
-import ulaval.glo2003.product.ui.ProductRequest;
-import ulaval.glo2003.product.ui.ProductResponse;
+import ulaval.glo2003.product.ui.responses.FilteredProductsResponse;
+import ulaval.glo2003.product.ui.requests.ProductRequest;
+import ulaval.glo2003.product.ui.responses.ProductResponse;
 
 @DisplayName("Product Resource")
 public class ProductResourceTest {

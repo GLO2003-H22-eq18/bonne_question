@@ -7,7 +7,7 @@ import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import ulaval.glo2003.seller.exceptions.*;
-import ulaval.glo2003.seller.ui.SellerRequest;
+import ulaval.glo2003.seller.ui.requests.SellerRequest;
 import ulaval.glo2003.utils.StringUtil;
 
 public class SellerFactory {
