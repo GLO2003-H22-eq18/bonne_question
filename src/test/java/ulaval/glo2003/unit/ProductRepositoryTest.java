@@ -498,8 +498,9 @@ public class ProductRepositoryTest {
         }
         return areAllValid;
     }
-
+  
     private static boolean verifyProductsPriceIsGreaterThanOrEqualToMinPrice(
+
             List<Product> products, double minPrice) {
         boolean areAllValid = true;
         for (Product product : products) {
@@ -516,6 +517,7 @@ public class ProductRepositoryTest {
         boolean areAllValid = true;
         for (Product product : products) {
             if (product.getSuggestedPrice() > maxPrice) {
+
                 areAllValid = false;
                 break;
             }
