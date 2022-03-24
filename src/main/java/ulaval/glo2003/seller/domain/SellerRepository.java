@@ -4,28 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 
-public class SellerRepository {
-    private final Map<String, Seller> sellers;
+public interface SellerRepository {
 
-    public SellerRepository() {
-        sellers = new HashMap<>();
-    }
+    public abstract Seller findById(String sellerId);
 
-    public Seller findById(String sellerId) {
-        Seller seller = sellers.get(sellerId);
-        if (seller != null) {
-            return seller;
-        } else {
-            throw new SellerNotFoundException();
-        }
-    }
+    public abstract void save(Seller seller);
 
-    public void save(Seller seller) {
-        String sellerId = seller.getId();
-        sellers.put(sellerId, seller);
-    }
-
-    public Map<String, Seller> getSellers() {
-        return sellers;
-    }
+    public abstract Map<String, Seller> getSellers();
 }

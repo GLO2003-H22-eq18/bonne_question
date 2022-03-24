@@ -15,6 +15,7 @@ import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
 import ulaval.glo2003.product.ui.ProductResource;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.seller.infrastructure.MongoSellersRepository;
 import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
 import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
 import ulaval.glo2003.seller.ui.SellerResource;
@@ -23,9 +24,9 @@ public class Main {
 
     public static final String BASE_URI = "http://0.0.0.0:";
 
-    public static HttpServer startServer() {
+    public static HttpServer startServer(ApplicationContext.ApplicationMode applicationMode) {
 
-        SellerRepository sellerRepository = new SellerRepository();
+        SellerRepository sellerRepository = new MongoSellersRepository(applicationMode);
         SellerFactory sellerFactory = new SellerFactory();
         SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
         SellerAssembler sellerAssembler = new SellerAssembler(sellerProductAssembler);
@@ -53,7 +54,9 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
+        ApplicationContext applicationContext = new ApplicationContext();
+
+        final HttpServer server = startServer(applicationContext.getApplicationMode());
 
         server.start();
     }

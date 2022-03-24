@@ -21,7 +21,7 @@ public class HealthResourceTest {
 
     @BeforeAll
     public static void startServer() throws IOException {
-        server = Main.startServer();
+        server = Main.startServer(applicationContext.getApplicationMode());
         server.start();
     }
 
