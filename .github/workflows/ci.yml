@@ -1,7 +1,7 @@
 name: Java CI Maven
 on:
   push:
-    branches:
+    branches-ignore:
       - main
       - dev
   pull_request:
