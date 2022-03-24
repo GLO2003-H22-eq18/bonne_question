@@ -44,6 +44,7 @@ jobs:
         run: mvn test -Dtest=glo2003/e2e/*
 
   deploy:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
