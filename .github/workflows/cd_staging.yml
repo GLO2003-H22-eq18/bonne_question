@@ -43,7 +43,10 @@ jobs:
       - name: System tests
         run: mvn test -Dtest=glo2003/e2e/*
 
-      - name: Deploy
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy with Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
