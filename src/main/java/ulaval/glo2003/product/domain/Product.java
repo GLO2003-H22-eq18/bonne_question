@@ -16,14 +16,14 @@ public class Product {
     private final Integer count;
 
     public Product(
+            String id,
             String title,
             String description,
             Double suggestedPrice,
             List<ProductCategory> categories,
             String sellerId,
-            String sellerName,
-            int currentId) {
-        this.id = String.valueOf(currentId);
+            String sellerName) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.suggestedPrice = suggestedPrice;

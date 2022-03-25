@@ -14,13 +14,13 @@ public class Seller {
     private final List<Product> products;
 
     public Seller(
+            String id,
             String name,
             String bio,
             OffsetDateTime createdAt,
             LocalDate birthDate,
-            List<Product> products,
-            int id) {
-        this.id = String.valueOf(id);
+            List<Product> products) {
+        this.id = id;
         this.createdAt = createdAt;
         this.birthDate = birthDate;
         this.name = name;

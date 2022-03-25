@@ -17,13 +17,13 @@ public class ProductFactory {
         checkNewProductInvalidParam(productRequest);
 
         return new Product(
+                String.valueOf(currentId++),
                 productRequest.title,
                 productRequest.description,
                 productRequest.suggestedPrice,
                 ProductCategory.toCategoriesList(productRequest.categories),
                 productSeller.getId(),
-                productSeller.getName(),
-                currentId++);
+                productSeller.getName());
     }
 
     public static void checkNewProductInvalidParam(ProductRequest productRequest) {

@@ -18,12 +18,12 @@ public class SellerFactory {
         checkInvalidParam(sellerRequest);
 
         return new Seller(
+                String.valueOf(currentId++),
                 sellerRequest.name,
                 sellerRequest.bio,
                 OffsetDateTime.now(Clock.systemUTC()),
                 LocalDate.parse(sellerRequest.birthDate),
-                new ArrayList<>(),
-                currentId++);
+                new ArrayList<>());
     }
 
     private void checkMissingParam(SellerRequest sellerRequest) {
