@@ -30,9 +30,9 @@ class SellerAssemblerTest {
         OffsetDateTime createdAt = OffsetDateTime.now();
         LocalDate birthDate = LocalDate.parse("1977-04-23");
         List<Product> products = new ArrayList<>();
-        int id = 1;
+        String id = "1";
 
-        return new Seller(name, bio, createdAt, birthDate, products, id);
+        return new Seller(id, name, bio, createdAt, birthDate, products);
     }
 
     @Test

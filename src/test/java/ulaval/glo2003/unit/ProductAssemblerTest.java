@@ -43,14 +43,14 @@ class ProductAssemblerTest {
         Double suggestedPrice = 32d;
         String sellerId = "0";
         String sellerName = "John Doe";
-        int id = 0;
+        String id = "1";
 
         List<String> categoriesString = new ArrayList<>();
         categoriesString.add("beauty");
         categoriesString.add("sports");
         List<ProductCategory> categories = toCategoriesList(categoriesString);
 
-        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id);
+        return new Product(id, title, description, suggestedPrice, categories, sellerId, sellerName);
     }
 
     @Test

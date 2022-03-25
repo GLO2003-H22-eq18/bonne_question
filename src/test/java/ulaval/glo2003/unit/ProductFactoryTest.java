@@ -42,12 +42,12 @@ public class ProductFactoryTest {
         productFactory = new ProductFactory();
         productSeller =
                 new Seller(
+                        String.valueOf(currentSellerId++),
                         "John Cena",
                         "What a chad!",
                         OffsetDateTime.now(Clock.systemUTC()),
                         LocalDate.parse("1977-04-23"),
-                        new ArrayList<>(),
-                        currentSellerId++);
+                        new ArrayList<>());
     }
 
     public ProductRequest createProductRequest(
