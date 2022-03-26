@@ -2,6 +2,7 @@ package ulaval.glo2003.product.domain;
 
 import java.time.Clock;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -14,6 +15,8 @@ public class Product {
     private final String sellerId;
     private final String sellerName;
     private final Integer count;
+    // TODO: initialize in constructor
+    private final List<Offer> offers;
 
     public Product(
             String id,
@@ -31,6 +34,7 @@ public class Product {
         this.sellerId = sellerId;
         this.sellerName = sellerName;
         this.count = 0;
+        this.offers = new ArrayList<>();
 
         this.createdAt = OffsetDateTime.now(Clock.systemUTC());
     }
@@ -69,5 +73,9 @@ public class Product {
 
     public Integer getCount() {
         return count;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
     }
 }

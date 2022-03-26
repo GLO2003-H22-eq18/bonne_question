@@ -27,6 +27,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.Main;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;
 import ulaval.glo2003.seller.ui.responses.SellerResponse;
@@ -35,6 +36,7 @@ import ulaval.glo2003.seller.ui.responses.SellerResponse;
 class SellerResourceTest {
 
     public static HttpServer server;
+    public static ApplicationContext applicationContext;
 
     @BeforeAll
     public static void startServer() throws IOException {

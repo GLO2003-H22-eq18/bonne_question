@@ -1,4 +1,4 @@
-package ulaval.glo2003.seller.infrastructure;
+package ulaval.glo2003.seller.infrastructure.repository;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -15,6 +15,9 @@ import static dev.morphia.query.experimental.filters.Filters.eq;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
+import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
+import ulaval.glo2003.seller.infrastructure.models.SellerModel;
 
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -23,8 +26,11 @@ import java.util.Map;
 public class MongoSellersRepository implements SellerRepository {
     private final MongoDatabase mongoDatabase;
     private final Datastore datastore;
+    private final SellerModelAssembler sellerModelAssembler;
 
-    public MongoSellersRepository(ApplicationContext.ApplicationMode applicationMode) {
+    public MongoSellersRepository(ApplicationContext.ApplicationMode applicationMode, SellerModelAssembler sellerModelAssembler) {
+
+        this.sellerModelAssembler = sellerModelAssembler;
 
         String MONGODB_URI = System.getenv("MONGODB_URI");
         ConnectionString connectionString = new ConnectionString(MONGODB_URI);
@@ -44,25 +50,24 @@ public class MongoSellersRepository implements SellerRepository {
         }
 
         this.datastore = Morphia.createDatastore(mongoClient, "floppa-dev");
-        this.datastore.getMapper().mapPackage("ulaval.glo2003.seller.ui");
+        this.datastore.getMapper().mapPackage("ulaval.glo2003.seller.infrastructure");
     }
 
     @Override
     public Seller findById(String sellerId) {
-//        Seller seller;
-//        long query = datastore.find(SellerModel.class)
-//                .filter(eq("_id", sellerId))
-//                .stream().count();
-//
-//        System.out.println(query);
-//        return null;
-        return null;
+        SellerModel sellerModel = datastore.find(SellerModel.class).filter(eq("_id", sellerId)).first();
+
+        if (sellerModel == null) {
+            throw new SellerNotFoundException();
+        }
+
+        return sellerModelAssembler.createSeller(sellerModel);
     }
 
     @Override
     public void save(Seller seller) {
-//        SellerModel sellerInMemory = new SellerModel(seller);
-//        this.datastore.save(sellerInMemory);
+        SellerModel sellerModel = sellerModelAssembler.createSellerModel(seller);
+        datastore.save(sellerModel);
     }
 
     @Override

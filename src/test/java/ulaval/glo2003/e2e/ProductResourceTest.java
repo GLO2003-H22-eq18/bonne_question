@@ -50,6 +50,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.Main;
 import ulaval.glo2003.product.ui.responses.FilteredProductsResponse;
 import ulaval.glo2003.product.ui.requests.ProductRequest;
@@ -59,6 +60,7 @@ import ulaval.glo2003.product.ui.responses.ProductResponse;
 public class ProductResourceTest {
 
     public static HttpServer server;
+    public static ApplicationContext applicationContext;
 
     @BeforeAll
     public static void startServer() throws IOException {

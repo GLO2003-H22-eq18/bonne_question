@@ -9,18 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
+import ulaval.glo2003.seller.infrastructure.assemblers.OfferModelAssembler;
+import ulaval.glo2003.seller.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
+import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
 
 public class SellerRepositoryTest {
 
     private SellerRepository sellerRepository;
+    public static ApplicationContext applicationContext;
 
     @BeforeEach
     public void setUp() {
-        sellerRepository = new SellerRepository();
+        OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
+        ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
+        SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
+        this.sellerRepository = new MongoSellersRepository(applicationContext.getApplicationMode(), sellerModelAssembler);
     }
 
     public Seller getSeller() {
