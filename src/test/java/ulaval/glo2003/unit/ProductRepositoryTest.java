@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.domain.ProductRepository;
@@ -41,6 +42,7 @@ public class ProductRepositoryTest {
             Arrays.asList(ProductCategory.BEAUTY);
     private static final double MIDDLE_PRICE = 10000;
     private ProductRepository productRepository;
+    private static final List<Offer> OFFERS = new ArrayList();
 
     @BeforeEach
     void setUp() {
@@ -57,7 +59,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++);
+                        currentProductId++,
+                        OFFERS);
         productRepository.save(product);
 
         Product gottenProduct = productRepository.findById(product.getId());
@@ -80,7 +83,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -89,7 +93,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(SELLER_ID_1, null, new ArrayList<>(), null, null);
 
@@ -109,7 +114,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -118,7 +124,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(INVALID_ID, null, new ArrayList<>(), null, null);
 
@@ -138,7 +145,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -147,7 +155,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1, new ArrayList<>(), null, null);
 
@@ -167,7 +176,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -176,7 +186,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1_AND_2_IN_COMMON, new ArrayList<>(), null, null);
 
@@ -196,7 +207,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -205,7 +217,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, INVALID_TITLE, new ArrayList<>(), null, null);
 
@@ -226,7 +239,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -235,7 +249,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_ONLY_IN_1);
 
@@ -258,7 +273,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -267,7 +283,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_2);
 
@@ -289,7 +306,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -298,7 +316,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, INVALID_CATEGORIES, null, null);
 
@@ -318,7 +337,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -327,7 +347,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(MIDDLE_PRICE), null);
 
@@ -348,7 +369,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -357,7 +379,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
@@ -378,7 +401,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -387,7 +411,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), null, Double.toString(MIDDLE_PRICE));
 
@@ -408,7 +433,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -417,7 +443,8 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++));
+                        currentProductId++,
+                        OFFERS));
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
         List<Product> products =

@@ -7,6 +7,8 @@ import static ulaval.glo2003.product.ui.assemblers.ProductSellerAssembler.create
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.exceptions.InvalidPriceTypeException;
@@ -30,7 +32,8 @@ public class ProductAssembler {
         List<String> categories = toStringList(product.getCategories());
         ProductSellerResponse seller =
                 createProductSellerResponse(product.getSellerId(), product.getSellerName());
-        ProductOffersResponse offers = createProductOffersResponse(product.getCount());
+        ProductOffersResponse offers =
+                createProductOffersResponse(product.getOffers());
 
         return new ProductResponse(id, createdAt, title, description, suggestedPrice, categories,
                 seller, offers);

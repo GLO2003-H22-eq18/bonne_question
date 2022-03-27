@@ -1,5 +1,6 @@
 package ulaval.glo2003.product.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import ulaval.glo2003.product.exceptions.InvalidProductCategoriesException;
 import ulaval.glo2003.product.exceptions.InvalidProductDescriptionException;
@@ -23,7 +24,8 @@ public class ProductFactory {
                 ProductCategory.toCategoriesList(productRequest.categories),
                 productSeller.getId(),
                 productSeller.getName(),
-                currentId++);
+                currentId++,
+                new ArrayList<>());
     }
 
     public static void checkNewProductInvalidParam(ProductRequest productRequest) {

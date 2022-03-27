@@ -2,6 +2,7 @@ package ulaval.glo2003.product.domain;
 
 import java.time.Clock;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -13,7 +14,7 @@ public class Product {
     private final List<ProductCategory> categories;
     private final String sellerId;
     private final String sellerName;
-    private final Integer count;
+    private final List<Offer> offers;
 
     public Product(
             String title,
@@ -22,7 +23,8 @@ public class Product {
             List<ProductCategory> categories,
             String sellerId,
             String sellerName,
-            int currentId) {
+            int currentId,
+            List<Offer> offers) {
         this.id = String.valueOf(currentId);
         this.title = title;
         this.description = description;
@@ -30,7 +32,7 @@ public class Product {
         this.categories = categories;
         this.sellerId = sellerId;
         this.sellerName = sellerName;
-        this.count = 0;
+        this.offers = offers;
 
         this.createdAt = OffsetDateTime.now(Clock.systemUTC());
     }
@@ -67,7 +69,7 @@ public class Product {
         return sellerName;
     }
 
-    public Integer getCount() {
-        return count;
+    public List<Offer> getOffers() {
+        return offers;
     }
 }

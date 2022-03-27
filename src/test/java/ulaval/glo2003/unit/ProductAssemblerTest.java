@@ -7,8 +7,11 @@ import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.velocity.util.ArrayListWrapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.exceptions.MissingProductDescriptionException;
@@ -50,7 +53,9 @@ class ProductAssemblerTest {
         categoriesString.add("sports");
         List<ProductCategory> categories = toCategoriesList(categoriesString);
 
-        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id);
+        List<Offer> offers = new ArrayList();
+
+        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id, offers);
     }
 
     @Test
@@ -106,6 +111,8 @@ class ProductAssemblerTest {
         assertThat(productResponse.categories).isEqualTo(toStringList(product.getCategories()));
         assertThat(productResponse.seller.id).isEqualTo(product.getSellerId());
         assertThat(productResponse.seller.name).isEqualTo(product.getSellerName());
-        assertThat(productResponse.offers.count).isEqualTo(product.getCount());
+        assertThat(productResponse.offers.count).isEqualTo(0);
+        assertThat(productResponse.offers.mean).isEqualTo(null);
+
     }
 }
