@@ -12,8 +12,7 @@ import ulaval.glo2003.product.ui.responses.OfferResponse;
 public class DetailedProductOffersAssembler {
 
     public static DetailedProductOffersResponse createDetailedProductOffersResponse(
-            Product product) {
-        List<Offer> offers = product.getOffers();
+            List<Offer> offers) {
         Double min = getOffersMin(offers);
         Double max = getOffersMax(offers);
         Double mean = getOffersMean(offers);
