@@ -33,7 +33,7 @@ public class Main {
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
         ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
-        SellerRepository sellerRepository = new MongoSellersRepository(applicationMode.getDatabase(), sellerModelAssembler);
+        SellerRepository sellerRepository = new MongoSellersRepository(applicationMode.getDatabase(), sellerModelAssembler, productModelAssembler);
         ProductRepository productRepository = new MongoProductsRepository(applicationMode.getDatabase(), productModelAssembler);
 
         SellerFactory sellerFactory = new SellerFactory();

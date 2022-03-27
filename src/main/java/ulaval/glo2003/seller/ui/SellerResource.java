@@ -34,11 +34,7 @@ public class SellerResource {
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
         Seller seller =
-                sellerRepository.getSellers().entrySet().stream()
-                        .filter(map -> map.getKey().equals(sellerId))
-                        .findAny()
-                        .orElseThrow(SellerNotFoundException::new)
-                        .getValue();
+                sellerRepository.findById(sellerId);
 
         SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 
