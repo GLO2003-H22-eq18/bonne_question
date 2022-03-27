@@ -9,12 +9,17 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.ApplicationContext;
+import ulaval.glo2003.product.domain.MongoProductsRepository;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.exceptions.InvalidPriceTypeException;
 import ulaval.glo2003.product.exceptions.ProductNotFoundException;
+import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
+import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
+import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 
 public class ProductRepositoryTest {
 
@@ -41,10 +46,17 @@ public class ProductRepositoryTest {
             Arrays.asList(ProductCategory.BEAUTY);
     private static final double MIDDLE_PRICE = 10000;
     private ProductRepository productRepository;
+    private final ApplicationContext applicationContext = new ApplicationContext();
+    private final OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
+    private final ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
+    private final SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
+
+    public ProductRepositoryTest() {
+    }
 
     @BeforeEach
     void setUp() {
-        productRepository = new ProductRepository();
+        productRepository = new MongoProductsRepository(applicationContext.getDatabase(), productModelAssembler);
     }
 
     @Test

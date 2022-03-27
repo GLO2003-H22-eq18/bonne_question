@@ -14,8 +14,8 @@ import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
-import ulaval.glo2003.seller.infrastructure.assemblers.OfferModelAssembler;
-import ulaval.glo2003.seller.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
 
@@ -29,7 +29,7 @@ public class SellerRepositoryTest {
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
         ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
-        this.sellerRepository = new MongoSellersRepository(applicationContext.getApplicationMode(), sellerModelAssembler);
+        this.sellerRepository = new MongoSellersRepository(applicationContext.getDatabase(), sellerModelAssembler);
     }
 
     public Seller getSeller() {

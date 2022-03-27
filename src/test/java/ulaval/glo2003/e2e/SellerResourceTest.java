@@ -36,11 +36,11 @@ import ulaval.glo2003.seller.ui.responses.SellerResponse;
 class SellerResourceTest {
 
     public static HttpServer server;
-    public static ApplicationContext applicationContext;
+    public static ApplicationContext applicationContext = new ApplicationContext();
 
     @BeforeAll
     public static void startServer() throws IOException {
-        server = Main.startServer(applicationContext.getApplicationMode());
+        server = Main.startServer(applicationContext);
         server.start();
     }
 
