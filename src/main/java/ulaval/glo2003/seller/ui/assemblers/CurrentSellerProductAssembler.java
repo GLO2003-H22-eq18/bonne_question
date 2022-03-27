@@ -9,7 +9,7 @@ import ulaval.glo2003.seller.ui.responses.CurrentSellerProductResponse;
 
 public class CurrentSellerProductAssembler {
 
-    public CurrentSellerProductResponse createCurrentSellerProductResponse(Product product) {
+    public static CurrentSellerProductResponse createCurrentSellerProductResponse(Product product) {
         String id = product.getId();
         String title = product.getTitle();
         String description = product.getDescription();

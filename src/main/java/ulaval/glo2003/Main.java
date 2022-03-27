@@ -27,8 +27,7 @@ public class Main {
 
         SellerRepository sellerRepository = new SellerRepository();
         SellerFactory sellerFactory = new SellerFactory();
-        SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
-        SellerAssembler sellerAssembler = new SellerAssembler(sellerProductAssembler);
+        SellerAssembler sellerAssembler = new SellerAssembler();
         SellerResource sellerResource =
                 new SellerResource(sellerRepository, sellerFactory, sellerAssembler);
 

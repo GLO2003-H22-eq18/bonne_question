@@ -5,7 +5,6 @@ import static java.lang.Double.MAX_VALUE;
 import java.util.List;
 import java.util.stream.Collectors;
 import ulaval.glo2003.product.domain.Offer;
-import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.ui.responses.DetailedProductOffersResponse;
 import ulaval.glo2003.product.ui.responses.OfferResponse;
 

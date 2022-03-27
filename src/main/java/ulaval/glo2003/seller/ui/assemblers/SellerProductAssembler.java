@@ -9,7 +9,7 @@ import ulaval.glo2003.seller.ui.responses.SellerProductResponse;
 
 public class SellerProductAssembler {
 
-    public SellerProductResponse createSellerProductResponse(Product product) {
+    public static SellerProductResponse createSellerProductResponse(Product product) {
         String id = product.getId();
         String createdAt = product.getCreatedAt().toString();
         String title = product.getTitle();
