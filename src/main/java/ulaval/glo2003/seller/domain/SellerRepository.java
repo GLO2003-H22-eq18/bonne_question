@@ -11,4 +11,6 @@ public interface SellerRepository {
     public abstract void save(Seller seller);
 
     public abstract Map<String, Seller> getSellers();
+
+    public abstract void updateSeller(String sellerId);
 }
