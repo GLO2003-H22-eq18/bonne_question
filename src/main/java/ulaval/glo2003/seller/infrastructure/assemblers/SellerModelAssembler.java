@@ -1,9 +1,9 @@
 package ulaval.glo2003.seller.infrastructure.assemblers;
 
-import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.seller.domain.Seller;
-import ulaval.glo2003.seller.infrastructure.models.ProductModel;
+import ulaval.glo2003.product.infrastructure.models.ProductModel;
 import ulaval.glo2003.seller.infrastructure.models.SellerModel;
 
 import java.time.LocalDate;

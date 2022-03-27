@@ -3,20 +3,22 @@ package ulaval.glo2003.seller.infrastructure.models;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Reference;
-import dev.morphia.mapping.experimental.MorphiaReference;
+import ulaval.glo2003.product.infrastructure.models.ProductModel;
 
 import java.util.List;
 
 @Entity("sellers")
 public class SellerModel {
     @Id
-    private final String id;
-    private final String name;
-    private final String createdAt;
-    private final String bio;
-    private final String birthDate;
+    private String id;
+    private String name;
+    private String createdAt;
+    private String bio;
+    private String birthDate;
     @Reference
-    private final List<ProductModel> products;
+    private List<ProductModel> products;
+
+    public SellerModel() {}
 
     public SellerModel(
             String id,

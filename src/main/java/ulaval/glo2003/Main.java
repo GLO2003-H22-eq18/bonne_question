@@ -9,16 +9,16 @@ import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.exceptions.InvalidArgumentExceptionMapper;
 import ulaval.glo2003.exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.exceptions.MissingArgumentExceptionMapper;
+import ulaval.glo2003.product.domain.MongoProductsRepository;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
 import ulaval.glo2003.product.ui.ProductResource;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
-import ulaval.glo2003.seller.infrastructure.assemblers.OfferModelAssembler;
-import ulaval.glo2003.seller.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
-import ulaval.glo2003.seller.infrastructure.models.OfferModel;
 import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
 import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
 import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
@@ -28,12 +28,13 @@ public class Main {
 
     public static final String BASE_URI = "http://0.0.0.0:";
 
-    public static HttpServer startServer(ApplicationContext.ApplicationMode applicationMode) {
+    public static HttpServer startServer(ApplicationContext applicationMode) {
 
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
         ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
-        SellerRepository sellerRepository = new MongoSellersRepository(applicationMode, sellerModelAssembler);
+        SellerRepository sellerRepository = new MongoSellersRepository(applicationMode.getDatabase(), sellerModelAssembler);
+        ProductRepository productRepository = new MongoProductsRepository(applicationMode.getDatabase(), productModelAssembler);
 
         SellerFactory sellerFactory = new SellerFactory();
         SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
@@ -41,7 +42,6 @@ public class Main {
         SellerResource sellerResource =
                 new SellerResource(sellerRepository, sellerFactory, sellerAssembler);
 
-        ProductRepository productRepository = new ProductRepository();
         ProductFactory productFactory = new ProductFactory();
         ProductAssembler productAssembler = new ProductAssembler();
         ProductResource productResource = new ProductResource(
@@ -64,7 +64,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ApplicationContext applicationContext = new ApplicationContext();
 
-        final HttpServer server = startServer(applicationContext.getApplicationMode());
+        final HttpServer server = startServer(applicationContext);
 
         server.start();
     }

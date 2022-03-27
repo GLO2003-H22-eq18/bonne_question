@@ -18,4 +18,16 @@ public class ApplicationContext {
 
         throw new UnsupportedOperationException("Mode " + mode + " not handled");
     }
+
+    public String getDatabase() {
+        ApplicationMode mode = getApplicationMode();
+
+        if (mode.equals(ApplicationMode.Production)) {
+            return "floppa-prod";
+        } else if (mode.equals(ApplicationMode.Staging)) {
+            return "floppa-staging";
+        } else {
+            return "floppa-dev";
+        }
+    }
 }

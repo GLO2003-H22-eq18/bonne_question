@@ -37,6 +37,7 @@ public class MongoProductsRepository implements ProductRepository {
 
         this.productModelAssembler = productModelAssembler;
         String mongodbUri = System.getenv("MONGODB_URI");
+        System.out.println(mongodbUri);
         ConnectionString connectionString = new ConnectionString(mongodbUri);
 
         MongoClientSettings settings = MongoClientSettings.builder()
