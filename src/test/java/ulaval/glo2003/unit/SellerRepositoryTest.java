@@ -22,14 +22,14 @@ import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
 public class SellerRepositoryTest {
 
     private SellerRepository sellerRepository;
-    public static ApplicationContext applicationContext;
+    public static ApplicationContext applicationContext = new ApplicationContext();
 
     @BeforeEach
     public void setUp() {
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
         ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
-        this.sellerRepository = new MongoSellersRepository(applicationContext.getDatabase(), sellerModelAssembler);
+        this.sellerRepository = new MongoSellersRepository(applicationContext.getDatabase(), sellerModelAssembler, productModelAssembler);
     }
 
     public Seller getSeller() {

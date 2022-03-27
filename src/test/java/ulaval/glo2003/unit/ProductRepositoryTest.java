@@ -7,6 +7,7 @@ import static ulaval.glo2003.product.domain.ProductCategory.toCategoriesList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.ApplicationContext;
@@ -483,8 +484,10 @@ public class ProductRepositoryTest {
 
     private static boolean verifyProductsHaveTitle(List<Product> products, String title) {
         boolean areAllValid = true;
+        String lowerCaseTitle = title.toLowerCase();
         for (Product product : products) {
-            if (!product.getTitle().contains(title)) {
+            System.out.println(product.getTitle());
+            if (!product.getTitle().toLowerCase().contains(lowerCaseTitle)) {
                 areAllValid = false;
                 break;
             }
@@ -529,7 +532,6 @@ public class ProductRepositoryTest {
         boolean areAllValid = true;
         for (Product product : products) {
             if (product.getSuggestedPrice() > maxPrice) {
-
                 areAllValid = false;
                 break;
             }
