@@ -8,7 +8,6 @@ import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.velocity.util.ArrayListWrapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Offer;
@@ -47,13 +46,12 @@ class ProductAssemblerTest {
         String sellerId = "0";
         String sellerName = "John Doe";
         int id = 0;
+        List<Offer> offers = new ArrayList();
 
         List<String> categoriesString = new ArrayList<>();
         categoriesString.add("beauty");
         categoriesString.add("sports");
         List<ProductCategory> categories = toCategoriesList(categoriesString);
-
-        List<Offer> offers = new ArrayList();
 
         return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id, offers);
     }
