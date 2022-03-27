@@ -40,10 +40,16 @@ public class ProductModelAssembler {
         String description = productModel.getDescription();
         String createdAt = productModel.getCreatedAt();
         Double suggestedPrice = productModel.getSuggestedPrice();
-        List<ProductCategory> categories = ProductCategory.toCategoriesList(productModel.getCategories());
         String sellerId = productModel.getSellerId();
         String sellerName = productModel.getSellerName();
         Integer count = productModel.getCount();
+
+        List<ProductCategory> categories;
+        if (productModel.getCategories() != null) {
+            categories = ProductCategory.toCategoriesList(productModel.getCategories());
+        } else {
+            categories = new ArrayList<>();
+        }
 
         List<Offer> offers;
         if (productModel.getOffers() != null) {

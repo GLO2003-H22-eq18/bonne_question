@@ -37,7 +37,6 @@ public class MongoProductsRepository implements ProductRepository {
 
         this.productModelAssembler = productModelAssembler;
         String mongodbUri = System.getenv("MONGODB_URI");
-        System.out.println(mongodbUri);
         ConnectionString connectionString = new ConnectionString(mongodbUri);
 
         MongoClientSettings settings = MongoClientSettings.builder()
@@ -71,30 +70,72 @@ public class MongoProductsRepository implements ProductRepository {
     @Override
     public List<Product> getFilteredProducts(
             FilteredProductRequest filteredProductRequest) {
-        return null;
+        List<Product> filteredProductsList;
+        if (filteredProductRequest.sellerId != null) {
+            filteredProductsList = getProductsFilterBySellerId(filteredProductRequest.sellerId);
+        } else {
+            filteredProductsList = datastore.find(ProductModel.class)
+                                            .stream()
+                                            .map(productModelAssembler::createProduct)
+                                            .collect(Collectors.toList());
+        }
+
+        if (filteredProductRequest.title != null) {
+            filteredProductsList = getProductsFilterByTitle(filteredProductsList, filteredProductRequest.title);
+        }
+
+        if (!filteredProductRequest.categories.isEmpty()) {
+            filteredProductsList = getProductsFilterByCategories(filteredProductsList, filteredProductRequest.categories);
+        }
+
+        if (filteredProductRequest.minPrice != null) {
+            filteredProductsList =
+                    getMinPriceFilteredProducts(filteredProductsList, filteredProductRequest.minPrice);
+        }
+
+        if (filteredProductRequest.maxPrice != null) {
+            filteredProductsList =
+                    getMaxPriceFilteredProducts(filteredProductsList, filteredProductRequest.maxPrice);
+        }
+
+        return filteredProductsList;
     }
 
     public List<Product> getProductsFilterBySellerId(String sellerId) {
-        return null;
+        return datastore.find(ProductModel.class)
+                .filter((eq("sellerId", sellerId))).stream()
+                .map(productModelAssembler::createProduct)
+                .collect(Collectors.toList());
     }
 
-    private List<Product> getProductsFilterByTitle(
+    public List<Product> getProductsFilterByTitle(
             List<Product> filteredProductsList, String title) {
-        return null;
+        final String lowerCaseTitle = title.toLowerCase();
+        return filteredProductsList.stream()
+                .filter(product -> product.getTitle().toLowerCase().contains(lowerCaseTitle))
+                .collect(Collectors.toList());
     }
 
     public List<Product> getProductsFilterByCategories(
             List<Product> filteredProductsList, List<ProductCategory> categories) {
-        return null;
+        return filteredProductsList.stream()
+                .filter(
+                        product ->
+                                !Collections.disjoint(product.getCategories(), categories))
+                .collect(Collectors.toList());
     }
 
     public List<Product> getMinPriceFilteredProducts(
             List<Product> filteredProductsList, Double minPrice) {
-        return null;
+        return filteredProductsList.stream()
+                .filter(product -> product.getSuggestedPrice() >= minPrice)
+                .collect(Collectors.toList());
     }
 
     public List<Product> getMaxPriceFilteredProducts(
             List<Product> filteredProductsList, Double maxPrice) {
-        return null;
+        return filteredProductsList.stream()
+                .filter(product -> product.getSuggestedPrice() <= maxPrice)
+                .collect(Collectors.toList());
     }
 }

@@ -20,13 +20,8 @@ public interface ProductRepository {
 
     public List<Product> getProductsFilterBySellerId(String sellerId);
 
-    private List<Product> getProductsFilterByTitle(
-            List<Product> filteredProductsList, String title) {
-        final String lowerCaseTitle = title.toLowerCase();
-        return filteredProductsList.stream()
-                .filter(product -> product.getTitle().toLowerCase().contains(lowerCaseTitle))
-                .collect(Collectors.toList());
-    }
+    public List<Product> getProductsFilterByTitle(
+            List<Product> filteredProductsList, String title);
 
     public List<Product> getProductsFilterByCategories(
             List<Product> filteredProductsList, List<ProductCategory> categories);

@@ -52,7 +52,7 @@ public class ProductResource {
         Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
         productRepository.save(myProduct);
-        sellerRepository.updateSeller(sellerId);
+        sellerRepository.updateSeller(myProduct);
 
         return Response.status(201)
                 .header("Location", uri.getPath() + "/" + myProduct.getId())
