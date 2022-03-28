@@ -13,18 +13,18 @@ public class ProductOffersAssembler {
         return new ProductOffersResponse(mean, count);
     }
 
-    private static Double getOffersMean (List<Offer> offers){
-        if(offers.isEmpty()){
+    private static Double getOffersMean(List<Offer> offers) {
+        if (offers.isEmpty()) {
             return null;
         }
         Double total = 0.0;
-        for(int i = 0; i < offers.size(); i++){
+        for (int i = 0; i < offers.size(); i++) {
             total += offers.get(i).getAmount();
         }
-        return total/offers.size();
+        return total / offers.size();
     }
 
-    private static Integer getOffersCount (List<Offer> offers){
+    private static Integer getOffersCount(List<Offer> offers) {
         return offers.size();
     }
 }

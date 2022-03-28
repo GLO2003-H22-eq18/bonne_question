@@ -20,8 +20,7 @@ class SellerAssemblerTest {
 
     @BeforeAll
     public static void setUp() {
-        SellerProductAssembler sellerProductAssembler = new SellerProductAssembler();
-        sellerAssembler = new SellerAssembler(sellerProductAssembler);
+        sellerAssembler = new SellerAssembler();
     }
 
     public Seller getSeller() {

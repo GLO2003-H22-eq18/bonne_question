@@ -11,8 +11,8 @@ public class SellerAssembler {
 
     private final SellerProductAssembler sellerProductAssembler;
 
-    public SellerAssembler(SellerProductAssembler sellerProductAssembler) {
-        this.sellerProductAssembler = sellerProductAssembler;
+    public SellerAssembler() {
+        sellerProductAssembler = new SellerProductAssembler();
     }
 
     public SellerResponse createSellerResponse(Seller seller) {
