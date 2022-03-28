@@ -9,11 +9,11 @@ import ulaval.glo2003.seller.ui.responses.SellerProductResponse;
 
 public class SellerProductAssembler {
 
-    public static SellerProductResponse createSellerProductResponse(Product product) {
+    public SellerProductResponse createSellerProductResponse(Product product) {
         String id = product.getId();
-        String createdAt = product.getCreatedAt().toString();
         String title = product.getTitle();
         String description = product.getDescription();
+        String createdAt = product.getCreatedAt().toString();
         Double suggestedPrice = product.getSuggestedPrice();
         List<String> categories = toStringList(product.getCategories());
         List<Offer> offers = product.getOffers();

@@ -9,6 +9,12 @@ import ulaval.glo2003.seller.ui.responses.SellerResponse;
 
 public class SellerAssembler {
 
+    private final SellerProductAssembler sellerProductAssembler;
+
+    public SellerAssembler() {
+        sellerProductAssembler = new SellerProductAssembler();
+    }
+
     public SellerResponse createSellerResponse(Seller seller) {
         String id = seller.getId();
         String createdAt = seller.getCreatedAt().toString();
@@ -17,7 +23,7 @@ public class SellerAssembler {
         List<Product> products = seller.getProducts();
 
         List<SellerProductResponse> productsResponse = products.stream()
-                .map(SellerProductAssembler::createSellerProductResponse)
+                .map(sellerProductAssembler::createSellerProductResponse)
                 .collect(Collectors.toList());
 
         return new SellerResponse(id, createdAt, name, bio, productsResponse);
