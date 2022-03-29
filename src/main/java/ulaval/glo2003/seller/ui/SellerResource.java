@@ -65,7 +65,12 @@ public class SellerResource {
     @Path("/@me")
     public Response getCurrentSeller(
             @HeaderParam("X-Seller-Id") String sellerId) {
-        Seller seller = sellerRepository.findById(sellerId);
+        Seller seller =
+                sellerRepository.getSellers().entrySet().stream()
+                        .filter(map -> map.getKey().equals(sellerId))
+                        .findAny()
+                        .orElseThrow(SellerNotFoundException::new)
+                        .getValue();
 
         CurrentSellerResponse currentSellerResponse =
                 currentSellerAssembler.createCurrentSellerResponse(seller);
