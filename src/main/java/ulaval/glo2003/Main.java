@@ -9,6 +9,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.exceptions.InvalidArgumentExceptionMapper;
 import ulaval.glo2003.exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.exceptions.MissingArgumentExceptionMapper;
+import ulaval.glo2003.product.domain.OfferFactory;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
@@ -34,8 +35,10 @@ public class Main {
         ProductRepository productRepository = new ProductRepository();
         ProductFactory productFactory = new ProductFactory();
         ProductAssembler productAssembler = new ProductAssembler();
+        OfferFactory offerFactory = new OfferFactory();
         ProductResource productResource = new ProductResource(
-                sellerRepository, productRepository, productFactory, productAssembler);
+                sellerRepository, productRepository, productFactory, productAssembler,
+                offerFactory);
 
         final ResourceConfig resourceConfig = new ResourceConfig()
                 .register(sellerResource)

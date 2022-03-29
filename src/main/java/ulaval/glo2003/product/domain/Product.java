@@ -72,4 +72,8 @@ public class Product {
     public List<Offer> getOffers() {
         return offers;
     }
+
+    public void addOffer(Offer offer) {
+        this.offers.add(offer);
+    }
 }
