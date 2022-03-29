@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.UriInfo;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 import ulaval.glo2003.seller.ui.assemblers.CurrentSellerAssembler;
 import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;
@@ -27,17 +28,23 @@ public class SellerResource {
     public SellerResource(
             SellerRepository sellerRepository,
             SellerFactory sellerFactory,
-            SellerAssembler sellerAssembler) {
+            SellerAssembler sellerAssembler,
+            CurrentSellerAssembler currentSellerAssembler) {
         this.sellerRepository = sellerRepository;
         this.sellerFactory = sellerFactory;
         this.sellerAssembler = sellerAssembler;
-        this.currentSellerAssembler = new CurrentSellerAssembler();
+        this.currentSellerAssembler = currentSellerAssembler;
     }
 
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        Seller seller = sellerRepository.findById(sellerId);
+        Seller seller =
+                sellerRepository.getSellers().entrySet().stream()
+                        .filter(map -> map.getKey().equals(sellerId))
+                        .findAny()
+                        .orElseThrow(SellerNotFoundException::new)
+                        .getValue();
 
         SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 

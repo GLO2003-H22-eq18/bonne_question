@@ -15,8 +15,8 @@ import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
 import ulaval.glo2003.product.ui.ProductResource;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.seller.ui.assemblers.CurrentSellerAssembler;
 import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
-import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
 import ulaval.glo2003.seller.ui.SellerResource;
 
 public class Main {
@@ -28,8 +28,10 @@ public class Main {
         SellerRepository sellerRepository = new SellerRepository();
         SellerFactory sellerFactory = new SellerFactory();
         SellerAssembler sellerAssembler = new SellerAssembler();
+        CurrentSellerAssembler currentSellerAssembler = new CurrentSellerAssembler();
         SellerResource sellerResource =
-                new SellerResource(sellerRepository, sellerFactory, sellerAssembler);
+                new SellerResource(sellerRepository, sellerFactory, sellerAssembler,
+                        currentSellerAssembler);
 
         ProductRepository productRepository = new ProductRepository();
         ProductFactory productFactory = new ProductFactory();
