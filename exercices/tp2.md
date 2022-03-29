@@ -28,7 +28,6 @@ Nous avons décidé en équipe de choisir la stratégie **_Git flow_** afin de s
 - Certaines _pull-requests_ contenaient trop de changements. Ceci était majoritairement causé par des _commits_ trop lourds en incluant parfois plusieurs rectifications d'erreurs de plusieurs fichiers en même temps. À l'avenir, il faut que chaque membre de l'équipe pense à _commit_ ses changements plus fréquemment et créer les pull-requests lorsque nécessaire.
 - Les pull-requests étaient presque toujours en _review_ par un membre de l'équipe autre que le créateur de la _pull-request_. Toutefois, certaines _pull-requests_ ont été créées puis _mergées_ sans l'accord et le _review_ d'au moins un autre membre de l'équipe. Cela a créé de la confusion au sein de l'équipe, qui avait parfois du mal à déterminer où le projet en était. À l'avenir, toutes les _pull-requests_ devraient être en _review_ et _merged_ par au minimum un autre membre de l'équipe.
 
-
 ### Planification du travail sur Github
 
 #### Project:
@@ -42,7 +41,7 @@ Nous avons décidé en équipe de choisir la stratégie **_Git flow_** afin de s
 ![Issues1](https://user-images.githubusercontent.com/73801331/156836041-e8d886cb-97bb-4163-9e7b-589136098826.PNG)
 
 #2
-![Issues2](https://user-images.githubusercontent.com/73801331/156836064-331b893f-f730-4852-8e5d-cf73fba1bc18.PNG)
+![Issues2](https://user-images.githubusercontent.com/73801331/157116603-d948c602-3ba3-4865-a651-0ca8b56f3605.PNG)
 
 #3
 ![Issues3](https://user-images.githubusercontent.com/73801331/156836093-2aa4c538-523a-402b-b3db-0d87aef8aa28.PNG)
