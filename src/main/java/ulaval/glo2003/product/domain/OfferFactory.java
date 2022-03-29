@@ -18,7 +18,7 @@ public class OfferFactory {
 
         return new Offer(
                 String.valueOf(currentId++),
-                offerRequest.amount,
+                (Math.round(offerRequest.amount * 100.0) / 100.0),
                 offerRequest.message,
                 offerRequest.name,
                 offerRequest.email,
