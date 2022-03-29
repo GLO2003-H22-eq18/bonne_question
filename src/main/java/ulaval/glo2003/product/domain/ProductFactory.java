@@ -1,5 +1,6 @@
 package ulaval.glo2003.product.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import ulaval.glo2003.product.exceptions.InvalidProductCategoriesException;
 import ulaval.glo2003.product.exceptions.InvalidProductDescriptionException;
@@ -12,19 +13,6 @@ import ulaval.glo2003.utils.StringUtil;
 
 public class ProductFactory {
     private static int currentId = 0;
-
-    public Product create(Seller productSeller, ProductRequest productRequest) {
-        checkNewProductInvalidParam(productRequest);
-
-        return new Product(
-                String.valueOf(currentId++),
-                productRequest.title,
-                productRequest.description,
-                productRequest.suggestedPrice,
-                ProductCategory.toCategoriesList(productRequest.categories),
-                productSeller.getId(),
-                productSeller.getName());
-    }
 
     public static void checkNewProductInvalidParam(ProductRequest productRequest) {
         validateString(productRequest.title, "title");
@@ -65,5 +53,17 @@ public class ProductFactory {
         }
     }
 
+    public Product create(Seller productSeller, ProductRequest productRequest) {
+        checkNewProductInvalidParam(productRequest);
 
+        return new Product(
+                productRequest.title,
+                productRequest.description,
+                productRequest.suggestedPrice,
+                ProductCategory.toCategoriesList(productRequest.categories),
+                productSeller.getId(),
+                productSeller.getName(),
+                String.valueOf(currentId++),
+                new ArrayList<>());
+    }
 }

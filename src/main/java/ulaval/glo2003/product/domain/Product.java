@@ -14,28 +14,25 @@ public class Product {
     private final List<ProductCategory> categories;
     private final String sellerId;
     private final String sellerName;
-    private final Integer count;
-    // TODO: initialize in constructor
     private final List<Offer> offers;
 
     public Product(
-            String id,
             String title,
             String description,
             Double suggestedPrice,
             List<ProductCategory> categories,
             String sellerId,
-            String sellerName) {
-        this.id = id;
+            String sellerName,
+            String currentId,
+            List<Offer> offers) {
+        this.id = currentId;
         this.title = title;
         this.description = description;
         this.suggestedPrice = suggestedPrice;
         this.categories = categories;
         this.sellerId = sellerId;
         this.sellerName = sellerName;
-        this.count = 0;
-        this.offers = new ArrayList<>();
-
+        this.offers = offers;
         this.createdAt = OffsetDateTime.now(Clock.systemUTC());
     }
 
@@ -71,11 +68,11 @@ public class Product {
         return sellerName;
     }
 
-    public Integer getCount() {
-        return count;
-    }
-
     public List<Offer> getOffers() {
         return offers;
+    }
+
+    public void addOffer(Offer offer) {
+        this.offers.add(offer);
     }
 }

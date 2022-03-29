@@ -7,11 +7,14 @@ import static ulaval.glo2003.product.domain.ProductCategory.toCategoriesList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.MongoProductsRepository;
+
+import ulaval.glo2003.product.domain.Offer;
+
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.domain.ProductRepository;
@@ -47,30 +50,35 @@ public class ProductRepositoryTest {
             Arrays.asList(ProductCategory.BEAUTY);
     private static final double MIDDLE_PRICE = 10000;
     private ProductRepository productRepository;
+
     private final ApplicationContext applicationContext = new ApplicationContext();
     private final OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
     private final ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
     private final SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
 
+    private static final List<Offer> OFFERS = new ArrayList();
+
     public ProductRepositoryTest() {
     }
 
+
     @BeforeEach
     void setUp() {
-        productRepository = new MongoProductsRepository(applicationContext.getDatabase(), productModelAssembler);
+        productRepository = new MongoProductsRepository(applicationContext.getDatabase(), offerModelAssembler, productModelAssembler);
     }
 
     @Test
     void givenProductId_whenProductExists_thenFindCorrectProduct() {
         Product product =
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1);
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS);
         productRepository.save(product);
 
         Product gottenProduct = productRepository.findById(product.getId());
@@ -87,22 +95,24 @@ public class ProductRepositoryTest {
     void givenSellerId_whenProductsWithSellerIdInRepo_thenReturnSellerIdsProducts() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(SELLER_ID_1, null, new ArrayList<>(), null, null);
 
@@ -116,22 +126,25 @@ public class ProductRepositoryTest {
     void givenSellerId_whenNoProductsWithSellerIdInRepo_thenReturnNoProduct() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(INVALID_ID, null, new ArrayList<>(), null, null);
 
@@ -145,22 +158,25 @@ public class ProductRepositoryTest {
     void givenTitle_whenProductsWithTitleInRepo_thenReturnCorrectProducts() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1, new ArrayList<>(), null, null);
 
@@ -174,22 +190,25 @@ public class ProductRepositoryTest {
     void givenPartOfTitle_whenProductsWithPartOfTitleInRepo_thenReturnCorrectProducts() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1_AND_2_IN_COMMON, new ArrayList<>(), null, null);
 
@@ -203,22 +222,25 @@ public class ProductRepositoryTest {
     void givenTitle_whenNoProductsWithTitleInRepo_thenReturnNoProduct() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, INVALID_TITLE, new ArrayList<>(), null, null);
 
@@ -233,22 +255,25 @@ public class ProductRepositoryTest {
     void givenOneCategory_whenProductsWithCategoryInRepo_thenReturnCorrectProducts() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_ONLY_IN_1);
 
@@ -265,22 +290,25 @@ public class ProductRepositoryTest {
     void givenMultipleCategories_whenProductsWithCategoryInRepo_thenReturnCorrectProducts() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_2);
 
@@ -296,22 +324,25 @@ public class ProductRepositoryTest {
     void givenCategories_whenNoProductsWithCategoryInRepo_thenReturnNoProduct() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, INVALID_CATEGORIES, null, null);
 
@@ -325,22 +356,25 @@ public class ProductRepositoryTest {
     void givenMinPrice_whenProductsWithCorrectPriceInRepo_thenReturnCorrectProduct() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(MIDDLE_PRICE), null);
 
@@ -355,22 +389,25 @@ public class ProductRepositoryTest {
     void givenMinPrice_whenAProductWithPriceEqualToMinPriceInRepo_thenReturnCorrectProduct() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
@@ -385,22 +422,25 @@ public class ProductRepositoryTest {
     void givenMaxPrice_whenProductsWithCorrectPriceInRepo_thenReturnCorrectProduct() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), null, Double.toString(MIDDLE_PRICE));
 
@@ -415,22 +455,26 @@ public class ProductRepositoryTest {
     void givenMinPrice_whenAProductWithPriceEqualToMaxPriceInRepo_thenReturnCorrectProduct() {
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_1,
                         DESCRIPTION_1,
                         SUGGESTED_PRICE_1,
                         CATEGORIES_1,
                         SELLER_ID_1,
-                        SELLER_NAME_1));
+                        SELLER_NAME_1,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         productRepository.save(
                 new Product(
-                        String.valueOf(currentProductId++),
                         TITLE_2,
                         DESCRIPTION_2,
                         SUGGESTED_PRICE_2,
                         CATEGORIES_2,
                         SELLER_ID_2,
-                        SELLER_NAME_2));
+                        SELLER_NAME_2,
+                        String.valueOf(currentProductId++),
+                        OFFERS));
+
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
         List<Product> products =

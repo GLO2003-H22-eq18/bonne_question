@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.seller.ui.assemblers.SellerProductAssembler;
@@ -27,9 +28,10 @@ public class SellerProductAssemblerTest {
         List<ProductCategory> categories = new ArrayList<>();
         String sellerId = "1";
         String sellerName = "John Doe";
-        String id = "1";
+        String id = "0";
+        List<Offer> offers = new ArrayList<>();
 
-        return new Product(id, title, description, suggestedPrice, categories, sellerId, sellerName);
+        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id, offers);
     }
 
     @Test
@@ -45,6 +47,7 @@ public class SellerProductAssemblerTest {
         assertThat(sellerProductResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
         assertThat(sellerProductResponse.description).isEqualTo(product.getDescription());
         assertThat(sellerProductResponse.categories).isEqualTo(product.getCategories());
-        assertThat(sellerProductResponse.offers.count).isEqualTo(product.getCount());
+        assertThat(sellerProductResponse.offers.count).isEqualTo(0);
+        assertThat(sellerProductResponse.offers.mean).isEqualTo(null);
     }
 }

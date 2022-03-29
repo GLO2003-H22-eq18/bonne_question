@@ -1,7 +1,9 @@
 package ulaval.glo2003.seller.ui.responses;
 
 import java.util.List;
+
 import ulaval.glo2003.product.ui.responses.ProductOffersResponse;
+
 
 public class SellerProductResponse {
     public String id;
@@ -22,13 +24,13 @@ public class SellerProductResponse {
                                  String description,
                                  Double suggestedPrice,
                                  List<String> categories,
-                                 Integer count) {
+                                 ProductOffersResponse offers) {
         this.id = id;
         this.createdAt = createdAt;
         this.title = title;
         this.description = description;
         this.suggestedPrice = suggestedPrice;
         this.categories = categories;
-        this.offers = new ProductOffersResponse(count);
+        this.offers = offers;
     }
 }
