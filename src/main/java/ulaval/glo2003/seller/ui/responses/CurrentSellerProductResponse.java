@@ -1,9 +1,6 @@
 package ulaval.glo2003.seller.ui.responses;
 
-import static ulaval.glo2003.product.ui.assemblers.DetailedProductOffersAssembler.createDetailedProductOffersResponse;
-
 import java.util.List;
-import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.ui.responses.DetailedProductOffersResponse;
 
 public class CurrentSellerProductResponse {
@@ -26,13 +23,13 @@ public class CurrentSellerProductResponse {
                                         String description,
                                         Double suggestedPrice,
                                         List<String> categories,
-                                        List<Offer> offers) {
+                                        DetailedProductOffersResponse offers) {
         this.id = id;
         this.createdAt = createdAt;
         this.title = title;
         this.description = description;
         this.suggestedPrice = suggestedPrice;
         this.categories = categories;
-        this.offers = createDetailedProductOffersResponse(offers);
+        this.offers = offers;
     }
 }

@@ -5,7 +5,7 @@ import ulaval.glo2003.product.ui.responses.BuyerResponse;
 
 public class BuyerAssembler {
 
-    public static BuyerResponse createBuyerResponse(Offer offer) {
+    public BuyerResponse createBuyerResponse(Offer offer) {
         String name = offer.getName();
         String email = offer.getEmail();
         String phoneNumber = offer.getPhoneNumber();
