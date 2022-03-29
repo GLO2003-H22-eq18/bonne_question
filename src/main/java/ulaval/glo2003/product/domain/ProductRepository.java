@@ -31,4 +31,6 @@ public interface ProductRepository {
 
     public List<Product> getMaxPriceFilteredProducts(
             List<Product> filteredProductsList, Double maxPrice);
+
+    public abstract void updateOffer(Offer myOffer, String productId);
 }

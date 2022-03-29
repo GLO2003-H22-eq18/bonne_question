@@ -22,7 +22,6 @@ public class ProductModel {
     public ProductModel() {}
 
     public ProductModel(
-            String id,
             String title,
             String description,
             String createdAt,
@@ -30,6 +29,7 @@ public class ProductModel {
             List<String> categories,
             String sellerId,
             String sellerName,
+            String id,
             List<OfferModel> offers) {
         this.id = id;
         this.title = title;

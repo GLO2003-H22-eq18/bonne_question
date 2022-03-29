@@ -1,10 +1,12 @@
 package ulaval.glo2003.product.domain;
 
+import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.mongodb.ConnectionString;
@@ -17,7 +19,9 @@ import com.mongodb.client.MongoDatabase;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import ulaval.glo2003.product.exceptions.ProductNotFoundException;
+import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.models.OfferModel;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 import ulaval.glo2003.seller.domain.Seller;
@@ -31,10 +35,12 @@ public class MongoProductsRepository implements ProductRepository {
 
     private final MongoDatabase mongoDatabase;
     private final Datastore datastore;
+    private final OfferModelAssembler offerModelAssembler;
     private final ProductModelAssembler productModelAssembler;
 
-    public MongoProductsRepository(String database, ProductModelAssembler productModelAssembler) {
+    public MongoProductsRepository(String database, OfferModelAssembler offerModelAssembler, ProductModelAssembler productModelAssembler) {
 
+        this.offerModelAssembler = offerModelAssembler;
         this.productModelAssembler = productModelAssembler;
         String mongodbUri = System.getenv("MONGODB_URI");
         ConnectionString connectionString = new ConnectionString(mongodbUri);
@@ -137,5 +143,30 @@ public class MongoProductsRepository implements ProductRepository {
         return filteredProductsList.stream()
                 .filter(product -> product.getSuggestedPrice() <= maxPrice)
                 .collect(Collectors.toList());
+    }
+
+    public void updateOffer(Offer offer, String productId) {
+        ProductModel productModel = datastore.find(ProductModel.class)
+                .filter(eq("_id", productId))
+                .first();
+
+        if (productModel == null) {
+            throw new ProductNotFoundException();
+        }
+
+        OfferModel offerModel = offerModelAssembler.createOfferModel(offer);
+        List<OfferModel> offers = Objects.requireNonNullElse(productModel.getOffers(), new ArrayList<>());
+        offers.add(offerModel);
+
+
+        datastore.find(ProductModel.class)
+                .filter(eq("_id", productId))
+                .update(
+                        UpdateOperators.set(
+                                "offers",
+                                offers
+                        )
+                )
+                .execute();
     }
 }

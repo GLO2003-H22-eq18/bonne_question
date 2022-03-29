@@ -1,13 +1,13 @@
 package ulaval.glo2003.product.infrastructure.assemblers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.infrastructure.models.OfferModel;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class ProductModelAssembler {
 
@@ -26,12 +26,14 @@ public class ProductModelAssembler {
         List<String> categories = ProductCategory.toStringList(product.getCategories());
         String sellerId = product.getSellerId();
         String sellerName = product.getSellerName();
-        Integer count = product.getCount();
 
-        // TODO: get offers from product
-        List<OfferModel> offers = new ArrayList<>();
+        List<OfferModel> offers = product.getOffers()
+                .stream()
+                .map(offerModelAssembler::createOfferModel)
+                .collect(Collectors.toList());
 
-        return new ProductModel(id, title, description, createdAt, suggestedPrice, categories, sellerId, sellerName, offers);
+        return new ProductModel(title, description, createdAt, suggestedPrice, categories,
+                sellerId, sellerName, id, offers);
     }
 
     public Product createProduct(ProductModel productModel) {
@@ -53,12 +55,13 @@ public class ProductModelAssembler {
 
         List<Offer> offers;
         if (productModel.getOffers() != null) {
-            offers = productModel.getOffers().stream().map(offerModelAssembler::createOffer).collect(Collectors.toList());
+            offers = productModel.getOffers().stream().map(offerModelAssembler::createOffer)
+                    .collect(Collectors.toList());
         } else {
             offers = new ArrayList<>();
         }
 
-        // TODO: add offers to Product constructor and pass them here
-        return new Product(id, title, description, suggestedPrice, categories, sellerId, sellerName);
+        return new Product(title, description, suggestedPrice, categories, sellerId,
+                sellerName, id, offers);
     }
 }
