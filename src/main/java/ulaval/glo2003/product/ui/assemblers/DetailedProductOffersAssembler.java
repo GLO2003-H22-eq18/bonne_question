@@ -10,7 +10,13 @@ import ulaval.glo2003.product.ui.responses.OfferResponse;
 
 public class DetailedProductOffersAssembler {
 
-    public static DetailedProductOffersResponse createDetailedProductOffersResponse(
+    private final OfferAssembler offerAssembler;
+
+    public DetailedProductOffersAssembler() {
+        offerAssembler = new OfferAssembler();
+    }
+
+    public DetailedProductOffersResponse createDetailedProductOffersResponse(
             List<Offer> offers) {
         Double min = getOffersMin(offers);
         Double max = getOffersMax(offers);
@@ -18,13 +24,13 @@ public class DetailedProductOffersAssembler {
         Integer count = getOfferCount(offers);
 
         List<OfferResponse> offersResponse = offers.stream()
-                .map(OfferAssembler::createOfferResponse)
+                .map(offerAssembler::createOfferResponse)
                 .collect(Collectors.toList());
 
         return new DetailedProductOffersResponse(min, max, mean, count, offersResponse);
     }
 
-    private static Double getOffersMin(List<Offer> offers) {
+    private Double getOffersMin(List<Offer> offers) {
         if (offers.isEmpty()) {
             return null;
         }
@@ -37,7 +43,7 @@ public class DetailedProductOffersAssembler {
         return min;
     }
 
-    private static Double getOffersMax(List<Offer> offers) {
+    private Double getOffersMax(List<Offer> offers) {
         if (offers.isEmpty()) {
             return null;
         }
@@ -50,7 +56,7 @@ public class DetailedProductOffersAssembler {
         return max;
     }
 
-    private static Double getOffersMean(List<Offer> offers) {
+    private Double getOffersMean(List<Offer> offers) {
         if (offers.isEmpty()) {
             return null;
         }
@@ -61,7 +67,7 @@ public class DetailedProductOffersAssembler {
         return total / offers.size();
     }
 
-    private static Integer getOfferCount(List<Offer> offers) {
+    private Integer getOfferCount(List<Offer> offers) {
         return offers.size();
     }
 }
