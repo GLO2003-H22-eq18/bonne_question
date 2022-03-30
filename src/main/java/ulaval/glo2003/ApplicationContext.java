@@ -30,4 +30,8 @@ public class ApplicationContext {
             return "floppa-dev";
         }
     }
+
+    public String getConnectionString() {
+        return System.getenv("MONGO_CONNECTION");
+    }
 }

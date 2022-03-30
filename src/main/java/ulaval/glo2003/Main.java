@@ -9,12 +9,12 @@ import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.exceptions.InvalidArgumentExceptionMapper;
 import ulaval.glo2003.exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.exceptions.MissingArgumentExceptionMapper;
-import ulaval.glo2003.product.domain.MongoProductsRepository;
 import ulaval.glo2003.product.domain.OfferFactory;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
 import ulaval.glo2003.product.ui.ProductResource;
 import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
 import ulaval.glo2003.seller.domain.SellerFactory;
@@ -28,17 +28,17 @@ public class Main {
 
     public static final String BASE_URI = "http://0.0.0.0:";
 
-    public static HttpServer startServer(ApplicationContext applicationMode) {
+    public static HttpServer startServer(ApplicationContext applicationContext) {
 
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
         ProductModelAssembler productModelAssembler =
                 new ProductModelAssembler(offerModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
         SellerRepository sellerRepository =
-                new MongoSellersRepository(applicationMode.getDatabase(), sellerModelAssembler,
+                new MongoSellersRepository(applicationContext, sellerModelAssembler,
                         productModelAssembler);
         ProductRepository productRepository =
-                new MongoProductsRepository(applicationMode.getDatabase(), offerModelAssembler, productModelAssembler);
+                new MongoProductsRepository(applicationContext, offerModelAssembler, productModelAssembler);
 
         SellerFactory sellerFactory = new SellerFactory();
         SellerAssembler sellerAssembler = new SellerAssembler();

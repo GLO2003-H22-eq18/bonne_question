@@ -29,7 +29,7 @@ public class SellerRepositoryTest {
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
         ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
-        this.sellerRepository = new MongoSellersRepository(applicationContext.getDatabase(), sellerModelAssembler, productModelAssembler);
+        this.sellerRepository = new MongoSellersRepository(applicationContext, sellerModelAssembler, productModelAssembler);
     }
 
     public Seller getSeller() {

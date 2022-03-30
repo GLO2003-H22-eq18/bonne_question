@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ulaval.glo2003.ApplicationContext;
-import ulaval.glo2003.product.domain.MongoProductsRepository;
+import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
 
 import ulaval.glo2003.product.domain.Offer;
 
@@ -64,7 +64,7 @@ public class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        productRepository = new MongoProductsRepository(applicationContext.getDatabase(), offerModelAssembler, productModelAssembler);
+        productRepository = new MongoProductsRepository(applicationContext, offerModelAssembler, productModelAssembler);
     }
 
     @Test

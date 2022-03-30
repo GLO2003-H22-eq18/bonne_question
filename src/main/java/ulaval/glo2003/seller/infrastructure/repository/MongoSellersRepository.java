@@ -6,13 +6,11 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
-import dev.morphia.query.FindOptions;
-import dev.morphia.query.MorphiaCursor;
-import dev.morphia.query.Query;
-import dev.morphia.query.experimental.updates.UpdateOperator;
 import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
@@ -22,7 +20,6 @@ import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 import ulaval.glo2003.seller.infrastructure.models.SellerModel;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,16 +28,15 @@ import java.util.stream.Collectors;
 import static dev.morphia.query.experimental.filters.Filters.*;
 
 public class MongoSellersRepository implements SellerRepository {
-    private final MongoDatabase mongoDatabase;
     private final Datastore datastore;
     private final SellerModelAssembler sellerModelAssembler;
     private final ProductModelAssembler productModelAssembler;
 
-    public MongoSellersRepository(String database, SellerModelAssembler sellerModelAssembler, ProductModelAssembler productModelAssembler) {
+    public MongoSellersRepository(ApplicationContext applicationContext, SellerModelAssembler sellerModelAssembler, ProductModelAssembler productModelAssembler) {
 
         this.sellerModelAssembler = sellerModelAssembler;
         this.productModelAssembler = productModelAssembler;
-        String mongodbUri = System.getenv("MONGODB_URI");
+        String mongodbUri = applicationContext.getConnectionString();
         ConnectionString connectionString = new ConnectionString(mongodbUri);
 
         MongoClientSettings settings = MongoClientSettings.builder()
@@ -49,8 +45,8 @@ public class MongoSellersRepository implements SellerRepository {
                 .build();
         MongoClient mongoClient = MongoClients.create(settings);
 
-        this.mongoDatabase = mongoClient.getDatabase(database);
-        this.datastore = Morphia.createDatastore(mongoClient, database);
+        MongoDatabase mongoDatabase = mongoClient.getDatabase(applicationContext.getDatabase());
+        this.datastore = Morphia.createDatastore(mongoClient, applicationContext.getDatabase());
         this.datastore.getMapper().mapPackage("ulaval.glo2003.seller.infrastructure");
     }
 
