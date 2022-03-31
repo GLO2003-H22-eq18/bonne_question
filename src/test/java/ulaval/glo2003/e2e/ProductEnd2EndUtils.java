@@ -1,6 +1,7 @@
 package ulaval.glo2003.e2e;
 
 import static com.google.common.truth.Truth.assertThat;
+import static io.restassured.RestAssured.given;
 import static ulaval.glo2003.e2e.End2EndUtils.FAKER;
 import static ulaval.glo2003.e2e.End2EndUtils.RANDOM;
 import static ulaval.glo2003.e2e.End2EndUtils.createResource;
@@ -10,7 +11,9 @@ import static ulaval.glo2003.e2e.End2EndUtils.getResourceById;
 import static ulaval.glo2003.e2e.End2EndUtils.mixUpperAndLowerCase;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.A_VALID_SELLER_NAME;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createRandomSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSellerGetId;
 
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -19,13 +22,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.http.HttpStatus;
 import ulaval.glo2003.product.domain.ProductCategory;
+import ulaval.glo2003.product.ui.requests.OfferRequest;
 import ulaval.glo2003.product.ui.requests.ProductRequest;
 import ulaval.glo2003.product.ui.responses.ProductResponse;
 import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class ProductEnd2EndUtils {
     public final static int NUMBER_OF_PRODUCTS = 16;
+    public static final String A_VALID_BUYER_NAME = "John Doe";
+    public static final String A_VALID_BUYER_EMAIL = "john.doe@email.com";
+    public static final String A_VALID_BUYER_PHONE = "18191234567";
+    public static final Double A_VALID_OFFER_AMOUNT = 10000.23;
+    public static final String A_VALID_OFFER_MESSAGE = "Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet.";
+    public static final String A_VALID_OFFER_MESSAGE_2 = FAKER.lorem().fixedString(100);
     public static final String A_VALID_PRODUCT_TITLE = "Foobar";
     public static final String A_RANDOM_VALID_PRODUCT_TITLE = FAKER.commerce().productName();
     public static final String A_VALID_PRODUCT_DESCRIPTION = "An awesome generic product!";
@@ -50,6 +61,10 @@ public class ProductEnd2EndUtils {
     public static Response createProductResource(ProductRequest productRequest, String sellerId) {
         Headers productSeller = new Headers(new Header("X-Seller-Id", sellerId));
         return createResource("/products", productRequest, productSeller);
+    }
+
+    public static Response createOfferResource(OfferRequest offerRequest, String productId) {
+        return createResource("/products/{productId}/offers", offerRequest, "productId", productId);
     }
 
     public static ProductRequest createValidProduct() {
@@ -77,6 +92,17 @@ public class ProductEnd2EndUtils {
         productRequest.categories = getRandomCategories(MAXIMUM_NUMBER_OF_CATEGORIES);
 
         return productRequest;
+    }
+
+    public static OfferRequest createValidOffer() {
+        OfferRequest offerRequest = new OfferRequest();
+        offerRequest.name = A_VALID_BUYER_NAME;
+        offerRequest.email = A_VALID_BUYER_EMAIL;
+        offerRequest.phoneNumber = A_VALID_BUYER_PHONE;
+        offerRequest.amount = A_VALID_OFFER_AMOUNT;
+        offerRequest.message = A_VALID_OFFER_MESSAGE;
+
+        return offerRequest;
     }
 
     public static String createRandomProductGetId() {
@@ -207,6 +233,13 @@ public class ProductEnd2EndUtils {
         ProductRequest productRequest = createValidProduct();
         productRequest.categories = A_INVALID_PRODUCT_CATEGORIES;
         return productRequest;
+    }
+
+    public static String addValidOfferToProductGetId(OfferRequest offer) {
+        String productId = createRandomProductGetId();
+        Response response = createOfferResource(offer, productId);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+        return productId;
     }
 
     public static Response getProducts() {

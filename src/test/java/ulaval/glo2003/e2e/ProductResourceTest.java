@@ -7,9 +7,11 @@ import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsInvalidParamEr
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsItemNotFoundError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsMissingParamError;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_RANDOM_VALID_PRODUCT_TITLE;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_VALID_OFFER_AMOUNT;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_VALID_PRODUCT_SUGGESTED_PRICE;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.NUMBER_OF_PRODUCTS;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.VALID_PRODUCT_CATEGORIES;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.addValidOfferToProductGetId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.assertThatAllProductsHaveAtLeastOneCategoryFromGivenCategories;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.assertThatAllProductsHaveTheSameSellerId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.assertThatAllProductsPriceIsGreaterOrEqualToMinPrice;
@@ -27,6 +29,7 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRan
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellersWithMinPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellersWithTitle;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsWithCommonCategoriesFromRandomSellers;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidOffer;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProduct;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProductGetId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProductWithoutCategories;
@@ -51,8 +54,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
+import ulaval.glo2003.product.ui.requests.OfferRequest;
 import ulaval.glo2003.product.ui.responses.FilteredProductsResponse;
 import ulaval.glo2003.product.ui.requests.ProductRequest;
+import ulaval.glo2003.product.ui.responses.ProductOffersResponse;
 import ulaval.glo2003.product.ui.responses.ProductResponse;
 
 @DisplayName("Product Resource")
@@ -383,7 +388,27 @@ public class ProductResourceTest {
                 }
             }
         }
+
+        @DisplayName("WHEN creating an offer")
+        @Nested
+        class WhenAddingOffer {
+
+            @DisplayName("GIVEN valid offer THEN adds offer to product with status 200 ok")
+            @Test
+            void givenValidOfferRequest_whenAddingProductOffer_thenOfferIsAddedToProductWithStatus200() {
+                OfferRequest offerRequest = createValidOffer();
+                String productId = addValidOfferToProductGetId(offerRequest);
+
+                Response response = getProductById(productId);
+                ProductOffersResponse offersResponse = response.body().as(ProductResponse.class).offers;
+
+                assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                assertThat(offersResponse.count).isEqualTo(1);
+                assertThat(offersResponse.mean).isEqualTo(A_VALID_OFFER_AMOUNT);
+            }
+        }
     }
+
 
 
 }
