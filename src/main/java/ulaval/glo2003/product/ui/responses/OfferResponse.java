@@ -1,13 +1,15 @@
 package ulaval.glo2003.product.ui.responses;
 
+import org.bson.types.ObjectId;
+
 public class OfferResponse {
-    public String id;
+    public ObjectId id;
     public String createdAt;
     public Double amount;
     public String message;
     public BuyerResponse buyer;
 
-    public OfferResponse(String id,
+    public OfferResponse(ObjectId id,
                          String createdAt,
                          Double amount,
                          String message,

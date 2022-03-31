@@ -1,5 +1,6 @@
 package ulaval.glo2003.product.infrastructure.assemblers;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ public class ProductModelAssembler {
         String id = productModel.getId();
         String title = productModel.getTitle();
         String description = productModel.getDescription();
-        String createdAt = productModel.getCreatedAt();
+        OffsetDateTime createdAt = OffsetDateTime.parse(productModel.getCreatedAt());
         Double suggestedPrice = productModel.getSuggestedPrice();
         String sellerId = productModel.getSellerId();
         String sellerName = productModel.getSellerName();
@@ -62,6 +63,6 @@ public class ProductModelAssembler {
         }
 
         return new Product(title, description, suggestedPrice, categories, sellerId,
-                sellerName, id, offers);
+                sellerName, id, offers, createdAt);
     }
 }

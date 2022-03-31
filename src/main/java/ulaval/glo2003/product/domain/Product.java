@@ -24,7 +24,8 @@ public class Product {
             String sellerId,
             String sellerName,
             String currentId,
-            List<Offer> offers) {
+            List<Offer> offers,
+            OffsetDateTime createdAt) {
         this.id = currentId;
         this.title = title;
         this.description = description;
@@ -33,7 +34,7 @@ public class Product {
         this.sellerId = sellerId;
         this.sellerName = sellerName;
         this.offers = offers;
-        this.createdAt = OffsetDateTime.now(Clock.systemUTC());
+        this.createdAt = createdAt;
     }
 
     public String getId() {

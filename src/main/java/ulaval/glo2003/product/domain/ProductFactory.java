@@ -1,5 +1,7 @@
 package ulaval.glo2003.product.domain;
 
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import ulaval.glo2003.product.exceptions.InvalidProductCategoriesException;
@@ -64,6 +66,7 @@ public class ProductFactory {
                 productSeller.getId(),
                 productSeller.getName(),
                 String.valueOf(currentId++),
-                new ArrayList<>());
+                new ArrayList<>(),
+                OffsetDateTime.now(Clock.systemUTC()));
     }
 }
