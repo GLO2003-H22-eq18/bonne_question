@@ -21,6 +21,7 @@ import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
 
 public class SellerRepositoryTest {
 
+    private static final String INVALID_SELLER_ID = "-1";
     private SellerRepository sellerRepository;
     public static ApplicationContext applicationContext = new ApplicationContext();
 
@@ -45,10 +46,8 @@ public class SellerRepositoryTest {
 
     @Test
     void whenSearchingNullSellerInRepository_thenSellerNotFoundException() {
-        Seller seller = getSeller();
-
         assertThrows(SellerNotFoundException.class,
-                () -> sellerRepository.findById(seller.getId()));
+                () -> sellerRepository.findById(INVALID_SELLER_ID));
     }
 
     @Test
@@ -56,6 +55,10 @@ public class SellerRepositoryTest {
         Seller seller = getSeller();
         sellerRepository.save(seller);
 
-        assertThat(sellerRepository.findById(seller.getId())).isEqualTo(seller);
+        assertThat(sellerRepository.findById(seller.getId()).getName()).isEqualTo(seller.getName());
+        assertThat(sellerRepository.findById(seller.getId()).getBio()).isEqualTo(seller.getBio());
+        assertThat(sellerRepository.findById(seller.getId()).getBirthDate()).isEqualTo(seller.getBirthDate());
+        assertThat(sellerRepository.findById(seller.getId()).getProducts()).isEqualTo(seller.getProducts());
+        assertThat(sellerRepository.findById(seller.getId()).getCreatedAt()).isEqualTo(seller.getCreatedAt());
     }
 }

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ulaval.glo2003.product.domain.ProductCategory.toCategoriesList;
 import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -51,8 +53,8 @@ class ProductAssemblerTest {
         categoriesString.add("sports");
         List<ProductCategory> categories = toCategoriesList(categoriesString);
 
-        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id,
-                offers);
+        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id, offers,
+                OffsetDateTime.now(Clock.systemUTC()));
     }
 
     @Test
