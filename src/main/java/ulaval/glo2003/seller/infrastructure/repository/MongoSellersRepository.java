@@ -37,6 +37,7 @@ public class MongoSellersRepository implements SellerRepository {
         this.sellerModelAssembler = sellerModelAssembler;
         this.productModelAssembler = productModelAssembler;
         String mongodbUri = applicationContext.getConnectionString();
+
         ConnectionString connectionString = new ConnectionString(mongodbUri);
 
         MongoClientSettings settings = MongoClientSettings.builder()
@@ -107,5 +108,20 @@ public class MongoSellersRepository implements SellerRepository {
                     )
                 )
                 .execute();
+    }
+
+    public int getNextId() {
+        List<SellerModel> sellers = datastore.find(SellerModel.class).stream().collect(Collectors.toList());
+        int nextId = Integer.parseInt(sellers.get(0).getId());
+
+        for (SellerModel seller : sellers) {
+            int id = Integer.parseInt(seller.getId());
+
+            if (id > nextId) {
+                nextId = id;
+            }
+        }
+
+        return nextId;
     }
 }

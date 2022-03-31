@@ -27,6 +27,7 @@ import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.product.infrastructure.models.OfferModel;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
+import ulaval.glo2003.seller.infrastructure.models.SellerModel;
 
 import static dev.morphia.query.experimental.filters.Filters.eq;
 
@@ -166,5 +167,20 @@ public class MongoProductsRepository implements ProductRepository {
                         )
                 )
                 .execute();
+    }
+
+    public int getNextId() {
+        List<ProductModel> products = datastore.find(ProductModel.class).stream().collect(Collectors.toList());
+        int nextId = Integer.parseInt(products.get(0).getId());
+
+        for (ProductModel product : products) {
+            int id = Integer.parseInt(product.getId());
+
+            if (id > nextId) {
+                nextId = id;
+            }
+        }
+
+        return nextId;
     }
 }
