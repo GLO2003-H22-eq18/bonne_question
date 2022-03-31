@@ -1,11 +1,12 @@
 package ulaval.glo2003.product.infrastructure.assemblers;
 
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.infrastructure.models.OfferModel;
 
 public class OfferModelAssembler {
     public OfferModel createOfferModel(Offer offer) {
-        String id = offer.getId();
+        ObjectId id = offer.getId();
         Double amount = offer.getAmount();
         String message = offer.getMessage();
         String name = offer.getName();
@@ -16,7 +17,7 @@ public class OfferModelAssembler {
     }
 
     public Offer createOffer(OfferModel offerModel) {
-        String id = offerModel.getId();
+        ObjectId id = offerModel.getId();
         Double amount = offerModel.getAmount();
         String message = offerModel.getMessage();
         String name = offerModel.getName();

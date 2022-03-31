@@ -2,11 +2,12 @@ package ulaval.glo2003.product.infrastructure.models;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
+import org.bson.types.ObjectId;
 
 @Entity("offers")
 public class OfferModel {
     @Id
-    private String id;
+    private ObjectId id;
     private Double amount;
     private String message;
     private String name;
@@ -16,7 +17,7 @@ public class OfferModel {
     public OfferModel() {}
 
     public OfferModel(
-            String id,
+            ObjectId id,
             Double amount,
             String message,
             String name,
@@ -50,7 +51,7 @@ public class OfferModel {
         return amount;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 }
