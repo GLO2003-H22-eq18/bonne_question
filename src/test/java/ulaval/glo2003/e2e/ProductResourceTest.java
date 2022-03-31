@@ -44,6 +44,7 @@ import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSellerGetId;
 import io.restassured.response.Response;
 import java.io.IOException;
 import org.apache.http.HttpStatus;
+import org.bson.types.ObjectId;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -168,7 +169,7 @@ public class ProductResourceTest {
         @DisplayName("GIVEN invalid id THEN returns error 404 not found")
         @Test
         void givenInvalidProductId_whenGettingProduct_thenReturnsError404() {
-            Response response = getProductById(A_INVALID_ID);
+            Response response = getProductById(A_INVALID_ID.toString());
 
             assertThatResponseIsItemNotFoundError(response);
         }
@@ -248,9 +249,8 @@ public class ProductResourceTest {
                 @DisplayName("GIVEN invalid id THEN returns no product with status 200 ok")
                 @Test
                 void givenInvalidSellerId_whenFilteringProductsBySellerId_thenReturnsError400() {
-                    String sellerId = A_INVALID_ID;
 
-                    Response response = getProductsBySellerId(A_INVALID_ID);
+                    Response response = getProductsBySellerId(A_INVALID_ID.toString());
                     FilteredProductsResponse filteredProductsResponse =
                             response.as(FilteredProductsResponse.class);
 

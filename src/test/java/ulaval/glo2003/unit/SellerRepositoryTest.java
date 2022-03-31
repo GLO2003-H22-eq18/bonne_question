@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.ApplicationContext;
@@ -21,7 +23,7 @@ import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
 
 public class SellerRepositoryTest {
 
-    private static final String INVALID_SELLER_ID = "-1";
+    private static final ObjectId INVALID_SELLER_ID = new ObjectId();
     private SellerRepository sellerRepository;
     public static ApplicationContext applicationContext = new ApplicationContext();
 
@@ -39,7 +41,7 @@ public class SellerRepositoryTest {
         OffsetDateTime createdAt = OffsetDateTime.now();
         LocalDate birthDate = LocalDate.parse("1977-04-23");
         List<Product> products = new ArrayList<>();
-        String id = "1";
+        ObjectId id = new ObjectId();
 
         return new Seller(id, name, bio, createdAt, birthDate, products);
     }

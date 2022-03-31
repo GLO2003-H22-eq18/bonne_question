@@ -6,6 +6,8 @@ import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Offer;
@@ -28,9 +30,9 @@ public class SellerProductAssemblerTest {
         String description = "Wow, so good!";
         Double suggestedPrice = 34d;
         List<ProductCategory> categories = new ArrayList<>();
-        String sellerId = "1";
+        ObjectId sellerId = new ObjectId();
         String sellerName = "John Doe";
-        String id = "0";
+        ObjectId id = new ObjectId();
         List<Offer> offers = new ArrayList<>();
 
         return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id, offers, OffsetDateTime.now(Clock.systemUTC()));
@@ -43,7 +45,7 @@ public class SellerProductAssemblerTest {
         SellerProductResponse sellerProductResponse =
                 sellerProductAssembler.createSellerProductResponse(product);
 
-        assertThat(sellerProductResponse.id).isEqualTo(product.getId());
+        assertThat(sellerProductResponse.id).isEqualTo(product.getId().toString());
         assertThat(sellerProductResponse.createdAt).isEqualTo(product.getCreatedAt().toString());
         assertThat(sellerProductResponse.title).isEqualTo(product.getTitle());
         assertThat(sellerProductResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());

@@ -11,6 +11,8 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.OfferFactory;
 import ulaval.glo2003.product.domain.Product;
@@ -57,7 +59,7 @@ public class ProductResource {
             @Context UriInfo uri) {
 
         productAssembler.checkProductRequestMissingParams(productRequest);
-        Seller productSeller = sellerRepository.findById(sellerId);
+        Seller productSeller = sellerRepository.findById(new ObjectId(sellerId));
         Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
         productRepository.save(myProduct);
@@ -71,7 +73,7 @@ public class ProductResource {
     @GET
     @Path("/{productId}")
     public Response getProduct(@PathParam("productId") String productId) {
-        Product product = productRepository.findById(productId);
+        Product product = productRepository.findById(new ObjectId(productId));
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
 
@@ -111,7 +113,7 @@ public class ProductResource {
             @PathParam("productId") String productId) {
 
         offerRequestAssembler.checkOfferRequestMissingParams(offerRequest);
-        Product product = productRepository.findById(productId);
+        Product product = productRepository.findById(new ObjectId(productId));
         Offer myOffer = offerFactory.create(product.getSuggestedPrice(), offerRequest);
         product.addOffer(myOffer);
         productRepository.updateOffer(myOffer, productId);

@@ -10,6 +10,7 @@ import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import org.bson.types.ObjectId;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
@@ -52,7 +53,7 @@ public class MongoSellersRepository implements SellerRepository {
     }
 
     @Override
-    public Seller findById(String sellerId) {
+    public Seller findById(ObjectId sellerId) {
         if (sellerId == null) {
             throw new SellerNotFoundException();
         }
@@ -73,14 +74,14 @@ public class MongoSellersRepository implements SellerRepository {
     }
 
     @Override
-    public Map<String, Seller> getSellers() {
+    public Map<ObjectId, Seller> getSellers() {
         List<Seller> sellersList =
                 datastore.find(SellerModel.class)
                         .stream()
                         .map(sellerModelAssembler::createSeller)
                         .collect(Collectors.toList());
 
-        Map<String, Seller> sellers = new HashMap<>();
+        Map<ObjectId, Seller> sellers = new HashMap<>();
         sellersList.forEach(seller -> sellers.put(seller.getId(), seller));
 
         return sellers;
@@ -111,17 +112,17 @@ public class MongoSellersRepository implements SellerRepository {
     }
 
     public int getNextId() {
-        List<SellerModel> sellers = datastore.find(SellerModel.class).stream().collect(Collectors.toList());
-        int nextId = Integer.parseInt(sellers.get(0).getId());
+//        List<SellerModel> sellers = datastore.find(SellerModel.class).stream().collect(Collectors.toList());
+//        int nextId = Integer.parseInt(sellers.get(0).getId());
+//
+//        for (SellerModel seller : sellers) {
+//            int id = Integer.parseInt(seller.getId());
+//
+//            if (id > nextId) {
+//                nextId = id;
+//            }
+//        }
 
-        for (SellerModel seller : sellers) {
-            int id = Integer.parseInt(seller.getId());
-
-            if (id > nextId) {
-                nextId = id;
-            }
-        }
-
-        return nextId;
+        return 0;
     }
 }

@@ -3,13 +3,13 @@ package ulaval.glo2003.product.ui.responses;
 import org.bson.types.ObjectId;
 
 public class OfferResponse {
-    public ObjectId id;
+    public String id;
     public String createdAt;
     public Double amount;
     public String message;
     public BuyerResponse buyer;
 
-    public OfferResponse(ObjectId id,
+    public OfferResponse(String id,
                          String createdAt,
                          Double amount,
                          String message,

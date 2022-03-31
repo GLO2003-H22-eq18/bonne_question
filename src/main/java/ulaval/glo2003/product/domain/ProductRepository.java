@@ -6,19 +6,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.exceptions.ProductNotFoundException;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 
 public interface ProductRepository {
 
-    public void save(Product produc);
+    public void save(Product product);
 
-    public Product findById(String productId);
+    public Product findById(ObjectId productId);
 
     public List<Product> getFilteredProducts(
             FilteredProductRequest filteredProductRequest);
 
-    public List<Product> getProductsFilterBySellerId(String sellerId);
+    public List<Product> getProductsFilterBySellerId(ObjectId sellerId);
 
     public List<Product> getProductsFilterByTitle(
             List<Product> filteredProductsList, String title);

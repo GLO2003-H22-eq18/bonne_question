@@ -4,6 +4,8 @@ import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.exceptions.InvalidProductCategoriesException;
 import ulaval.glo2003.product.exceptions.InvalidProductDescriptionException;
 import ulaval.glo2003.product.exceptions.InvalidProductSuggestedPriceException;
@@ -14,7 +16,21 @@ import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.utils.StringUtil;
 
 public class ProductFactory {
-    private static int currentId = 0;
+
+    public Product create(Seller productSeller, ProductRequest productRequest) {
+        checkNewProductInvalidParam(productRequest);
+
+        return new Product(
+                productRequest.title,
+                productRequest.description,
+                productRequest.suggestedPrice,
+                ProductCategory.toCategoriesList(productRequest.categories),
+                productSeller.getId(),
+                productSeller.getName(),
+                new ObjectId(),
+                new ArrayList<>(),
+                OffsetDateTime.now(Clock.systemUTC()));
+    }
 
     public static void checkNewProductInvalidParam(ProductRequest productRequest) {
         validateString(productRequest.title, "title");
@@ -53,20 +69,5 @@ public class ProductFactory {
         if (suggestedPrice < 1.00d) {
             throw new InvalidProductSuggestedPriceException();
         }
-    }
-
-    public Product create(Seller productSeller, ProductRequest productRequest) {
-        checkNewProductInvalidParam(productRequest);
-
-        return new Product(
-                productRequest.title,
-                productRequest.description,
-                productRequest.suggestedPrice,
-                ProductCategory.toCategoriesList(productRequest.categories),
-                productSeller.getId(),
-                productSeller.getName(),
-                String.valueOf(currentId++),
-                new ArrayList<>(),
-                OffsetDateTime.now(Clock.systemUTC()));
     }
 }

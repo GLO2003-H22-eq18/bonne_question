@@ -16,6 +16,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import org.bson.types.ObjectId;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
@@ -62,7 +63,7 @@ public class MongoProductsRepository implements ProductRepository {
     }
 
     @Override
-    public Product findById(String productId) {
+    public Product findById(ObjectId productId) {
         ProductModel productModel = datastore.find(ProductModel.class).filter(eq("_id", productId)).first();
 
         if (productModel == null) {
@@ -106,7 +107,7 @@ public class MongoProductsRepository implements ProductRepository {
         return filteredProductsList;
     }
 
-    public List<Product> getProductsFilterBySellerId(String sellerId) {
+    public List<Product> getProductsFilterBySellerId(ObjectId sellerId) {
         return datastore.find(ProductModel.class)
                 .filter((eq("sellerId", sellerId))).stream()
                 .map(productModelAssembler::createProduct)
@@ -170,17 +171,17 @@ public class MongoProductsRepository implements ProductRepository {
     }
 
     public int getNextId() {
-        List<ProductModel> products = datastore.find(ProductModel.class).stream().collect(Collectors.toList());
-        int nextId = Integer.parseInt(products.get(0).getId());
+//        List<ProductModel> products = datastore.find(ProductModel.class).stream().collect(Collectors.toList());
+//        int nextId = Integer.parseInt(products.get(0).getId());
+//
+//        for (ProductModel product : products) {
+//            int id = Integer.parseInt(product.getId());
+//
+//            if (id > nextId) {
+//                nextId = id;
+//            }
+//        }
 
-        for (ProductModel product : products) {
-            int id = Integer.parseInt(product.getId());
-
-            if (id > nextId) {
-                nextId = id;
-            }
-        }
-
-        return nextId;
+        return 0;
     }
 }

@@ -2,19 +2,20 @@ package ulaval.glo2003.product.infrastructure.models;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
 @Entity("products")
 public class ProductModel {
     @Id
-    private String id;
+    private ObjectId id;
     private String title;
     private String description;
     private String createdAt;
     private Double suggestedPrice;
     private List<String> categories;
-    private String sellerId;
+    private ObjectId sellerId;
     private String sellerName;
     private Integer count;
     private List<OfferModel> offers;
@@ -27,9 +28,9 @@ public class ProductModel {
             String createdAt,
             Double suggestedPrice,
             List<String> categories,
-            String sellerId,
+            ObjectId sellerId,
             String sellerName,
-            String id,
+            ObjectId id,
             List<OfferModel> offers) {
         this.id = id;
         this.title = title;
@@ -43,7 +44,7 @@ public class ProductModel {
         this.offers = offers;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
@@ -67,7 +68,7 @@ public class ProductModel {
         return categories;
     }
 
-    public String getSellerId() {
+    public ObjectId getSellerId() {
         return sellerId;
     }
 

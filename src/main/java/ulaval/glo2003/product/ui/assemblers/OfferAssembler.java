@@ -14,7 +14,7 @@ public class OfferAssembler {
     }
 
     public OfferResponse createOfferResponse(Offer offer) {
-        ObjectId id = offer.getId();
+        String id = offer.getId().toString();
         String createdAt = offer.getCreatedAt().toString();
         Double amount = offer.getAmount();
         String message = offer.getMessage();

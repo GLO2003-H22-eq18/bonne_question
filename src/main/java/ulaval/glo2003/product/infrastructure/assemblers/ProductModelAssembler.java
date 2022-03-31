@@ -4,6 +4,8 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
@@ -19,13 +21,13 @@ public class ProductModelAssembler {
     }
 
     public ProductModel createProductModel(Product product) {
-        String id = product.getId();
+        ObjectId id = product.getId();
         String createdAt = product.getCreatedAt().toString();
         String title = product.getTitle();
         String description = product.getDescription();
         Double suggestedPrice = product.getSuggestedPrice();
         List<String> categories = ProductCategory.toStringList(product.getCategories());
-        String sellerId = product.getSellerId();
+        ObjectId sellerId = product.getSellerId();
         String sellerName = product.getSellerName();
 
         List<OfferModel> offers = product.getOffers()
@@ -38,12 +40,12 @@ public class ProductModelAssembler {
     }
 
     public Product createProduct(ProductModel productModel) {
-        String id = productModel.getId();
+        ObjectId id = productModel.getId();
         String title = productModel.getTitle();
         String description = productModel.getDescription();
         OffsetDateTime createdAt = OffsetDateTime.parse(productModel.getCreatedAt());
         Double suggestedPrice = productModel.getSuggestedPrice();
-        String sellerId = productModel.getSellerId();
+        ObjectId sellerId = productModel.getSellerId();
         String sellerName = productModel.getSellerName();
         Integer count = productModel.getCount();
 

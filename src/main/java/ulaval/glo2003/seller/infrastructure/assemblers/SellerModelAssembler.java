@@ -1,5 +1,6 @@
 package ulaval.glo2003.seller.infrastructure.assemblers;
 
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.seller.domain.Seller;
@@ -21,7 +22,7 @@ public class SellerModelAssembler {
     }
 
     public SellerModel createSellerModel(Seller seller) {
-        String id = seller.getId();
+        ObjectId id = seller.getId();
         String createdAt = seller.getCreatedAt().toString();
         String birthDate = seller.getBirthDate().toString();
         String name = seller.getName().toString();
@@ -32,7 +33,7 @@ public class SellerModelAssembler {
     }
 
     public Seller createSeller(SellerModel sellerModel) {
-        String id = sellerModel.getId();
+        ObjectId id = sellerModel.getId();
         OffsetDateTime createdAt = OffsetDateTime.parse(sellerModel.getCreatedAt());
         LocalDate birthDate = LocalDate.parse(sellerModel.getBirthDate());
         String name = sellerModel.getName().toString();

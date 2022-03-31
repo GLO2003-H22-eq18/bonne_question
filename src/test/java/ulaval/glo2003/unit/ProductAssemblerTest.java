@@ -9,6 +9,8 @@ import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Offer;
@@ -43,9 +45,7 @@ class ProductAssemblerTest {
         String title = "Clean Stuff";
         String description = "The cleanest of all the clean stuff.";
         Double suggestedPrice = 32d;
-        String sellerId = "0";
         String sellerName = "John Doe";
-        String id = "0";
         List<Offer> offers = new ArrayList();
 
         List<String> categoriesString = new ArrayList<>();
@@ -53,7 +53,7 @@ class ProductAssemblerTest {
         categoriesString.add("sports");
         List<ProductCategory> categories = toCategoriesList(categoriesString);
 
-        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id, offers,
+        return new Product(title, description, suggestedPrice, categories, new ObjectId(), sellerName, new ObjectId(), offers,
                 OffsetDateTime.now(Clock.systemUTC()));
     }
 
@@ -102,13 +102,13 @@ class ProductAssemblerTest {
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
 
-        assertThat(productResponse.id).isEqualTo(product.getId());
+        assertThat(productResponse.id).isEqualTo(product.getId().toString());
         assertThat(productResponse.createdAt).isEqualTo(product.getCreatedAt().toString());
         assertThat(productResponse.title).isEqualTo(product.getTitle());
         assertThat(productResponse.description).isEqualTo(product.getDescription());
         assertThat(productResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
         assertThat(productResponse.categories).isEqualTo(toStringList(product.getCategories()));
-        assertThat(productResponse.seller.id).isEqualTo(product.getSellerId());
+        assertThat(productResponse.seller.id).isEqualTo(product.getSellerId().toString());
         assertThat(productResponse.seller.name).isEqualTo(product.getSellerName());
         assertThat(productResponse.offers.count).isEqualTo(0);
         assertThat(productResponse.offers.mean).isEqualTo(null);

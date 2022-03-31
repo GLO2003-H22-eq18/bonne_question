@@ -10,6 +10,8 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +33,7 @@ import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 public class ProductRepositoryTest {
 
     private static int currentProductId = 0;
-    private static final String INVALID_ID = "-1";
+    private static final ObjectId INVALID_ID = new ObjectId();
     private static final String INVALID_TITLE = "Noone has this title muahaha!";
     private static final List<String> INVALID_CATEGORIES = Arrays.asList("NOT A CATEGORY", "XD");
     private static final String TITLE_1 = "The rock";
@@ -39,14 +41,14 @@ public class ProductRepositoryTest {
     private static final double SUGGESTED_PRICE_1 = 1000;
     private static final List<ProductCategory> CATEGORIES_1 =
             Arrays.asList(ProductCategory.BEAUTY, ProductCategory.OTHER);
-    private static final String SELLER_ID_1 = "1";
+    private static final ObjectId SELLER_ID_1 = new ObjectId();
     private static final String SELLER_NAME_1 = "Dwayne Johnson";
     private static final String TITLE_2 = "The cape of invisibility";
     private static final String DESCRIPTION_2 = "Deathly hallow";
     private static final double SUGGESTED_PRICE_2 = 1000000;
     private static final List<ProductCategory> CATEGORIES_2 =
             Arrays.asList(ProductCategory.APPAREL, ProductCategory.OTHER);
-    private static final String SELLER_ID_2 = "2";
+    private static final ObjectId SELLER_ID_2 = new ObjectId();
     private static final String SELLER_NAME_2 = "Harry Potter";
     private static final String TITLE_1_AND_2_IN_COMMON = "The";
     private static final List<ProductCategory> CATEGORIES_ONLY_IN_1 =
@@ -80,12 +82,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC()));
-        System.out.println(product.getCreatedAt());
         productRepository.save(product);
-        System.out.println(product.getId());
 
         Product gottenProduct = productRepository.findById(product.getId());
 
@@ -116,7 +116,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
         productRepository.save(
@@ -127,7 +127,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -149,7 +149,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -161,7 +161,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -183,7 +183,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -195,7 +195,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -217,7 +217,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -229,7 +229,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -251,7 +251,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -263,7 +263,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -286,7 +286,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -298,7 +298,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -323,7 +323,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -335,7 +335,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -359,7 +359,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -371,7 +371,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -393,7 +393,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -405,7 +405,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -428,7 +428,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -440,7 +440,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -463,7 +463,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -475,7 +475,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -498,7 +498,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -510,7 +510,7 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        String.valueOf(currentProductId++),
+                        new ObjectId(),
                         OFFERS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
@@ -523,7 +523,7 @@ public class ProductRepositoryTest {
                 .isTrue();
     }
 
-    private static FilteredProductRequest createFilteredProductRequest(String sellerId, String title, List<String> categories, String minPrice, String maxPrice) {
+    private static FilteredProductRequest createFilteredProductRequest(ObjectId sellerId, String title, List<String> categories, String minPrice, String maxPrice) {
         FilteredProductRequest filteredProductRequest = new FilteredProductRequest();
         filteredProductRequest.sellerId = sellerId;
         filteredProductRequest.title = title;
@@ -554,7 +554,7 @@ public class ProductRepositoryTest {
         }
     }
 
-    private static boolean verifyProductsHaveSameSellerId(List<Product> products, String sellerId) {
+    private static boolean verifyProductsHaveSameSellerId(List<Product> products, ObjectId sellerId) {
         boolean areAllValid = true;
         for (Product product : products) {
             if (!product.getSellerId().equals(sellerId)) {

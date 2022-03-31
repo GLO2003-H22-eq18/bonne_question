@@ -109,7 +109,7 @@ class SellerResourceTest {
         @DisplayName("GIVEN invalid id THEN returns error 404")
         @Test
         void givenInvalidSellerId_whenGettingSeller_thenReturnsError404() {
-            Response response = getSellerById(A_INVALID_ID);
+            Response response = getSellerById(A_INVALID_ID.toString());
 
             assertThatResponseIsItemNotFoundError(response);
         }

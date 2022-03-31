@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.ui.requests.ProductRequest;
 import ulaval.glo2003.product.ui.responses.ProductResponse;
@@ -98,7 +100,7 @@ public class ProductEnd2EndUtils {
 
     public static Map<String, String> getCorrespondingFilters(ProductResponse productResponse) {
         Map<String, String> correspondingFilters = new HashMap<>();
-        correspondingFilters.put(PRODUCT_FILTER_SELLER_ID, productResponse.seller.id);
+        correspondingFilters.put(PRODUCT_FILTER_SELLER_ID, productResponse.seller.id.toString());
         correspondingFilters.put(PRODUCT_FILTER_TITLE, productResponse.title);
         correspondingFilters.put(PRODUCT_FILTER_MIN_PRICE,
                 productResponse.suggestedPrice.toString());

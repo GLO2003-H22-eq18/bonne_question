@@ -3,6 +3,7 @@ package ulaval.glo2003.seller.infrastructure.models;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Reference;
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @Entity("sellers")
 public class SellerModel {
     @Id
-    private String id;
+    private ObjectId id;
     private String name;
     private String createdAt;
     private String bio;
@@ -21,7 +22,7 @@ public class SellerModel {
     public SellerModel() {}
 
     public SellerModel(
-            String id,
+            ObjectId id,
             String createdAt,
             String birthDate,
             String name,
@@ -35,7 +36,7 @@ public class SellerModel {
         this.products = products;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 

@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
@@ -23,7 +25,6 @@ import ulaval.glo2003.seller.domain.Seller;
 
 public class ProductFactoryTest {
 
-    private static int currentSellerId = 0;
     private static final String TITLE = "Une roche";
     private static final String INVALID_TITLE = "";
     private static final String DESCRIPTION = "Un matériau solide";
@@ -42,7 +43,7 @@ public class ProductFactoryTest {
         productFactory = new ProductFactory();
         productSeller =
                 new Seller(
-                        String.valueOf(currentSellerId++),
+                        new ObjectId(),
                         "John Cena",
                         "What a chad!",
                         OffsetDateTime.now(Clock.systemUTC()),
