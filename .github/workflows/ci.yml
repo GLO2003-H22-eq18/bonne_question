@@ -33,6 +33,12 @@ jobs:
 
       - name: Unit tests
         run: mvn test -Dtest=glo2003/unit/*
+        env:
+          MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
+          MODE: DEV
 
       - name: System tests
         run: mvn test -Dtest=glo2003/e2e/*
+        env:
+          MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
+          MODE: DEV
