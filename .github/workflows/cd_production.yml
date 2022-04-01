@@ -56,3 +56,7 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           delay: 5
           healthcheck: "https://production-bonne-question.herokuapp.com/health"
+
+        env:
+          HD_MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
+          HD_MODE: PROD
