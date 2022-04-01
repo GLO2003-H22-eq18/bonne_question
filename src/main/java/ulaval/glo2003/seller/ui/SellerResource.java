@@ -63,11 +63,7 @@ public class SellerResource {
     public Response getCurrentSeller(
             @HeaderParam("X-Seller-Id") String sellerId) {
         Seller seller =
-                sellerRepository.getSellers().entrySet().stream()
-                        .filter(map -> map.getKey().equals(sellerId))
-                        .findAny()
-                        .orElseThrow(SellerNotFoundException::new)
-                        .getValue();
+                sellerRepository.findById(new ObjectId(sellerId));
 
         CurrentSellerResponse currentSellerResponse =
                 currentSellerAssembler.createCurrentSellerResponse(seller);
