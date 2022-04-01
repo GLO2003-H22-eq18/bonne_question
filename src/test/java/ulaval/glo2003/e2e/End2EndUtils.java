@@ -13,13 +13,14 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 import org.apache.http.HttpStatus;
+import org.bson.types.ObjectId;
 import ulaval.glo2003.exceptions.ErrorCode;
 import ulaval.glo2003.exceptions.ErrorResponse;
 
 public class End2EndUtils {
 
     public final static Faker FAKER = new Faker();
-    public static final String A_INVALID_ID = "13200298A";
+    public static final ObjectId A_INVALID_ID = new ObjectId();
     public static final Random RANDOM = new Random();
 
     public static void assertThatPostResponseIsValid(Response postResponse) {

@@ -1,5 +1,6 @@
 package ulaval.glo2003.product.ui.assemblers;
 
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.ui.responses.BuyerResponse;
 import ulaval.glo2003.product.ui.responses.OfferResponse;
@@ -13,7 +14,7 @@ public class OfferAssembler {
     }
 
     public OfferResponse createOfferResponse(Offer offer) {
-        String id = offer.getId();
+        String id = offer.getId().toString();
         String createdAt = offer.getCreatedAt().toString();
         Double amount = offer.getAmount();
         String message = offer.getMessage();

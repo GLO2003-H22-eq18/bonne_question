@@ -1,7 +1,11 @@
 package ulaval.glo2003.product.domain;
 
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.exceptions.InvalidProductCategoriesException;
 import ulaval.glo2003.product.exceptions.InvalidProductDescriptionException;
 import ulaval.glo2003.product.exceptions.InvalidProductSuggestedPriceException;
@@ -12,7 +16,6 @@ import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.utils.StringUtil;
 
 public class ProductFactory {
-    private static int currentId = 0;
 
     public Product create(Seller productSeller, ProductRequest productRequest) {
         checkNewProductInvalidParam(productRequest);
@@ -24,8 +27,9 @@ public class ProductFactory {
                 ProductCategory.toCategoriesList(productRequest.categories),
                 productSeller.getId(),
                 productSeller.getName(),
-                currentId++,
-                new ArrayList<>());
+                new ObjectId(),
+                new ArrayList<>(),
+                OffsetDateTime.now(Clock.systemUTC()));
     }
 
     public static void checkNewProductInvalidParam(ProductRequest productRequest) {
@@ -66,6 +70,4 @@ public class ProductFactory {
             throw new InvalidProductSuggestedPriceException();
         }
     }
-
-
 }

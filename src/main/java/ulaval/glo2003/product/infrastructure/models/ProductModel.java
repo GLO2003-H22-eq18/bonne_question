@@ -1,33 +1,37 @@
-package ulaval.glo2003.product.domain;
+package ulaval.glo2003.product.infrastructure.models;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import org.bson.types.ObjectId;
 
-import java.time.Clock;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Product {
-    private final ObjectId id;
-    private final OffsetDateTime createdAt;
-    private final String title;
-    private final String description;
-    private final Double suggestedPrice;
-    private final List<ProductCategory> categories;
-    private final ObjectId sellerId;
-    private final String sellerName;
-    private final List<Offer> offers;
+@Entity("products")
+public class ProductModel {
+    @Id
+    private ObjectId id;
+    private String title;
+    private String description;
+    private String createdAt;
+    private Double suggestedPrice;
+    private List<String> categories;
+    private ObjectId sellerId;
+    private String sellerName;
+    private Integer count;
+    private List<OfferModel> offers;
 
-    public Product(
+    public ProductModel() {}
+
+    public ProductModel(
             String title,
             String description,
+            String createdAt,
             Double suggestedPrice,
-            List<ProductCategory> categories,
+            List<String> categories,
             ObjectId sellerId,
             String sellerName,
             ObjectId id,
-            List<Offer> offers,
-            OffsetDateTime createdAt) {
+            List<OfferModel> offers) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -35,15 +39,16 @@ public class Product {
         this.categories = categories;
         this.sellerId = sellerId;
         this.sellerName = sellerName;
-        this.offers = offers;
+        this.count = 0;
         this.createdAt = createdAt;
+        this.offers = offers;
     }
 
     public ObjectId getId() {
         return id;
     }
 
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
@@ -59,7 +64,7 @@ public class Product {
         return suggestedPrice;
     }
 
-    public List<ProductCategory> getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
@@ -71,11 +76,11 @@ public class Product {
         return sellerName;
     }
 
-    public List<Offer> getOffers() {
-        return offers;
+    public Integer getCount() {
+        return count;
     }
 
-    public void addOffer(Offer offer) {
-        this.offers.add(offer);
+    public List<OfferModel> getOffers() {
+        return offers;
     }
 }
