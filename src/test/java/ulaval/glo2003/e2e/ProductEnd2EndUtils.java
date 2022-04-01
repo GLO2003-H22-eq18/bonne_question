@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.http.HttpStatus;
+import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.ui.requests.OfferRequest;
 import ulaval.glo2003.product.ui.requests.ProductRequest;
@@ -32,11 +33,15 @@ import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 public class ProductEnd2EndUtils {
     public final static int NUMBER_OF_PRODUCTS = 16;
     public static final String A_VALID_BUYER_NAME = "John Doe";
+    public static final String A_INVALID_BUYER_NAME = "    \n  \t \n ";
     public static final String A_VALID_BUYER_EMAIL = "john.doe@email.com";
+    public static final String A_INVALID_BUYER_EMAIL = "someRandomString";
     public static final String A_VALID_BUYER_PHONE = "18191234567";
+    public static final String A_INVALID_BUYER_PHONE = "123456789";
     public static final Double A_VALID_OFFER_AMOUNT = 10000.23;
-    public static final String A_VALID_OFFER_MESSAGE = "Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet.";
-    public static final String A_VALID_OFFER_MESSAGE_2 = FAKER.lorem().fixedString(100);
+    public static final Double A_INVALID_OFFER_AMOUNT = 0.99;
+    public static final String A_VALID_OFFER_MESSAGE = FAKER.lorem().fixedString(100);
+    public static final String A_INVALID_OFFER_MESSAGE = "Donec porttitor interdum lacus sed finibus orem amet.";
     public static final String A_VALID_PRODUCT_TITLE = "Foobar";
     public static final String A_RANDOM_VALID_PRODUCT_TITLE = FAKER.commerce().productName();
     public static final String A_VALID_PRODUCT_DESCRIPTION = "An awesome generic product!";
@@ -211,6 +216,16 @@ public class ProductEnd2EndUtils {
         return productRequest;
     }
 
+    public static OfferRequest createOfferWithMissingParams() {
+        OfferRequest offerRequest = new OfferRequest();
+        offerRequest.name = null;
+        offerRequest.email = null;
+        offerRequest.phoneNumber = null;
+        offerRequest.amount = null;
+        offerRequest.message = null;
+        return offerRequest;
+    }
+
     public static ProductRequest createProductWithInvalidTitle() {
         ProductRequest productRequest = createValidProduct();
         productRequest.title = A_INVALID_PRODUCT_TITLE;
@@ -235,11 +250,34 @@ public class ProductEnd2EndUtils {
         return productRequest;
     }
 
-    public static String addValidOfferToProductGetId(OfferRequest offer) {
-        String productId = createRandomProductGetId();
-        Response response = createOfferResource(offer, productId);
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-        return productId;
+    public static OfferRequest createOfferWithInvalidBuyerName() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.name = A_INVALID_BUYER_NAME;
+        return offerRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidBuyerEmail() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.email = A_INVALID_BUYER_EMAIL;
+        return offerRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidBuyerPhone() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.phoneNumber = A_INVALID_BUYER_PHONE;
+        return offerRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidMessage() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.message = A_INVALID_OFFER_MESSAGE;
+        return offerRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidAmount() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.amount = A_INVALID_OFFER_AMOUNT;
+        return offerRequest;
     }
 
     public static Response getProducts() {
