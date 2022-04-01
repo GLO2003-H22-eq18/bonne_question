@@ -149,7 +149,7 @@ public class MongoProductsRepository implements ProductRepository {
                 .collect(Collectors.toList());
     }
 
-    public void updateOffer(Offer offer, String productId) {
+    public void updateOffer(Offer offer, ObjectId productId) {
         ProductModel productModel = datastore.find(ProductModel.class)
                 .filter(eq("_id", productId))
                 .first();

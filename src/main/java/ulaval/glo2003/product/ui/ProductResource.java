@@ -116,7 +116,7 @@ public class ProductResource {
         Product product = productRepository.findById(new ObjectId(productId));
         Offer myOffer = offerFactory.create(product.getSuggestedPrice(), offerRequest);
         product.addOffer(myOffer);
-        productRepository.updateOffer(myOffer, productId);
+        productRepository.updateOffer(myOffer, new ObjectId(productId));
 
 
         return Response.status(200).build();
