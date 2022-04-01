@@ -51,11 +51,12 @@ public class ProductAssembler {
                                                                String minPrice, String maxPrice) {
         FilteredProductRequest filteredProductRequest = new FilteredProductRequest();
 
-        if (sellerId != null && sellerId.length() == 24) {
-            filteredProductRequest.sellerId = new ObjectId(sellerId);
-        } else  {
-            // create ObjectId that no one has
-            filteredProductRequest.sellerId = new ObjectId();
+        if (sellerId != null) {
+            if (sellerId.length() == 24) {
+                filteredProductRequest.sellerId = new ObjectId(sellerId);
+            } else {
+                filteredProductRequest.sellerId = new ObjectId(); // create ObjectId that no one has
+            }
         }
 
         filteredProductRequest.title = title;
