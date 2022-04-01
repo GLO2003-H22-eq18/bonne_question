@@ -52,9 +52,12 @@ public class Main {
                 sellerRepository, productRepository, productFactory, productAssembler,
                 offerFactory);
 
+        HealthResource healthResource = new HealthResource(sellerRepository);
+
         final ResourceConfig resourceConfig = new ResourceConfig()
                 .register(sellerResource)
                 .register(productResource)
+                .register(healthResource)
                 .register(new InvalidArgumentExceptionMapper())
                 .register(new MissingArgumentExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())
