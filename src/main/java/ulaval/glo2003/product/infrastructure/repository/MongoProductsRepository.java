@@ -56,7 +56,6 @@ public class MongoProductsRepository implements ProductRepository {
                 .build();
         MongoClient mongoClient = MongoClients.create(settings);
 
-//        MongoDatabase mongoDatabase = mongoClient.getDatabase(applicationContext.getDatabase());
         this.datastore = Morphia.createDatastore(mongoClient, applicationContext.getDatabase());
         this.datastore.getMapper().mapPackage("ulaval.glo2003.product.infrastructure");
     }
@@ -173,20 +172,5 @@ public class MongoProductsRepository implements ProductRepository {
                         )
                 )
                 .execute();
-    }
-
-    public int getNextId() {
-//        List<ProductModel> products = datastore.find(ProductModel.class).stream().collect(Collectors.toList());
-//        int nextId = Integer.parseInt(products.get(0).getId());
-//
-//        for (ProductModel product : products) {
-//            int id = Integer.parseInt(product.getId());
-//
-//            if (id > nextId) {
-//                nextId = id;
-//            }
-//        }
-
-        return 0;
     }
 }

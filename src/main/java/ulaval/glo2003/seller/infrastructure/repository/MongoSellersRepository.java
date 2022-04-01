@@ -56,7 +56,6 @@ public class MongoSellersRepository implements SellerRepository {
                 .build();
         MongoClient mongoClient = MongoClients.create(settings);
 
-//        MongoDatabase mongoDatabase = mongoClient.getDatabase(applicationContext.getDatabase());
         this.datastore = Morphia.createDatastore(mongoClient, applicationContext.getDatabase());
         this.datastore.getMapper().mapPackage("ulaval.glo2003.seller.infrastructure");
     }
