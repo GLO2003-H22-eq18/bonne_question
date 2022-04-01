@@ -10,7 +10,7 @@ public class CurrentSellerResponse {
     public String createdAt;
     public String bio;
     public String birthDate;
-    List<CurrentSellerProductResponse> products;
+    public List<CurrentSellerProductResponse> products;
 
     public CurrentSellerResponse() {
         super();
