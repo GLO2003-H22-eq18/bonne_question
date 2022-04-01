@@ -4,6 +4,8 @@ import com.mongodb.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.connection.ClusterSettings;
+import com.mongodb.connection.ConnectionPoolSettings;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.experimental.updates.UpdateOperators;
@@ -24,6 +26,7 @@ import ulaval.glo2003.seller.infrastructure.models.SellerModel;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static dev.morphia.query.experimental.filters.Filters.*;
@@ -42,12 +45,18 @@ public class MongoSellersRepository implements SellerRepository {
         ConnectionString connectionString = new ConnectionString(mongodbUri);
 
         MongoClientSettings settings = MongoClientSettings.builder()
+                .applyToClusterSettings(builder -> builder.applySettings(
+                        ClusterSettings.builder().serverSelectionTimeout(1000, TimeUnit.MILLISECONDS).build())
+                )
+                .applyToConnectionPoolSettings(builder -> builder.applySettings(
+                        ConnectionPoolSettings.builder().maxConnectionIdleTime(1000, TimeUnit.MILLISECONDS).build()
+                ))
                 .applyConnectionString(connectionString)
                 .serverApi(ServerApi.builder().version(ServerApiVersion.V1).build())
                 .build();
         MongoClient mongoClient = MongoClients.create(settings);
 
-        MongoDatabase mongoDatabase = mongoClient.getDatabase(applicationContext.getDatabase());
+//        MongoDatabase mongoDatabase = mongoClient.getDatabase(applicationContext.getDatabase());
         this.datastore = Morphia.createDatastore(mongoClient, applicationContext.getDatabase());
         this.datastore.getMapper().mapPackage("ulaval.glo2003.seller.infrastructure");
     }
@@ -109,20 +118,5 @@ public class MongoSellersRepository implements SellerRepository {
                     )
                 )
                 .execute();
-    }
-
-    public int getNextId() {
-//        List<SellerModel> sellers = datastore.find(SellerModel.class).stream().collect(Collectors.toList());
-//        int nextId = Integer.parseInt(sellers.get(0).getId());
-//
-//        for (SellerModel seller : sellers) {
-//            int id = Integer.parseInt(seller.getId());
-//
-//            if (id > nextId) {
-//                nextId = id;
-//            }
-//        }
-
-        return 0;
     }
 }

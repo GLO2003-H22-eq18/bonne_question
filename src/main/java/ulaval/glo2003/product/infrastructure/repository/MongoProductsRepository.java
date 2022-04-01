@@ -1,16 +1,16 @@
 package ulaval.glo2003.product.infrastructure.repository;
 
+import com.mongodb.*;
+import com.mongodb.connection.ClusterSettings;
+import com.mongodb.connection.ConnectionPoolSettings;
 import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.ServerApi;
-import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
@@ -28,7 +28,6 @@ import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.product.infrastructure.models.OfferModel;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
-import ulaval.glo2003.seller.infrastructure.models.SellerModel;
 
 import static dev.morphia.query.experimental.filters.Filters.eq;
 
@@ -46,12 +45,18 @@ public class MongoProductsRepository implements ProductRepository {
         ConnectionString connectionString = new ConnectionString(mongodbUri);
 
         MongoClientSettings settings = MongoClientSettings.builder()
+                .applyToClusterSettings(builder -> builder.applySettings(
+                        ClusterSettings.builder().serverSelectionTimeout(1000, TimeUnit.MILLISECONDS).build())
+                )
+                .applyToConnectionPoolSettings(builder -> builder.applySettings(
+                        ConnectionPoolSettings.builder().maxConnectionIdleTime(1000, TimeUnit.MILLISECONDS).build()
+                ))
                 .applyConnectionString(connectionString)
                 .serverApi(ServerApi.builder().version(ServerApiVersion.V1).build())
                 .build();
         MongoClient mongoClient = MongoClients.create(settings);
 
-        MongoDatabase mongoDatabase = mongoClient.getDatabase(applicationContext.getDatabase());
+//        MongoDatabase mongoDatabase = mongoClient.getDatabase(applicationContext.getDatabase());
         this.datastore = Morphia.createDatastore(mongoClient, applicationContext.getDatabase());
         this.datastore.getMapper().mapPackage("ulaval.glo2003.product.infrastructure");
     }

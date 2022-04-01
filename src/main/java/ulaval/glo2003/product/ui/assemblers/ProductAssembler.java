@@ -51,8 +51,11 @@ public class ProductAssembler {
                                                                String minPrice, String maxPrice) {
         FilteredProductRequest filteredProductRequest = new FilteredProductRequest();
 
-        if (sellerId != null) {
+        if (sellerId != null && sellerId.length() == 24) {
             filteredProductRequest.sellerId = new ObjectId(sellerId);
+        } else  {
+            // create ObjectId that no one has
+            filteredProductRequest.sellerId = new ObjectId();
         }
 
         filteredProductRequest.title = title;
