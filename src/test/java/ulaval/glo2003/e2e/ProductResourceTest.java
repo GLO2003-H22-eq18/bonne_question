@@ -407,11 +407,8 @@ public class ProductResourceTest {
                 String productId = createRandomProductGetId();
 
                 Response response = createOfferResource(offerRequest, productId);
-                ProductOffersResponse offersResponse = getProductById(productId).body().as(ProductResponse.class).offers;
 
                 assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                assertThat(offersResponse.count).isEqualTo(1);
-                assertThat(offersResponse.mean).isEqualTo(A_VALID_OFFER_AMOUNT);
             }
 
             @DisplayName("GIVEN no required parameters THEN returns error 400 bad request")
@@ -487,7 +484,16 @@ public class ProductResourceTest {
 
             @DisplayName("GIVEN valid id THEN adds offer to product with status 200 ok")
             @Test
-            void givenValidOfferRequest_whenAddingProductOffer_thenOfferIsAddedToProductWithStatus200() {
+            void givenValidOfferId_whenGettingProductOffer_thenOfferIsReturnedWithStatus200() {
+                OfferRequest offerRequest = createValidOffer();
+                String productId = createRandomProductGetId();
+
+                Response response = getProductById(productId);
+                ProductOffersResponse offersResponse = response.body().as(ProductResponse.class).offers;
+
+                assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                assertThat(offersResponse.count).isEqualTo(1);
+                assertThat(offersResponse.mean).isEqualTo(A_VALID_OFFER_AMOUNT);
             }
         }
     }
