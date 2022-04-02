@@ -40,23 +40,7 @@ public class MongoSellersRepository implements SellerRepository {
 
         this.sellerModelAssembler = sellerModelAssembler;
         this.productModelAssembler = productModelAssembler;
-        String mongodbUri = applicationContext.getConnectionString();
-
-        ConnectionString connectionString = new ConnectionString(mongodbUri);
-
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyToClusterSettings(builder -> builder.applySettings(
-                        ClusterSettings.builder().serverSelectionTimeout(1000, TimeUnit.MILLISECONDS).build())
-                )
-                .applyToConnectionPoolSettings(builder -> builder.applySettings(
-                        ConnectionPoolSettings.builder().maxConnectionIdleTime(1000, TimeUnit.MILLISECONDS).build()
-                ))
-                .applyConnectionString(connectionString)
-                .serverApi(ServerApi.builder().version(ServerApiVersion.V1).build())
-                .build();
-        MongoClient mongoClient = MongoClients.create(settings);
-
-        this.datastore = Morphia.createDatastore(mongoClient, applicationContext.getDatabase());
+        this.datastore = applicationContext.getDatastore();
         this.datastore.getMapper().mapPackage("ulaval.glo2003.seller.infrastructure");
     }
 

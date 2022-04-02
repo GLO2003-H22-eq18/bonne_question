@@ -1,11 +1,23 @@
 package ulaval.glo2003;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.ServerApi;
+import com.mongodb.ServerApiVersion;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.connection.ClusterSettings;
+import com.mongodb.connection.ConnectionPoolSettings;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
+import java.util.concurrent.TimeUnit;
+
 public class ApplicationContext {
-    public enum ApplicationMode {
+    private enum ApplicationMode {
         Staging, Production, Dev
     }
 
-    public ApplicationMode getApplicationMode() {
+    private ApplicationMode getApplicationMode() {
         String mode = System.getenv("MODE");
 
         if (mode == null || mode.equals("DEV")) {
@@ -19,7 +31,7 @@ public class ApplicationContext {
         throw new UnsupportedOperationException("Mode " + mode + " not handled");
     }
 
-    public String getDatabase() {
+    private String getDatabase() {
         ApplicationMode mode = getApplicationMode();
 
         if (mode.equals(ApplicationMode.Production)) {
@@ -31,7 +43,27 @@ public class ApplicationContext {
         }
     }
 
-    public String getConnectionString() {
+    private String getConnectionString() {
         return System.getenv("MONGO_CONNECTION");
+    }
+
+    public Datastore getDatastore() {
+        String mongodbUri = getConnectionString();
+
+        ConnectionString connectionString = new ConnectionString(mongodbUri);
+
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyToClusterSettings(builder -> builder.applySettings(
+                        ClusterSettings.builder().serverSelectionTimeout(1000, TimeUnit.MILLISECONDS).build())
+                )
+                .applyToConnectionPoolSettings(builder -> builder.applySettings(
+                        ConnectionPoolSettings.builder().maxConnectionIdleTime(1000, TimeUnit.MILLISECONDS).build()
+                ))
+                .applyConnectionString(connectionString)
+                .serverApi(ServerApi.builder().version(ServerApiVersion.V1).build())
+                .build();
+        MongoClient mongoClient = MongoClients.create(settings);
+
+        return Morphia.createDatastore(mongoClient, getDatabase());
     }
 }
