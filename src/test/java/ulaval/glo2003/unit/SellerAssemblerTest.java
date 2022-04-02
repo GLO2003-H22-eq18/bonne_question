@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Product;
@@ -29,9 +31,8 @@ class SellerAssemblerTest {
         OffsetDateTime createdAt = OffsetDateTime.now();
         LocalDate birthDate = LocalDate.parse("1977-04-23");
         List<Product> products = new ArrayList<>();
-        int id = 1;
 
-        return new Seller(name, bio, createdAt, birthDate, products, id);
+        return new Seller(new ObjectId(), name, bio, createdAt, birthDate, products);
     }
 
     @Test
@@ -40,7 +41,7 @@ class SellerAssemblerTest {
 
         SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 
-        assertThat(sellerResponse.id).isEqualTo(seller.getId());
+        assertThat(sellerResponse.id).isEqualTo(seller.getId().toString());
         assertThat(sellerResponse.createdAt).isEqualTo(seller.getCreatedAt().toString());
         assertThat(sellerResponse.name).isEqualTo(seller.getName());
         assertThat(sellerResponse.bio).isEqualTo(seller.getBio());

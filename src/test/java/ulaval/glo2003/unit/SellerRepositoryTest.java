@@ -7,20 +7,32 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
+import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
+import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
 
 public class SellerRepositoryTest {
 
+    private static final ObjectId INVALID_SELLER_ID = new ObjectId();
     private SellerRepository sellerRepository;
+    public static ApplicationContext applicationContext = new ApplicationContext();
 
     @BeforeEach
     public void setUp() {
-        sellerRepository = new SellerRepository();
+        OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
+        ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
+        SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
+        this.sellerRepository = new MongoSellersRepository(applicationContext, sellerModelAssembler, productModelAssembler);
     }
 
     public Seller getSeller() {
@@ -29,17 +41,15 @@ public class SellerRepositoryTest {
         OffsetDateTime createdAt = OffsetDateTime.now();
         LocalDate birthDate = LocalDate.parse("1977-04-23");
         List<Product> products = new ArrayList<>();
-        int id = 1;
+        ObjectId id = new ObjectId();
 
-        return new Seller(name, bio, createdAt, birthDate, products, id);
+        return new Seller(id, name, bio, createdAt, birthDate, products);
     }
 
     @Test
     void whenSearchingNullSellerInRepository_thenSellerNotFoundException() {
-        Seller seller = getSeller();
-
         assertThrows(SellerNotFoundException.class,
-                () -> sellerRepository.findById(seller.getId()));
+                () -> sellerRepository.findById(INVALID_SELLER_ID));
     }
 
     @Test
@@ -47,6 +57,10 @@ public class SellerRepositoryTest {
         Seller seller = getSeller();
         sellerRepository.save(seller);
 
-        assertThat(sellerRepository.findById(seller.getId())).isEqualTo(seller);
+        assertThat(sellerRepository.findById(seller.getId()).getName()).isEqualTo(seller.getName());
+        assertThat(sellerRepository.findById(seller.getId()).getBio()).isEqualTo(seller.getBio());
+        assertThat(sellerRepository.findById(seller.getId()).getBirthDate()).isEqualTo(seller.getBirthDate());
+        assertThat(sellerRepository.findById(seller.getId()).getProducts()).isEqualTo(seller.getProducts());
+        assertThat(sellerRepository.findById(seller.getId()).getCreatedAt()).isEqualTo(seller.getCreatedAt());
     }
 }

@@ -30,6 +30,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.Main;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;
 import ulaval.glo2003.seller.ui.responses.CurrentSellerResponse;
@@ -39,10 +40,11 @@ import ulaval.glo2003.seller.ui.responses.SellerResponse;
 class SellerResourceTest {
 
     public static HttpServer server;
+    public static ApplicationContext applicationContext = new ApplicationContext();
 
     @BeforeAll
     public static void startServer() throws IOException {
-        server = Main.startServer();
+        server = Main.startServer(applicationContext);
         server.start();
     }
 
@@ -111,7 +113,7 @@ class SellerResourceTest {
         @DisplayName("GIVEN invalid id THEN returns error 404")
         @Test
         void givenInvalidSellerId_whenGettingSeller_thenReturnsError404() {
-            Response response = getSellerById(A_INVALID_ID);
+            Response response = getSellerById(A_INVALID_ID.toString());
 
             assertThatResponseIsItemNotFoundError(response);
         }

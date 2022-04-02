@@ -12,10 +12,15 @@ import ulaval.glo2003.exceptions.MissingArgumentExceptionMapper;
 import ulaval.glo2003.product.domain.OfferFactory;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
-import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
 import ulaval.glo2003.product.ui.ProductResource;
+import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
+import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
 import ulaval.glo2003.seller.ui.assemblers.CurrentSellerAssembler;
 import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
 import ulaval.glo2003.seller.ui.SellerResource;
@@ -24,9 +29,18 @@ public class Main {
 
     public static final String BASE_URI = "http://0.0.0.0:";
 
-    public static HttpServer startServer() {
+    public static HttpServer startServer(ApplicationContext applicationContext) {
 
-        SellerRepository sellerRepository = new SellerRepository();
+        OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
+        ProductModelAssembler productModelAssembler =
+                new ProductModelAssembler(offerModelAssembler);
+        SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
+        SellerRepository sellerRepository =
+                new MongoSellersRepository(applicationContext, sellerModelAssembler,
+                        productModelAssembler);
+        ProductRepository productRepository =
+                new MongoProductsRepository(applicationContext, offerModelAssembler, productModelAssembler);
+
         SellerFactory sellerFactory = new SellerFactory();
         SellerAssembler sellerAssembler = new SellerAssembler();
         CurrentSellerAssembler currentSellerAssembler = new CurrentSellerAssembler();
@@ -34,7 +48,6 @@ public class Main {
                 new SellerResource(sellerRepository, sellerFactory, sellerAssembler,
                         currentSellerAssembler);
 
-        ProductRepository productRepository = new ProductRepository();
         ProductFactory productFactory = new ProductFactory();
         ProductAssembler productAssembler = new ProductAssembler();
         OfferFactory offerFactory = new OfferFactory();
@@ -42,9 +55,12 @@ public class Main {
                 sellerRepository, productRepository, productFactory, productAssembler,
                 offerFactory);
 
+        HealthResource healthResource = new HealthResource(sellerRepository);
+
         final ResourceConfig resourceConfig = new ResourceConfig()
                 .register(sellerResource)
                 .register(productResource)
+                .register(healthResource)
                 .register(new InvalidArgumentExceptionMapper())
                 .register(new MissingArgumentExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())
@@ -57,7 +73,9 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
+        ApplicationContext applicationContext = new ApplicationContext();
+
+        final HttpServer server = startServer(applicationContext);
 
         server.start();
     }

@@ -1,5 +1,7 @@
 package ulaval.glo2003.seller.ui.responses;
 
+import org.bson.types.ObjectId;
+
 import java.util.List;
 
 public class SellerResponse {

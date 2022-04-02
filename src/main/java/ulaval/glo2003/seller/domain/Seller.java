@@ -3,10 +3,12 @@ package ulaval.glo2003.seller.domain;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Product;
 
 public class Seller {
-    private final String id;
+    private final ObjectId id;
     private final OffsetDateTime createdAt;
     private final LocalDate birthDate;
     private final String name;
@@ -14,13 +16,13 @@ public class Seller {
     private final List<Product> products;
 
     public Seller(
+            ObjectId id,
             String name,
             String bio,
             OffsetDateTime createdAt,
             LocalDate birthDate,
-            List<Product> products,
-            int id) {
-        this.id = String.valueOf(id);
+            List<Product> products) {
+        this.id = id;
         this.createdAt = createdAt;
         this.birthDate = birthDate;
         this.name = name;
@@ -28,7 +30,7 @@ public class Seller {
         this.products = products;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
