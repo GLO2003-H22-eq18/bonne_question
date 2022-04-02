@@ -6,6 +6,8 @@ import static ulaval.glo2003.e2e.End2EndUtils.assertThatPostResponseIsValid;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsInvalidParamError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsItemNotFoundError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsMissingParamError;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithRandomOffersFromSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.NUMBER_OF_OFFERS;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.addProductToSellerGetId;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerWithProductResponseFieldsAreValid;
@@ -16,6 +18,7 @@ import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerWithInvalidName;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerWithMissingParams;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSeller;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.getCurrentSellerById;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.getSellerById;
 
 import io.restassured.response.Response;
@@ -29,6 +32,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.Main;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;
+import ulaval.glo2003.seller.ui.responses.CurrentSellerResponse;
 import ulaval.glo2003.seller.ui.responses.SellerResponse;
 
 @DisplayName("Seller Resource")
@@ -140,6 +144,36 @@ class SellerResourceTest {
             assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
             assertThatSellerWithProductResponseFieldsAreValid(sellerResponse,
                     sellerId, productId);
+        }
+    }
+
+    @Nested
+    @DisplayName("WHEN getting current seller")
+    class WhenGettingCurrentSeller {
+
+        @DisplayName("GIVEN seller without products THEN returns current seller and status 200")
+        @Test
+        void givenValidSellerIdWithoutProducts_whenGettingCurrentSeller_thenReturnsCurrentSellerAndStatus200() {
+            // TODO
+        }
+
+        @DisplayName("GIVEN seller with products but no offers THEN returns current seller and status 200")
+        @Test
+        void givenValidSellerIdWithProductsWithoutOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductsAndStatus200() {
+            // TODO
+        }
+
+        @DisplayName("GIVEN seller with products and offers THEN returns current seller and status 200")
+        @Test
+        void givenValidSellerIdWithProductsWithOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductAndOffersAndStatus200() {
+            // TODO
+            //String sellerId = createValidSellerGetId();
+            //String productId = createProductWithRandomOffersFromSellerGetId(sellerId, NUMBER_OF_OFFERS);
+
+            //Response response = getCurrentSellerById(sellerId);
+            //CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+
+            //assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
         }
     }
 }

@@ -96,6 +96,17 @@ public class End2EndUtils {
                 .response();
     }
 
+    public static Response getResourceById(String path, Headers header) {
+        return given()
+                .contentType(ContentType.JSON)
+                .headers(header)
+                .when()
+                .get()
+                .then()
+                .extract()
+                .response();
+    }
+
     public static Response getResourceByFilter(String path, String filterName,
                                                 Object filterValue) {
         return given()
