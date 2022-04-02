@@ -40,7 +40,7 @@ public class DetailedProductOffersAssembler {
                 min = offer.getAmount();
             }
         }
-        return min;
+        return (Math.round(min * 100.0) / 100.0);
     }
 
     private Double getOffersMax(List<Offer> offers) {
@@ -53,7 +53,7 @@ public class DetailedProductOffersAssembler {
                 max = offer.getAmount();
             }
         }
-        return max;
+        return (Math.round(max * 100.0) / 100.0);
     }
 
     private Double getOffersMean(List<Offer> offers) {
@@ -64,7 +64,7 @@ public class DetailedProductOffersAssembler {
         for (Offer offer : offers) {
             total += offer.getAmount();
         }
-        return total / offers.size();
+        return (Math.round((total / offers.size()) * 100.0) / 100.0);
     }
 
     private Integer getOfferCount(List<Offer> offers) {
