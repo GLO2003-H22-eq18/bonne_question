@@ -1,6 +1,14 @@
 # TP3
+### Stories
 
-
+#### Story 1
+  Un vendeur peut afficher plusieurs produits dans un paquet de produit à un prix avantageux. 
+#### Story 2
+  Un acheteur peut voir l'historique de toutes les offres qu'il a effectué.
+#### Story 3
+  Un acheteur reçoit une alerte lorsqu'une de ses offres est surpassée par une autre.
+  
+  
 ### Planification du travail sur Github
 
 #### Projet:
