@@ -23,7 +23,7 @@ public class ProductFactory {
         return new Product(
                 productRequest.title,
                 productRequest.description,
-                productRequest.suggestedPrice,
+                (Math.round(productRequest.suggestedPrice * 100.0) / 100.0),
                 ProductCategory.toCategoriesList(productRequest.categories),
                 productSeller.getId(),
                 productSeller.getName(),
