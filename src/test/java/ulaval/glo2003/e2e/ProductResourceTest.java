@@ -7,6 +7,7 @@ import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsInvalidParamEr
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsItemNotFoundError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsMissingParamError;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_RANDOM_VALID_PRODUCT_TITLE;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_VALID_OFFER_AMOUNT;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_VALID_PRODUCT_SUGGESTED_PRICE;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.NUMBER_OF_PRODUCTS;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.VALID_PRODUCT_CATEGORIES;
@@ -15,18 +16,28 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.assertThatAllProductsHaveTh
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.assertThatAllProductsPriceIsGreaterOrEqualToMinPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.assertThatAllProductsPriceIsLesserOrEqualToMaxPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.assertThatProductResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createOfferResource;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createOfferWithInvalidAmount;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createOfferWithInvalidBuyerEmail;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createOfferWithInvalidBuyerName;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createOfferWithInvalidBuyerPhone;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createOfferWithInvalidMessage;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createOfferWithMissingParams;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductResource;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithInvalidCategories;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithInvalidDescription;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithInvalidPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithInvalidTitle;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithMissingParams;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductGetId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductGetResponse;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductWithOfferGetId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellers;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellersWithMaxPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellersWithMinPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellersWithTitle;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsWithCommonCategoriesFromRandomSellers;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidOffer;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProduct;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProductGetId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProductWithoutCategories;
@@ -53,8 +64,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.Main;
+import ulaval.glo2003.product.ui.requests.OfferRequest;
 import ulaval.glo2003.product.ui.responses.FilteredProductsResponse;
 import ulaval.glo2003.product.ui.requests.ProductRequest;
+import ulaval.glo2003.product.ui.responses.ProductOffersResponse;
 import ulaval.glo2003.product.ui.responses.ProductResponse;
 
 @DisplayName("Product Resource")
@@ -172,6 +185,20 @@ public class ProductResourceTest {
             Response response = getProductById(A_INVALID_ID.toString());
 
             assertThatResponseIsItemNotFoundError(response);
+        }
+
+        @DisplayName("GIVEN product with offer THEN returns product with offer and status 200 ok")
+        @Test
+        void givenValidProductWithOffer_whenGettingProduct_thenProductWithOfferIsReturnedWithStatus200() {
+            // TODO
+            //String productId = createRandomProductWithOfferGetId();
+
+            //Response response = getProductById(productId);
+            //ProductOffersResponse offersResponse = response.body().as(ProductResponse.class).offers;
+
+            //assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            //assertThat(offersResponse.count).isEqualTo(1);
+            //assertThat(offersResponse.mean).isEqualTo(A_VALID_OFFER_AMOUNT);
         }
 
         @DisplayName("WHEN filtering")
@@ -385,8 +412,87 @@ public class ProductResourceTest {
                 }
             }
         }
+
+        @DisplayName("WHEN adding an offer")
+        @Nested
+        class WhenAddingOffer {
+
+            @DisplayName("GIVEN valid offer THEN adds offer to product with status 200 ok")
+            @Test
+            void givenValidOfferRequest_whenAddingProductOffer_thenOfferIsAddedToProductWithStatus200() {
+                OfferRequest offerRequest = createValidOffer();
+                String productId = createRandomProductGetId();
+
+                Response response = createOfferResource(offerRequest, productId);
+
+                assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            }
+
+            @DisplayName("GIVEN no required parameters THEN returns error 400 bad request")
+            @Test
+            void givenOfferRequestWithMissingParam_whenAddingProductOffer_thenReturnsError400() {
+                OfferRequest offerRequest = createOfferWithMissingParams();
+                String productId = createRandomProductGetId();
+
+                Response response = createOfferResource(offerRequest, productId);
+
+                assertThatResponseIsMissingParamError(response);
+            }
+
+            @DisplayName("GIVEN invalid buyer name THEN returns error 400 bad request")
+            @Test
+            void givenOfferRequestWithInvalidBuyerName_whenAddingProductOffer_thenReturnsError400() {
+                OfferRequest offerRequest = createOfferWithInvalidBuyerName();
+                String productId = createRandomProductGetId();
+
+                Response response = createOfferResource(offerRequest, productId);
+
+                assertThatResponseIsInvalidParamError(response);
+            }
+
+            @DisplayName("GIVEN invalid buyer email THEN returns error 400 bad request")
+            @Test
+            void givenOfferRequestWithInvalidBuyerEmail_whenAddingProductOffer_thenReturnsError400() {
+                OfferRequest offerRequest = createOfferWithInvalidBuyerEmail();
+                String productId = createRandomProductGetId();
+
+                Response response = createOfferResource(offerRequest, productId);
+
+                assertThatResponseIsInvalidParamError(response);
+            }
+
+            @DisplayName("GIVEN invalid buyer phone THEN returns error 400 bad request")
+            @Test
+            void givenOfferRequestWithInvalidBuyerPhone_whenAddingProductOffer_thenReturnsError400() {
+                OfferRequest offerRequest = createOfferWithInvalidBuyerPhone();
+                String productId = createRandomProductGetId();
+
+                Response response = createOfferResource(offerRequest, productId);
+
+                assertThatResponseIsInvalidParamError(response);
+            }
+
+            @DisplayName("GIVEN invalid message THEN returns error 400 bad request")
+            @Test
+            void givenOfferRequestWithInvalidMessage_whenAddingProductOffer_thenReturnsError400() {
+                OfferRequest offerRequest = createOfferWithInvalidMessage();
+                String productId = createRandomProductGetId();
+
+                Response response = createOfferResource(offerRequest, productId);
+
+                assertThatResponseIsInvalidParamError(response);
+            }
+
+            @DisplayName("GIVEN invalid amount THEN returns error 400 bad request")
+            @Test
+            void givenOfferRequestWithInvalidAmount_whenAddingProductOffer_thenReturnsError400() {
+                OfferRequest offerRequest = createOfferWithInvalidAmount();
+                String productId = createRandomProductGetId();
+
+                Response response = createOfferResource(offerRequest, productId);
+
+                assertThatResponseIsInvalidParamError(response);
+            }
+        }
     }
-
-
 }
-

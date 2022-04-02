@@ -63,6 +63,18 @@ public class End2EndUtils {
                 .response();
     }
 
+    public static Response createResource(String path, Object request, String pathParam, String resourceId) {
+        return given()
+                .contentType(ContentType.JSON)
+                .pathParam(pathParam, resourceId)
+                .body(request)
+                .when()
+                .post(path)
+                .then()
+                .extract()
+                .response();
+    }
+
     public static Response createResource(String path, Object request, Headers header) {
         return given()
                 .contentType(ContentType.JSON)
@@ -80,6 +92,17 @@ public class End2EndUtils {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(pathParam, resourceId)
+                .then()
+                .extract()
+                .response();
+    }
+
+    public static Response getResourceById(String path, Headers header) {
+        return given()
+                .contentType(ContentType.JSON)
+                .headers(header)
+                .when()
+                .get()
                 .then()
                 .extract()
                 .response();

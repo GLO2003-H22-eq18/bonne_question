@@ -1,6 +1,7 @@
 package ulaval.glo2003.e2e;
 
 import static com.google.common.truth.Truth.assertThat;
+import static io.restassured.RestAssured.given;
 import static ulaval.glo2003.e2e.End2EndUtils.FAKER;
 import static ulaval.glo2003.e2e.End2EndUtils.RANDOM;
 import static ulaval.glo2003.e2e.End2EndUtils.createResource;
@@ -10,7 +11,9 @@ import static ulaval.glo2003.e2e.End2EndUtils.getResourceById;
 import static ulaval.glo2003.e2e.End2EndUtils.mixUpperAndLowerCase;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.A_VALID_SELLER_NAME;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createRandomSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSellerGetId;
 
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -19,15 +22,27 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.http.HttpStatus;
+import ulaval.glo2003.product.domain.Offer;
 import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.ProductCategory;
+import ulaval.glo2003.product.ui.requests.OfferRequest;
 import ulaval.glo2003.product.ui.requests.ProductRequest;
 import ulaval.glo2003.product.ui.responses.ProductResponse;
 import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class ProductEnd2EndUtils {
     public final static int NUMBER_OF_PRODUCTS = 16;
+    public static final String A_VALID_BUYER_NAME = "John Doe";
+    public static final String A_INVALID_BUYER_NAME = "    \n  \t \n ";
+    public static final String A_VALID_BUYER_EMAIL = "john.doe@email.com";
+    public static final String A_INVALID_BUYER_EMAIL = "someRandomString";
+    public static final String A_VALID_BUYER_PHONE = "18191234567";
+    public static final String A_INVALID_BUYER_PHONE = "123456789";
+    public static final Double A_VALID_OFFER_AMOUNT = 10000.23;
+    public static final Double A_INVALID_OFFER_AMOUNT = 0.99;
+    public static final String A_VALID_OFFER_MESSAGE = "Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet.";
+    public static final String A_INVALID_OFFER_MESSAGE = "Donec porttitor interdum lacus sed finibus orem amet.";
     public static final String A_VALID_PRODUCT_TITLE = "Foobar";
     public static final String A_RANDOM_VALID_PRODUCT_TITLE = FAKER.commerce().productName();
     public static final String A_VALID_PRODUCT_DESCRIPTION = "An awesome generic product!";
@@ -52,6 +67,10 @@ public class ProductEnd2EndUtils {
     public static Response createProductResource(ProductRequest productRequest, String sellerId) {
         Headers productSeller = new Headers(new Header("X-Seller-Id", sellerId));
         return createResource("/products", productRequest, productSeller);
+    }
+
+    public static Response createOfferResource(OfferRequest offerRequest, String productId) {
+        return createResource("/products/{productId}/offers", offerRequest, "productId", productId);
     }
 
     public static ProductRequest createValidProduct() {
@@ -79,6 +98,42 @@ public class ProductEnd2EndUtils {
         productRequest.categories = getRandomCategories(MAXIMUM_NUMBER_OF_CATEGORIES);
 
         return productRequest;
+    }
+
+    public static String createRandomProductWithOfferGetId(){
+        ProductResponse productResponse = createProductResource(createRandomProduct(), createRandomSellerGetId()).as(ProductResponse.class);
+        addRandomOfferToProduct(productResponse.id, productResponse.suggestedPrice);
+
+        return productResponse.id;
+    }
+
+    public static OfferRequest createValidOffer() {
+        OfferRequest offerRequest = new OfferRequest();
+        offerRequest.name = A_VALID_BUYER_NAME;
+        offerRequest.email = A_VALID_BUYER_EMAIL;
+        offerRequest.phoneNumber = A_VALID_BUYER_PHONE;
+        offerRequest.amount = A_VALID_OFFER_AMOUNT;
+        offerRequest.message = A_VALID_OFFER_MESSAGE;
+
+        return offerRequest;
+    }
+
+    public static OfferRequest createRandomOffer(double suggestedProductPrice) {
+        OfferRequest offerRequest = new OfferRequest();
+        offerRequest.name = FAKER.funnyName().name();
+        offerRequest.email = FAKER.internet().safeEmailAddress();
+        offerRequest.phoneNumber = FAKER.phoneNumber().subscriberNumber(11);
+        offerRequest.amount = Double.parseDouble(FAKER.commerce().price(suggestedProductPrice, MAXIMUM_PRODUCT_PRICE));
+        offerRequest.message = FAKER.lorem().fixedString(100);
+
+        return offerRequest;
+    }
+
+    public static void addRandomOfferToProduct(String productId, double suggestedProductPrice) {
+        OfferRequest offerRequest = createRandomOffer(suggestedProductPrice);
+
+        Response response = createOfferResource(offerRequest, productId);
+        assertThat(response.statusCode()).isEqualTo(200);
     }
 
     public static String createRandomProductGetId() {
@@ -171,6 +226,16 @@ public class ProductEnd2EndUtils {
         }
     }
 
+    public static String createProductWithRandomOffersFromSellerGetId(String sellerId, int numberOfOffers) {
+        ProductResponse productResponse = createProductResource(createRandomProduct(), sellerId).as(ProductResponse.class);
+
+        for (int i = 0; i < numberOfOffers; i++) {
+            addRandomOfferToProduct(productResponse.id, productResponse.suggestedPrice);
+        }
+
+        return productResponse.id;
+    }
+
 
     public static ProductRequest createValidProductWithoutCategories() {
         ProductRequest productRequest = createValidProduct();
@@ -185,6 +250,16 @@ public class ProductEnd2EndUtils {
         productRequest.suggestedPrice = null;
         productRequest.categories = null;
         return productRequest;
+    }
+
+    public static OfferRequest createOfferWithMissingParams() {
+        OfferRequest offerRequest = new OfferRequest();
+        offerRequest.name = null;
+        offerRequest.email = null;
+        offerRequest.phoneNumber = null;
+        offerRequest.amount = null;
+        offerRequest.message = null;
+        return offerRequest;
     }
 
     public static ProductRequest createProductWithInvalidTitle() {
@@ -209,6 +284,36 @@ public class ProductEnd2EndUtils {
         ProductRequest productRequest = createValidProduct();
         productRequest.categories = A_INVALID_PRODUCT_CATEGORIES;
         return productRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidBuyerName() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.name = A_INVALID_BUYER_NAME;
+        return offerRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidBuyerEmail() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.email = A_INVALID_BUYER_EMAIL;
+        return offerRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidBuyerPhone() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.phoneNumber = A_INVALID_BUYER_PHONE;
+        return offerRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidMessage() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.message = A_INVALID_OFFER_MESSAGE;
+        return offerRequest;
+    }
+
+    public static OfferRequest createOfferWithInvalidAmount() {
+        OfferRequest offerRequest = createValidOffer();
+        offerRequest.amount = A_INVALID_OFFER_AMOUNT;
+        return offerRequest;
     }
 
     public static Response getProducts() {
