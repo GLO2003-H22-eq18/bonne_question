@@ -17,7 +17,6 @@ public class ProductModel {
     private List<String> categories;
     private ObjectId sellerId;
     private String sellerName;
-    private Integer count;
     private List<OfferModel> offers;
 
     public ProductModel() {}
@@ -39,7 +38,6 @@ public class ProductModel {
         this.categories = categories;
         this.sellerId = sellerId;
         this.sellerName = sellerName;
-        this.count = 0;
         this.createdAt = createdAt;
         this.offers = offers;
     }
@@ -74,10 +72,6 @@ public class ProductModel {
 
     public String getSellerName() {
         return sellerName;
-    }
-
-    public Integer getCount() {
-        return count;
     }
 
     public List<OfferModel> getOffers() {

@@ -47,7 +47,6 @@ public class ProductModelAssembler {
         Double suggestedPrice = productModel.getSuggestedPrice();
         ObjectId sellerId = productModel.getSellerId();
         String sellerName = productModel.getSellerName();
-        Integer count = productModel.getCount();
 
         List<ProductCategory> categories;
         if (productModel.getCategories() != null) {
