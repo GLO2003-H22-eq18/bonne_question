@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.ui.assemblers.OfferAssembler;
+import ulaval.glo2003.product.ui.responses.BuyerResponse;
 import ulaval.glo2003.product.ui.responses.OfferResponse;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -22,12 +23,10 @@ class OfferAssemblerTest {
 
         OfferResponse offerResponse = offerAssembler.createOfferResponse(offer);
 
-        assertThat(offerResponse.id).isEqualTo(offer.getId());
+        assertThat(offerResponse.id).isEqualTo(offer.getId().toString());
         assertThat(offerResponse.amount).isEqualTo(offer.getAmount());
         assertThat(offerResponse.message).isEqualTo(offer.getMessage());
-        assertThat(offerResponse.buyer.name).isEqualTo(offer.getName());
-        assertThat(offerResponse.buyer.email).isEqualTo(offer.getEmail());
-        assertThat(offerResponse.buyer.phoneNumber).isEqualTo(offer.getPhoneNumber());
+        assertThat(offerResponse.buyer).isInstanceOf(BuyerResponse.class);
     }
 
     public Offer getOffer() {
