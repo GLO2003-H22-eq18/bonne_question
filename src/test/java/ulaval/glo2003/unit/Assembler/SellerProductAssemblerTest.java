@@ -32,7 +32,8 @@ public class SellerProductAssemblerTest {
         assertThat(sellerProductResponse.title).isEqualTo(product.getTitle());
         assertThat(sellerProductResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
         assertThat(sellerProductResponse.description).isEqualTo(product.getDescription());
-        assertThat(sellerProductResponse.categories).isEqualTo(toStringList(product.getCategories()));
+        assertThat(sellerProductResponse.categories).isEqualTo(
+                toStringList(product.getCategories()));
         assertThat(sellerProductResponse.offers).isInstanceOf(ProductOffersResponse.class);
     }
 }

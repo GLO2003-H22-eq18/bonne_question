@@ -15,7 +15,9 @@ class OfferAssemblerTest {
     private static OfferAssembler offerAssembler;
 
     @BeforeAll
-    public static void setup() { offerAssembler = new OfferAssembler();}
+    public static void setup() {
+        offerAssembler = new OfferAssembler();
+    }
 
     @Test
     void givenOffer_whenCreateOfferResponse_thenCorrectOfferResponse() {
