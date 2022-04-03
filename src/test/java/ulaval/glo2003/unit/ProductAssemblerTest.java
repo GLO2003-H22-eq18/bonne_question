@@ -26,35 +26,20 @@ import ulaval.glo2003.product.ui.responses.ProductResponse;
 class ProductAssemblerTest {
 
     private static final String TITLE = "Une roche";
-    private static final String INVALID_TITLE = "";
     private static final String DESCRIPTION = "Un matériau solide";
-    private static final String INVALID_DESCRIPTION = "  \n\t";
     private static final Double SUGGESTED_PRICE = 500.0;
-    private static final String INVALID_SUGGESTED_PRICE = "90a";
     private static final List<String> CATEGORIES = List.of("sports");
-    private static final List<String> EMPTY_CATEGORIES = List.of();
-    private static final List<String> INVALID_CATEGORIES = List.of("sports", "invalid");
+    private static final String SELLER_NAME = "John Doe";
+    private static final Double AMOUNT1 = 25.0;
+    private static final Double AMOUNT2 = 75.0;
+    private static final ObjectId PRODUCT_ID = new ObjectId();
+    private static final ObjectId SELLER_ID = new ObjectId();
+    private static final OffsetDateTime CREATED_AT = OffsetDateTime.now(Clock.systemUTC());
     private static ProductAssembler productAssembler;
 
     @BeforeAll
     public static void setUp() {
         productAssembler = new ProductAssembler();
-    }
-
-    public Product getProduct() {
-        String title = "Clean Stuff";
-        String description = "The cleanest of all the clean stuff.";
-        Double suggestedPrice = 32d;
-        String sellerName = "John Doe";
-        List<Offer> offers = new ArrayList();
-
-        List<String> categoriesString = new ArrayList<>();
-        categoriesString.add("beauty");
-        categoriesString.add("sports");
-        List<ProductCategory> categories = toCategoriesList(categoriesString);
-
-        return new Product(title, description, suggestedPrice, categories, new ObjectId(), sellerName, new ObjectId(), offers,
-                OffsetDateTime.now(Clock.systemUTC()));
     }
 
     @Test
@@ -97,7 +82,7 @@ class ProductAssemblerTest {
     }
 
     @Test
-    void givenProduct_whenCreateProductResponse_thenCorrectProductResponse() {
+    void givenProductWithNoOffer_whenCreateProductResponse_thenCorrectProductResponse() {
         Product product = getProduct();
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
@@ -112,6 +97,65 @@ class ProductAssemblerTest {
         assertThat(productResponse.seller.name).isEqualTo(product.getSellerName());
         assertThat(productResponse.offers.count).isEqualTo(0);
         assertThat(productResponse.offers.mean).isEqualTo(null);
+    }
 
+    @Test
+    void givenProductWithOneOffer_whenCreateProductResponse_thenCorrectProductResponse() {
+        Product product = getProduct();
+        Offer offer = getOffer(AMOUNT1);
+        product.addOffer(offer);
+
+        ProductResponse productResponse = productAssembler.createProductResponse(product);
+
+        assertThat(productResponse.id).isEqualTo(product.getId().toString());
+        assertThat(productResponse.createdAt).isEqualTo(product.getCreatedAt().toString());
+        assertThat(productResponse.title).isEqualTo(product.getTitle());
+        assertThat(productResponse.description).isEqualTo(product.getDescription());
+        assertThat(productResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
+        assertThat(productResponse.categories).isEqualTo(toStringList(product.getCategories()));
+        assertThat(productResponse.seller.id).isEqualTo(product.getSellerId().toString());
+        assertThat(productResponse.seller.name).isEqualTo(product.getSellerName());
+        assertThat(productResponse.offers.count).isEqualTo(1);
+        assertThat(productResponse.offers.mean).isEqualTo(AMOUNT1);
+    }
+
+    @Test
+    void givenProductWithMultipleOffers_whenCreateProductResponse_thenCorrectProductResponse() {
+        Product product = getProduct();
+        Offer offer1 = getOffer(AMOUNT1);
+        Offer offer2 = getOffer(AMOUNT2);
+        product.addOffer(offer1);
+        product.addOffer(offer2);
+
+        ProductResponse productResponse = productAssembler.createProductResponse(product);
+
+        assertThat(productResponse.id).isEqualTo(product.getId().toString());
+        assertThat(productResponse.createdAt).isEqualTo(product.getCreatedAt().toString());
+        assertThat(productResponse.title).isEqualTo(product.getTitle());
+        assertThat(productResponse.description).isEqualTo(product.getDescription());
+        assertThat(productResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
+        assertThat(productResponse.categories).isEqualTo(toStringList(product.getCategories()));
+        assertThat(productResponse.seller.id).isEqualTo(product.getSellerId().toString());
+        assertThat(productResponse.seller.name).isEqualTo(product.getSellerName());
+        assertThat(productResponse.offers.count).isEqualTo(2);
+        assertThat(productResponse.offers.mean).isEqualTo(50.0);
+    }
+
+    public Product getProduct() {
+        List<ProductCategory> categories = toCategoriesList(CATEGORIES);
+        List<Offer> offers = new ArrayList();
+
+        return new Product(TITLE, DESCRIPTION, SUGGESTED_PRICE, categories, PRODUCT_ID, SELLER_NAME, SELLER_ID, offers,
+                CREATED_AT);
+    }
+
+    public Offer getOffer(Double amount) {
+        String message = "Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet.";
+        ObjectId id = new ObjectId();
+        String name = "John";
+        String email = "sickmail@hotmail.com";
+        String phoneNumber = "5989782222";
+
+        return new Offer(id, amount, message, name ,email, phoneNumber);
     }
 }
