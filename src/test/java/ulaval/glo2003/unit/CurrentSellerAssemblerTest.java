@@ -32,12 +32,12 @@ public class CurrentSellerAssemblerTest {
     private static CurrentSellerAssembler currentSellerAssembler;
 
     @BeforeAll
-    public static void setup(){
+    public static void setup() {
         currentSellerAssembler = new CurrentSellerAssembler();
     }
 
     @Test
-    void givenSellerWithProduct_whenCreateCurrentSellerResponse_thenCorrectSellerResponse(){
+    void givenSellerWithProduct_whenCreateCurrentSellerResponse_thenCorrectSellerResponse() {
         Seller seller = getSeller();
         Product product = getProduct();
         Offer offer = getOffer();
@@ -45,7 +45,8 @@ public class CurrentSellerAssemblerTest {
         seller.addProduct(product);
         product.addOffer(offer);
 
-        CurrentSellerResponse currentSellerResponse = currentSellerAssembler.createCurrentSellerResponse(seller);
+        CurrentSellerResponse currentSellerResponse =
+                currentSellerAssembler.createCurrentSellerResponse(seller);
 
         assertThat(currentSellerResponse.name).isEqualTo(seller.getName());
         assertThat(currentSellerResponse.id).isEqualTo(seller.getId().toString());
@@ -56,10 +57,11 @@ public class CurrentSellerAssemblerTest {
     }
 
     @Test
-    void givenSellerNoProduct_whenCreateCurrentSellerResponse_thenCorrectSellerResponse(){
+    void givenSellerNoProduct_whenCreateCurrentSellerResponse_thenCorrectSellerResponse() {
         Seller seller = getSeller();
 
-        CurrentSellerResponse currentSellerResponse = currentSellerAssembler.createCurrentSellerResponse(seller);
+        CurrentSellerResponse currentSellerResponse =
+                currentSellerAssembler.createCurrentSellerResponse(seller);
 
         assertThat(currentSellerResponse.name).isEqualTo(seller.getName());
         assertThat(currentSellerResponse.id).isEqualTo(seller.getId().toString());
@@ -69,7 +71,7 @@ public class CurrentSellerAssemblerTest {
         assertThat(currentSellerResponse.products.size()).isEqualTo(seller.getProducts().size());
     }
 
-    public Seller getSeller(){
+    public Seller getSeller() {
         return new Seller(ID, NAME, BIO, CREATED_AT, BIRTHDATE, PRODUCTS);
     }
 
@@ -85,7 +87,8 @@ public class CurrentSellerAssemblerTest {
         categoriesString.add("sports");
         List<ProductCategory> categories = toCategoriesList(categoriesString);
 
-        return new Product(title, description, suggestedPrice, categories, new ObjectId(), sellerName, new ObjectId(), offers,
+        return new Product(title, description, suggestedPrice, categories, new ObjectId(),
+                sellerName, new ObjectId(), offers,
                 OffsetDateTime.now(Clock.systemUTC()));
     }
 
@@ -97,6 +100,6 @@ public class CurrentSellerAssemblerTest {
         String email = "sickmail@hotmail.com";
         String phoneNumber = "5989782222";
 
-        return new Offer(id, amount, message, name ,email, phoneNumber);
+        return new Offer(id, amount, message, name, email, phoneNumber);
     }
 }

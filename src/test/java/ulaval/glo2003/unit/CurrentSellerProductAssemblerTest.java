@@ -22,7 +22,9 @@ public class CurrentSellerProductAssemblerTest {
     private static CurrentSellerProductAssembler currentSellerProductAssembler;
 
     @BeforeAll
-    public static void setup() {currentSellerProductAssembler = new CurrentSellerProductAssembler();}
+    public static void setup() {
+        currentSellerProductAssembler = new CurrentSellerProductAssembler();
+    }
 
     @Test
     void givenProductWithOffer_whenCreateCurrentSellerProductResponse_thenCorrectCurrentProductSellerResponse() {
@@ -35,12 +37,17 @@ public class CurrentSellerProductAssemblerTest {
                 currentSellerProductAssembler.createCurrentSellerProductResponse(product);
 
         assertThat(currentSellerProductAssemblerResponse.id).isEqualTo(product.getId().toString());
-        assertThat(currentSellerProductAssemblerResponse.createdAt).isEqualTo(product.getCreatedAt().toString());
+        assertThat(currentSellerProductAssemblerResponse.createdAt).isEqualTo(
+                product.getCreatedAt().toString());
         assertThat(currentSellerProductAssemblerResponse.title).isEqualTo(product.getTitle());
-        assertThat(currentSellerProductAssemblerResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
-        assertThat(currentSellerProductAssemblerResponse.description).isEqualTo(product.getDescription());
-        assertThat(currentSellerProductAssemblerResponse.categories).isEqualTo(product.getCategories());
-        assertThat(currentSellerProductAssemblerResponse.offers).isInstanceOf(DetailedProductOffersResponse.class);
+        assertThat(currentSellerProductAssemblerResponse.suggestedPrice).isEqualTo(
+                product.getSuggestedPrice());
+        assertThat(currentSellerProductAssemblerResponse.description).isEqualTo(
+                product.getDescription());
+        assertThat(currentSellerProductAssemblerResponse.categories).isEqualTo(
+                product.getCategories());
+        assertThat(currentSellerProductAssemblerResponse.offers).isInstanceOf(
+                DetailedProductOffersResponse.class);
     }
 
     @Test
@@ -51,12 +58,17 @@ public class CurrentSellerProductAssemblerTest {
                 currentSellerProductAssembler.createCurrentSellerProductResponse(product);
 
         assertThat(currentSellerProductAssemblerResponse.id).isEqualTo(product.getId().toString());
-        assertThat(currentSellerProductAssemblerResponse.createdAt).isEqualTo(product.getCreatedAt().toString());
+        assertThat(currentSellerProductAssemblerResponse.createdAt).isEqualTo(
+                product.getCreatedAt().toString());
         assertThat(currentSellerProductAssemblerResponse.title).isEqualTo(product.getTitle());
-        assertThat(currentSellerProductAssemblerResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
-        assertThat(currentSellerProductAssemblerResponse.description).isEqualTo(product.getDescription());
-        assertThat(currentSellerProductAssemblerResponse.categories).isEqualTo(product.getCategories());
-        assertThat(currentSellerProductAssemblerResponse.offers).isInstanceOf(DetailedProductOffersResponse.class);
+        assertThat(currentSellerProductAssemblerResponse.suggestedPrice).isEqualTo(
+                product.getSuggestedPrice());
+        assertThat(currentSellerProductAssemblerResponse.description).isEqualTo(
+                product.getDescription());
+        assertThat(currentSellerProductAssemblerResponse.categories).isEqualTo(
+                product.getCategories());
+        assertThat(currentSellerProductAssemblerResponse.offers).isInstanceOf(
+                DetailedProductOffersResponse.class);
     }
 
     public Product getProduct() {
@@ -69,7 +81,8 @@ public class CurrentSellerProductAssemblerTest {
         ObjectId id = new ObjectId();
         List<Offer> offers = new ArrayList<>();
 
-        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id, offers, OffsetDateTime.now(Clock.systemUTC()));
+        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id,
+                offers, OffsetDateTime.now(Clock.systemUTC()));
     }
 
     public Offer getOffer() {
@@ -80,6 +93,6 @@ public class CurrentSellerProductAssemblerTest {
         String email = "sickmail@hotmail.com";
         String phoneNumber = "5989782222";
 
-        return new Offer(id, amount, message, name ,email, phoneNumber);
+        return new Offer(id, amount, message, name, email, phoneNumber);
     }
 }
