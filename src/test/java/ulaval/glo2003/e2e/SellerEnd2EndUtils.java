@@ -101,7 +101,8 @@ public class SellerEnd2EndUtils {
     }
 
     public static Response getCurrentSellerById(String sellerId) {
-        return getResourceById("/sellers/@me", "X-Seller-Id", sellerId);
+        Headers sellerHeader = new Headers(new Header("X-Seller-Id", sellerId));
+        return getResourceById("/sellers/@me", sellerHeader);
     }
 
     public static String addProductToSellerGetId(String sellerId) {

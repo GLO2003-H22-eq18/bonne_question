@@ -98,10 +98,10 @@ public class End2EndUtils {
                 .response();
     }
 
-    public static Response getResourceById(String path, String headerName, String headerValue) {
+    public static Response getResourceById(String path, Headers header) {
         return given()
                 .contentType(ContentType.JSON)
-                .header(headerName, headerValue)
+                .headers(header)
                 .when()
                 .get(path)
                 .then()
