@@ -29,7 +29,7 @@ public class BuyerAssemblerTest {
 
     public Offer getOffer() {
         Double amount = 25.0;
-        String message = "Significant message";
+        String message = "Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet.";
         ObjectId id = new ObjectId();
         String name = "John";
         String email = "sickmail@hotmail.com";
