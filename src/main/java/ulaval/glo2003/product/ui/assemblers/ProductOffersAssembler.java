@@ -20,7 +20,7 @@ public class ProductOffersAssembler {
         for (Offer offer : offers) {
             total += offer.getAmount();
         }
-        return total / offers.size();
+        return (Math.round((total / offers.size()) * 100.0) / 100.0);
     }
 
     private Integer getOffersCount(List<Offer> offers) {

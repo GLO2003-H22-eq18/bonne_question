@@ -13,6 +13,8 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductResource;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProduct;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProduct;
 
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import java.time.ZoneId;
 import java.util.stream.IntStream;
@@ -28,6 +30,7 @@ public class SellerEnd2EndUtils {
     public static final String A_INVALID_SELLER_NAME = "    \n  \t \n ";
     public static final String A_INVALID_SELLER_BIO = "    \n  \t \n ";
     public static final String A_INVALID_SELLER_BIRTHDATE = "2100-11-01";
+    public static final int NUMBER_OF_OFFERS = 3;
 
     public static Response createSellerResource(SellerRequest sellerRequest) {
         return createResource("/sellers", sellerRequest);
@@ -93,6 +96,11 @@ public class SellerEnd2EndUtils {
 
     public static Response getSellerById(String sellerId) {
         return getResourceById("/sellers/{sellerId}", sellerId);
+    }
+
+    public static Response getCurrentSellerById(String sellerId) {
+        Headers sellerHeader = new Headers(new Header("X-Seller-Id", sellerId));
+        return getResourceById("/sellers/@me", sellerHeader);
     }
 
     public static String addProductToSellerGetId(String sellerId) {

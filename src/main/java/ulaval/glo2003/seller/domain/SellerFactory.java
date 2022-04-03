@@ -6,24 +6,25 @@ import java.time.OffsetDateTime;
 import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.seller.exceptions.*;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;
 import ulaval.glo2003.utils.StringUtil;
 
 public class SellerFactory {
-    private static int currentId = 1;
 
     public Seller create(SellerRequest sellerRequest) {
         checkMissingParam(sellerRequest);
         checkInvalidParam(sellerRequest);
 
         return new Seller(
+                new ObjectId(),
                 sellerRequest.name,
                 sellerRequest.bio,
                 OffsetDateTime.now(Clock.systemUTC()),
                 LocalDate.parse(sellerRequest.birthDate),
-                new ArrayList<>(),
-                currentId++);
+                new ArrayList<>());
     }
 
     private void checkMissingParam(SellerRequest sellerRequest) {

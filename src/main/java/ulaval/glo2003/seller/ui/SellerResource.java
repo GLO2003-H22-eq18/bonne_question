@@ -8,6 +8,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import org.bson.types.ObjectId;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
@@ -40,11 +41,7 @@ public class SellerResource {
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
         Seller seller =
-                sellerRepository.getSellers().entrySet().stream()
-                        .filter(map -> map.getKey().equals(sellerId))
-                        .findAny()
-                        .orElseThrow(SellerNotFoundException::new)
-                        .getValue();
+                sellerRepository.findById(new ObjectId(sellerId));
 
         SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 
@@ -66,11 +63,7 @@ public class SellerResource {
     public Response getCurrentSeller(
             @HeaderParam("X-Seller-Id") String sellerId) {
         Seller seller =
-                sellerRepository.getSellers().entrySet().stream()
-                        .filter(map -> map.getKey().equals(sellerId))
-                        .findAny()
-                        .orElseThrow(SellerNotFoundException::new)
-                        .getValue();
+                sellerRepository.findById(new ObjectId(sellerId));
 
         CurrentSellerResponse currentSellerResponse =
                 currentSellerAssembler.createCurrentSellerResponse(seller);

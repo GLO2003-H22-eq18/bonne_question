@@ -13,13 +13,14 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 import org.apache.http.HttpStatus;
+import org.bson.types.ObjectId;
 import ulaval.glo2003.exceptions.ErrorCode;
 import ulaval.glo2003.exceptions.ErrorResponse;
 
 public class End2EndUtils {
 
     public final static Faker FAKER = new Faker();
-    public static final String A_INVALID_ID = "13200298A";
+    public static final ObjectId A_INVALID_ID = new ObjectId();
     public static final Random RANDOM = new Random();
 
     public static void assertThatPostResponseIsValid(Response postResponse) {
@@ -62,6 +63,18 @@ public class End2EndUtils {
                 .response();
     }
 
+    public static Response createResource(String path, Object request, String pathParam, String resourceId) {
+        return given()
+                .contentType(ContentType.JSON)
+                .pathParam(pathParam, resourceId)
+                .body(request)
+                .when()
+                .post(path)
+                .then()
+                .extract()
+                .response();
+    }
+
     public static Response createResource(String path, Object request, Headers header) {
         return given()
                 .contentType(ContentType.JSON)
@@ -79,6 +92,17 @@ public class End2EndUtils {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(pathParam, resourceId)
+                .then()
+                .extract()
+                .response();
+    }
+
+    public static Response getResourceById(String path, Headers header) {
+        return given()
+                .contentType(ContentType.JSON)
+                .headers(header)
+                .when()
+                .get()
                 .then()
                 .extract()
                 .response();
