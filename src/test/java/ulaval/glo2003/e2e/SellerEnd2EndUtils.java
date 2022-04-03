@@ -1,6 +1,7 @@
 package ulaval.glo2003.e2e;
 
 import static com.google.common.truth.Truth.assertThat;
+import static io.restassured.RestAssured.given;
 import static ulaval.glo2003.e2e.End2EndUtils.FAKER;
 import static ulaval.glo2003.e2e.End2EndUtils.createResource;
 import static ulaval.glo2003.e2e.End2EndUtils.extractLocationId;
@@ -13,6 +14,7 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductResource;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProduct;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProduct;
 
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -99,8 +101,7 @@ public class SellerEnd2EndUtils {
     }
 
     public static Response getCurrentSellerById(String sellerId) {
-        Headers sellerHeader = new Headers(new Header("X-Seller-Id", sellerId));
-        return getResourceById("/sellers/@me", sellerHeader);
+        return getResourceById("/sellers/@me", "X-Seller-Id", sellerId);
     }
 
     public static String addProductToSellerGetId(String sellerId) {

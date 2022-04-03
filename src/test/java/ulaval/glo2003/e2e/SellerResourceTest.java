@@ -155,27 +155,44 @@ class SellerResourceTest {
 
         @DisplayName("GIVEN seller without products THEN returns current seller and status 200")
         @Test
-        void givenValidSellerIdWithoutProducts_whenGettingCurrentSeller_thenReturnsCurrentSellerAndStatus200() {
-            // TODO
+        void givenValidSellerIdWithoutProducts_whenGettingCurrentSeller_thenReturnsCurrentSellerInfoAndStatus200() {
+            String sellerId = createValidSellerGetId();
+            System.out.println("Seller Id = " + sellerId);
+
+            Response response = getCurrentSellerById(sellerId);
+            System.out.println(response.body().asPrettyString());
+            //CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+
         }
 
-        @DisplayName("GIVEN seller with products but no offers THEN returns current seller and status 200")
+        @DisplayName("GIVEN seller with a product but no offers THEN returns current seller and status 200")
         @Test
-        void givenValidSellerIdWithProductsWithoutOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductsAndStatus200() {
-            // TODO
+        void givenValidSellerIdWithOneProductWithoutOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductInfoAndStatus200() {
+            String sellerId = createValidSellerGetId();
+            System.out.println("Seller Id = " + sellerId);
+            //String productId = addProductToSellerGetId(sellerId);
+
+            Response response = getCurrentSellerById(sellerId);
+            System.out.println(response.body().asPrettyString());
+            //CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
         }
 
         @DisplayName("GIVEN seller with products and offers THEN returns current seller and status 200")
         @Test
-        void givenValidSellerIdWithProductsWithOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductAndOffersAndStatus200() {
-            // TODO
-            //String sellerId = createValidSellerGetId();
+        void givenValidSellerIdWithProductsWithOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductAndOffersInfoAndStatus200() {
+            String sellerId = createValidSellerGetId();
+            System.out.println("Seller Id = " + sellerId);
             //String productId = createProductWithRandomOffersFromSellerGetId(sellerId, NUMBER_OF_OFFERS);
 
-            //Response response = getCurrentSellerById(sellerId);
+            Response response = getCurrentSellerById(sellerId);
+            System.out.println(response.body().asPrettyString());
             //CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
 
-            //assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
         }
     }
 }
