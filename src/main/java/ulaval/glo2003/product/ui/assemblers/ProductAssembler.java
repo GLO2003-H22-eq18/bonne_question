@@ -5,6 +5,8 @@ import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.exceptions.InvalidPriceTypeException;
@@ -28,7 +30,7 @@ public class ProductAssembler {
     }
 
     public ProductResponse createProductResponse(Product product) {
-        String id = product.getId();
+        String id = product.getId().toString();
         String createdAt = product.getCreatedAt().toString();
         String title = product.getTitle();
         String description = product.getDescription();
@@ -48,12 +50,22 @@ public class ProductAssembler {
                                                                List<String> categories,
                                                                String minPrice, String maxPrice) {
         FilteredProductRequest filteredProductRequest = new FilteredProductRequest();
-        filteredProductRequest.sellerId = sellerId;
+
+        if (sellerId != null) {
+            if (sellerId.length() == 24) {
+                filteredProductRequest.sellerId = new ObjectId(sellerId);
+            } else {
+                filteredProductRequest.sellerId = new ObjectId(); // create ObjectId that no one has
+            }
+        }
+
         filteredProductRequest.title = title;
         filteredProductRequest.categories = createProductCategoryList(categories);
+
         if (minPrice != null) {
             filteredProductRequest.minPrice = parsePriceToDouble(minPrice);
         }
+
         if (maxPrice != null) {
             filteredProductRequest.maxPrice = parsePriceToDouble(maxPrice);
         }

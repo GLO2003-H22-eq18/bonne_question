@@ -11,17 +11,18 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.Main;
 
 @DisplayName("Health Resource")
 public class HealthResourceTest {
 
-
     public static HttpServer server;
+    public static ApplicationContext applicationContext = new ApplicationContext();
 
     @BeforeAll
     public static void startServer() throws IOException {
-        server = Main.startServer();
+        server = Main.startServer(applicationContext);
         server.start();
     }
 

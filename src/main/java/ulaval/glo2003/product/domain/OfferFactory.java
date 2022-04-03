@@ -1,6 +1,8 @@
 package ulaval.glo2003.product.domain;
 
 import java.util.regex.Pattern;
+
+import org.bson.types.ObjectId;
 import ulaval.glo2003.product.exceptions.offers.InvalidOfferAmountException;
 import ulaval.glo2003.product.exceptions.offers.InvalidOfferEmailException;
 import ulaval.glo2003.product.exceptions.offers.InvalidOfferMessageException;
@@ -10,14 +12,13 @@ import ulaval.glo2003.product.ui.requests.OfferRequest;
 import ulaval.glo2003.utils.StringUtil;
 
 public class OfferFactory {
-    private static int currentId = 0;
 
     public Offer create(Double productSuggestedPrice, OfferRequest offerRequest) {
 
         checkInvalidParam(productSuggestedPrice, offerRequest);
 
         return new Offer(
-                String.valueOf(currentId++),
+                new ObjectId(),
                 (Math.round(offerRequest.amount * 100.0) / 100.0),
                 offerRequest.message,
                 offerRequest.name,

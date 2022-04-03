@@ -3,24 +3,37 @@ package ulaval.glo2003.unit;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ulaval.glo2003.product.domain.ProductCategory.toCategoriesList;
+import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import ulaval.glo2003.ApplicationContext;
+import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
+
 import ulaval.glo2003.product.domain.Offer;
+
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.exceptions.InvalidPriceTypeException;
 import ulaval.glo2003.product.exceptions.ProductNotFoundException;
+import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
+import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
+import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 
 public class ProductRepositoryTest {
 
     private static int currentProductId = 0;
-    private static final String INVALID_ID = "-1";
+    private static final ObjectId INVALID_ID = new ObjectId();
     private static final String INVALID_TITLE = "Noone has this title muahaha!";
     private static final List<String> INVALID_CATEGORIES = Arrays.asList("NOT A CATEGORY", "XD");
     private static final String TITLE_1 = "The rock";
@@ -28,25 +41,35 @@ public class ProductRepositoryTest {
     private static final double SUGGESTED_PRICE_1 = 1000;
     private static final List<ProductCategory> CATEGORIES_1 =
             Arrays.asList(ProductCategory.BEAUTY, ProductCategory.OTHER);
-    private static final String SELLER_ID_1 = "1";
+    private static final ObjectId SELLER_ID_1 = new ObjectId();
     private static final String SELLER_NAME_1 = "Dwayne Johnson";
     private static final String TITLE_2 = "The cape of invisibility";
     private static final String DESCRIPTION_2 = "Deathly hallow";
     private static final double SUGGESTED_PRICE_2 = 1000000;
     private static final List<ProductCategory> CATEGORIES_2 =
             Arrays.asList(ProductCategory.APPAREL, ProductCategory.OTHER);
-    private static final String SELLER_ID_2 = "2";
+    private static final ObjectId SELLER_ID_2 = new ObjectId();
     private static final String SELLER_NAME_2 = "Harry Potter";
     private static final String TITLE_1_AND_2_IN_COMMON = "The";
     private static final List<ProductCategory> CATEGORIES_ONLY_IN_1 =
             Arrays.asList(ProductCategory.BEAUTY);
     private static final double MIDDLE_PRICE = 10000;
     private ProductRepository productRepository;
+
+    private final ApplicationContext applicationContext = new ApplicationContext();
+    private final OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
+    private final ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
+    private final SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
+
     private static final List<Offer> OFFERS = new ArrayList();
+
+    public ProductRepositoryTest() {
+    }
+
 
     @BeforeEach
     void setUp() {
-        productRepository = new ProductRepository();
+        productRepository = new MongoProductsRepository(applicationContext, offerModelAssembler, productModelAssembler);
     }
 
     @Test
@@ -59,13 +82,23 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS);
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC()));
         productRepository.save(product);
 
         Product gottenProduct = productRepository.findById(product.getId());
 
-        assertThat(gottenProduct).isEqualTo(product);
+        System.out.println(gottenProduct.getId());
+        System.out.println(gottenProduct.getCreatedAt());
+        toStringList(gottenProduct.getCategories()).forEach(category -> assertThat(toStringList(product.getCategories()).contains(category)));
+        assertThat(gottenProduct.getCreatedAt()).isEqualTo(product.getCreatedAt());
+        assertThat(gottenProduct.getId()).isEqualTo(product.getId());
+        assertThat(gottenProduct.getTitle()).isEqualTo(product.getTitle());
+        assertThat(gottenProduct.getDescription()).isEqualTo(product.getDescription());
+        assertThat(gottenProduct.getSuggestedPrice()).isEqualTo(product.getSuggestedPrice());
+        assertThat(gottenProduct.getSellerId()).isEqualTo(product.getSellerId());
+        assertThat(gottenProduct.getSellerName()).isEqualTo(product.getSellerName());
     }
 
     @Test
@@ -83,8 +116,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -93,8 +127,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(SELLER_ID_1, null, new ArrayList<>(), null, null);
 
@@ -114,8 +149,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -124,8 +161,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(INVALID_ID, null, new ArrayList<>(), null, null);
 
@@ -145,8 +183,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -155,8 +195,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1, new ArrayList<>(), null, null);
 
@@ -176,8 +217,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -186,8 +229,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1_AND_2_IN_COMMON, new ArrayList<>(), null, null);
 
@@ -207,8 +251,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -217,8 +263,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, INVALID_TITLE, new ArrayList<>(), null, null);
 
@@ -239,8 +286,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -249,8 +298,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_ONLY_IN_1);
 
@@ -273,8 +323,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -283,8 +335,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_2);
 
@@ -306,8 +359,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -316,8 +371,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, INVALID_CATEGORIES, null, null);
 
@@ -337,8 +393,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -347,8 +405,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(MIDDLE_PRICE), null);
 
@@ -369,8 +428,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -379,8 +440,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
@@ -401,8 +463,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -411,8 +475,9 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), null, Double.toString(MIDDLE_PRICE));
 
@@ -433,8 +498,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_1,
                         SELLER_ID_1,
                         SELLER_NAME_1,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         productRepository.save(
                 new Product(
                         TITLE_2,
@@ -443,8 +510,10 @@ public class ProductRepositoryTest {
                         CATEGORIES_2,
                         SELLER_ID_2,
                         SELLER_NAME_2,
-                        currentProductId++,
-                        OFFERS));
+                        new ObjectId(),
+                        OFFERS,
+                        OffsetDateTime.now(Clock.systemUTC())));
+
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
 
         List<Product> products =
@@ -454,7 +523,7 @@ public class ProductRepositoryTest {
                 .isTrue();
     }
 
-    private static FilteredProductRequest createFilteredProductRequest(String sellerId, String title, List<String> categories, String minPrice, String maxPrice) {
+    private static FilteredProductRequest createFilteredProductRequest(ObjectId sellerId, String title, List<String> categories, String minPrice, String maxPrice) {
         FilteredProductRequest filteredProductRequest = new FilteredProductRequest();
         filteredProductRequest.sellerId = sellerId;
         filteredProductRequest.title = title;
@@ -485,7 +554,7 @@ public class ProductRepositoryTest {
         }
     }
 
-    private static boolean verifyProductsHaveSameSellerId(List<Product> products, String sellerId) {
+    private static boolean verifyProductsHaveSameSellerId(List<Product> products, ObjectId sellerId) {
         boolean areAllValid = true;
         for (Product product : products) {
             if (!product.getSellerId().equals(sellerId)) {
@@ -498,8 +567,9 @@ public class ProductRepositoryTest {
 
     private static boolean verifyProductsHaveTitle(List<Product> products, String title) {
         boolean areAllValid = true;
+        String lowerCaseTitle = title.toLowerCase();
         for (Product product : products) {
-            if (!product.getTitle().contains(title)) {
+            if (!product.getTitle().toLowerCase().contains(lowerCaseTitle)) {
                 areAllValid = false;
                 break;
             }
@@ -544,7 +614,6 @@ public class ProductRepositoryTest {
         boolean areAllValid = true;
         for (Product product : products) {
             if (product.getSuggestedPrice() > maxPrice) {
-
                 areAllValid = false;
                 break;
             }
