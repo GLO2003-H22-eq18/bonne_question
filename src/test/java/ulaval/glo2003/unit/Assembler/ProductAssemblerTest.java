@@ -1,27 +1,25 @@
-package ulaval.glo2003.unit;
+package ulaval.glo2003.unit.Assembler;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static ulaval.glo2003.product.domain.ProductCategory.toCategoriesList;
 import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
+import static ulaval.glo2003.unit.Assembler.AssemblerUnitTestUtils.getOffer;
+import static ulaval.glo2003.unit.Assembler.AssemblerUnitTestUtils.getProduct;
 
-import java.time.Clock;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
-import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.exceptions.MissingProductDescriptionException;
 import ulaval.glo2003.product.exceptions.MissingProductSuggestedPriceException;
 import ulaval.glo2003.product.exceptions.MissingProductTitleException;
 import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
 import ulaval.glo2003.product.ui.requests.ProductRequest;
+import ulaval.glo2003.product.ui.responses.ProductOffersResponse;
 import ulaval.glo2003.product.ui.responses.ProductResponse;
+import ulaval.glo2003.product.ui.responses.ProductSellerResponse;
 
 class ProductAssemblerTest {
 
@@ -29,12 +27,8 @@ class ProductAssemblerTest {
     private static final String DESCRIPTION = "Un matériau solide";
     private static final Double SUGGESTED_PRICE = 500.0;
     private static final List<String> CATEGORIES = List.of("sports");
-    private static final String SELLER_NAME = "John Doe";
     private static final Double AMOUNT1 = 25.0;
     private static final Double AMOUNT2 = 75.0;
-    private static final ObjectId PRODUCT_ID = new ObjectId();
-    private static final ObjectId SELLER_ID = new ObjectId();
-    private static final OffsetDateTime CREATED_AT = OffsetDateTime.now(Clock.systemUTC());
     private static ProductAssembler productAssembler;
 
     @BeforeAll
@@ -93,10 +87,8 @@ class ProductAssemblerTest {
         assertThat(productResponse.description).isEqualTo(product.getDescription());
         assertThat(productResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
         assertThat(productResponse.categories).isEqualTo(toStringList(product.getCategories()));
-        assertThat(productResponse.seller.id).isEqualTo(product.getSellerId().toString());
-        assertThat(productResponse.seller.name).isEqualTo(product.getSellerName());
-        assertThat(productResponse.offers.count).isEqualTo(0);
-        assertThat(productResponse.offers.mean).isEqualTo(null);
+        assertThat(productResponse.seller).isInstanceOf(ProductSellerResponse.class);
+        assertThat(productResponse.offers).isInstanceOf(ProductOffersResponse.class);
     }
 
     @Test
@@ -113,10 +105,8 @@ class ProductAssemblerTest {
         assertThat(productResponse.description).isEqualTo(product.getDescription());
         assertThat(productResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
         assertThat(productResponse.categories).isEqualTo(toStringList(product.getCategories()));
-        assertThat(productResponse.seller.id).isEqualTo(product.getSellerId().toString());
-        assertThat(productResponse.seller.name).isEqualTo(product.getSellerName());
-        assertThat(productResponse.offers.count).isEqualTo(1);
-        assertThat(productResponse.offers.mean).isEqualTo(AMOUNT1);
+        assertThat(productResponse.seller).isInstanceOf(ProductSellerResponse.class);
+        assertThat(productResponse.offers).isInstanceOf(ProductOffersResponse.class);
     }
 
     @Test
@@ -135,27 +125,7 @@ class ProductAssemblerTest {
         assertThat(productResponse.description).isEqualTo(product.getDescription());
         assertThat(productResponse.suggestedPrice).isEqualTo(product.getSuggestedPrice());
         assertThat(productResponse.categories).isEqualTo(toStringList(product.getCategories()));
-        assertThat(productResponse.seller.id).isEqualTo(product.getSellerId().toString());
-        assertThat(productResponse.seller.name).isEqualTo(product.getSellerName());
-        assertThat(productResponse.offers.count).isEqualTo(2);
-        assertThat(productResponse.offers.mean).isEqualTo(50.0);
-    }
-
-    public Product getProduct() {
-        List<ProductCategory> categories = toCategoriesList(CATEGORIES);
-        List<Offer> offers = new ArrayList();
-
-        return new Product(TITLE, DESCRIPTION, SUGGESTED_PRICE, categories, PRODUCT_ID, SELLER_NAME, SELLER_ID, offers,
-                CREATED_AT);
-    }
-
-    public Offer getOffer(Double amount) {
-        String message = "Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet.";
-        ObjectId id = new ObjectId();
-        String name = "John";
-        String email = "sickmail@hotmail.com";
-        String phoneNumber = "5989782222";
-
-        return new Offer(id, amount, message, name ,email, phoneNumber);
+        assertThat(productResponse.seller).isInstanceOf(ProductSellerResponse.class);
+        assertThat(productResponse.offers).isInstanceOf(ProductOffersResponse.class);
     }
 }

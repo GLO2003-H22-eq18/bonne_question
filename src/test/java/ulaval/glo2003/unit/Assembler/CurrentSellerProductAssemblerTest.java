@@ -1,21 +1,17 @@
-package ulaval.glo2003.unit;
+package ulaval.glo2003.unit.Assembler;
 
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
-import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.ui.responses.DetailedProductOffersResponse;
 import ulaval.glo2003.seller.ui.assemblers.CurrentSellerProductAssembler;
 import ulaval.glo2003.seller.ui.responses.CurrentSellerProductResponse;
 
-import java.time.Clock;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.google.common.truth.Truth.assertThat;
+import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
+import static ulaval.glo2003.unit.Assembler.AssemblerUnitTestUtils.getOffer;
+import static ulaval.glo2003.unit.Assembler.AssemblerUnitTestUtils.getProduct;
 
 public class CurrentSellerProductAssemblerTest {
 
@@ -29,8 +25,7 @@ public class CurrentSellerProductAssemblerTest {
     @Test
     void givenProductWithOffer_whenCreateCurrentSellerProductResponse_thenCorrectCurrentProductSellerResponse() {
         Product product = getProduct();
-        Offer offer = getOffer();
-
+        Offer offer = getOffer(25.03);
         product.addOffer(offer);
 
         CurrentSellerProductResponse currentSellerProductAssemblerResponse =
@@ -45,7 +40,7 @@ public class CurrentSellerProductAssemblerTest {
         assertThat(currentSellerProductAssemblerResponse.description).isEqualTo(
                 product.getDescription());
         assertThat(currentSellerProductAssemblerResponse.categories).isEqualTo(
-                product.getCategories());
+                toStringList(product.getCategories()));
         assertThat(currentSellerProductAssemblerResponse.offers).isInstanceOf(
                 DetailedProductOffersResponse.class);
     }
@@ -66,33 +61,8 @@ public class CurrentSellerProductAssemblerTest {
         assertThat(currentSellerProductAssemblerResponse.description).isEqualTo(
                 product.getDescription());
         assertThat(currentSellerProductAssemblerResponse.categories).isEqualTo(
-                product.getCategories());
+                toStringList(product.getCategories()));
         assertThat(currentSellerProductAssemblerResponse.offers).isInstanceOf(
                 DetailedProductOffersResponse.class);
-    }
-
-    public Product getProduct() {
-        String title = "Mister Clean";
-        String description = "Wow, so good!";
-        Double suggestedPrice = 34d;
-        List<ProductCategory> categories = new ArrayList<>();
-        ObjectId sellerId = new ObjectId();
-        String sellerName = "John Doe";
-        ObjectId id = new ObjectId();
-        List<Offer> offers = new ArrayList<>();
-
-        return new Product(title, description, suggestedPrice, categories, sellerId, sellerName, id,
-                offers, OffsetDateTime.now(Clock.systemUTC()));
-    }
-
-    public Offer getOffer() {
-        Double amount = 25.0;
-        String message = "Significant message";
-        ObjectId id = new ObjectId();
-        String name = "John";
-        String email = "sickmail@hotmail.com";
-        String phoneNumber = "5989782222";
-
-        return new Offer(id, amount, message, name, email, phoneNumber);
     }
 }
