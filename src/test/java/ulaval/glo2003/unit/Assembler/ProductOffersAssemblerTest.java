@@ -58,6 +58,6 @@ public class ProductOffersAssemblerTest {
                 productOffersAssembler.createProductOffersResponse(offers);
 
         assertThat(productOffersResponse.count).isEqualTo(offers.size());
-        assertThat(productOffersResponse.mean).isEqualTo((AMOUNT1 + AMOUNT2) /2);
+        assertThat(productOffersResponse.mean).isEqualTo((AMOUNT1 + AMOUNT2) / 2);
     }
 }
