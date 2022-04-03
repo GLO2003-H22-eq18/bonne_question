@@ -153,6 +153,14 @@ class SellerResourceTest {
     @DisplayName("WHEN getting current seller")
     class WhenGettingCurrentSeller {
 
+        @DisplayName("GIVEN invalid seller id THEN returns error 404 ")
+        @Test
+        void givenInvalidCurrentSellerId_whenGettingCurrentSeller_thenReturnsErrorNotFound404() {
+            Response response = getCurrentSellerById(A_INVALID_ID.toString());
+
+            assertThatResponseIsItemNotFoundError(response);
+        }
+
         @DisplayName("GIVEN seller without products THEN returns current seller and status 200")
         @Test
         void givenValidSellerIdWithoutProducts_whenGettingCurrentSeller_thenReturnsCurrentSellerInfoAndStatus200() {
