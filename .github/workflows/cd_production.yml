@@ -1,0 +1,73 @@
+name: Floppa Production CD
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: Git Ref
+        required: true
+        default: ''
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.git-ref }}
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: '5.0'
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: maven
+
+      - name: Checkstyle
+        run: mvn checkstyle::check
+
+      - name: Compile with Maven
+        run: mvn compile
+
+      - name: Unit tests
+        run: mvn test -Dtest=glo2003/unit/*
+        env:
+          MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
+          MODE: PROD
+
+      - name: System tests
+        run: mvn test -Dtest=glo2003/e2e/*
+        env:
+          MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
+          MODE: PROD
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.git-ref }}
+
+      - name: Deploy with Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "production-bonne-question"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          delay: 5
+          healthcheck: "https://production-bonne-question.herokuapp.com/health"
+
+        env:
+          HD_MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
+          HD_MODE: PROD
