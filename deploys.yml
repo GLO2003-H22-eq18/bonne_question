@@ -1,0 +1,5 @@
+deploy:
+  staging:
+    url: https://staging-bonne-question.herokuapp.com/
+  production:
+    url: https://prod-bonne-question.herokuapp.com/

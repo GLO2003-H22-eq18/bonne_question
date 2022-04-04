@@ -11,11 +11,23 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
+import ulaval.glo2003.product.domain.Offer;
+import ulaval.glo2003.product.domain.OfferFactory;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.ui.assemblers.OfferRequestAssembler;
+import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
+import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
+import ulaval.glo2003.product.ui.requests.OfferRequest;
+import ulaval.glo2003.product.ui.requests.ProductRequest;
+import ulaval.glo2003.product.ui.responses.FilteredProductsResponse;
+import ulaval.glo2003.product.ui.responses.ProductResponse;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.utils.ObjectIdUtil;
 
 
 @Path("/products")
@@ -24,16 +36,21 @@ public class ProductResource {
     private final ProductRepository productRepository;
     private final ProductFactory productFactory;
     private final ProductAssembler productAssembler;
+    private final OfferFactory offerFactory;
+    private final OfferRequestAssembler offerRequestAssembler;
 
     public ProductResource(
             SellerRepository sellerRepository,
             ProductRepository productRepository,
             ProductFactory productFactory,
-            ProductAssembler productAssembler) {
+            ProductAssembler productAssembler,
+            OfferFactory offerFactory) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productFactory = productFactory;
         this.productAssembler = productAssembler;
+        this.offerFactory = offerFactory;
+        this.offerRequestAssembler = new OfferRequestAssembler();
     }
 
     @POST
@@ -42,10 +59,13 @@ public class ProductResource {
             @HeaderParam("X-Seller-Id") String sellerId,
             @Context UriInfo uri) {
 
-        Seller productSeller = sellerRepository.findById(sellerId);
+        productAssembler.checkProductRequestMissingParams(productRequest);
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        Seller productSeller = sellerRepository.findById(sellerObjectId);
         Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
         productRepository.save(myProduct);
+        sellerRepository.updateSeller(myProduct);
 
         return Response.status(201)
                 .header("Location", uri.getPath() + "/" + myProduct.getId())
@@ -55,7 +75,8 @@ public class ProductResource {
     @GET
     @Path("/{productId}")
     public Response getProduct(@PathParam("productId") String productId) {
-        Product product = productRepository.findById(productId);
+        ObjectId productObjectId = ObjectIdUtil.createValidObjectId(productId);
+        Product product = productRepository.findById(productObjectId);
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
 
@@ -70,11 +91,12 @@ public class ProductResource {
             @QueryParam("minPrice") String minPrice,
             @QueryParam("maxPrice") String maxPrice) {
 
-        ProductUtil.checkFilteredProductInvalidParam(title, categories, minPrice, maxPrice);
-
+        FilteredProductRequest filteredProductRequest =
+                productAssembler.createFilteredProductRequest(sellerId, title, categories, minPrice,
+                        maxPrice);
 
         List<Product> filteredProducts = productRepository
-                .getFilteredProducts(sellerId, title, categories, minPrice, maxPrice);
+                .getFilteredProducts(filteredProductRequest);
 
         List<ProductResponse> filteredProductsResponseList = filteredProducts
                 .stream()
@@ -85,5 +107,21 @@ public class ProductResource {
                 new FilteredProductsResponse(filteredProductsResponseList);
 
         return Response.status(200).entity(filteredProductsResponse).build();
+    }
+
+    @POST
+    @Path("/{productId}/offers")
+    public Response postOffer(
+            OfferRequest offerRequest,
+            @PathParam("productId") String productId) {
+
+        offerRequestAssembler.checkOfferRequestMissingParams(offerRequest);
+        ObjectId objectId = ObjectIdUtil.createValidObjectId(productId);
+        Product product = productRepository.findById(objectId);
+        Offer myOffer = offerFactory.create(product.getSuggestedPrice(), offerRequest);
+        product.addOffer(myOffer);
+        productRepository.updateOffer(myOffer, new ObjectId(productId));
+
+        return Response.status(200).build();
     }
 }

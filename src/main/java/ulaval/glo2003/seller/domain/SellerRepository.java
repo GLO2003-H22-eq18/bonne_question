@@ -2,30 +2,18 @@ package ulaval.glo2003.seller.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.bson.types.ObjectId;
+import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 
-public class SellerRepository {
-    private final Map<String, Seller> sellers;
+public interface SellerRepository {
 
-    public SellerRepository() {
-        sellers = new HashMap<>();
-    }
+    public abstract Seller findById(ObjectId sellerId);
 
-    public Seller findById(String sellerId) {
-        Seller seller = sellers.get(sellerId);
-        if (seller != null) {
-            return seller;
-        } else {
-            throw new SellerNotFoundException();
-        }
-    }
+    public abstract void save(Seller seller);
 
-    public void save(Seller seller) {
-        String sellerId = seller.getId();
-        sellers.put(sellerId, seller);
-    }
+    public abstract Map<ObjectId, Seller> getSellers();
 
-    public Map<String, Seller> getSellers() {
-        return sellers;
-    }
+    public abstract void updateSeller(Product myProduct);
 }

@@ -38,7 +38,10 @@ public enum ProductCategory {
 
     public static List<ProductCategory> toCategoriesList(List<String> names) {
         List<ProductCategory> categories = new ArrayList<>();
-        names.forEach((name) -> categories.add(findByName(name)));
+
+        if (names != null) {
+            names.forEach((name) -> categories.add(findByName(name)));
+        }
 
         return new ArrayList<>(
                 new HashSet<>(categories));
