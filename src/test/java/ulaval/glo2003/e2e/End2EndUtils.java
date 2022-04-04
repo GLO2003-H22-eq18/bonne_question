@@ -100,6 +100,7 @@ public class End2EndUtils {
 
     public static Response getResourceById(String path, Headers header) {
         return given()
+                .urlEncodingEnabled(false)
                 .contentType(ContentType.JSON)
                 .headers(header)
                 .when()
