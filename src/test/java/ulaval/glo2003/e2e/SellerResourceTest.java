@@ -6,9 +6,14 @@ import static ulaval.glo2003.e2e.End2EndUtils.assertThatPostResponseIsValid;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsInvalidParamError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsItemNotFoundError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsMissingParamError;
-import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithRandomOffersFromSellerGetId;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_VALID_PRODUCT_SUGGESTED_PRICE;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.addRandomOfferToProduct;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.NUMBER_OF_OFFERS;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.addProductToSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerProductResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithOffersResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithoutOffersResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerWithProductResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerResource;
@@ -165,13 +170,12 @@ class SellerResourceTest {
         @Test
         void givenValidSellerIdWithoutProducts_whenGettingCurrentSeller_thenReturnsCurrentSellerInfoAndStatus200() {
             String sellerId = createValidSellerGetId();
-            System.out.println("Seller Id = " + sellerId);
 
             Response response = getCurrentSellerById(sellerId);
-            System.out.println(response.body().asPrettyString());
-            //CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+            CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
 
             assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThatCurrentSellerResponseFieldsAreValid(sellerResponse, sellerId);
 
         }
 
@@ -179,28 +183,29 @@ class SellerResourceTest {
         @Test
         void givenValidSellerIdWithOneProductWithoutOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductInfoAndStatus200() {
             String sellerId = createValidSellerGetId();
-            System.out.println("Seller Id = " + sellerId);
-            //String productId = addProductToSellerGetId(sellerId);
+            String productId = addProductToSellerGetId(sellerId);
 
             Response response = getCurrentSellerById(sellerId);
-            System.out.println(response.body().asPrettyString());
-            //CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+            CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
 
             assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThatCurrentSellerWithProductWithoutOffersResponseFieldsAreValid(sellerResponse,
+                    sellerId, productId);
         }
 
         @DisplayName("GIVEN seller with products and offers THEN returns current seller and status 200")
         @Test
         void givenValidSellerIdWithProductsWithOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductAndOffersInfoAndStatus200() {
             String sellerId = createValidSellerGetId();
-            System.out.println("Seller Id = " + sellerId);
-            //String productId = createProductWithRandomOffersFromSellerGetId(sellerId, NUMBER_OF_OFFERS);
+            String productId = addProductToSellerGetId(sellerId);
+            addRandomOfferToProduct(productId);
 
             Response response = getCurrentSellerById(sellerId);
-            System.out.println(response.body().asPrettyString());
-            //CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+            CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
 
             assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThatCurrentSellerWithProductWithOffersResponseFieldsAreValid(sellerResponse,
+                    sellerId, productId);
         }
     }
 }
