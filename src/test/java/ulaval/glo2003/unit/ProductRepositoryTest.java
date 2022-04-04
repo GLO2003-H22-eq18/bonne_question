@@ -89,8 +89,6 @@ public class ProductRepositoryTest {
 
         Product gottenProduct = productRepository.findById(product.getId());
 
-        System.out.println(gottenProduct.getId());
-        System.out.println(gottenProduct.getCreatedAt());
         toStringList(gottenProduct.getCategories()).forEach(category -> assertThat(toStringList(product.getCategories()).contains(category)));
         assertThat(gottenProduct.getCreatedAt()).isEqualTo(product.getCreatedAt());
         assertThat(gottenProduct.getId()).isEqualTo(product.getId());
