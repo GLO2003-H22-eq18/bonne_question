@@ -67,6 +67,7 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           delay: 5
           healthcheck: "https://staging-bonne-question.herokuapp.com/health"
+          rollbackonhealthcheckfailed: true
 
         env:
           HD_MONGO_CONNECTION: ${{secrets.MONGO_CONNECTION}}
