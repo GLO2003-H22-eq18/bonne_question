@@ -175,6 +175,7 @@ class SellerResourceTest {
 
             assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
             assertThatCurrentSellerResponseFieldsAreValid(sellerResponse, sellerId);
+            assertThat(sellerResponse.products).isEmpty();
 
         }
 
