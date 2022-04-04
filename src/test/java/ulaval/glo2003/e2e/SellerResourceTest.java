@@ -179,7 +179,7 @@ class SellerResourceTest {
 
         }
 
-        @DisplayName("GIVEN seller with a product but no offers THEN returns current seller and status 200")
+        @DisplayName("GIVEN seller with a product but no offers THEN returns current seller with product but no offers and status 200")
         @Test
         void givenValidSellerIdWithOneProductWithoutOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductInfoAndStatus200() {
             String sellerId = createValidSellerGetId();
@@ -193,7 +193,7 @@ class SellerResourceTest {
                     sellerId, productId);
         }
 
-        @DisplayName("GIVEN seller with products and offers THEN returns current seller and status 200")
+        @DisplayName("GIVEN seller with products and offers THEN returns current seller with product and offers' info and status 200")
         @Test
         void givenValidSellerIdWithProductsWithOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductAndOffersInfoAndStatus200() {
             String sellerId = createValidSellerGetId();
