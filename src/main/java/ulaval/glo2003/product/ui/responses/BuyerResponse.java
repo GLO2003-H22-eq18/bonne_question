@@ -5,6 +5,10 @@ public class BuyerResponse {
     public String email;
     public String phoneNumber;
 
+    public BuyerResponse() {
+        super();
+    }
+
     public BuyerResponse(String name,
                          String email,
                          String phoneNumber) {

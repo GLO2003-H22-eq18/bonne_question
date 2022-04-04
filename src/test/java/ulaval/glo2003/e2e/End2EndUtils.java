@@ -7,6 +7,7 @@ import static io.restassured.RestAssured.given;
 
 import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
+import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import java.util.Collection;
@@ -99,10 +100,11 @@ public class End2EndUtils {
 
     public static Response getResourceById(String path, Headers header) {
         return given()
+                .urlEncodingEnabled(false)
                 .contentType(ContentType.JSON)
                 .headers(header)
                 .when()
-                .get()
+                .get(path)
                 .then()
                 .extract()
                 .response();
@@ -161,6 +163,5 @@ public class End2EndUtils {
 
         return randomizedString.toString();
     }
-
 }
 

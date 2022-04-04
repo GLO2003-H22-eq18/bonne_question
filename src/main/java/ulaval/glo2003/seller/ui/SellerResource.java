@@ -62,8 +62,7 @@ public class SellerResource {
     @Path("/@me")
     public Response getCurrentSeller(
             @HeaderParam("X-Seller-Id") String sellerId) {
-        Seller seller =
-                sellerRepository.findById(new ObjectId(sellerId));
+        Seller seller = sellerRepository.findById(new ObjectId(sellerId));
 
         CurrentSellerResponse currentSellerResponse =
                 currentSellerAssembler.createCurrentSellerResponse(seller);

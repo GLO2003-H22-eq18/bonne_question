@@ -32,7 +32,8 @@ import ulaval.glo2003.product.ui.responses.ProductResponse;
 import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class ProductEnd2EndUtils {
-    public final static int NUMBER_OF_PRODUCTS = 16;
+    public static final int NUMBER_OF_OFFERS = 3;
+    public static final int NUMBER_OF_PRODUCTS = 16;
     public static final String A_VALID_BUYER_NAME = "John Doe";
     public static final String A_INVALID_BUYER_NAME = "    \n  \t \n ";
     public static final String A_VALID_BUYER_EMAIL = "john.doe@email.com";
@@ -226,14 +227,10 @@ public class ProductEnd2EndUtils {
         }
     }
 
-    public static String createProductWithRandomOffersFromSellerGetId(String sellerId, int numberOfOffers) {
-        ProductResponse productResponse = createProductResource(createRandomProduct(), sellerId).as(ProductResponse.class);
-
-        for (int i = 0; i < numberOfOffers; i++) {
-            addRandomOfferToProduct(productResponse.id, productResponse.suggestedPrice);
+    public static void addRandomOfferToProduct(String productId) {
+        for (int i = 0; i < NUMBER_OF_OFFERS; i++) {
+            addRandomOfferToProduct(productId, A_VALID_PRODUCT_SUGGESTED_PRICE);
         }
-
-        return productResponse.id;
     }
 
 

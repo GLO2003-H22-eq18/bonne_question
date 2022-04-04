@@ -6,9 +6,14 @@ import static ulaval.glo2003.e2e.End2EndUtils.assertThatPostResponseIsValid;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsInvalidParamError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsItemNotFoundError;
 import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsMissingParamError;
-import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithRandomOffersFromSellerGetId;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_VALID_PRODUCT_SUGGESTED_PRICE;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.addRandomOfferToProduct;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.NUMBER_OF_OFFERS;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.addProductToSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerProductResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithOffersResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithoutOffersResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerWithProductResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerResource;
@@ -153,29 +158,54 @@ class SellerResourceTest {
     @DisplayName("WHEN getting current seller")
     class WhenGettingCurrentSeller {
 
-        @DisplayName("GIVEN seller without products THEN returns current seller and status 200")
+        @DisplayName("GIVEN invalid seller id THEN returns error 404 ")
         @Test
-        void givenValidSellerIdWithoutProducts_whenGettingCurrentSeller_thenReturnsCurrentSellerAndStatus200() {
-            // TODO
+        void givenInvalidCurrentSellerId_whenGettingCurrentSeller_thenReturnsErrorNotFound404() {
+            Response response = getCurrentSellerById(A_INVALID_ID.toString());
+
+            assertThatResponseIsItemNotFoundError(response);
         }
 
-        @DisplayName("GIVEN seller with products but no offers THEN returns current seller and status 200")
+        @DisplayName("GIVEN seller without products THEN returns current seller and status 200")
         @Test
-        void givenValidSellerIdWithProductsWithoutOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductsAndStatus200() {
-            // TODO
+        void givenValidSellerIdWithoutProducts_whenGettingCurrentSeller_thenReturnsCurrentSellerInfoAndStatus200() {
+            String sellerId = createValidSellerGetId();
+
+            Response response = getCurrentSellerById(sellerId);
+            CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThatCurrentSellerResponseFieldsAreValid(sellerResponse, sellerId);
+
+        }
+
+        @DisplayName("GIVEN seller with a product but no offers THEN returns current seller and status 200")
+        @Test
+        void givenValidSellerIdWithOneProductWithoutOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductInfoAndStatus200() {
+            String sellerId = createValidSellerGetId();
+            String productId = addProductToSellerGetId(sellerId);
+
+            Response response = getCurrentSellerById(sellerId);
+            CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThatCurrentSellerWithProductWithoutOffersResponseFieldsAreValid(sellerResponse,
+                    sellerId, productId);
         }
 
         @DisplayName("GIVEN seller with products and offers THEN returns current seller and status 200")
         @Test
-        void givenValidSellerIdWithProductsWithOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductAndOffersAndStatus200() {
-            // TODO
-            //String sellerId = createValidSellerGetId();
-            //String productId = createProductWithRandomOffersFromSellerGetId(sellerId, NUMBER_OF_OFFERS);
+        void givenValidSellerIdWithProductsWithOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductAndOffersInfoAndStatus200() {
+            String sellerId = createValidSellerGetId();
+            String productId = addProductToSellerGetId(sellerId);
+            addRandomOfferToProduct(productId);
 
-            //Response response = getCurrentSellerById(sellerId);
-            //CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+            Response response = getCurrentSellerById(sellerId);
+            CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
 
-            //assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThatCurrentSellerWithProductWithOffersResponseFieldsAreValid(sellerResponse,
+                    sellerId, productId);
         }
     }
 }

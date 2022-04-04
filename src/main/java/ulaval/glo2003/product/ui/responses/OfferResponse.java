@@ -9,6 +9,10 @@ public class OfferResponse {
     public String message;
     public BuyerResponse buyer;
 
+    public OfferResponse() {
+        super();
+    }
+
     public OfferResponse(String id,
                          String createdAt,
                          Double amount,
