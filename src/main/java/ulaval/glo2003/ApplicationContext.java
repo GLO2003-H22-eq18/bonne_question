@@ -54,10 +54,10 @@ public class ApplicationContext {
 
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyToClusterSettings(builder -> builder.applySettings(
-                        ClusterSettings.builder().serverSelectionTimeout(1000, TimeUnit.MILLISECONDS).build())
+                        ClusterSettings.builder().serverSelectionTimeout(5000, TimeUnit.MILLISECONDS).build())
                 )
                 .applyToConnectionPoolSettings(builder -> builder.applySettings(
-                        ConnectionPoolSettings.builder().maxConnectionIdleTime(1000, TimeUnit.MILLISECONDS).build()
+                        ConnectionPoolSettings.builder().maxConnectionIdleTime(5000, TimeUnit.MILLISECONDS).build()
                 ))
                 .applyConnectionString(connectionString)
                 .serverApi(ServerApi.builder().version(ServerApiVersion.V1).build())
