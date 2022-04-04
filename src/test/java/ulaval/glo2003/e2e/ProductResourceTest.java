@@ -305,7 +305,7 @@ public class ProductResourceTest {
                             response.as(FilteredProductsResponse.class);
 
                     assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-                    assertThat(filteredProductsResponse.products.size()).isEqualTo(
+                    assertThat(filteredProductsResponse.products.size()).isAtLeast(
                             NUMBER_OF_PRODUCTS);
                 }
             }
