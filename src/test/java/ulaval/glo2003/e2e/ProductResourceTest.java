@@ -29,9 +29,9 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithInvalidDes
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithInvalidPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithInvalidTitle;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductWithMissingParams;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomOffer;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductGetId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductGetResponse;
-import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductWithOfferGetId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellers;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellersWithMaxPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProductsFromRandomSellersWithMinPrice;
@@ -50,6 +50,7 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.getProductsByMinPrice;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.getProductsBySellerId;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.getProductsByTitle;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.addRandomProductsToSeller;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createRandomSellerGetId;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSellerGetId;
 
 import io.restassured.response.Response;
@@ -190,15 +191,15 @@ public class ProductResourceTest {
         @DisplayName("GIVEN product with offer THEN returns product with offer and status 200 ok")
         @Test
         void givenValidProductWithOffer_whenGettingProduct_thenProductWithOfferIsReturnedWithStatus200() {
-            // TODO
-            //String productId = createRandomProductWithOfferGetId();
+            String productId = createValidProductGetId(createRandomSellerGetId());
+            OfferRequest offerRequest = createRandomOffer(A_VALID_PRODUCT_SUGGESTED_PRICE);
 
-            //Response response = getProductById(productId);
-            //ProductOffersResponse offersResponse = response.body().as(ProductResponse.class).offers;
+            Response response = createOfferResource(offerRequest, productId);
+            ProductOffersResponse offersResponse = getProductById(productId).as(ProductResponse.class).offers;
 
-            //assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-            //assertThat(offersResponse.count).isEqualTo(1);
-            //assertThat(offersResponse.mean).isEqualTo(A_VALID_OFFER_AMOUNT);
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            assertThat(offersResponse.count).isEqualTo(1);
+            assertThat(offersResponse.mean).isGreaterThan(0);
         }
 
         @DisplayName("WHEN filtering")

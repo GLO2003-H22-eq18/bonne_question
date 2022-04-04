@@ -14,14 +14,12 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductResource;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProduct;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProduct;
 
-import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import java.time.ZoneId;
 import java.util.stream.IntStream;
 import ulaval.glo2003.product.ui.responses.BuyerResponse;
-import ulaval.glo2003.product.ui.responses.DetailedProductOffersResponse;
 import ulaval.glo2003.product.ui.responses.OfferResponse;
 import ulaval.glo2003.seller.ui.responses.CurrentSellerProductResponse;
 import ulaval.glo2003.seller.ui.responses.CurrentSellerResponse;

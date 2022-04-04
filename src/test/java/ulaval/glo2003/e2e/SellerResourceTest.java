@@ -10,7 +10,6 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_VALID_PRODUCT_SUGGESTED_P
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.addRandomOfferToProduct;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.NUMBER_OF_OFFERS;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.addProductToSellerGetId;
-import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerProductResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithOffersResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithoutOffersResponseFieldsAreValid;
