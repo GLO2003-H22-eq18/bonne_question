@@ -227,7 +227,7 @@ public class ProductEnd2EndUtils {
 
     public static ProductRequest createValidProductWithoutCategories() {
         ProductRequest productRequest = createValidProduct();
-        productRequest.categories = VALID_PRODUCT_CATEGORIES;
+        productRequest.categories = null;
         return productRequest;
     }
 
