@@ -27,6 +27,7 @@ import ulaval.glo2003.product.ui.responses.FilteredProductsResponse;
 import ulaval.glo2003.product.ui.responses.ProductResponse;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
+import ulaval.glo2003.utils.ObjectIdUtil;
 
 
 @Path("/products")
@@ -59,7 +60,8 @@ public class ProductResource {
             @Context UriInfo uri) {
 
         productAssembler.checkProductRequestMissingParams(productRequest);
-        Seller productSeller = sellerRepository.findById(new ObjectId(sellerId));
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        Seller productSeller = sellerRepository.findById(sellerObjectId);
         Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
         productRepository.save(myProduct);
@@ -73,7 +75,8 @@ public class ProductResource {
     @GET
     @Path("/{productId}")
     public Response getProduct(@PathParam("productId") String productId) {
-        Product product = productRepository.findById(new ObjectId(productId));
+        ObjectId productObjectId = ObjectIdUtil.createValidObjectId(productId);
+        Product product = productRepository.findById(productObjectId);
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
 
@@ -113,11 +116,11 @@ public class ProductResource {
             @PathParam("productId") String productId) {
 
         offerRequestAssembler.checkOfferRequestMissingParams(offerRequest);
-        Product product = productRepository.findById(new ObjectId(productId));
+        ObjectId objectId = ObjectIdUtil.createValidObjectId(productId);
+        Product product = productRepository.findById(objectId);
         Offer myOffer = offerFactory.create(product.getSuggestedPrice(), offerRequest);
         product.addOffer(myOffer);
         productRepository.updateOffer(myOffer, new ObjectId(productId));
-
 
         return Response.status(200).build();
     }

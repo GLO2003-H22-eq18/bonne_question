@@ -18,6 +18,7 @@ import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;
 import ulaval.glo2003.seller.ui.responses.CurrentSellerResponse;
 import ulaval.glo2003.seller.ui.responses.SellerResponse;
+import ulaval.glo2003.utils.ObjectIdUtil;
 
 @Path("/sellers")
 public class SellerResource {
@@ -40,8 +41,9 @@ public class SellerResource {
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
         Seller seller =
-                sellerRepository.findById(new ObjectId(sellerId));
+                sellerRepository.findById(sellerObjectId);
 
         SellerResponse sellerResponse = sellerAssembler.createSellerResponse(seller);
 
@@ -62,7 +64,8 @@ public class SellerResource {
     @Path("/@me")
     public Response getCurrentSeller(
             @HeaderParam("X-Seller-Id") String sellerId) {
-        Seller seller = sellerRepository.findById(new ObjectId(sellerId));
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        Seller seller = sellerRepository.findById(sellerObjectId);
 
         CurrentSellerResponse currentSellerResponse =
                 currentSellerAssembler.createCurrentSellerResponse(seller);
