@@ -3,6 +3,7 @@ package ulaval.glo2003.unit;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
