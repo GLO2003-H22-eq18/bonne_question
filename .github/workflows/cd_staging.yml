@@ -59,13 +59,16 @@ jobs:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: STAGING
 
+      - name: Code Coverage
+        run: mvn jacoco:report
+
       - name: Code Quality Analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           sonar.branch.name: origin/dev
           sonar.branch.target: origin/dev
-        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=bonne_question
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=bonne_question -Pcoverage
 
   deploy:
     needs: [build]
