@@ -1,15 +1,42 @@
 package ulaval.glo2003.utils;
 
 import org.bson.types.ObjectId;
+import ulaval.glo2003.exceptions.InvalidArgumentException;
+import ulaval.glo2003.exceptions.MissingArgumentException;
 
 public class ObjectIdUtil {
-    static public ObjectId createValidObjectId(String stringObjectId) {
-        ObjectId objectId = new ObjectId();
 
-        if (stringObjectId != null && stringObjectId.length() == 24) {
-            objectId = new ObjectId(stringObjectId);
+    private static final int OBJECT_ID_LENGTH = 24;
+
+    public static class MissingObjectIdException extends MissingArgumentException {
+        public MissingObjectIdException() {
+            super("Object Id is missing");
         }
+    }
 
-        return objectId;
+    public static class InvalidObjectIdException extends InvalidArgumentException {
+        public InvalidObjectIdException() {
+            super("Object Id is invalid");
+        }
+    }
+
+    public static ObjectId createValidObjectId(String stringObjectId) {
+
+        checkMissingObjectId(stringObjectId);
+        checkInvalidObjectId(stringObjectId);
+
+        return new ObjectId(stringObjectId);
+    }
+
+    public static void checkMissingObjectId(String stringObjectId) {
+        if (stringObjectId == null) {
+            throw new MissingObjectIdException();
+        }
+    }
+
+    public static void checkInvalidObjectId(String stringObjectId) {
+        if (stringObjectId.length() != OBJECT_ID_LENGTH) {
+            throw new InvalidObjectIdException();
+        }
     }
 }
