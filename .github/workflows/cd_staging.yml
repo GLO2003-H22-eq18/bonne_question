@@ -59,11 +59,13 @@ jobs:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: STAGING
 
+      - name: Fetch origin/main
+        run: git fetch origin main
+
       - name: Code Quality Analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          ref: ${{ github.event.inputs.git-ref }}
         run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=bonne_question
 
   deploy:
