@@ -135,11 +135,6 @@
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
-                        <!--                        <configuration>-->
-                        <!--                            <outputDirectory>-->
-                        <!--                                ${project.build.directory}/lib-->
-                        <!--                            </outputDirectory>-->
-                        <!--                        </configuration>-->
                     </execution>
                 </executions>
             </plugin>
@@ -228,18 +223,4 @@
             </plugin>
         </plugins>
     </build>
-         
-    <settings>
-        <pluginGroups>
-            <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
-        </pluginGroups>
-        <profiles>
-            <profile>
-                <id>sonar</id>
-                <activation>
-                    <activeByDefault>true</activeByDefault>
-                </activation>
-            </profile>
-         </profiles>
-     </settings>
 </project>
