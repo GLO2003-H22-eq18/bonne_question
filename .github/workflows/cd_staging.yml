@@ -52,7 +52,7 @@ jobs:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: STAGING
 
-      -name: Run Snyk
+      - name: Run Snyk
         uses: snyk/actions/maven@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
