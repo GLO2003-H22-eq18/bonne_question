@@ -51,16 +51,8 @@ jobs:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: DEV
 
-      - name: Run Coverage
-        run: |
-          chmod +x gradlew
-          ./gradlew testCoverage
-
-      - name: Add coverage to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.2
-        with:
-          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 40
-          min-coverage-changed-files: 60
+      - uses: microsoft/PR-Metrics@v1.4.1
+      - name: PR Metrics
+        env:
+          PR_METRICS_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
