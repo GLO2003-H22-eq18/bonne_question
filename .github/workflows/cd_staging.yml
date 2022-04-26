@@ -34,6 +34,19 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
       - name: Checkstyle
         run: mvn checkstyle::check
 
@@ -51,11 +64,6 @@ jobs:
         env:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: STAGING
-
-      - name: Run Snyk
-        uses: snyk/actions/maven@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   deploy:
     needs: [build]
