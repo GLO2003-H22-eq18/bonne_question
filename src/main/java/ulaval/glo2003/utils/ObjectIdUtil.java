@@ -6,37 +6,39 @@ import ulaval.glo2003.exceptions.MissingArgumentException;
 
 public class ObjectIdUtil {
 
+
+
     private static final int OBJECT_ID_LENGTH = 24;
 
     public static class MissingObjectIdException extends MissingArgumentException {
-        public MissingObjectIdException() {
-            super("Object Id is missing");
+        public MissingObjectIdException(String objectName) {
+            super(objectName + " id is missing");
         }
     }
 
     public static class InvalidObjectIdException extends InvalidArgumentException {
-        public InvalidObjectIdException() {
-            super("Object Id is invalid");
+        public InvalidObjectIdException(String objectName) {
+            super(objectName + " id is invalid");
         }
     }
 
-    public static ObjectId createValidObjectId(String stringObjectId) {
+    public static <T> ObjectId createValidObjectId(String stringObjectId, Class<T> objectClass) {
 
-        checkMissingObjectId(stringObjectId);
-        checkInvalidObjectId(stringObjectId);
+        checkMissingObjectId(stringObjectId, objectClass.getSimpleName());
+        checkInvalidObjectId(stringObjectId, objectClass.getSimpleName());
 
         return new ObjectId(stringObjectId);
     }
 
-    public static void checkMissingObjectId(String stringObjectId) {
+    public static void checkMissingObjectId(String stringObjectId, String objectName) {
         if (stringObjectId == null) {
-            throw new MissingObjectIdException();
+            throw new MissingObjectIdException(objectName);
         }
     }
 
-    public static void checkInvalidObjectId(String stringObjectId) {
+    public static void checkInvalidObjectId(String stringObjectId, String objectName) {
         if (stringObjectId.length() != OBJECT_ID_LENGTH) {
-            throw new InvalidObjectIdException();
+            throw new InvalidObjectIdException(objectName);
         }
     }
 }

@@ -9,6 +9,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import java.io.Console;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,7 +61,7 @@ public class ProductResource {
             @Context UriInfo uri) {
 
         productAssembler.checkProductRequestMissingParams(productRequest);
-        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId, Seller.class);
         Seller productSeller = sellerRepository.findById(sellerObjectId);
         Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
@@ -75,7 +76,7 @@ public class ProductResource {
     @GET
     @Path("/{productId}")
     public Response getProduct(@PathParam("productId") String productId) {
-        ObjectId productObjectId = ObjectIdUtil.createValidObjectId(productId);
+        ObjectId productObjectId = ObjectIdUtil.createValidObjectId(productId, Product.class);
         Product product = productRepository.findById(productObjectId);
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
@@ -116,7 +117,7 @@ public class ProductResource {
             @PathParam("productId") String productId) {
 
         offerRequestAssembler.checkOfferRequestMissingParams(offerRequest);
-        ObjectId objectId = ObjectIdUtil.createValidObjectId(productId);
+        ObjectId objectId = ObjectIdUtil.createValidObjectId(productId, Product.class);
         Product product = productRepository.findById(objectId);
         Offer myOffer = offerFactory.create(product.getSuggestedPrice(), offerRequest);
         product.addOffer(myOffer);
