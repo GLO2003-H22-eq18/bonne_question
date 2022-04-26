@@ -21,12 +21,6 @@ jobs:
           ref: ${{ github.event.inputs.git-ref }}
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
-     
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.7.0
@@ -39,6 +33,13 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: maven
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
       - name: Checkstyle
         run: mvn checkstyle::check
@@ -57,6 +58,14 @@ jobs:
         env:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: STAGING
+
+      - name: Code Quality Analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          sonar.branch.name: origin/dev
+          sonar.branch.target: origin/dev
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=bonne_question
 
   deploy:
     needs: [build]
