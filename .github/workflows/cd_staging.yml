@@ -34,6 +34,13 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
       - name: Checkstyle
         run: mvn checkstyle::check
 
@@ -51,22 +58,12 @@ jobs:
         env:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: STAGING
-          
-          
-      - name: Cache SonarQube packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-     
-      - name: Analyze
+
+      - name: Analyse
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run:
-          mvn -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=bonne_question -Dsonar.login=admin -Dsonar.password=admin
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=bonne_question
 
   deploy:
     needs: [build]
