@@ -65,6 +65,11 @@ jobs:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: STAGING
 
+      -name: Run Snyk
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
