@@ -41,7 +41,7 @@ public class SellerResource {
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId, Seller.class);
         Seller seller =
                 sellerRepository.findById(sellerObjectId);
 
@@ -64,7 +64,7 @@ public class SellerResource {
     @Path("/@me")
     public Response getCurrentSeller(
             @HeaderParam("X-Seller-Id") String sellerId) {
-        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId, Seller.class);
         Seller seller = sellerRepository.findById(sellerObjectId);
 
         CurrentSellerResponse currentSellerResponse =

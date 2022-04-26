@@ -36,9 +36,7 @@ public class OfferFactory {
     }
 
     private void validateEmail(String email) {
-        String emailRegex =
-                "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
-                        + "A-Z]{2,7}$";
+        String emailRegex = "^(.+)@(.+)\\.(.+)$";
 
         Pattern pattern = Pattern.compile(emailRegex);
         if (!(pattern.matcher(email).matches())) {

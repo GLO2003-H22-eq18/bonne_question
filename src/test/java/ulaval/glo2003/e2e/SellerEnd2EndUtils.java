@@ -30,8 +30,7 @@ import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class SellerEnd2EndUtils {
     public static final String PHONE_NUMBER_REGEX = "[0-9]{11}";
-    public static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
-            + "A-Z]{2,7}$";
+    public static final String EMAIL_REGEX = "^(.+)@(.+)\\.(.+)$";
     public static final String A_VALID_SELLER_NAME = "John Cena";
     public static final String A_VALID_SELLER_BIO = "What a chad!";
     public static final String A_VALID_SELLER_BIRTHDATE = "1997-04-23";
