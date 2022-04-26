@@ -51,6 +51,11 @@ jobs:
           MONGO_CONNECTION: ${{secrets.MONGO_LOCAL}}
           MODE: DEV
 
+      - name: Run Coverage
+        run: |
+          chmod +x gradlew
+          ./gradlew testCoverage
+
       - name: Add coverage to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.2
