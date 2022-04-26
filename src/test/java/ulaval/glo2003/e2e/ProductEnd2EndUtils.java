@@ -101,6 +101,13 @@ public class ProductEnd2EndUtils {
         return productRequest;
     }
 
+    public static String createRandomProductWithOfferGetId(){
+        ProductResponse productResponse = createProductResource(createRandomProduct(), createRandomSellerGetId()).as(ProductResponse.class);
+        addRandomOfferToProduct(productResponse.id, productResponse.suggestedPrice);
+
+        return productResponse.id;
+    }
+
     public static OfferRequest createValidOffer() {
         OfferRequest offerRequest = new OfferRequest();
         offerRequest.name = A_VALID_BUYER_NAME;
@@ -123,6 +130,12 @@ public class ProductEnd2EndUtils {
         return offerRequest;
     }
 
+    public static void addRandomOfferToProduct(String productId, double suggestedProductPrice) {
+        OfferRequest offerRequest = createRandomOffer(suggestedProductPrice);
+
+        Response response = createOfferResource(offerRequest, productId);
+        assertThat(response.statusCode()).isEqualTo(200);
+    }
 
     public static String createRandomProductGetId() {
         String sellerId = createRandomSellerGetId();
@@ -215,19 +228,15 @@ public class ProductEnd2EndUtils {
     }
 
     public static void addRandomOfferToProduct(String productId) {
-        double suggestedPrice = getProductById(productId).as(ProductResponse.class).suggestedPrice;
-
         for (int i = 0; i < NUMBER_OF_OFFERS; i++) {
-            OfferRequest offerRequest = createRandomOffer(suggestedPrice);
-            Response response = createOfferResource(offerRequest, productId);
-            assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+            addRandomOfferToProduct(productId, A_VALID_PRODUCT_SUGGESTED_PRICE);
         }
     }
 
 
     public static ProductRequest createValidProductWithoutCategories() {
         ProductRequest productRequest = createValidProduct();
-        productRequest.categories = null;
+        productRequest.categories = VALID_PRODUCT_CATEGORIES;
         return productRequest;
     }
 
