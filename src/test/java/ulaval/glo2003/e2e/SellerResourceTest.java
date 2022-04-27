@@ -9,10 +9,14 @@ import static ulaval.glo2003.e2e.End2EndUtils.assertThatResponseIsMissingParamEr
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.A_VALID_PRODUCT_SUGGESTED_PRICE;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.addRandomOfferToProduct;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.NUMBER_OF_OFFERS;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.NUMBER_OF_VIEWS;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.addProductToSellerGetId;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.addViewsToProduct;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithOffersResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithViewsResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithoutOffersResponseFieldsAreValid;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatCurrentSellerWithProductWithoutViewsResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.assertThatSellerWithProductResponseFieldsAreValid;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerResource;
@@ -23,6 +27,7 @@ import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createSellerWithMissingParam
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSeller;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.createValidSellerGetId;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.getCurrentSellerById;
+import static ulaval.glo2003.e2e.SellerEnd2EndUtils.getCurrentSellerViewsById;
 import static ulaval.glo2003.e2e.SellerEnd2EndUtils.getSellerById;
 
 import io.restassured.response.Response;
@@ -206,6 +211,64 @@ class SellerResourceTest {
             assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
             assertThatCurrentSellerWithProductWithOffersResponseFieldsAreValid(sellerResponse,
                     sellerId, productId);
+        }
+
+        @Nested
+        @DisplayName("WHEN getting current seller views")
+        class WhenGettingCurrentSellerViews {
+
+            @DisplayName("GIVEN invalid seller id THEN returns error 404 ")
+            @Test
+            void givenInvalidCurrentSellerId_whenGettingCurrentSellerViews_thenReturnsErrorNotFound404() {
+                Response response = getCurrentSellerViewsById(A_INVALID_ID.toString());
+
+                assertThatResponseIsItemNotFoundError(response);
+            }
+
+            @DisplayName("GIVEN seller without products THEN returns current seller and status 200")
+            @Test
+            void givenValidSellerIdWithoutProducts_whenGettingCurrentSellerViews_thenReturnsCurrentSellerInfoAndStatus200() {
+                String sellerId = createValidSellerGetId();
+
+                Response response = getCurrentSellerViewsById(sellerId);
+                CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+
+                assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                assertThatCurrentSellerResponseFieldsAreValid(sellerResponse, sellerId);
+                assertThat(sellerResponse.products).isEmpty();
+
+            }
+
+            @DisplayName("GIVEN seller with a product but no views THEN returns current seller with product but no views and status 200")
+            @Test
+            void givenValidSellerIdWithOneProductWithoutViews_whenGettingCurrentSellerViews_thenReturnsCurrentSellerWithProductInfoAndStatus200() {
+                String sellerId = createValidSellerGetId();
+                String productId = addProductToSellerGetId(sellerId);
+
+                Response response = getCurrentSellerViewsById(sellerId);
+                CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+
+                assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                assertThatCurrentSellerWithProductWithoutViewsResponseFieldsAreValid(sellerResponse,
+                        sellerId, productId);
+            }
+
+            @DisplayName("GIVEN seller with products and views THEN returns current seller with product and views' info and status 200")
+            @Test
+            void givenValidSellerIdWithProductsWithOffers_whenGettingCurrentSeller_thenReturnsCurrentSellerWithProductAndOffersInfoAndStatus200() {
+                String sellerId = createValidSellerGetId();
+                String productId = addProductToSellerGetId(sellerId);
+                addViewsToProduct(productId, NUMBER_OF_VIEWS);
+
+                Response response = getCurrentSellerViewsById(sellerId);
+                CurrentSellerResponse sellerResponse = response.as(CurrentSellerResponse.class);
+
+                assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
+                assertThatCurrentSellerWithProductWithViewsResponseFieldsAreValid
+                        (sellerResponse,
+                        sellerId, productId);
+            }
+
         }
     }
 }
