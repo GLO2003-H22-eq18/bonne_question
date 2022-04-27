@@ -30,7 +30,7 @@ Un conseil qu'on peut donner à une équipe qui va faire le projet serait de bie
 
 Bien que nous avons utiliser Git pour le contrôle des versions dans d'autres cours, nous avons vraiment pris le temps d'utiliser l'outil de façon plus précise dans ce projet en utilisant des branches pour le développement, des pull-request pour intégrer les fonctionnalités, en plus de rester constant dans les normes pour documenter les versions. C'est une expérience qui nous sera utile pour le reste de notre parcours universitaire en plus d'être un bon exemple d'utilisation dans un cadre professionnel puisque beaucoup de compagnies utilisent des outils comme Git pour contrôler les versions des projets avec précision. 
 
-Nous avons également, pour la première fois, installé un CI pipeline directement sur la plateforme Github pour s'initier à l'intégration continue.
+Nous avons également, pour la première fois, installé un CI pipeline directement avec l'aide de la plateforme Github pour s'initier à l'intégration continue en nous permettant de tester lorsqu'on remet une nouvelle version fonctionnelle du logiciel en faisant des changements sur le projet. Avec une augmentation de la popularité du DevOps, il y a des bonnes chance que nous ayons à réutiliser des outils d'intégration continue dans nos vies professionnelles.
 
 
 
@@ -40,7 +40,7 @@ Nous avons également, pour la première fois, installé un CI pipeline directem
 
 La participation d'une entreprise dans un projet open source permet de mettre à jour un projet existant avec les ressources d'une entreprise. Donc, probablement plus rapidement et plus efficacement que si plusieurs individus contribuaient de façon indépendante. L'entreprise fait donc avancer un projet déjà existant pour le bénéfice de tous et peut l'utiliser en plus bien souvent ```free of charge```.  C'est un positif pour la communauté qui voit un projet avancer et pour l'entreprise qui sauve des coûts.
 
-Un défi que rencontre souvent les entreprises est de créer des systèmes représentatifs des réalités du marché visé et s'assurer que les utilisateurs ont les fonctionnalités désirées. En contribuant et en utilisant des projets open source, on s'assure d'une manière que la communauté (ou le marché) est investi dans le développement et que normalement, les utilisateurs visés par le projet sont mieux représenté puisqu'ils contribuent à son avancement. 
+Un défi que rencontrent souvent les entreprises est de créer des systèmes représentatifs des réalités du marché visé et s'assurer que les utilisateurs ont les fonctionnalités désirées. En contribuant et en utilisant des projets open source, on s'assure d'une manière que la communauté (ou le marché) est investi dans le développement et que normalement, les utilisateurs visés par le projet sont mieux représentés puisqu'ils contribuent à son avancement. 
 
 
 
@@ -48,11 +48,11 @@ Un défi que rencontre souvent les entreprises est de créer des systèmes repr�
 https://opensource.guide/starting-a-project/
 https://opensource.com/life/14/6/12-challenges-open-source-projects
 
-Le premier défi de mise en place est qu'il faut considérer le temps requis pour gérer les contributions de d'autres individus. En effet, si le projet open source attire l'engouement de plusieurs personnes, il se peut qu'il devienne plus dur de gérer toutes les demandes, les commentaires et les requêtes de support. Il faut donc considérer que le temps accordé à son propre projet open-source risque de ne pas être strictement pour le développement du code. D'autant plus qu'il faut prendre le temps de créer des bons documents pour la gestion du projet avec la communauté (```Open source license, README, Contributing guidelines, Code of conduct```) et pour protéger le projet avec les lois sur la propriété intellectuelle.
+Le premier défi de mise en place est qu'il faut considérer le temps requis pour gérer les contributions d'autres individus. En effet, si le projet open source attire l'engouement de plusieurs personnes, il se peut qu'il devienne plus dur de gérer toutes les demandes, les commentaires et les requêtes de support. Il faut donc considérer que le temps accordé à son propre projet open-source risque de ne pas être strictement pour le développement du code. D'autant plus qu'il faut prendre le temps de créer des bons documents pour la gestion du projet avec la communauté (```Open source license, README, Contributing guidelines, Code of conduct```) et pour protéger le projet avec les lois sur la propriété intellectuelle.
 
-Ensuite, la mise en place d'un projet open source implique de créer un document pour décrire la vision du projet pour que les contributeurs puissent faire du développement dans la trajectoire souhaitée. Cette vision demande d'avoir une idée clair de ce que le projet devrait contenir, ce qui peut être une étape difficile à faire puisqu'il peut être complexe de se projeter dans le futur dans un projet en cours de développement. 
+Ensuite, la mise en place d'un projet open source implique de créer un document pour décrire la vision du projet pour que les contributeurs puissent faire du développement dans la trajectoire souhaitée. Cette vision demande d'avoir une idée claire de ce que le projet devrait contenir, ce qui peut être une étape difficile à faire puisqu'il peut être complexe de se projeter dans le futur dans un projet en cours de développement et d'en plus, l'exprimer dans un document.
 
-Assumer que les contributions seront pas toutes selon nos attentes??
+Finalement, un autre défi pour la mise en place d'un projet open source est de rendre le projet attirant pour que des individus veulent colaborer. Il faut donc faire une documentation intéressante, un concept qui suscite l'intérêt et bien sûr un nom qui attrape l'oeil.
 
 
 3. Quelle information vous a-t-elle le plus surprise à propos de l'open source?
