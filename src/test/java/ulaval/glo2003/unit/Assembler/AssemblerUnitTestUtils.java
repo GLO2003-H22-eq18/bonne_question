@@ -56,4 +56,11 @@ public class AssemblerUnitTestUtils {
 
         return new Offer(id, createdAt, amount, message, name, email, phoneNumber);
     }
+
+    public static View getView() {
+        ObjectId id = new ObjectId();
+        OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
+
+        return new View(id, createdAt);
+    }
 }
