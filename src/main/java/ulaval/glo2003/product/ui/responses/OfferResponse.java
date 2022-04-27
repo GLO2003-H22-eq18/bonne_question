@@ -1,7 +1,5 @@
 package ulaval.glo2003.product.ui.responses;
 
-import org.bson.types.ObjectId;
-
 public class OfferResponse {
     public String id;
     public String createdAt;

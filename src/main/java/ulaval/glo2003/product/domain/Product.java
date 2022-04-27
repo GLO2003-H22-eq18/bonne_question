@@ -17,6 +17,7 @@ public class Product {
     private final ObjectId sellerId;
     private final String sellerName;
     private final List<Offer> offers;
+    private final List<View> views;
 
     public Product(
             String title,
@@ -27,6 +28,7 @@ public class Product {
             String sellerName,
             ObjectId id,
             List<Offer> offers,
+            List<View> views,
             OffsetDateTime createdAt) {
         this.id = id;
         this.title = title;
@@ -36,6 +38,7 @@ public class Product {
         this.sellerId = sellerId;
         this.sellerName = sellerName;
         this.offers = offers;
+        this.views = views;
         this.createdAt = createdAt;
     }
 
@@ -77,5 +80,13 @@ public class Product {
 
     public void addOffer(Offer offer) {
         this.offers.add(offer);
+    }
+
+    public List<View> getViews() {
+        return views;
+    }
+
+    public void addView(View view) {
+        this.views.add(view);
     }
 }

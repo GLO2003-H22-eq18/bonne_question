@@ -72,4 +72,17 @@ public class SellerResource {
 
         return Response.status(200).entity(currentSellerResponse).build();
     }
+
+    @GET
+    @Path("/@me/views")
+    public Response getCurrentSellerViews(
+            @HeaderParam("X-Seller-Id") String sellerId) {
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId, Seller.class);
+        Seller seller = sellerRepository.findById(sellerObjectId);
+
+        CurrentSellerResponse currentSellerResponse =
+                currentSellerAssembler.createCurrentSellerViewsResponse(seller);
+
+        return Response.status(200).entity(currentSellerResponse).build();
+    }
 }

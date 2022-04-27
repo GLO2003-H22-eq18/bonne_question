@@ -29,6 +29,7 @@ public class ProductFactory {
                 productSeller.getName(),
                 new ObjectId(),
                 new ArrayList<>(),
+                new ArrayList<>(),
                 OffsetDateTime.now(Clock.systemUTC()));
     }
 

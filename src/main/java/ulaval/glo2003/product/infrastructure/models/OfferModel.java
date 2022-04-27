@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 public class OfferModel {
     @Id
     private ObjectId id;
+    private String createdAt;
     private Double amount;
     private String message;
     private String name;
@@ -18,17 +19,23 @@ public class OfferModel {
 
     public OfferModel(
             ObjectId id,
+            String createdAt,
             Double amount,
             String message,
             String name,
             String email,
             String phoneNumber) {
         this.id = id;
+        this.createdAt = createdAt;
         this.amount = amount;
         this.message = message;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
     }
 
     public String getPhoneNumber() {

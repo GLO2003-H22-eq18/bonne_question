@@ -16,6 +16,7 @@ public class Offer {
 
     public Offer(
             ObjectId id,
+            OffsetDateTime createdAt,
             Double amount,
             String message,
             String name,
@@ -27,8 +28,7 @@ public class Offer {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-
-        this.createdAt = OffsetDateTime.now(Clock.systemUTC());
+        this.createdAt = createdAt;
     }
 
     public ObjectId getId() {

@@ -1,32 +1,27 @@
 package ulaval.glo2003.product.infrastructure.repository;
 
-import com.mongodb.*;
-import com.mongodb.connection.ClusterSettings;
-import com.mongodb.connection.ConnectionPoolSettings;
 import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
 import dev.morphia.Datastore;
-import dev.morphia.Morphia;
 import org.bson.types.ObjectId;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
 import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.domain.View;
 import ulaval.glo2003.product.exceptions.ProductNotFoundException;
 import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.ViewModelAssembler;
 import ulaval.glo2003.product.infrastructure.models.OfferModel;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
+import ulaval.glo2003.product.infrastructure.models.ViewModel;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 
 import static dev.morphia.query.experimental.filters.Filters.eq;
@@ -35,11 +30,13 @@ public class MongoProductsRepository implements ProductRepository {
 
     private final Datastore datastore;
     private final OfferModelAssembler offerModelAssembler;
+    private final ViewModelAssembler viewModelAssembler;
     private final ProductModelAssembler productModelAssembler;
 
-    public MongoProductsRepository(ApplicationContext applicationContext, OfferModelAssembler offerModelAssembler, ProductModelAssembler productModelAssembler) {
+    public MongoProductsRepository(ApplicationContext applicationContext, OfferModelAssembler offerModelAssembler, ViewModelAssembler viewModelAssembler, ProductModelAssembler productModelAssembler) {
 
         this.offerModelAssembler = offerModelAssembler;
+        this.viewModelAssembler = viewModelAssembler;
         this.productModelAssembler = productModelAssembler;
         this.datastore = applicationContext.getDatastore();
         this.datastore.getMapper().mapPackage("ulaval.glo2003.product.infrastructure");
@@ -154,6 +151,31 @@ public class MongoProductsRepository implements ProductRepository {
                         UpdateOperators.set(
                                 "offers",
                                 offers
+                        )
+                )
+                .execute();
+    }
+
+    @Override
+    public void updateView(View view, ObjectId productId) {
+        ProductModel productModel = datastore.find(ProductModel.class)
+                .filter(eq("_id", productId))
+                .first();
+
+        if (productModel == null) {
+            throw new ProductNotFoundException();
+        }
+
+        ViewModel viewModel = viewModelAssembler.createViewModel(view);
+        List<ViewModel> views = Objects.requireNonNullElse(productModel.getViews(), new ArrayList<>());
+        views.add(viewModel);
+
+        datastore.find(ProductModel.class)
+                .filter(eq("_id", productId))
+                .update(
+                        UpdateOperators.set(
+                                "views",
+                                views
                         )
                 )
                 .execute();

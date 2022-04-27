@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
+import ulaval.glo2003.product.domain.View;
 import ulaval.glo2003.seller.domain.Seller;
 
 public class AssemblerUnitTestUtils {
@@ -21,6 +22,7 @@ public class AssemblerUnitTestUtils {
         Double suggestedPrice = 20.0;
         String sellerName = "John Doe";
         List<Offer> offers = new ArrayList();
+        List<View> views = new ArrayList();
 
         List<String> categoriesString = new ArrayList<>();
         categoriesString.add("beauty");
@@ -28,7 +30,7 @@ public class AssemblerUnitTestUtils {
         List<ProductCategory> categories = toCategoriesList(categoriesString);
 
         return new Product(title, description, suggestedPrice, categories, new ObjectId(),
-                sellerName, new ObjectId(), offers,
+                sellerName, new ObjectId(), offers, views,
                 OffsetDateTime.now(Clock.systemUTC()));
     }
 
@@ -47,10 +49,18 @@ public class AssemblerUnitTestUtils {
         String message =
                 "Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet.";
         ObjectId id = new ObjectId();
+        OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
         String name = "John";
         String email = "sickmail@hotmail.com";
         String phoneNumber = "59897822222";
 
-        return new Offer(id, amount, message, name, email, phoneNumber);
+        return new Offer(id, createdAt, amount, message, name, email, phoneNumber);
+    }
+
+    public static View getView() {
+        ObjectId id = new ObjectId();
+        OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
+
+        return new View(id, createdAt);
     }
 }
