@@ -9,15 +9,19 @@ import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;
+import ulaval.glo2003.product.domain.View;
 import ulaval.glo2003.product.infrastructure.models.OfferModel;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
+import ulaval.glo2003.product.infrastructure.models.ViewModel;
 
 public class ProductModelAssembler {
 
     private final OfferModelAssembler offerModelAssembler;
+    private final ViewModelAssembler viewModelAssembler;
 
-    public ProductModelAssembler(OfferModelAssembler offerModelAssembler) {
+    public ProductModelAssembler(OfferModelAssembler offerModelAssembler, ViewModelAssembler viewModelAssembler) {
         this.offerModelAssembler = offerModelAssembler;
+        this.viewModelAssembler = viewModelAssembler;
     }
 
     public ProductModel createProductModel(Product product) {
@@ -35,8 +39,13 @@ public class ProductModelAssembler {
                 .map(offerModelAssembler::createOfferModel)
                 .collect(Collectors.toList());
 
+        List<ViewModel> views = product.getViews()
+                .stream()
+                .map(viewModelAssembler::createViewModel)
+                .collect(Collectors.toList());
+
         return new ProductModel(title, description, createdAt, suggestedPrice, categories,
-                sellerId, sellerName, id, offers);
+                sellerId, sellerName, id, offers, views);
     }
 
     public Product createProduct(ProductModel productModel) {
@@ -63,7 +72,15 @@ public class ProductModelAssembler {
             offers = new ArrayList<>();
         }
 
+        List<View> views;
+        if (productModel.getViews() != null) {
+            views = productModel.getViews().stream().map(viewModelAssembler::createView)
+                    .collect(Collectors.toList());
+        } else {
+            views = new ArrayList<>();
+        }
+
         return new Product(title, description, suggestedPrice, categories, sellerId,
-                sellerName, id, offers, createdAt);
+                sellerName, id, offers, views, createdAt);
     }
 }

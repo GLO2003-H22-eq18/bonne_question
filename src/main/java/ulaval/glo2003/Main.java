@@ -14,6 +14,7 @@ import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
 import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.ViewModelAssembler;
 import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
 import ulaval.glo2003.product.ui.ProductResource;
 import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
@@ -32,14 +33,15 @@ public class Main {
     public static HttpServer startServer(ApplicationContext applicationContext) {
 
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
+        ViewModelAssembler viewModelAssembler = new ViewModelAssembler();
         ProductModelAssembler productModelAssembler =
-                new ProductModelAssembler(offerModelAssembler);
+                new ProductModelAssembler(offerModelAssembler, viewModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
         SellerRepository sellerRepository =
                 new MongoSellersRepository(applicationContext, sellerModelAssembler,
                         productModelAssembler);
         ProductRepository productRepository =
-                new MongoProductsRepository(applicationContext, offerModelAssembler, productModelAssembler);
+                new MongoProductsRepository(applicationContext, offerModelAssembler, viewModelAssembler, productModelAssembler);
 
         SellerFactory sellerFactory = new SellerFactory();
         SellerAssembler sellerAssembler = new SellerAssembler();

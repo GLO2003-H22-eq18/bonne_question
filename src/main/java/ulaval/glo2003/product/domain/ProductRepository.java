@@ -35,4 +35,6 @@ public interface ProductRepository {
             List<Product> filteredProductsList, Double maxPrice);
 
     public abstract void updateOffer(Offer myOffer, ObjectId productId);
+
+    public abstract void updateView(View myView, ObjectId productId);
 }

@@ -18,6 +18,7 @@ public class ProductModel {
     private ObjectId sellerId;
     private String sellerName;
     private List<OfferModel> offers;
+    private List<ViewModel> views;
 
     public ProductModel() {}
 
@@ -30,7 +31,8 @@ public class ProductModel {
             ObjectId sellerId,
             String sellerName,
             ObjectId id,
-            List<OfferModel> offers) {
+            List<OfferModel> offers,
+            List<ViewModel> views) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -40,6 +42,7 @@ public class ProductModel {
         this.sellerName = sellerName;
         this.createdAt = createdAt;
         this.offers = offers;
+        this.views = views;
     }
 
     public ObjectId getId() {
@@ -76,5 +79,9 @@ public class ProductModel {
 
     public List<OfferModel> getOffers() {
         return offers;
+    }
+
+    public List<ViewModel> getViews() {
+        return views;
     }
 }

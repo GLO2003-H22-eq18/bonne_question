@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.infrastructure.assemblers.ViewModelAssembler;
 import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
@@ -33,7 +34,8 @@ public class SellerRepositoryTest {
     @BeforeEach
     public void setUp() {
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
-        ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
+        ViewModelAssembler viewModelAssembler = new ViewModelAssembler();
+        ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler, viewModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
         this.sellerRepository = new MongoSellersRepository(applicationContext, sellerModelAssembler, productModelAssembler);
     }
