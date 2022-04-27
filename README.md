@@ -9,7 +9,9 @@ Développement et contribution: https://github.com/GLO2003-H22-eq18/bonne_questi
 API staging: https://staging-bonne-question.herokuapp.com/
 API production: https://production-bonne-question.herokuapp.com/
 
-![example workflow](https://github.com/GLO2003-H22-eq18/bonne_question/actions/workflows/cd_staging.yml/badge.svg)
+![CD Staging](https://github.com/GLO2003-H22-eq18/bonne_question/actions/workflows/cd_staging.yml/badge.svg)
+![CD Production](https://github.com/GLO2003-H22-eq18/bonne_question/actions/workflows/cd_production.yml/badge.svg)
+![CI](https://github.com/GLO2003-H22-eq18/bonne_question/actions/workflows/ci.yml/badge.svg)
 
 ## Requis
 
