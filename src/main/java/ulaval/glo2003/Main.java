@@ -12,6 +12,7 @@ import ulaval.glo2003.exceptions.MissingArgumentExceptionMapper;
 import ulaval.glo2003.product.domain.OfferFactory;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.domain.ViewFactory;
 import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.product.infrastructure.assemblers.ViewModelAssembler;
@@ -53,9 +54,10 @@ public class Main {
         ProductFactory productFactory = new ProductFactory();
         ProductAssembler productAssembler = new ProductAssembler();
         OfferFactory offerFactory = new OfferFactory();
+        ViewFactory viewFactory = new ViewFactory();
         ProductResource productResource = new ProductResource(
                 sellerRepository, productRepository, productFactory, productAssembler,
-                offerFactory);
+                offerFactory, viewFactory);
 
         HealthResource healthResource = new HealthResource(sellerRepository);
 
