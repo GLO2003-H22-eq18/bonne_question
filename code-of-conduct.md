@@ -21,7 +21,7 @@ l'apparence, l'éthnicité, l'âge ou la religion.
 
 ## Comportement inacceptable
 
-L'harcèlement peut inclure les points suivants:
+L'harcèlement peut inclure les points suivants et ne sera pas toléré:
 
 - Commentaires inappropriés, offensifs ou non-désirés en rapport avec l'expérience, l'identité sexuelle, l'orientation sexuelle,
 l'apparence, l'éthnicité, l'âge ou la religion ou toutes autres catégories proscrits par la loi.
@@ -30,7 +30,7 @@ l'apparence, l'éthnicité, l'âge ou la religion ou toutes autres catégories p
 - Intimidation et _stalking_ (en ligne ou en personne).
 - Interrompre des rencontres ou tout autre événement
 - Contacts physiques non-désirés.
-- Attention sexuelle non-désiré.
+- Attention sexuelle non-désirée.
 
 
 ## Plaintes
@@ -42,21 +42,21 @@ révisées et investiguées. Les chefs de communauté ont l'obligation de respec
 
 Les chefs de communauté suivront les directives suivantes pour appliquer les conséquences appropriées pour toute action en violation de nos termes.
 
-1. Correction
+### Correction
 
 __Offense__: utilisation d'un langage inapproprié et d'un comportement jugé non-professionnel ou non-désiré dans la communauté.
 
 __Conséquence__: un avertissement privé des chefs de communauté, expliquant quels termes ont été violés. Une excuse publique
 pourrait être demandée.
 
-2. Bannissement temporaire
+### Bannissement temporaire
 
 __Offense__: violation sérieuse des termes de la communauté, incluant un comportement non-professionnel ou non-désiré se répétant à 2 ou plusieurs reprises.
 
 __Conséquence__: un bannissement de la communauté pour une période temporaire. Toute communication et interaction avec la communauté est interdite durant
 cette période. Ne pas suivre ces derniers termes pourrait mener à un bannissement permanent.
 
-3. Bannissement permanent
+### Bannissement permanent
 
 __Offense__: violation sérieuse des termes de la communauté de façon répété, incluant l'intimidation d'un ou des membres et un manque de respect sérieux.
 
