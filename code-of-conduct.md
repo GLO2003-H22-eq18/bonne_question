@@ -62,3 +62,7 @@ __Offense__: violation sérieuse des termes de la communauté de façon répét�
 
 __Conséquence__: un bannissement de la communauté pour une période permanente. Toute communication et interaction avec la communauté est interdite.
 
+## Attribution
+Ce code de conduite est adapté du code de conduite de Contributor Covenant, version 2.0, qui peut être retrouvé ici: https://www.contributorcovenant.org/version/2/0/code_of_conduct.html.
+
+Les _guidelines_ communautaires sont inspirés de code de conduite de Mozilla.
