@@ -87,8 +87,8 @@ Jacoco (rapport affiché directement dans Sonarcloud):
 La license se trouve dans le fichier LICENSE. Celle qui a été choisit est la license de MIT, pour plusieurs raisons.
 - __Favorise le _open-source___: La license procure plusieurs permissions: elle permet d'utiliser le code, le modifier, le publier, le vendre, etc. Cela encourage la
 distribution et le développement du code source.
-- __Simple d'utilisation__: les membres d'une communauté qui possède cette license ont très peu de restrictions et peuvent ainsi travailler sans crainte de faire une
-action interdite.
+- __Simple d'utilisation__: un projet qui possède cette license ont très peu de restrictions (comparément à d'autres licenses) et peuvent ainsi travailler sans crainte de faire une action interdite. Par exemple, la license Apache oblige un individu à indiquer quels changements ont été appliqués au code source dans le cas où cet individu souhaite republier le même code.
+- __Protège les développeurs et le fondateur du projet__: si l'on décide de ne pas utiliser une license, tous les individus contribuant au projet deviennent un propriétaire exclusif de leur travail, et seulement de celui-ci. Cela signifie que personne ne peut copier, utiliser, distribuer ou modifier les contributions des autres, et cela s'applique également au fondateur du projet. Tiré de cette page web: [https://opensource.guide/legal/](https://opensource.guide/legal/).
 
 
 
