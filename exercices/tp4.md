@@ -2,9 +2,9 @@
 ## Retrospective finale
 1. Décrivez 2 problématiques que possèdent votre processus et développer 2 plans distincts afin de les résoudres. Soyez constructifs dans vos critiques et évitez de mettre la faute sur une ou un groupe de personne en particulier.
 
-Ajouter des moments rapides dans les rencontres pour que chaque personne explique sa partie? (style stand-up)??
+La première problématique se trouverais au niveau de la diffusion des informations du projet dans des portions du développement. Puisque nous sommes 5 dans l'équipe, il a été logique de diviser la charge du développement en plusieurs sous-groupes quelques fois dans le projet. Ainsi, il y a des coéquipiers qui ne touchent qu'à certaines parties du développement ce qui cause le problème que les autres membres n'ont pas connaissance de comment les technologies ont été intégrées ou simplement comment les utilisé si le comportement du logiciel change. Une solution à ce problème serait d'instauré un petit moment à chaque semaine que chaque personne puisse résumé le travail effectué, les technologies utilisées et les problèmes rencontrés. Ce moment peut être très rapide et être fait sous forme de stand-up, dans l'optique de diffuser les connaissances et des informations à toute l'équipe en plus de juger l'état d'avancement du projet. 
 
-
+Une autre problématique de notre développement est que nous n'avons pas basé pas notre développement sur les tests des fonctionnalités. Nous avons fait le développement de chaque portion des travaux pratique en premier pour venir seulement tester à fin. Dans le meileur des cas, nous aurions basé notre développement sur la conception des tests au départ pour eviter des problèmes durs à trouver. Heureusement, aucun problème majeur n'est apparu avec notre technique, mais il se pourrait que dans un plus gros projet, il soit primordial d'adopter une approche TDD (test driven development).
 
 
 2. Décrivez la démarche que vous aviez entrepris afin d'intégrer de nouveaux outils technologiques. Quelles étaient les étapes du processus? Comment avez-vous réagis aux différents bogues? Exploriez-vous à l'aide de tests unitaires ou manuels? Qu'avez-vous appris suite à cette démarche?
@@ -14,7 +14,7 @@ Ajouter des moments rapides dans les rencontres pour que chaque personne expliqu
 
 Nous avons réussi à garder un excellent niveau de constance entre les différentes phases du projet pour continuer notre développement selon des bons standards de gestion des versions, d'architecture du système et d'application des notions du clean code. Le résultat final du projet est mieux structuré et plus facile à comprendre. Il est également plus facile pour l'équipe de valider quelles nouvelles fonctionnalités seraient plus facile à implémenter dans le projet grâce à l'architecture choisie.
 
-Nous avons réussi à répartir le travail de façon assez équitable pour que chaque coéquipier puisse toucher à plusieurs portions du développement et ainsi, la diffusion des connaissances s'est fait efficacement. 
+Nous avons réussi à répartir le travail de façon assez équitable pour que chaque coéquipier puisse toucher à plusieurs portions du développement et ainsi, l'apprentissage s'est fait plus efficacement tout au long du projet. Cette répartition égale à été possible grâce à l'attention avec laquelle que nous avons séparé les travaux pratique et les tâches en issues sur github. Ces issues avaient toutes relativement le même temps de complétion en plus de permettre au membres de l'équipe de se lancer sur celles voulues sans enfermer d'individu dans des portions précises du développement. Ainsi, chaque personne a eu l'occasion de toucher à plusieurs parties du développement.
 
 
 
@@ -27,7 +27,7 @@ Un conseil qu'on peut donner à une équipe qui va faire le projet serait de bie
 
 Bien que nous avons utiliser Git pour le contrôle de version dans d'autres cours, nous avons vraiment pris le temps d'utiliser l'outil de façon plus précise dans ce projet en utilisant des branches pour le développement, des pull-request pour intégrer les fonctionnalités, en plus de rester constant dans les normes pour documenter les versions. C'est une expérience qui nous sera utile pour le reste de notre parcours universitaire en plus d'être un bon exemple d'utilisation dans un cadre professionnel. 
 
-Nous avons également, pour la première fois, installé un CI pipeline directemet sur la plateforme Github pour s'initier à l'intégration continue.
+Nous avons également, pour la première fois, installé un CI pipeline directement sur la plateforme Github pour s'initier à l'intégration continue.
 
 
 
