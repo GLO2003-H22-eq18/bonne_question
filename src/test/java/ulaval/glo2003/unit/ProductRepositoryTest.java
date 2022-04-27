@@ -30,11 +30,9 @@ import ulaval.glo2003.product.exceptions.ProductNotFoundException;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
-import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 
 public class ProductRepositoryTest {
 
-    private static int currentProductId = 0;
     private static final ObjectId INVALID_ID = new ObjectId();
     private static final String INVALID_TITLE = "Noone has this title muahaha!";
     private static final List<String> INVALID_CATEGORIES = Arrays.asList("NOT A CATEGORY", "XD");
@@ -62,7 +60,6 @@ public class ProductRepositoryTest {
     private final OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
     private final ViewModelAssembler viewModelAssembler = new ViewModelAssembler();
     private final ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler, viewModelAssembler);
-    private final SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
 
     private static final List<Offer> OFFERS = new ArrayList();
     private static final List<View> VIEWS = new ArrayList();
