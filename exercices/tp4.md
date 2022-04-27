@@ -56,4 +56,29 @@ Assumer que les contributions seront pas toutes selon nos attentes??
 
 https://alternativeto.net/
 
-Une information qui nous a grandement surpris est que beaucoup de frameworks et des applications très utilisés comme par exemple ```Ruby on Rails``` sont en open source et la communauté peut contribuer pour améliorer des fonctionnalités et ajouter de la documentation. Voir des très gros projets comme ce framework renforce le principe avancé par l'open source que l'entraide à travers la communauté est la meilleure manière d'avancer des projets. Il n'est donc pas nécessairement avantageux de garder le monopole sur le développement d'un projet pour garder privée la propriété intellectuelle du projet en entier.  
+Une information qui nous a grandement surpris est que beaucoup de frameworks et des applications très utilisés comme par exemple ```Ruby on Rails``` sont en open source et la communauté peut contribuer pour améliorer des fonctionnalités et ajouter de la documentation. Voir des très gros projets comme ce framework renforce le principe avancé par l'open source que l'entraide à travers la communauté est la meilleure manière d'avancer des projets. Il n'est donc pas nécessairement avantageux de garder le monopole sur le développement d'un projet pour garder privée la propriété intellectuelle du projet en entier.
+
+## Outils de métriques
+- 1 outil d'analyse de la **qualité du code**
+
+Sonarcloud/SonarqubeScan:![sonarcloud-global](https://user-images.githubusercontent.com/73568394/165558480-8834283a-156e-43ae-8fbf-f49a54f64a1f.JPG)
+![sonarcloud-code-smells](https://user-images.githubusercontent.com/73568394/165558538-178ddfd4-6e3e-4c49-bcb4-765c99518f22.JPG)
+![code-quality-analysis](https://user-images.githubusercontent.com/73568394/165558563-87f5b343-3a7a-476c-8497-c5bf2c26d491.JPG)
+
+- 1 outil de détection de **failles de sécurité**
+
+Sonarcloud/SonarqubeScan:![sonarcloud-security](https://user-images.githubusercontent.com/73568394/165558693-ff0a9b4d-484d-4fee-a3dc-b4ab9754ee6b.JPG)
+
+Snyk:![security-snyk-global](https://user-images.githubusercontent.com/73568394/165558725-835c141a-3d6c-4a64-9cb2-69da440ccbcc.JPG)
+![security-snyk-detailed](https://user-images.githubusercontent.com/73568394/165558746-ce9699b8-0681-47b3-b3de-0519e764ee99.JPG)
+
+- 1 outil de mesure du **test coverage**
+
+Jacoco (rapport affiché directement dans Sonarcloud):
+![code-coverage-dev](https://user-images.githubusercontent.com/73568394/165558900-465d2756-1174-4886-a8e2-c9be9d7a9ab1.JPG)
+![newpr-no-tests-code-coverage](https://user-images.githubusercontent.com/73568394/165558977-419b6191-efb7-412c-9e24-d434ba6727be.JPG)
+![code-coverage-new-pr-detailed](https://user-images.githubusercontent.com/73568394/165558993-dc1bbdae-21e0-4f78-a833-fb403f7a2ad3.JPG)
+
+
+
+
