@@ -83,5 +83,14 @@ Jacoco (rapport affiché directement dans Sonarcloud):
 ![code-coverage-new-pr-detailed](https://user-images.githubusercontent.com/73568394/165558993-dc1bbdae-21e0-4f78-a833-fb403f7a2ad3.JPG)
 
 
+## Explications de la license choisie
+La license se trouve dans le fichier LICENSE. Celle qui a été choisit est la license de MIT, pour plusieurs raisons.
+- __Favorise le _open-source___: La license procure plusieurs permissions: elle permet d'utiliser le code, le modifier, le publier, le vendre, etc. Cela encourage la
+distribution et le développement du code source.
+- __Simple d'utilisation__: les membres d'une communauté qui possède cette license ont très peu de restrictions et peuvent ainsi travailler sans crainte de faire une
+action interdite.
+
+
+
 
 
