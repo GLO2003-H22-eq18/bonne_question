@@ -65,4 +65,8 @@ __Conséquence__: un bannissement de la communauté pour une période permanente
 ## Attribution
 Ce code de conduite est adapté du code de conduite de Contributor Covenant, version 2.0, qui peut être retrouvé ici: https://www.contributorcovenant.org/version/2/0/code_of_conduct.html.
 
-Les _guidelines_ communautaires sont inspirés de code de conduite de Mozilla.
+Les _guidelines_ communautaires sont inspirés du code de conduite de Mozilla.
+
+Le code de conduite a été adapté. Certaines sections sont manquantes et certaines phrases ont été modifiées ou ajoutées. Toutefois, nous jugeons que la structure
+du code de conduite de Contributor Covenant est complète. On y retrouve bien les termes générales dans une introduction, le comportement attendu par les membres et
+le comportement jugé inacceptable, ainsi que les conséquences suite à des offenses. 
