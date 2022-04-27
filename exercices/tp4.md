@@ -2,22 +2,34 @@
 ## Retrospective finale
 1. Décrivez 2 problématiques que possèdent votre processus et développer 2 plans distincts afin de les résoudres. Soyez constructifs dans vos critiques et évitez de mettre la faute sur une ou un groupe de personne en particulier.
 
+Ajouter des moments rapides dans les rencontres pour que chaque personne explique sa partie? (style stand-up)??
+
+
+
 
 2. Décrivez la démarche que vous aviez entrepris afin d'intégrer de nouveaux outils technologiques. Quelles étaient les étapes du processus? Comment avez-vous réagis aux différents bogues? Exploriez-vous à l'aide de tests unitaires ou manuels? Qu'avez-vous appris suite à cette démarche?
 
 
 3. Quels sont les bons coups de votre équipe? De quelles parties êtes-vous fiers? Nommez-en 3.
 
-Nous avons réussi à garder un excellent niveau de constance entre les différentes phases du projet pour conserver notre développement selon des bons standards des gestions des versions, de l'architecture du système et pour appliquer les notions du clean code.
+Nous avons réussi à garder un excellent niveau de constance entre les différentes phases du projet pour continuer notre développement selon des bons standards de gestion des versions, d'architecture du système et d'application des notions du clean code. Le résultat final du projet est mieux structuré et plus facile à comprendre. Il est également plus facile pour l'équipe de valider quelles nouvelles fonctionnalités seraient plus facile à implémenter dans le projet grâce à l'architecture choisie.
+
+Nous avons réussi à répartir le travail de façon assez équitable pour que chaque coéquipier puisse toucher à plusieurs portions du développement et ainsi, la diffusion des connaissances s'est fait efficacement. 
 
 
 
 4. Quel conseil donneriez-vous aux prochains étudiants qui doivent faire ce projet?
 
-Un conseil qu'on peut donner à une équipe qui va faire le projet serait de bien s'appliquer lors des pull-requests en attitrant une et préférablement plusieurs personnes à la révision du code développé dans la branche. Cela dans l'optique d'ensuite merge le contenu de la nouvelle branche avec plus de confiance dans les branches principales pour éviter le plus possible de laisser des erreurs dans le code et réviser en fonction des changements faits en parallèle dans le reste du code pour éviter les conflits. Cette pratique permet de conserver grandement la cohésion dans le projet entre les différentes étapes et membres de l'équipe.
+Un conseil qu'on peut donner à une équipe qui va faire le projet serait de bien s'appliquer lors des pull-requests en attitrant une et préférablement plusieurs personnes à la révision du code développé dans les branches. Ainsi dans l'optique d'ensuite merge le contenu de la nouvelle branche avec plus de confiance dans les branches principales pour éviter le plus possible de laisser des erreurs dans le code et réviser en fonction des changements faits en parallèle dans le reste du code pour éviter les conflits. Cette pratique permet de conserver grandement la cohésion dans le projet entre les différentes étapes et membres de l'équipe.
 
 
 5. Quels apprentissages, trucs ou techniques appris dans ce projet croyez-vous pouvoir utiliser plus tard? Décrivez-en au moins 2. Cela peut être des apprentissages techniques, pratiques, sur le travail d'équipe ou encore par rapport au processus.
+
+Bien que nous avons utiliser Git pour le contrôle de version dans d'autres cours, nous avons vraiment pris le temps d'utiliser l'outil de façon plus précise dans ce projet en utilisant des branches pour le développement, des pull-request pour intégrer les fonctionnalités, en plus de rester constant dans les normes pour documenter les versions. C'est une expérience qui nous sera utile pour le reste de notre parcours universitaire en plus d'être un bon exemple d'utilisation dans un cadre professionnel. 
+
+Nous avons également, pour la première fois, installé un CI pipeline directemet sur la plateforme Github pour s'initier à l'intégration continue.
+
+
 
 ## Open Source
 
@@ -26,7 +38,6 @@ Un conseil qu'on peut donner à une équipe qui va faire le projet serait de bie
 La participation d'une entreprise dans un projet open source permet de mettre à jour un projet existant avec les ressources d'une entreprise. Donc, probablement plus rapidement et plus efficacement que si plusieurs individus contribuaient de façon indépendante. L'entreprise fait donc avancer un projet déjà existant pour le bénéfice de tous et peut l'utiliser en plus bien souvent ```free of charge```.  C'est un positif pour la communauté qui voit un projet avancer et pour l'entreprise qui sauve des coûts.
 
 Un défi que rencontre souvent les entreprises est de créer des systèmes représentatifs des réalités du marché visé et s'assurer que les utilisateurs ont les fonctionnalités désirées. En contribuant et en utilisant des projets open source, on s'assure d'une manière que la communauté (ou le marché) est investi dans le développement et que normalement, les utilisateurs visés par le projet sont mieux représenté puisqu'ils contribuent à son avancement. 
-
 
 
 
