@@ -31,7 +31,7 @@ Les rapports de bugs ont tendance à avoir :
 - Notes (y compris éventuellement pourquoi vous pensez que cela pourrait se produire, ou des choses que vous avez essayées qui n'ont pas fonctionné)
 
 ## Utilisez un style de codage cohérent
-Respectez 
+Respectez le style de code déjà présent dans le projet et référez vous aux concepts de clean code pour vos pull requests.
 
 ## Licence
 En contribuant, vous acceptez que vos contributions soient autorisées sous sa licence MIT.
