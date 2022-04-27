@@ -1,6 +1,5 @@
 package ulaval.glo2003.product.domain;
 
-import java.time.Clock;
 import java.time.OffsetDateTime;
 import org.bson.types.ObjectId;
 

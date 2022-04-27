@@ -106,6 +106,12 @@ public class ProductResource {
         List<Product> filteredProducts = productRepository
                 .getFilteredProducts(filteredProductRequest);
 
+        for (Product product : filteredProducts) {
+            View myView = viewFactory.create();
+            product.addView(myView);
+            productRepository.updateView(myView, product.getId());
+        }
+
         List<ProductResponse> filteredProductsResponseList = filteredProducts
                 .stream()
                 .map(productAssembler::createProductResponse)
