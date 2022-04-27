@@ -22,7 +22,7 @@ public class DetailedProductViewsAssembler {
 
     public DetailedProductViewsResponse createDetailedProductViewsResponse(
             List<View> views) {
-        String mostRecentVisit = getMostRecentView(views).toString();
+        String mostRecentVisit = getMostRecentView(views);
         Integer count = getViewsCount(views);
 
         List<ViewResponse> viewResponses = views.stream()
@@ -32,8 +32,8 @@ public class DetailedProductViewsAssembler {
         return new DetailedProductViewsResponse(mostRecentVisit, count, viewResponses);
     }
 
-    private OffsetDateTime getMostRecentView(List<View> views) {
-        return views.isEmpty() ? null : views.get(views.size()-1).getCreatedAt();
+    private String getMostRecentView(List<View> views) {
+        return views.isEmpty() ? null : views.get(views.size() - 1).getCreatedAt().toString();
     }
 
     private Integer getViewsCount(List<View> views) {
