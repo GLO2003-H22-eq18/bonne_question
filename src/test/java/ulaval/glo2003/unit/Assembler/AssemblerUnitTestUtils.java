@@ -49,10 +49,11 @@ public class AssemblerUnitTestUtils {
         String message =
                 "Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet.";
         ObjectId id = new ObjectId();
+        OffsetDateTime createdAt = OffsetDateTime.now(Clock.systemUTC());
         String name = "John";
         String email = "sickmail@hotmail.com";
         String phoneNumber = "59897822222";
 
-        return new Offer(id, amount, message, name, email, phoneNumber);
+        return new Offer(id, createdAt, amount, message, name, email, phoneNumber);
     }
 }

@@ -1,5 +1,7 @@
 package ulaval.glo2003.product.domain;
 
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
@@ -19,6 +21,7 @@ public class OfferFactory {
 
         return new Offer(
                 new ObjectId(),
+                OffsetDateTime.now(Clock.systemUTC()),
                 (Math.round(offerRequest.amount * 100.0) / 100.0),
                 offerRequest.message,
                 offerRequest.name,

@@ -31,5 +31,6 @@ public class ViewFactoryTest {
         View view2 = viewFactory.create();
 
         assertThat(view1.getId()).isNotEqualTo(view2.getId());
+        assertThat(view1.getCreatedAt().toString()).isNotEqualTo(view2.getCreatedAt().toString());
     }
 }

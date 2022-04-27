@@ -9,10 +9,10 @@ public class View {
     private final OffsetDateTime createdAt;
 
     public View(
-            ObjectId id) {
+            ObjectId id,
+            OffsetDateTime createdAt) {
         this.id = id;
-
-        this.createdAt = OffsetDateTime.now(Clock.systemUTC());
+        this.createdAt = createdAt;
     }
 
     public ObjectId getId() {
