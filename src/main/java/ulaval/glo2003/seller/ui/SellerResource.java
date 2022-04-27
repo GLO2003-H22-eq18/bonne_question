@@ -81,7 +81,7 @@ public class SellerResource {
         Seller seller = sellerRepository.findById(sellerObjectId);
 
         CurrentSellerResponse currentSellerResponse =
-                currentSellerAssembler.createCurrentSellerResponse(seller);
+                currentSellerAssembler.createCurrentSellerViewsResponse(seller);
 
         return Response.status(200).entity(currentSellerResponse).build();
     }

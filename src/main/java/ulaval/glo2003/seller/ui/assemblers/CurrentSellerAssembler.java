@@ -30,4 +30,19 @@ public class CurrentSellerAssembler {
 
         return new CurrentSellerResponse(id, name, createdAt, bio, birthDate, productsResponse);
     }
+
+    public CurrentSellerResponse createCurrentSellerViewsResponse(Seller seller) {
+        String id = seller.getId().toString();
+        String name = seller.getName();
+        String createdAt = seller.getCreatedAt().toString();
+        String bio = seller.getBio();
+        String birthDate = seller.getBirthDate().toString();
+        List<Product> products = seller.getProducts();
+
+        List<CurrentSellerProductResponse> productsResponse = products.stream()
+                .map(currentSellerProductAssembler::createCurrentSellerProductViewsResponse)
+                .collect(Collectors.toList());
+
+        return new CurrentSellerResponse(id, name, createdAt, bio, birthDate, productsResponse);
+    }
 }
