@@ -9,6 +9,7 @@ En tant que vendeur, j'aimerais pouvoir consulter le nombre de visionnements de 
 1. Si aucun visionnement n'a été faite sur le produit :
     1. La liste des visionnements est vide.
     2. Le compte est à 0.
+    3. Le plus récent visionnement est facultatif (`null` ou non-présent).
 2. Le vendeur affiché est celui correspondant au `X-Seller-Id`
 3. **Seul le vendeur courant** peut voir sa date de naissance ainsi que les détails intrinsèques des visionnements sur ses produits.
 
@@ -43,7 +44,8 @@ En tant que vendeur, j'aimerais pouvoir consulter le nombre de visionnements de 
       suggestedPrice: Amount,
       categories: ProductCategory[],
       views: {
-        count: int,
+        count: int, 
+        mostRecentView: DateTime, 
         items: [
           {
             id: string,
@@ -79,14 +81,15 @@ En tant que vendeur, j'aimerais pouvoir consulter le nombre de visionnements de 
       ],
       "views": {
         "count": 2,
+        "mostRecentView": "2022-03-01T22:22:22.2222Z",
         "items": [
           {
             "id": "def",
-            "createdAt": "2022-01-01T22:22:22.2222Z"
+            "createdAt": "2022-02-01T22:22:22.2222Z"
           },
           {
             "id": "def",
-            "createdAt": "2022-01-01T22:22:22.2222Z"
+            "createdAt": "2022-03-01T22:22:22.2222Z"
           }
         ]
       }
