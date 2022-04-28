@@ -24,4 +24,6 @@ public class HomeResource {
         File f = new File("api/index.html");
         return new FileInputStream(f);
     }
+
+
 }
