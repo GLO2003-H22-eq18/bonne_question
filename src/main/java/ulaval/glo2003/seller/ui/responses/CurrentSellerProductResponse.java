@@ -1,8 +1,6 @@
 package ulaval.glo2003.seller.ui.responses;
 
 import java.util.List;
-
-import org.bson.types.ObjectId;
 import ulaval.glo2003.product.ui.responses.DetailedProductOffersResponse;
 import ulaval.glo2003.product.ui.responses.DetailedProductViewsResponse;
 

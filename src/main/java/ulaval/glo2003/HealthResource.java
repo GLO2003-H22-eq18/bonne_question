@@ -1,16 +1,14 @@
 package ulaval.glo2003;
 
-import com.mongodb.MongoClientException;
 import com.mongodb.MongoException;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
 import org.bson.types.ObjectId;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerRepository;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Path("/health")
 public class HealthResource {

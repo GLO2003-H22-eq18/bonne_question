@@ -2,8 +2,6 @@ package ulaval.glo2003.seller.ui.assemblers;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.ui.responses.SellerProductResponse;

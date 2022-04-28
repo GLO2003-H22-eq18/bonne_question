@@ -1,13 +1,14 @@
 package ulaval.glo2003.product.infrastructure.repository;
 
+import static dev.morphia.query.experimental.filters.Filters.eq;
+
+import dev.morphia.Datastore;
 import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import dev.morphia.Datastore;
 import org.bson.types.ObjectId;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Offer;
@@ -23,8 +24,6 @@ import ulaval.glo2003.product.infrastructure.models.OfferModel;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
 import ulaval.glo2003.product.infrastructure.models.ViewModel;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
-
-import static dev.morphia.query.experimental.filters.Filters.eq;
 
 public class MongoProductsRepository implements ProductRepository {
 

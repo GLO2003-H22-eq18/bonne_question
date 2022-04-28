@@ -3,7 +3,6 @@ package ulaval.glo2003.seller.domain;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
-
 import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Product;
 

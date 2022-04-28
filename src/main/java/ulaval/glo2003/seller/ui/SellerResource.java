@@ -12,7 +12,6 @@ import org.bson.types.ObjectId;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
-import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 import ulaval.glo2003.seller.ui.assemblers.CurrentSellerAssembler;
 import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;

@@ -1,17 +1,15 @@
 package ulaval.glo2003.seller.infrastructure.repository;
 
-import com.mongodb.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.connection.ClusterSettings;
-import com.mongodb.connection.ConnectionPoolSettings;
+import static dev.morphia.query.experimental.filters.Filters.*;
+
 import dev.morphia.Datastore;
-import dev.morphia.Morphia;
 import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-
+import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Product;
@@ -22,14 +20,6 @@ import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 import ulaval.glo2003.seller.infrastructure.models.SellerModel;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
-import static dev.morphia.query.experimental.filters.Filters.*;
 
 public class MongoSellersRepository implements SellerRepository {
     private final Datastore datastore;

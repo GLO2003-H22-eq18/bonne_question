@@ -1,12 +1,12 @@
 package ulaval.glo2003.seller.infrastructure.models;
 
+
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Reference;
+import java.util.List;
 import org.bson.types.ObjectId;
 import ulaval.glo2003.product.infrastructure.models.ProductModel;
-
-import java.util.List;
 
 @Entity("sellers")
 public class SellerModel {

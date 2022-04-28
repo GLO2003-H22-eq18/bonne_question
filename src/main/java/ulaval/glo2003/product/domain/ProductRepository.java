@@ -1,7 +1,6 @@
 package ulaval.glo2003.product.domain;
 
 import java.util.List;
-
 import org.bson.types.ObjectId;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 

@@ -2,9 +2,8 @@ package ulaval.glo2003.product.infrastructure.models;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
-import org.bson.types.ObjectId;
-
 import java.util.List;
+import org.bson.types.ObjectId;
 
 @Entity("products")
 public class ProductModel {
