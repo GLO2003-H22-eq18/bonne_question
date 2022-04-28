@@ -1,0 +1,709 @@
+<!doctype html>
+<!--
+  API Landing Page:
+  Customize as you see fit!
+-->
+<html><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Bonne Question API</title>
+
+  <!-- Flatdoc -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/rstacruz/flatdoc/v0.9.0/legacy.js"></script>
+  <script src="https://cdn.rawgit.com/rstacruz/flatdoc/v0.9.0/flatdoc.js"></script>
+
+  <!-- Flatdoc theme -->
+  <link href="https://cdn.rawgit.com/rstacruz/flatdoc/v0.9.0/theme-white/style.css" rel="stylesheet">
+  <script src="https://cdn.rawgit.com/rstacruz/flatdoc/v0.9.0/theme-white/script.js"></script>
+
+  <!-- Meta -->
+  <meta content="Bonne Question API" property="og:title">
+  <meta content="Bonne Question consiste au développement d'un site de vente anynonyme au Québec." name="description">
+
+  <!-- Icons -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+  <!-- Style -->
+  <style>
+    #github-icon {
+      margin-left: 5px;
+    }
+  #return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
+    display: none;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  #return-to-top i {
+    color: #fff;
+    margin: 0;
+    position: relative;
+    left: 14px;
+    top: 14px;
+    font-size: 19px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  #return-to-top:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  #return-to-top:hover i {
+    color: #fff;
+    top: 5px;
+  }
+  #flatdoc-intro {
+    font-size: 1.3em;
+    font-family: Open Sans,sans-serif;
+    font-weight: 300;
+  }
+  .title-card>.in {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .title-area>div {
+    position: relative;
+    z-index: 1;
+  }
+  .title-card {
+    background: #1d3b47 center center;
+    background-size: cover;
+    color: #ccc;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: table;
+    text-rendering: optimizeLegibility!important;
+    -webkit-font-smoothing: antialiased!important;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .title-area {
+    min-height: 100px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    text-align: center;
+    border-bottom: solid 1px #dfe2e7;
+    overflow: hidden;
+  }
+
+  .title-card .headline {
+    vertical-align: middle;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 40px;
+    padding-right: 40px;
+    max-width: 800px;
+    line-height: 1.7;
+  }
+  .title-card h1 {
+    font-family: open sans,sans-serif;
+    font-size: 3.3em;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 0.5em;
+    color: #fff;
+  }
+  .title-card p {
+    font-family: montserrat,sans-serif;
+    color: #b8eaea;
+    font-weight: 700;
+    font-size: 1.3em;
+  }
+
+  .title-card h5 {
+    margin-top: 150px;
+    font-family: montserrat,sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.8em;
+  }
+
+  .title-card h5 span {
+    display: inline-block;
+    padding: 5px 20px;
+    border: solid 3px #fff;
+  }
+
+  @media (max-width: 768px) {
+    .title-card h5 {
+      margin-top: 100px;
+    }
+  }
+  </style>
+  <!-- Initializer -->
+  <script>
+    Flatdoc.run({
+      fetcher: Flatdoc.file('docs.md')
+    });
+  </script>
+</head>
+<body role="flatdoc" class='big-h3 no-literate large-brief'>
+<div class="title-area title-card" style="background-image: url('https://images.unsplash.com/photo-1585399000684-d2f72660f092?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80'); height: 1319px;">
+<div class="in">
+  <div class="headline">
+    <h1>La vente est facile.</h1>
+    <p>Le meilleur outil de vente anonyme du Québec!</p>
+    <h5><span>Bonne Question</span></h5>
+  </div>
+</div>
+</div>
+<div class="header">
+  <div class="left">
+    <h1>Bonne Question</h1>
+    <ul>
+      <li><a href="https://github.com/GLO2003-H22-eq18/bonne_question">View on GitHub<i id="github-icon" class="icon-github"></i></a></li>
+      <li><a href="https://github.com/GLO2003-H22-eq18/bonne_question/issues">Issues</a></li>
+    </ul>
+  </div>
+  <div class="right">
+    <!-- Badges: see http://ghbtns.com and http://sonarcloud.io -->
+    <iframe src="https://ghbtns.com/github-btn.html?user=GLO2003-H22-eq18&amp;repo=bonne_question&amp;type=fork&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30" title="GitHub-Star"></iframe>
+  </div>
+</div>
+
+<div class="content-root">
+  <div class="menubar fixed">
+    <div class="menu section" role="flatdoc-menu">
+      <ul>
+        <li id="root-item" class="level-0">
+          <ul class="level-1" id="root-list">
+            <li id="how-to-get-started-item" class="level-1">
+              <a id="how-to-get-started-link" href="#how-to-get-started" class="level-1">How to get started</a>
+              <ul class="level-2" id="how-to-get-started-list">
+                <li id="how-to-get-started-contributeurs-item" class="level-2">
+                  <a id="how-to-get-started-contributeurs-link" href="#how-to-get-started-contributeurs" class="level-2">Contributeurs</a>
+                </li>
+                <li id="how-to-get-started-requis-item" class="level-2">
+                  <a id="how-to-get-started-requis-link" href="#how-to-get-started-requis" class="level-2">Requis</a>
+                </li>
+                <li id="how-to-get-started-setup-item" class="level-2">
+                  <a id="how-to-get-started-setup-link" href="#how-to-get-started-setup" class="level-2">Setup</a>
+                  <ul class="level-3" id="how-to-get-started-setup-list">
+                    <li id="how-to-get-started-setup-compilation-item" class="level-3">
+                      <a id="how-to-get-started-setup-compilation-link" href="#how-to-get-started-setup-compilation" class="level-3">Compilation</a></li><li id="how-to-get-started-setup-execution-item" class="level-3"><a id="how-to-get-started-setup-execution-link" href="#how-to-get-started-setup-execution" class="level-3">Exécution</a></li></ul></li></ul></li><li id="documentation-item" class="level-1"><a id="documentation-link" href="#documentation" class="level-1">Documentation</a><ul class="level-2" id="documentation-list"><li id="documentation-services-item" class="level-2"><a id="documentation-services-link" href="#documentation-services" class="level-2">Services</a></li><li id="documentation-types-generaux-item" class="level-2"><a id="documentation-types-generaux-link" href="#documentation-types-generaux" class="level-2">Types généraux</a></li><li id="documentation-retours-derreur-item" class="level-2"><a id="documentation-retours-derreur-link" href="#documentation-retours-derreur" class="level-2">Retours d’erreur</a><ul class="level-3" id="documentation-retours-derreur-list"><li id="documentation-retours-derreur-format-item" class="level-3"><a id="documentation-retours-derreur-format-link" href="#documentation-retours-derreur-format" class="level-3">Format</a></li><li id="documentation-retours-derreur-types-item" class="level-3"><a id="documentation-retours-derreur-types-link" href="#documentation-retours-derreur-types" class="level-3">Types</a></li></ul></li><li id="documentation-informations-additionnelles-item" class="level-2"><a id="documentation-informations-additionnelles-link" href="#documentation-informations-additionnelles" class="level-2">Informations additionnelles</a></li><li id="documentation-references-item" class="level-2"><a id="documentation-references-link" href="#documentation-references" class="level-2">Références</a></li></ul></li><li id="health-check-item" class="level-1"><a id="health-check-link" href="#health-check" class="level-1">Health Check</a><ul class="level-2" id="health-check-list"><li id="health-check-details-techniques-item" class="level-2"><a id="health-check-details-techniques-link" href="#health-check-details-techniques" class="level-2">Détails techniques</a></li></ul></li><li id="creation-dun-vendeur-item" class="level-1"><a id="creation-dun-vendeur-link" href="#creation-dun-vendeur" class="level-1">Création d’un vendeur</a><ul class="level-2" id="creation-dun-vendeur-list"><li id="creation-dun-vendeur-description-item" class="level-2"><a id="creation-dun-vendeur-description-link" href="#creation-dun-vendeur-description" class="level-2">Description</a></li><li id="creation-dun-vendeur-criteres-de-succes-item" class="level-2"><a id="creation-dun-vendeur-criteres-de-succes-link" href="#creation-dun-vendeur-criteres-de-succes" class="level-2">Critères de succès</a></li><li id="creation-dun-vendeur-details-techniques-item" class="level-2"><a id="creation-dun-vendeur-details-techniques-link" href="#creation-dun-vendeur-details-techniques" class="level-2">Détails techniques</a></li><li id="creation-dun-vendeur-changelog-item" class="level-2"><a id="creation-dun-vendeur-changelog-link" href="#creation-dun-vendeur-changelog" class="level-2">Changelog</a></li></ul></li><li id="obtention-vendeur-item" class="level-1"><a id="obtention-vendeur-link" href="#obtention-vendeur" class="level-1">Obtention vendeur</a><ul class="level-2" id="obtention-vendeur-list"><li id="obtention-vendeur-description-item" class="level-2"><a id="obtention-vendeur-description-link" href="#obtention-vendeur-description" class="level-2">Description</a></li><li id="obtention-vendeur-criteres-de-succes-item" class="level-2"><a id="obtention-vendeur-criteres-de-succes-link" href="#obtention-vendeur-criteres-de-succes" class="level-2">Critères de succès</a></li><li id="obtention-vendeur-details-techniques-item" class="level-2"><a id="obtention-vendeur-details-techniques-link" href="#obtention-vendeur-details-techniques" class="level-2">Détails techniques</a></li><li id="obtention-vendeur-changelog-item" class="level-2"><a id="obtention-vendeur-changelog-link" href="#obtention-vendeur-changelog" class="level-2">Changelog</a></li></ul></li><li id="creation-produit-item" class="level-1"><a id="creation-produit-link" href="#creation-produit" class="level-1">Création produit</a><ul class="level-2" id="creation-produit-list"><li id="creation-produit-description-item" class="level-2"><a id="creation-produit-description-link" href="#creation-produit-description" class="level-2">Description</a></li><li id="creation-produit-criteres-de-succes-item" class="level-2"><a id="creation-produit-criteres-de-succes-link" href="#creation-produit-criteres-de-succes" class="level-2">Critères de succès</a></li><li id="creation-produit-details-techniques-item" class="level-2"><a id="creation-produit-details-techniques-link" href="#creation-produit-details-techniques" class="level-2">Détails techniques</a></li><li id="creation-produit-changelog-item" class="level-2"><a id="creation-produit-changelog-link" href="#creation-produit-changelog" class="level-2">Changelog</a></li></ul></li><li id="obtention-produit-item" class="level-1"><a id="obtention-produit-link" href="#obtention-produit" class="level-1">Obtention produit</a><ul class="level-2" id="obtention-produit-list"><li id="obtention-produit-description-item" class="level-2"><a id="obtention-produit-description-link" href="#obtention-produit-description" class="level-2">Description</a></li><li id="obtention-produit-details-techniques-item" class="level-2"><a id="obtention-produit-details-techniques-link" href="#obtention-produit-details-techniques" class="level-2">Détails techniques</a></li></ul></li><li id="obtention-produits-filtres-item" class="level-1"><a id="obtention-produits-filtres-link" href="#obtention-produits-filtres" class="level-1">Obtention produits filtrés</a><ul class="level-2" id="obtention-produits-filtres-list"><li id="obtention-produits-filtres-description-item" class="level-2"><a id="obtention-produits-filtres-description-link" href="#obtention-produits-filtres-description" class="level-2">Description</a></li><li id="obtention-produits-filtres-criteres-de-succes-item" class="level-2"><a id="obtention-produits-filtres-criteres-de-succes-link" href="#obtention-produits-filtres-criteres-de-succes" class="level-2">Critères de succès</a></li><li id="obtention-produits-filtres-details-techniques-item" class="level-2"><a id="obtention-produits-filtres-details-techniques-link" href="#obtention-produits-filtres-details-techniques" class="level-2 active">Détails techniques</a></li></ul></li><li id="creation-doffre-sur-un-produit-item" class="level-1"><a id="creation-doffre-sur-un-produit-link" href="#creation-doffre-sur-un-produit" class="level-1">Création d’offre sur un produit</a><ul class="level-2" id="creation-doffre-sur-un-produit-list"><li id="creation-doffre-sur-un-produit-description-item" class="level-2"><a id="creation-doffre-sur-un-produit-description-link" href="#creation-doffre-sur-un-produit-description" class="level-2">Description</a></li><li id="creation-doffre-sur-un-produit-criteres-de-succes-item" class="level-2"><a id="creation-doffre-sur-un-produit-criteres-de-succes-link" href="#creation-doffre-sur-un-produit-criteres-de-succes" class="level-2">Critères de succès</a></li><li id="creation-doffre-sur-un-produit-details-techniques-item" class="level-2"><a id="creation-doffre-sur-un-produit-details-techniques-link" href="#creation-doffre-sur-un-produit-details-techniques" class="level-2">Détails techniques</a></li></ul></li><li id="obtention-vendeur-courant-item" class="level-1"><a id="obtention-vendeur-courant-link" href="#obtention-vendeur-courant" class="level-1">Obtention vendeur courant</a><ul class="level-2" id="obtention-vendeur-courant-list"><li id="obtention-vendeur-courant-description-item" class="level-2"><a id="obtention-vendeur-courant-description-link" href="#obtention-vendeur-courant-description" class="level-2">Description</a></li><li id="obtention-vendeur-courant-criteres-de-succes-item" class="level-2"><a id="obtention-vendeur-courant-criteres-de-succes-link" href="#obtention-vendeur-courant-criteres-de-succes" class="level-2">Critères de succès</a></li><li id="obtention-vendeur-courant-details-techniques-item" class="level-2"><a id="obtention-vendeur-courant-details-techniques-link" href="#obtention-vendeur-courant-details-techniques" class="level-2">Détails techniques</a></li></ul></li><li id="obtention-des-visionnements-item" class="level-1"><a id="obtention-des-visionnements-link" href="#obtention-des-visionnements" class="level-1">Obtention des visionnements</a><ul class="level-2" id="obtention-des-visionnements-list"><li id="obtention-des-visionnements-description-item" class="level-2"><a id="obtention-des-visionnements-description-link" href="#obtention-des-visionnements-description" class="level-2">Description</a></li><li id="obtention-des-visionnements-criteres-de-succes-item" class="level-2"><a id="obtention-des-visionnements-criteres-de-succes-link" href="#obtention-des-visionnements-criteres-de-succes" class="level-2">Critères de succès</a></li><li id="obtention-des-visionnements-details-techniques-item" class="level-2"><a id="obtention-des-visionnements-details-techniques-link" href="#obtention-des-visionnements-details-techniques" class="level-2">Détails techniques</a></li></ul></li><li id="versions-item" class="level-1"><a id="versions-link" href="#versions" class="level-1">Versions</a></li></ul></li></ul></div>
+  </div>
+  <div role="flatdoc-content" class="content">
+    <h1 id="how-to-get-started">How to get started</h1>
+    <!-- Return to Top -->
+    <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+
+    <p id="flatdoc-intro">Bienvenue sur le meilleur site de vente anonyme au Québec! Le projet a été développé dans le cadre du cours GLO-2003 à la session d'hiver 2022 à l'Université Laval.</p>
+    <h2 id="how-to-get-started-contributeurs">Contributeurs <i class="icon-heart"></i></h2>
+    <ul>
+      <li>Alexandre Mathieu</li>
+      <li>Jonathan Bessette Paquet</li>
+      <li>Kevin Jobin</li>
+      <li>Nathan Paquet</li>
+      <li>Simon Houde</li>
+    </ul>
+    <h2 id="how-to-get-started-requis">Requis</h2>
+    <ul>
+    <li>Java 11</li>
+    <li>Maven</li>
+  </ul><h2 id="how-to-get-started-setup">Setup</h2><h3 id="how-to-get-started-setup-compilation">Compilation</h3><pre><code>mvn clean install</code></pre><h3 id="how-to-get-started-setup-execution">Exécution</h3><pre><code>mvn exec:java</code></pre>
+
+    <h1 id="documentation">Documentation</h1>
+    <h2 id="documentation-services">Services</h2><ul>
+    <li>Health</li>
+    <li>Vendeur</li>
+    <li>Produit</li>
+    <li>Offre</li>
+    <li>Vente</li>
+  </ul>
+    <h2 id="documentation-types-generaux">Types généraux</h2><pre><code class="lang-ts">type DateTime: date et heure selon ISO-<span class="number">8601</span>/RFC-<span class="number">3339</span> (au timezone UTC)
+type Date: date (sans heures) selon ISO-<span class="number">8601</span>/RFC-<span class="number">3339</span>
+type Amount: float/double positif arrondi à <span class="number">2</span> décimales
+type Email: &lt;identifiant&gt;@&lt;service&gt;.&lt;extension&gt; (ex: <span class="string">"john.doe<span class="number">1</span>@gmail.com"</span>)
+type PhoneNumber: <span class="number">11</span> chiffres, en string (ex: +<span class="number">1</span> <span class="number">819</span> <span class="number">123</span> <span class="number">4567</span> =&gt; <span class="string">"<span class="number">18191234567</span>"</span>)
+type ProductCategory = <span class="string">"sports"</span> | <span class="string">"electronics"</span> | <span class="string">"apparel"</span> | <span class="string">"beauty"</span> | <span class="string">"housing"</span> | <span class="string">"other"</span></code></pre><h2 id="documentation-retours-derreur">Retours d’erreur</h2><h3 id="documentation-retours-derreur-format">Format</h3><pre><code class="lang-ts">{
+    code: ErrorCode,
+    description: string
+}</code></pre><h3 id="documentation-retours-derreur-types">Types</h3><table>
+    <thead>
+    <tr>
+      <th>ErrorCode</th>
+      <th>statut HTTP</th>
+      <th>description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><code>MISSING_PARAM</code></td>
+      <td>400</td>
+      <td>un paramètre (URL, header, JSON, etc.) est manquant</td>
+    </tr>
+    <tr>
+      <td><code>INVALID_PARAM</code></td>
+      <td>400</td>
+      <td>un paramètre (URL, header, JSON, etc.) est invalide (vide, négatif, trop long. etc.)</td>
+    </tr>
+    <tr>
+      <td><code>ITEM_NOT_FOUND</code></td>
+      <td>404</td>
+      <td>un élément est introuvable (id invalide ou inexistant)</td>
+    </tr>
+    </tbody>
+  </table><blockquote>
+    <p>L’exception pour le statut 500 n’est pas inscrite ici car elle devrait en principe ne jamais être retournée par le serveur</p>
+  </blockquote><h2 id="documentation-informations-additionnelles">Informations additionnelles</h2><ul>
+    <li>Un paramètre “<em>manquant</em>“ correspond à une valeur inexistante (champs non présent) ou nulle (<code>Null</code> en Java ou <code>null</code> en JSON).</li>
+    <li>Un paramètre “<em>vide</em>“ correspond à une valeur dont le contenu est “vide” (ex: string vide <code>""</code> ou contenant seulement des caractères “vide” (<code>'\t'</code>, <code>'\n'</code>, <code>' '</code>), chiffre vide <code>0</code>, etc.).</li>
+    <li>Lorsqu’un paramètre est nullable (avec <code>| null</code> après sont type), alors ce dernier peut être manquant sans générer d’erreur.</li>
+    <li>Un champ non nullable doit retourner une erreur de type <code>MISSING_PARAM</code> si la valeur reçue est manquante.</li>
+    <li>Tous les paramètres d’URL (query params) sont optionnels et peuvent donc être manquants sans retourner d’erreur.</li>
+    <li>Les valeurs “vides” des paramètres d’URL (ex: “”) doivent être considérées comme étant des vraies valeurs (ex: filtrer par <code>title = ""</code> doit retourner les titres égals à <code>""</code>).</li>
+    <li>Par défaut, une valeur vide ne doit pas retourner d’exception (sauf si explicitement décrit dans les énoncés de features).</li>
+  </ul><h2 id="documentation-references">Références</h2><ul>
+    <li>RFC-3339 [<a href="https://datatracker.ietf.org/doc/html/rfc3339">1</a>] et ISO-8601 [<a href="https://www.w3.org/TR/NOTE-datetime">1</a>] [<a href="https://www.loc.gov/standards/datetime/iso-tc154-wg5_n0038_iso_wd_8601-1_2016-02-16.pdf">2</a>]: Références pour les format <em>date</em> et <em>datetime</em> standards</li>
+  </ul><h1 id="health-check">Health Check</h1><p>Afin de correctement signaler que l’application se porte bien, une vérification de la connexion à la base de données est faite.</p><h2 id="health-check-details-techniques">Détails techniques</h2><p><strong>Requête</strong></p><p><code>GET /health</code></p><p><strong>Réponse</strong></p><h4>Status</h4><ul>
+    <li><code>200 OK</code> : tout est fonctionnel.</li>
+    <li><code>500 Server Error</code> : au moins un des services n’est pas fonctionnel.</li>
+  </ul><h4>Body</h4><pre><code class="lang-ts">{
+    api: boolean,
+    db: boolean
+}</code></pre><h4>Exemples</h4><p><strong>Succès</strong></p><pre><code class="lang-json">{
+    <span class="string">"api"</span>: true,
+    <span class="string">"db"</span>: true
+}</code></pre><p><strong>Échec db</strong></p><pre><code class="lang-json">{
+    <span class="string">"api"</span>: true,
+    <span class="string">"db"</span>: false
+}</code></pre><p><strong>Échec api</strong></p><pre><code class="lang-json">{}</code></pre><h1 id="creation-dun-vendeur">Création d’un vendeur</h1><h2 id="creation-dun-vendeur-description">Description</h2><p>En tant que vendeur, j’aimerais pouvoir me créer un compte afin de pouvoir accéder aux fonctionnalités de l’application.</p><h2 id="creation-dun-vendeur-criteres-de-succes">Critères de succès</h2><ol>
+    <li>Le vendeur doit avoir 18 ans ou plus.</li>
+    <li>Le vendeur doit avoir un nom.</li>
+    <li>Le vendeur doit avoir une biographie.</li>
+    <li>Le nouveau vendeur est sauvegardé dans l’application.</li>
+    <li>Le nouveau vendeur possède un identifiant <strong>unique</strong>.</li>
+  </ol><h2 id="creation-dun-vendeur-details-techniques">Détails techniques</h2><p><strong>Route</strong></p><pre><code>POST /sellers</code></pre><p><strong>Requête</strong></p><pre><code class="lang-ts">{
+  name: string,
+  bio: string,
+  birthDate: Date
+}</code></pre><p><strong>Réponse</strong></p><pre><code>HTTP 201 CREATED
+Headers:
+  Location: &lt;baseUrl&gt;/sellers/&lt;sellerId&gt;</code></pre><blockquote>
+    <p>Exemple de Location : <a href="http://staging-bonne-question.herokuapp.com:80/sellers/626ab9bd7a5a9c60360cfa80">http://staging-bonne-question.herokuapp.com:80/sellers/626ab9bd7a5a9c60360cfa80</a></p>
+  </blockquote><p><strong>Exceptions</strong></p><ul>
+    <li><code>MISSING_PARAMETER</code> si un champ de la requête est manquant.</li>
+    <li><code>INVALID_PARAMETER</code> si le nom, la biographie ou l’âge est invalide.</li>
+  </ul><h2 id="creation-dun-vendeur-changelog">Changelog</h2><ul>
+    <li><strong>29 janvier 2022</strong> : Ajout du critère sur l’unicité de l’id.</li>
+  </ul><h1 id="obtention-vendeur">Obtention vendeur</h1><h2 id="obtention-vendeur-description">Description</h2><p>En tant qu’acheteur, j’aimerais pouvoir visualiser les informations publiques associées à un vendeur.</p><h2 id="obtention-vendeur-criteres-de-succes">Critères de succès</h2><ol>
+    <li>À la création, le vendeur ne possède aucun produits.</li>
+  </ol><h2 id="obtention-vendeur-details-techniques">Détails techniques</h2><p><strong>Route</strong></p><pre><code>GET /sellers/{sellerId}</code></pre><p><strong>Réponse</strong></p><pre><code>HTTP 200 OK</code></pre><pre><code class="lang-ts">{
+  id: string,
+  name: string,
+  createdAt: DateTime,
+  bio: string,
+  products: [
+    {
+      id: string,
+      createdAt: DateTime,
+      title: string,
+      description: string,
+      categories: ProductCategory[],
+      suggestedPrice: Amount,
+      offers: {
+        mean: Amount | null,
+        count: int
+      }
+    }
+  ]
+}</code></pre><p><strong>Exceptions</strong></p><ul>
+    <li><code>ITEM_NOT_FOUND</code> si le vendeur avec <code>id=sellerId</code> n’existe pas.</li>
+  </ul><h2 id="obtention-vendeur-changelog">Changelog</h2><ul>
+    <li><strong>21 février 2022</strong> : ajout du champ <code>categories</code> dans la réponse de produit</li>
+  </ul><h1 id="creation-produit">Création produit</h1><h2 id="creation-produit-description">Description</h2><p>En tant que vendeur, j’aimerais pouvoir mettre mes produits en vente.</p><h2 id="creation-produit-criteres-de-succes">Critères de succès</h2><ol>
+    <li>Le nouveau produit est sauvegardé dans l’application.</li>
+    <li>Les nouveaux produits aparaissent dans les informations du vendeur (tel que décrit <a href="https://github.com/glo2003/H22-Iteration1/blob/master/features/2.seller-get.md">ici</a>).</li>
+    <li>Le titre ne doit pas être vide</li>
+    <li>La description ne doit pas être vide</li>
+    <li>Le prix suggéré doit être minimum 1$.</li>
+    <li>Le produit peut ne pas être associé à une catégorie.</li>
+    <li>L’id du nouveau produit est unique (par rapport aux autres produits).</li>
+  </ol><h2 id="creation-produit-details-techniques">Détails techniques</h2><p><strong>Route</strong></p><pre><code>POST /products</code></pre><p><strong>Requête - headers</strong></p><pre><code>X-Seller-Id: string</code></pre><p><strong>Requête - body</strong></p><pre><code class="lang-ts">{
+  title: string,
+  description: string,
+  suggestedPrice: number,
+  categories: ProductCategory[] | null
+}</code></pre><p><strong>Réponse - status</strong></p><p><code>201 CREATED</code></p><p><strong>Response - headers</strong></p><pre><code>Location: string</code></pre><blockquote>
+    <p>Exemple de Location : <a href="http://staging-bonne-question.herokuapp.com:80/products/626abb4f7a5a9c60360cfa81">http://staging-bonne-question.herokuapp.com:80/products/626abb4f7a5a9c60360cfa81</a> </p>
+  </blockquote><p><strong>Exceptions</strong></p><ul>
+    <li><code>MISSING_PARAMETER</code> si un champ de la requête est manquant.</li>
+    <li><code>INVALID_PARAMETER</code> si le titre, la description, une catégorie ou le montant est invalide.</li>
+    <li><code>ITEM_NOT_FOUND</code> si le vendeur n’existe pas.</li>
+  </ul><h2 id="creation-produit-changelog">Changelog</h2><ul>
+    <li><strong>4 février 2022</strong> : Ajout de précisions sur les champs</li>
+    <li><strong>4 février 2022</strong> : Correction du status code</li>
+  </ul><h1 id="obtention-produit">Obtention produit</h1><h2 id="obtention-produit-description">Description</h2><p>En tant qu’acheteur, j’aimerais pouvoir visualiser les détails d’un produit qui m’intéresse.</p><h2 id="obtention-produit-details-techniques">Détails techniques</h2><p><strong>Route</strong></p><pre><code>GET /products/{productId}</code></pre><p><strong>Réponse - status</strong></p><p><code>200 OK</code></p><p><strong>Réponse - body</strong></p><pre><code class="lang-ts">{
+  id: string,
+  createdAt: DateTime,
+  title: string,
+  description: string,
+  suggestedPrice: Amount,
+  categories: ProductCategory[],
+  seller: {
+    id: string,
+    name: string
+  },
+  offers: {
+    mean: Amount | null,
+    count: int
+  }
+}</code></pre><p><strong>Exemple:</strong></p><pre><code class="lang-json">{
+  <span class="string">"id"</span>: <span class="string">"abc"</span>,
+  <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">01</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>,
+  <span class="string">"title"</span>: <span class="string">"A cool hairbrush"</span>,
+  <span class="string">"description"</span>: <span class="string">"Pink and all"</span>,
+  <span class="string">"suggestedPrice"</span>: <span class="number"><span class="number">5</span>.<span class="number">01</span></span>,
+  <span class="string">"categories"</span>: [
+    <span class="string">"beauty"</span>
+  ],
+  <span class="string">"seller"</span>: {
+    <span class="string">"id"</span>: <span class="string">"<span class="number">123</span>"</span>,
+    <span class="string">"name"</span>: <span class="string">"John Doe"</span>
+  },
+  <span class="string">"offers"</span>: {
+    <span class="string">"count"</span>: <span class="number">0</span> <span class="comment">// sans offres</span>
+  }
+}</code></pre><pre><code class="lang-json">{
+  ...,
+  <span class="string">"offers"</span>: { <span class="comment">// avec offres</span>
+    <span class="string">"mean"</span>: <span class="number"><span class="number">10</span>.<span class="number">34</span></span>,
+    <span class="string">"count"</span>: <span class="number">2</span>
+  }
+}</code></pre><h1 id="obtention-produits-filtres">Obtention produits filtrés</h1><h2 id="obtention-produits-filtres-description">Description</h2><p>En tant qu’acheteur, j’aimerais pouvoir filtrer les produits afin de trouver ceux qui m’intéressent.</p><h2 id="obtention-produits-filtres-criteres-de-succes">Critères de succès</h2><ol>
+    <li>Les résultats doivent satisfaire TOUS les critères indiqués.</li>
+    <li>Le filtre de titre est inclusif et insensible à la case. Ex: le produit avec titre “sOmEtHiNg” est retourné si le filtre de titre “eth” est appliqué.</li>
+    <li>Les produits retournés doivent posséder au moins l’une des catégories du filtre, mais pas nécessairement toutes.</li>
+    <li>Les filtres de prix sont inclusifs.</li>
+  </ol><h2 id="obtention-produits-filtres-details-techniques">Détails techniques</h2><p><strong>Route</strong></p><p><code>GET /products?&lt;filters&gt;</code></p><p><strong>Requête - query params</strong></p><ul>
+    <li><code>sellerId</code> (<code>string</code>) : id du vendeur vendant le produit</li>
+    <li><code>title</code> (<code>string</code>) : titre du produit</li>
+    <li><code>categories</code> (<code>ProductCategory[]</code>) : catégories du produit</li>
+    <li><code>minPrice</code> (<code>Amount</code>) : prix initial minimum du produit</li>
+    <li><code>maxPrice</code> (<code>Amount</code>) : prix initial maximum du produit</li>
+  </ul><p><strong>Réponse - status</strong></p><p><code>200 OK</code></p><p><strong>Réponse - body</strong></p><pre><code class="lang-ts">{
+  products: [
+    {
+      id: string,
+      createdAt: DateTime,
+      title: string,
+      description: string,
+      suggestedPrice: Amount,
+      categories: ProductCategory[],
+      seller: {
+        id: string,
+        name: string
+      },
+      offers: {
+        mean: Amount | null,
+        count: int
+      }
+    }
+  ]
+}</code></pre><h1 id="creation-doffre-sur-un-produit">Création d’offre sur un produit</h1><h2 id="creation-doffre-sur-un-produit-description">Description</h2><p>En tant qu’acheteur, je veux effectuer une offre sur un produit afin de signaler mon intérêt d’achat.</p><h2 id="creation-doffre-sur-un-produit-criteres-de-succes">Critères de succès</h2><ol>
+    <li>L’offre est sauvegardée dans l’application.</li>
+    <li>Les nouvelles offres aparaissent dans les informations du produit associé (tel que décrit dans <a href="https://github.com/glo2003/H22-Iteration2/blob/master/features/2.product-get.md">get product</a> et <a href="https://github.com/glo2003/H22-Iteration2/blob/master/features/3.products-get.md">filter products</a>).</li>
+    <li>Les formats de email et de numéro de téléphones sont validés.</li>
+    <li>Le montant de l’offre doit être supérieur ou égal au montant suggéré du produit.</li>
+    <li>Un même client peut faire plusieurs offres. Celles-ci n’ont pas besoin d’être successivements plus élevées.</li>
+    <li>Le message doit être d’au moins 100 caractères.</li>
+    <li>Toutes les informations doivent être présentes et non-vides.</li>
+    <li>Rien ne confirme que l’offre n’a pas été crée par le vendeur (il n’y a pas d’authentification pour la personne qui fait une offre).</li>
+  </ol><h2 id="creation-doffre-sur-un-produit-details-techniques">Détails techniques</h2><p><strong>Requête</strong></p><p><code>POST /products/{productId}/offers</code></p><h4>Payload</h4><pre><code class="lang-ts">{
+  name: string,
+  email: Email,
+  phoneNumber: PhoneNumber,
+  amount: Amount,
+  message: string
+}</code></pre><h4>Exemples</h4><p><strong>Valide</strong></p><pre><code class="lang-json">{
+  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+  <span class="string">"email"</span>: <span class="string">"john.doe@email.com"</span>,
+  <span class="string">"phoneNumber"</span>: <span class="string">"<span class="number">18191234567</span>"</span>,
+  <span class="string">"amount"</span>: <span class="number"><span class="number">48</span>.<span class="number">23</span></span>,
+  <span class="string">"message"</span>: <span class="string">"Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet."</span>
+}</code></pre><p><strong>Réponse</strong></p><h4>Status</h4><ul>
+    <li><code>200 OK</code></li>
+  </ul><p><strong>Exceptions</strong></p><ul>
+    <li><code>ITEM_NOT_FOUND</code> si le produit n’existe pas.</li>
+    <li><code>INVALID_PARAMETER</code> si un des champs est invalide.</li>
+    <li><code>MISSING_PARAMETER</code> si un des champs est manquant (<code>null</code>).</li>
+  </ul><h1 id="obtention-vendeur-courant">Obtention vendeur courant</h1><h2 id="obtention-vendeur-courant-description">Description</h2><p>En tant que vendeur, j’aimerais pouvoir accéder aux détails de mon compte, particulièrement afin de visualiser mes produits ainsi que les offres des acheteurs.</p><h2 id="obtention-vendeur-courant-criteres-de-succes">Critères de succès</h2><ol>
+    <li>Si aucune offre n’a été faite sur le produit :<ol>
+      <li>Les montants minimum, maximum et moyens des offres sont facultatifs (<code>null</code> ou non-présents).</li>
+      <li>La liste d’offres est vide.</li>
+      <li>Le compte est à 0.</li>
+    </ol>
+    </li>
+    <li>Le vendeur affiché est celui correspondant au <code>X-Seller-Id</code></li>
+    <li><strong>Seul le vendeur courant</strong> peut voir sa date de naissance ainsi que les détails intrinsèques des offres sur ses produits.</li>
+  </ol><h2 id="obtention-vendeur-courant-details-techniques">Détails techniques</h2><p><strong>Requête</strong></p><p><code>GET /sellers/@me</code></p><h4>Headers</h4><ul>
+    <li><code>X-Seller-Id</code> : <code>string</code><ul>
+      <li>ID du vendeur.</li>
+    </ul>
+    </li>
+  </ul><p><strong>Réponse</strong></p><h4>Body</h4><pre><code class="lang-ts">{
+  id: string,
+  name: string,
+  createdAt: DateTime,
+  bio: string,
+  birthDate: Date,
+  products: [
+    {
+      id: string,
+      title: string,
+      description: string,
+      createdAt: DateTime,
+      suggestedPrice: Amount,
+      categories: ProductCategory[],
+      offers: {
+        min: Amount| null,
+        max: Amount | null,
+        mean: Amount | null,
+        count: int,
+        items: [
+          {
+            id: string,
+            createdAt: DateTime,
+            amount: Amount,
+            message: string,
+            buyer: {
+              name: string,
+              email: Email,
+              phoneNumber: PhoneNumber
+            }
+          }
+        ]
+      }
+    }
+  ]
+}</code></pre><h4>Exemple</h4><p><strong>Avec offres</strong></p><pre><code class="lang-json">{
+  <span class="string">"id"</span>: <span class="string">"abc"</span>,
+  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+  <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2020</span>-<span class="number">08</span>-<span class="number">09</span>T<span class="number">22</span>:<span class="number">56</span>:<span class="number"><span class="number">33</span>.<span class="number">928</span></span>Z"</span>,
+  <span class="string">"bio"</span>: <span class="string">"A franctic lunatic"</span>,
+  <span class="string">"birthDate"</span>: <span class="string">"<span class="number">1970</span>-<span class="number">07</span>-<span class="number">30</span>"</span>,
+  <span class="string">"products"</span>: [
+    {
+      <span class="string">"id"</span>: <span class="string">"<span class="number">123</span>"</span>,
+      <span class="string">"title"</span>: <span class="string">"A nice shoe."</span>,
+      <span class="string">"description"</span>: <span class="string">"Pink and all"</span>,
+      <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">01</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>,
+      <span class="string">"suggestedPrice"</span>: <span class="number"><span class="number">23</span>.<span class="number">65</span></span>,
+      <span class="string">"categories"</span>: [
+        <span class="string">"apparel"</span>
+      ],
+      <span class="string">"offers"</span>: {
+        <span class="string">"min"</span>: <span class="number"><span class="number">23</span>.<span class="number">65</span></span>,
+        <span class="string">"max"</span>: <span class="number">30</span>,
+        <span class="string">"mean"</span>: <span class="number"><span class="number">26</span>.<span class="number">83</span></span>,
+        <span class="string">"count"</span>: <span class="number">2</span>,
+        <span class="string">"items"</span>: [
+          {
+            <span class="string">"id"</span>: <span class="string">"def"</span>,
+            <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">01</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>,
+            <span class="string">"amount"</span>: <span class="number"><span class="number">23</span>.<span class="number">65</span></span>,
+            <span class="string">"message"</span>: <span class="string">"Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet."</span>,
+            <span class="string">"buyer"</span>: {
+              <span class="string">"name"</span>: <span class="string">"Janny Smithy"</span>,
+              <span class="string">"email"</span>: <span class="string">"j.s@email.com"</span>,
+              <span class="string">"phoneNumber"</span>: <span class="string">"<span class="number">18191234568</span>"</span>
+            }
+          },
+          {
+            <span class="string">"id"</span>: <span class="string">"def"</span>,
+            <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">01</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>,
+            <span class="string">"amount"</span>: <span class="number">30</span>,
+            <span class="string">"message"</span>: <span class="string">"Donec porttitor interdum lacus sed finibus. Nam pulvinar facilisis posuere. Maecenas vel lorem amet."</span>,
+            <span class="string">"buyer"</span>: {
+              <span class="string">"name"</span>: <span class="string">"Roger Smith"</span>,
+              <span class="string">"email"</span>: <span class="string">"r.s@email.com"</span>,
+              <span class="string">"phoneNumber"</span>: <span class="string">"<span class="number">18191234569</span>"</span>
+            }
+          }
+        ]
+      }
+    }
+  ]
+}</code></pre><p><strong>Sans offres</strong></p><pre><code class="lang-json">{
+  <span class="string">"id"</span>: <span class="string">"abc"</span>,
+  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+  <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2020</span>-<span class="number">08</span>-<span class="number">09</span>T<span class="number">22</span>:<span class="number">56</span>:<span class="number"><span class="number">33</span>.<span class="number">928</span></span>Z"</span>,
+  <span class="string">"bio"</span>: <span class="string">"A franctic lunatic"</span>,
+  <span class="string">"birthDate"</span>: <span class="string">"<span class="number">1970</span>-<span class="number">07</span>-<span class="number">30</span>"</span>,
+  <span class="string">"products"</span>: [
+    {
+      <span class="string">"id"</span>: <span class="string">"<span class="number">123</span>"</span>,
+      <span class="string">"title"</span>: <span class="string">"A nice shoe."</span>,
+      <span class="string">"description"</span>: <span class="string">"Pink and all"</span>,
+      <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">01</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>,
+      <span class="string">"suggestedPrice"</span>: <span class="number"><span class="number">23</span>.<span class="number">65</span></span>,
+      <span class="string">"categories"</span>: [
+        <span class="string">"apparel"</span>
+      ],
+      <span class="string">"offers"</span>: {
+        <span class="string">"count"</span>: <span class="number">0</span>,
+        <span class="string">"items"</span>: []
+      }
+    }
+  ]
+}</code></pre><p><strong>Sans produit</strong></p><pre><code class="lang-json">{
+  <span class="string">"id"</span>: <span class="string">"abc"</span>,
+  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+  <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2020</span>-<span class="number">08</span>-<span class="number">09</span>T<span class="number">22</span>:<span class="number">56</span>:<span class="number"><span class="number">33</span>.<span class="number">928</span></span>Z"</span>,
+  <span class="string">"bio"</span>: <span class="string">"A franctic lunatic"</span>,
+  <span class="string">"birthDate"</span>: <span class="string">"<span class="number">1970</span>-<span class="number">07</span>-<span class="number">30</span>"</span>,
+  <span class="string">"products"</span>: []
+}</code></pre><p><strong>Exceptions</strong></p>
+    <ul>
+    <li><code>ITEM_NOT_FOUND</code> si le vendeur n’est pas trouvé.</li>
+  </ul>
+
+<h1 id="obtention-des-visionnements">Obtention des visionnements</h1>
+<h2 id="obtention-des-visionnements-description">Description</h2><p>En tant que vendeur, j’aimerais pouvoir consulter le nombre de visionnements de chacun de mes produits.</p><h2 id="obtention-des-visionnements-criteres-de-succes">Critères de succès</h2><ol>
+    <li>Si aucun visionnement n’a été faite sur le produit :<ol>
+      <li>La liste des visionnements est vide.</li>
+      <li>Le compte est à 0.</li>
+      <li>Le plus récent visionnement est facultatif (<code>null</code> ou non-présent).</li>
+    </ol>
+    </li>
+    <li>Le vendeur affiché est celui correspondant au <code>X-Seller-Id</code></li>
+    <li><strong>Seul le vendeur courant</strong> peut voir sa date de naissance ainsi que les détails intrinsèques des visionnements sur ses produits.</li>
+  </ol><h2 id="obtention-des-visionnements-details-techniques">Détails techniques</h2><p><strong>Requête</strong></p><p><code>GET /sellers/@me/views</code></p><h4>Headers</h4><ul>
+    <li><code>X-Seller-Id</code> : <code>string</code><ul>
+      <li>ID du vendeur.</li>
+    </ul>
+    </li>
+  </ul><p><strong>Réponse</strong></p><h4>Body</h4><pre><code class="lang-ts">{
+  id: string,
+  name: string,
+  createdAt: DateTime,
+  bio: string,
+  birthDate: Date,
+  products: [
+    {
+      id: string,
+      title: string,
+      description: string,
+      createdAt: DateTime,
+      suggestedPrice: Amount,
+      categories: ProductCategory[],
+      views: {
+        count: int,
+        mostRecentView: DateTime,
+        items: [
+          {
+            id: string,
+            createdAt: DateTime,
+          }
+        ]
+      }
+    }
+  ]
+}</code></pre><h4>Exemple</h4><p><strong>Avec visionnements</strong></p><pre><code class="lang-json">{
+  <span class="string">"id"</span>: <span class="string">"abc"</span>,
+  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+  <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2020</span>-<span class="number">08</span>-<span class="number">09</span>T<span class="number">22</span>:<span class="number">56</span>:<span class="number"><span class="number">33</span>.<span class="number">928</span></span>Z"</span>,
+  <span class="string">"bio"</span>: <span class="string">"A franctic lunatic"</span>,
+  <span class="string">"birthDate"</span>: <span class="string">"<span class="number">1970</span>-<span class="number">07</span>-<span class="number">30</span>"</span>,
+  <span class="string">"products"</span>: [
+    {
+      <span class="string">"id"</span>: <span class="string">"<span class="number">123</span>"</span>,
+      <span class="string">"title"</span>: <span class="string">"A nice shoe."</span>,
+      <span class="string">"description"</span>: <span class="string">"Pink and all"</span>,
+      <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">01</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>,
+      <span class="string">"suggestedPrice"</span>: <span class="number"><span class="number">23</span>.<span class="number">65</span></span>,
+      <span class="string">"categories"</span>: [
+        <span class="string">"apparel"</span>
+      ],
+      <span class="string">"views"</span>: {
+        <span class="string">"count"</span>: <span class="number">2</span>,
+        <span class="string">"mostRecentView"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">03</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>,
+        <span class="string">"items"</span>: [
+          {
+            <span class="string">"id"</span>: <span class="string">"def"</span>,
+            <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">02</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>
+          },
+          {
+            <span class="string">"id"</span>: <span class="string">"def"</span>,
+            <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">03</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>
+          }
+        ]
+      }
+    }
+  ]
+}</code></pre><p><strong>Sans visionnements</strong></p><pre><code class="lang-json">{
+  <span class="string">"id"</span>: <span class="string">"abc"</span>,
+  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+  <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2020</span>-<span class="number">08</span>-<span class="number">09</span>T<span class="number">22</span>:<span class="number">56</span>:<span class="number"><span class="number">33</span>.<span class="number">928</span></span>Z"</span>,
+  <span class="string">"bio"</span>: <span class="string">"A franctic lunatic"</span>,
+  <span class="string">"birthDate"</span>: <span class="string">"<span class="number">1970</span>-<span class="number">07</span>-<span class="number">30</span>"</span>,
+  <span class="string">"products"</span>: [
+    {
+      <span class="string">"id"</span>: <span class="string">"<span class="number">123</span>"</span>,
+      <span class="string">"title"</span>: <span class="string">"A nice shoe."</span>,
+      <span class="string">"description"</span>: <span class="string">"Pink and all"</span>,
+      <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2022</span>-<span class="number">01</span>-<span class="number">01</span>T<span class="number">22</span>:<span class="number">22</span>:<span class="number"><span class="number">22</span>.<span class="number">2222</span></span>Z"</span>,
+      <span class="string">"suggestedPrice"</span>: <span class="number"><span class="number">23</span>.<span class="number">65</span></span>,
+      <span class="string">"categories"</span>: [
+        <span class="string">"apparel"</span>
+      ],
+      <span class="string">"views"</span>: {
+        <span class="string">"count"</span>: <span class="number">0</span>,
+        <span class="string">"items"</span>: []
+      }
+    }
+  ]
+}</code></pre><p><strong>Sans produit</strong></p><pre><code class="lang-json">{
+  <span class="string">"id"</span>: <span class="string">"abc"</span>,
+  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+  <span class="string">"createdAt"</span>: <span class="string">"<span class="number">2020</span>-<span class="number">08</span>-<span class="number">09</span>T<span class="number">22</span>:<span class="number">56</span>:<span class="number"><span class="number">33</span>.<span class="number">928</span></span>Z"</span>,
+  <span class="string">"bio"</span>: <span class="string">"A franctic lunatic"</span>,
+  <span class="string">"birthDate"</span>: <span class="string">"<span class="number">1970</span>-<span class="number">07</span>-<span class="number">30</span>"</span>,
+  <span class="string">"products"</span>: []
+}</code></pre><p><strong>Exceptions</strong></p><ul>
+    <li><code>ITEM_NOT_FOUND</code> si le vendeur n’est pas trouvé.</li>
+  </ul><h1 id="versions">Versions</h1><ul>
+    <li><strong>0.1.0</strong> </li>
+  </ul></div>
+</div>
+<script>// ===== Scroll to Top ====
+$(window).scroll(function() {
+  if ($(this).scrollTop() >= 50) {        // If page is scrolled more than 50px
+    $('#return-to-top').fadeIn(200);    // Fade in the arrow
+  } else {
+    $('#return-to-top').fadeOut(200);   // Else fade out the arrow
+  }
+});
+$('#return-to-top').click(function() {      // When arrow is clicked
+  $('body,html').animate({
+    scrollTop : 0                       // Scroll to top of body
+  }, 500);
+});</script>
+</body>
+</html>

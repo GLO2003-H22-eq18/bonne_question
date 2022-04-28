@@ -1,7 +1,8 @@
 package ulaval.glo2003.product.domain;
 
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.regex.Pattern;
-
 import org.bson.types.ObjectId;
 import ulaval.glo2003.product.exceptions.offers.InvalidOfferAmountException;
 import ulaval.glo2003.product.exceptions.offers.InvalidOfferEmailException;
@@ -19,6 +20,7 @@ public class OfferFactory {
 
         return new Offer(
                 new ObjectId(),
+                OffsetDateTime.now(Clock.systemUTC()),
                 (Math.round(offerRequest.amount * 100.0) / 100.0),
                 offerRequest.message,
                 offerRequest.name,
@@ -36,9 +38,7 @@ public class OfferFactory {
     }
 
     private void validateEmail(String email) {
-        String emailRegex =
-                "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
-                        + "A-Z]{2,7}$";
+        String emailRegex = "^(.+)@(.+)\\.(.+)$";
 
         Pattern pattern = Pattern.compile(emailRegex);
         if (!(pattern.matcher(email).matches())) {

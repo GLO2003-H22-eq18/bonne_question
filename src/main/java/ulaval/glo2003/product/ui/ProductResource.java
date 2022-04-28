@@ -11,13 +11,14 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.OfferFactory;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.domain.View;
+import ulaval.glo2003.product.domain.ViewFactory;
 import ulaval.glo2003.product.ui.assemblers.OfferRequestAssembler;
 import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
@@ -38,18 +39,21 @@ public class ProductResource {
     private final ProductAssembler productAssembler;
     private final OfferFactory offerFactory;
     private final OfferRequestAssembler offerRequestAssembler;
+    private final ViewFactory viewFactory;
 
     public ProductResource(
             SellerRepository sellerRepository,
             ProductRepository productRepository,
             ProductFactory productFactory,
             ProductAssembler productAssembler,
-            OfferFactory offerFactory) {
+            OfferFactory offerFactory,
+            ViewFactory viewFactory) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productFactory = productFactory;
         this.productAssembler = productAssembler;
         this.offerFactory = offerFactory;
+        this.viewFactory = viewFactory;
         this.offerRequestAssembler = new OfferRequestAssembler();
     }
 
@@ -60,7 +64,7 @@ public class ProductResource {
             @Context UriInfo uri) {
 
         productAssembler.checkProductRequestMissingParams(productRequest);
-        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId, Seller.class);
         Seller productSeller = sellerRepository.findById(sellerObjectId);
         Product myProduct = productFactory.create(productSeller, productRequest);
         productSeller.addProduct(myProduct);
@@ -75,8 +79,12 @@ public class ProductResource {
     @GET
     @Path("/{productId}")
     public Response getProduct(@PathParam("productId") String productId) {
-        ObjectId productObjectId = ObjectIdUtil.createValidObjectId(productId);
+
+        ObjectId productObjectId = ObjectIdUtil.createValidObjectId(productId, Product.class);
         Product product = productRepository.findById(productObjectId);
+        View myView = viewFactory.create();
+        product.addView(myView);
+        productRepository.updateView(myView, new ObjectId(productId));
 
         ProductResponse productResponse = productAssembler.createProductResponse(product);
 
@@ -98,6 +106,12 @@ public class ProductResource {
         List<Product> filteredProducts = productRepository
                 .getFilteredProducts(filteredProductRequest);
 
+        for (Product product : filteredProducts) {
+            View myView = viewFactory.create();
+            product.addView(myView);
+            productRepository.updateView(myView, product.getId());
+        }
+
         List<ProductResponse> filteredProductsResponseList = filteredProducts
                 .stream()
                 .map(productAssembler::createProductResponse)
@@ -116,7 +130,7 @@ public class ProductResource {
             @PathParam("productId") String productId) {
 
         offerRequestAssembler.checkOfferRequestMissingParams(offerRequest);
-        ObjectId objectId = ObjectIdUtil.createValidObjectId(productId);
+        ObjectId objectId = ObjectIdUtil.createValidObjectId(productId, Product.class);
         Product product = productRepository.findById(objectId);
         Offer myOffer = offerFactory.create(product.getSuggestedPrice(), offerRequest);
         product.addOffer(myOffer);

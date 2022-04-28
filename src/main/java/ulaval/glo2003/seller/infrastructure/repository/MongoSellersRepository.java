@@ -1,17 +1,15 @@
 package ulaval.glo2003.seller.infrastructure.repository;
 
-import com.mongodb.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.connection.ClusterSettings;
-import com.mongodb.connection.ConnectionPoolSettings;
+import static dev.morphia.query.experimental.filters.Filters.*;
+
 import dev.morphia.Datastore;
-import dev.morphia.Morphia;
 import dev.morphia.query.experimental.updates.UpdateOperators;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-
+import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import ulaval.glo2003.ApplicationContext;
 import ulaval.glo2003.product.domain.Product;
@@ -23,20 +21,14 @@ import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 import ulaval.glo2003.seller.infrastructure.models.SellerModel;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
-import static dev.morphia.query.experimental.filters.Filters.*;
-
 public class MongoSellersRepository implements SellerRepository {
     private final Datastore datastore;
     private final SellerModelAssembler sellerModelAssembler;
     private final ProductModelAssembler productModelAssembler;
 
-    public MongoSellersRepository(ApplicationContext applicationContext, SellerModelAssembler sellerModelAssembler, ProductModelAssembler productModelAssembler) {
+    public MongoSellersRepository(ApplicationContext applicationContext,
+                                  SellerModelAssembler sellerModelAssembler,
+                                  ProductModelAssembler productModelAssembler) {
 
         this.sellerModelAssembler = sellerModelAssembler;
         this.productModelAssembler = productModelAssembler;
@@ -50,7 +42,8 @@ public class MongoSellersRepository implements SellerRepository {
             throw new SellerNotFoundException();
         }
 
-        SellerModel sellerModel = datastore.find(SellerModel.class).filter(eq("_id", sellerId)).first();
+        SellerModel sellerModel =
+                datastore.find(SellerModel.class).filter(eq("_id", sellerId)).first();
 
         if (sellerModel == null) {
             throw new SellerNotFoundException();
@@ -89,16 +82,17 @@ public class MongoSellersRepository implements SellerRepository {
         }
 
         ProductModel productModel = productModelAssembler.createProductModel(product);
-        List<ProductModel> products = Objects.requireNonNullElse(sellerModel.getProducts(), new ArrayList<>());
+        List<ProductModel> products =
+                Objects.requireNonNullElse(sellerModel.getProducts(), new ArrayList<>());
         products.add(productModel);
 
         datastore.find(SellerModel.class)
                 .filter(eq("_id", product.getSellerId()))
                 .update(
-                    UpdateOperators.set(
-                            "products",
-                            products
-                    )
+                        UpdateOperators.set(
+                                "products",
+                                products
+                        )
                 )
                 .execute();
     }

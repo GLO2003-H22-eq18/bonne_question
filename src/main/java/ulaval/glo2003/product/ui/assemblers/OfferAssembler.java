@@ -1,6 +1,5 @@
 package ulaval.glo2003.product.ui.assemblers;
 
-import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.ui.responses.BuyerResponse;
 import ulaval.glo2003.product.ui.responses.OfferResponse;

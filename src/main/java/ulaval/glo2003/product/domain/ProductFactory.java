@@ -4,7 +4,6 @@ import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bson.types.ObjectId;
 import ulaval.glo2003.product.exceptions.InvalidProductCategoriesException;
 import ulaval.glo2003.product.exceptions.InvalidProductDescriptionException;
@@ -28,6 +27,7 @@ public class ProductFactory {
                 productSeller.getId(),
                 productSeller.getName(),
                 new ObjectId(),
+                new ArrayList<>(),
                 new ArrayList<>(),
                 OffsetDateTime.now(Clock.systemUTC()));
     }

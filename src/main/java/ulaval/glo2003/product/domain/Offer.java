@@ -1,9 +1,7 @@
 package ulaval.glo2003.product.domain;
 
-import org.bson.types.ObjectId;
-
-import java.time.Clock;
 import java.time.OffsetDateTime;
+import org.bson.types.ObjectId;
 
 public class Offer {
     private final ObjectId id;
@@ -16,6 +14,7 @@ public class Offer {
 
     public Offer(
             ObjectId id,
+            OffsetDateTime createdAt,
             Double amount,
             String message,
             String name,
@@ -27,8 +26,7 @@ public class Offer {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-
-        this.createdAt = OffsetDateTime.now(Clock.systemUTC());
+        this.createdAt = createdAt;
     }
 
     public ObjectId getId() {

@@ -16,6 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ulaval.glo2003.ApplicationContext;
+import ulaval.glo2003.product.domain.View;
+import ulaval.glo2003.product.infrastructure.assemblers.ViewModelAssembler;
 import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
 
 import ulaval.glo2003.product.domain.Offer;
@@ -28,11 +30,9 @@ import ulaval.glo2003.product.exceptions.ProductNotFoundException;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
-import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 
 public class ProductRepositoryTest {
 
-    private static int currentProductId = 0;
     private static final ObjectId INVALID_ID = new ObjectId();
     private static final String INVALID_TITLE = "Noone has this title muahaha!";
     private static final List<String> INVALID_CATEGORIES = Arrays.asList("NOT A CATEGORY", "XD");
@@ -58,10 +58,11 @@ public class ProductRepositoryTest {
 
     private final ApplicationContext applicationContext = new ApplicationContext();
     private final OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
-    private final ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler);
-    private final SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
+    private final ViewModelAssembler viewModelAssembler = new ViewModelAssembler();
+    private final ProductModelAssembler productModelAssembler = new ProductModelAssembler(offerModelAssembler, viewModelAssembler);
 
     private static final List<Offer> OFFERS = new ArrayList();
+    private static final List<View> VIEWS = new ArrayList();
 
     public ProductRepositoryTest() {
     }
@@ -69,7 +70,7 @@ public class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        productRepository = new MongoProductsRepository(applicationContext, offerModelAssembler, productModelAssembler);
+        productRepository = new MongoProductsRepository(applicationContext, offerModelAssembler, viewModelAssembler, productModelAssembler);
     }
 
     @Test
@@ -84,6 +85,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC()));
         productRepository.save(product);
 
@@ -116,6 +118,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
         productRepository.save(
                 new Product(
@@ -127,6 +130,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(SELLER_ID_1, null, new ArrayList<>(), null, null);
@@ -149,6 +153,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -161,6 +166,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(INVALID_ID, null, new ArrayList<>(), null, null);
@@ -183,6 +189,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -195,6 +202,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1, new ArrayList<>(), null, null);
@@ -217,6 +225,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -229,6 +238,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, TITLE_1_AND_2_IN_COMMON, new ArrayList<>(), null, null);
@@ -251,6 +261,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -263,6 +274,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, INVALID_TITLE, new ArrayList<>(), null, null);
@@ -286,6 +298,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -298,6 +311,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_ONLY_IN_1);
@@ -323,6 +337,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -335,6 +350,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         List<String> categories = ProductCategory.toStringList(CATEGORIES_2);
@@ -359,6 +375,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -371,6 +388,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, INVALID_CATEGORIES, null, null);
@@ -393,6 +411,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -405,6 +424,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(MIDDLE_PRICE), null);
@@ -428,6 +448,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -440,6 +461,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);
@@ -463,6 +485,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -475,6 +498,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), null, Double.toString(MIDDLE_PRICE));
@@ -498,6 +522,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_1,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         productRepository.save(
@@ -510,6 +535,7 @@ public class ProductRepositoryTest {
                         SELLER_NAME_2,
                         new ObjectId(),
                         OFFERS,
+                        VIEWS,
                         OffsetDateTime.now(Clock.systemUTC())));
 
         FilteredProductRequest filteredProductRequest = createFilteredProductRequest(null, null, new ArrayList<>(), Double.toString(SUGGESTED_PRICE_1), null);

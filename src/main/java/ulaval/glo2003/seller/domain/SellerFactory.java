@@ -6,7 +6,6 @@ import java.time.OffsetDateTime;
 import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-
 import org.bson.types.ObjectId;
 import ulaval.glo2003.seller.exceptions.*;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;

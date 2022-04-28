@@ -31,8 +31,8 @@ public final class OffsetDateTimeSubject extends Subject {
 
     public void isWithinExpectedRange() {
         OffsetDateTime now = OffsetDateTime.now(Clock.systemUTC());
-        OffsetDateTime lowerBound = now.minusSeconds(1);
-        OffsetDateTime higherBound = now.plusSeconds(1);
+        OffsetDateTime lowerBound = now.minusSeconds(2);
+        OffsetDateTime higherBound = now.plusSeconds(2);
 
         if (actual.isBefore(lowerBound) || actual.isAfter(higherBound)) {
             failWithActual(simpleFact(

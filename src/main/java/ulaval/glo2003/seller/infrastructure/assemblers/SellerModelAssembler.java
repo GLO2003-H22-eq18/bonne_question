@@ -1,17 +1,16 @@
 package ulaval.glo2003.seller.infrastructure.assemblers;
 
-import org.bson.types.ObjectId;
-import ulaval.glo2003.product.domain.Product;
-import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
-import ulaval.glo2003.seller.domain.Seller;
-import ulaval.glo2003.product.infrastructure.models.ProductModel;
-import ulaval.glo2003.seller.infrastructure.models.SellerModel;
-
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.bson.types.ObjectId;
+import ulaval.glo2003.product.domain.Product;
+import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.models.ProductModel;
+import ulaval.glo2003.seller.domain.Seller;
+import ulaval.glo2003.seller.infrastructure.models.SellerModel;
 
 public class SellerModelAssembler {
 
@@ -27,7 +26,9 @@ public class SellerModelAssembler {
         String birthDate = seller.getBirthDate().toString();
         String name = seller.getName().toString();
         String bio = seller.getBio().toString();
-        List<ProductModel> products = seller.getProducts().stream().map(productModelAssembler::createProductModel).collect(Collectors.toList());
+        List<ProductModel> products =
+                seller.getProducts().stream().map(productModelAssembler::createProductModel)
+                        .collect(Collectors.toList());
 
         return new SellerModel(id, createdAt, birthDate, name, bio, products);
     }
@@ -41,7 +42,8 @@ public class SellerModelAssembler {
 
         List<Product> products;
         if (sellerModel.getProducts() != null) {
-            products = sellerModel.getProducts().stream().map(productModelAssembler::createProduct).collect(Collectors.toList());
+            products = sellerModel.getProducts().stream().map(productModelAssembler::createProduct)
+                    .collect(Collectors.toList());
         } else {
             products = new ArrayList<>();
         }

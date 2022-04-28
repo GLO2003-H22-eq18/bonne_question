@@ -12,8 +12,10 @@ import ulaval.glo2003.exceptions.MissingArgumentExceptionMapper;
 import ulaval.glo2003.product.domain.OfferFactory;
 import ulaval.glo2003.product.domain.ProductFactory;
 import ulaval.glo2003.product.domain.ProductRepository;
+import ulaval.glo2003.product.domain.ViewFactory;
 import ulaval.glo2003.product.infrastructure.assemblers.OfferModelAssembler;
 import ulaval.glo2003.product.infrastructure.assemblers.ProductModelAssembler;
+import ulaval.glo2003.product.infrastructure.assemblers.ViewModelAssembler;
 import ulaval.glo2003.product.infrastructure.repository.MongoProductsRepository;
 import ulaval.glo2003.product.ui.ProductResource;
 import ulaval.glo2003.product.ui.assemblers.ProductAssembler;
@@ -21,9 +23,10 @@ import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
 import ulaval.glo2003.seller.infrastructure.assemblers.SellerModelAssembler;
 import ulaval.glo2003.seller.infrastructure.repository.MongoSellersRepository;
+import ulaval.glo2003.seller.ui.SellerResource;
 import ulaval.glo2003.seller.ui.assemblers.CurrentSellerAssembler;
 import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
-import ulaval.glo2003.seller.ui.SellerResource;
+
 
 public class Main {
 
@@ -32,14 +35,16 @@ public class Main {
     public static HttpServer startServer(ApplicationContext applicationContext) {
 
         OfferModelAssembler offerModelAssembler = new OfferModelAssembler();
+        ViewModelAssembler viewModelAssembler = new ViewModelAssembler();
         ProductModelAssembler productModelAssembler =
-                new ProductModelAssembler(offerModelAssembler);
+                new ProductModelAssembler(offerModelAssembler, viewModelAssembler);
         SellerModelAssembler sellerModelAssembler = new SellerModelAssembler(productModelAssembler);
         SellerRepository sellerRepository =
                 new MongoSellersRepository(applicationContext, sellerModelAssembler,
                         productModelAssembler);
         ProductRepository productRepository =
-                new MongoProductsRepository(applicationContext, offerModelAssembler, productModelAssembler);
+                new MongoProductsRepository(applicationContext, offerModelAssembler,
+                        viewModelAssembler, productModelAssembler);
 
         SellerFactory sellerFactory = new SellerFactory();
         SellerAssembler sellerAssembler = new SellerAssembler();
@@ -51,9 +56,10 @@ public class Main {
         ProductFactory productFactory = new ProductFactory();
         ProductAssembler productAssembler = new ProductAssembler();
         OfferFactory offerFactory = new OfferFactory();
+        ViewFactory viewFactory = new ViewFactory();
         ProductResource productResource = new ProductResource(
                 sellerRepository, productRepository, productFactory, productAssembler,
-                offerFactory);
+                offerFactory, viewFactory);
 
         HealthResource healthResource = new HealthResource(sellerRepository);
 

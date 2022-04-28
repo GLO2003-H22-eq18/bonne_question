@@ -5,7 +5,6 @@ import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.domain.ProductCategory;

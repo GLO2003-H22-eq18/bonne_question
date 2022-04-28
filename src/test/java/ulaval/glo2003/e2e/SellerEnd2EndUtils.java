@@ -13,6 +13,7 @@ import static ulaval.glo2003.e2e.ProductEnd2EndUtils.VALID_PRODUCT_CATEGORIES;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createProductResource;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createRandomProduct;
 import static ulaval.glo2003.e2e.ProductEnd2EndUtils.createValidProduct;
+import static ulaval.glo2003.e2e.ProductEnd2EndUtils.getProductById;
 
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
@@ -30,8 +31,7 @@ import ulaval.glo2003.subjects.OffsetDateTimeSubject;
 
 public class SellerEnd2EndUtils {
     public static final String PHONE_NUMBER_REGEX = "[0-9]{11}";
-    public static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
-            + "A-Z]{2,7}$";
+    public static final String EMAIL_REGEX = "^(.+)@(.+)\\.(.+)$";
     public static final String A_VALID_SELLER_NAME = "John Cena";
     public static final String A_VALID_SELLER_BIO = "What a chad!";
     public static final String A_VALID_SELLER_BIRTHDATE = "1997-04-23";
@@ -39,6 +39,7 @@ public class SellerEnd2EndUtils {
     public static final String A_INVALID_SELLER_BIO = "    \n  \t \n ";
     public static final String A_INVALID_SELLER_BIRTHDATE = "2100-11-01";
     public static final int NUMBER_OF_OFFERS = 3;
+    public static final Integer NUMBER_OF_VIEWS = 5;
 
     public static Response createSellerResource(SellerRequest sellerRequest) {
         return createResource("/sellers", sellerRequest);
@@ -111,9 +112,18 @@ public class SellerEnd2EndUtils {
         return getResourceById("/sellers/@me", sellerHeader);
     }
 
+    public static Response getCurrentSellerViewsById(String sellerId) {
+        Headers sellerHeader = new Headers(new Header("X-Seller-Id", sellerId));
+        return getResourceById("/sellers/@me/views", sellerHeader);
+    }
+
     public static String addProductToSellerGetId(String sellerId) {
         Response response = createProductResource(createValidProduct(), sellerId);
         return extractLocationId(response);
+    }
+
+    public static void addViewsToProduct(String productId, Integer numberOfViews) {
+        IntStream.range(0, numberOfViews).forEach(i -> getProductById(productId));
     }
 
     public static void addRandomProductsToSeller(String sellerId, int numberOfProducts) {
@@ -139,6 +149,28 @@ public class SellerEnd2EndUtils {
 
         CurrentSellerProductResponse sellerProductResponse = sellerResponse.products.get(0);
         assertThatCurrentSellerProductResponseFieldsAreValid(sellerProductResponse,
+                expectedProductId);
+    }
+
+    public static void assertThatCurrentSellerWithProductWithoutViewsResponseFieldsAreValid(
+            CurrentSellerResponse sellerResponse,
+            String expectedSellerId,
+            String expectedProductId) {
+        assertThatCurrentSellerResponseFieldsAreValid(sellerResponse, expectedSellerId);
+
+        CurrentSellerProductResponse sellerProductResponse = sellerResponse.products.get(0);
+        assertThatCurrentSellerProductNoViewsResponseFieldsAreValid(sellerProductResponse,
+                expectedProductId);
+    }
+
+    public static void assertThatCurrentSellerWithProductWithViewsResponseFieldsAreValid(
+            CurrentSellerResponse sellerResponse,
+            String expectedSellerId,
+            String expectedProductId) {
+        assertThatCurrentSellerResponseFieldsAreValid(sellerResponse, expectedSellerId);
+
+        CurrentSellerProductResponse sellerProductResponse = sellerResponse.products.get(0);
+        assertThatCurrentSellerProductViewsResponseFieldsAreValid(sellerProductResponse,
                 expectedProductId);
     }
 
@@ -197,6 +229,33 @@ public class SellerEnd2EndUtils {
         assertThat(productResponse.offers.items).isEmpty();
     }
 
+    public static void assertThatCurrentSellerProductNoViewsResponseFieldsAreValid(
+            CurrentSellerProductResponse productResponse, String expectedProductId) {
+        assertThat(productResponse.id).isEqualTo(expectedProductId);
+        OffsetDateTimeSubject.assertThat(productResponse.createdAt).isWithinExpectedRange();
+        assertThat(productResponse.title).isEqualTo(A_VALID_PRODUCT_TITLE);
+        assertThat(productResponse.description).isEqualTo(A_VALID_PRODUCT_DESCRIPTION);
+        assertThat(productResponse.suggestedPrice).isEqualTo(A_VALID_PRODUCT_SUGGESTED_PRICE);
+        assertThat(productResponse.categories).containsExactlyElementsIn(VALID_PRODUCT_CATEGORIES);
+        assertThat(productResponse.views.count).isEqualTo(0);
+        assertThat(productResponse.views.items).isEmpty();
+        assertThat(productResponse.views.mostRecentView).isNull();
+    }
+
+    public static void assertThatCurrentSellerProductViewsResponseFieldsAreValid(
+            CurrentSellerProductResponse productResponse, String expectedProductId) {
+        assertThat(productResponse.id).isEqualTo(expectedProductId);
+        OffsetDateTimeSubject.assertThat(productResponse.createdAt).isWithinExpectedRange();
+        assertThat(productResponse.title).isEqualTo(A_VALID_PRODUCT_TITLE);
+        assertThat(productResponse.description).isEqualTo(A_VALID_PRODUCT_DESCRIPTION);
+        assertThat(productResponse.suggestedPrice).isEqualTo(A_VALID_PRODUCT_SUGGESTED_PRICE);
+        assertThat(productResponse.categories).containsExactlyElementsIn(VALID_PRODUCT_CATEGORIES);
+        assertThat(productResponse.views.count).isEqualTo(NUMBER_OF_VIEWS);
+        assertThat(productResponse.views.items.size()).isEqualTo(NUMBER_OF_VIEWS);
+        assertThat(productResponse.views.mostRecentView).isEqualTo(
+                productResponse.views.items.get(productResponse.views.items.size() - 1).createdAt);
+    }
+
     public static void assertThatCurrentSellerProductOffersResponseFieldsAreValid(
             CurrentSellerProductResponse productResponse, String expectedProductId) {
         assertThat(productResponse.id).isEqualTo(expectedProductId);
@@ -206,6 +265,7 @@ public class SellerEnd2EndUtils {
         assertThat(productResponse.suggestedPrice).isEqualTo(A_VALID_PRODUCT_SUGGESTED_PRICE);
         assertThat(productResponse.categories).containsExactlyElementsIn(VALID_PRODUCT_CATEGORIES);
         assertThat(productResponse.offers.count).isEqualTo(NUMBER_OF_OFFERS);
+        assertThat(productResponse.offers.items.size()).isEqualTo(NUMBER_OF_OFFERS);
 
         double mean = 0;
         double min = Double.MAX_VALUE;

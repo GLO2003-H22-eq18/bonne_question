@@ -12,7 +12,6 @@ import org.bson.types.ObjectId;
 import ulaval.glo2003.seller.domain.Seller;
 import ulaval.glo2003.seller.domain.SellerFactory;
 import ulaval.glo2003.seller.domain.SellerRepository;
-import ulaval.glo2003.seller.exceptions.SellerNotFoundException;
 import ulaval.glo2003.seller.ui.assemblers.CurrentSellerAssembler;
 import ulaval.glo2003.seller.ui.assemblers.SellerAssembler;
 import ulaval.glo2003.seller.ui.requests.SellerRequest;
@@ -41,7 +40,7 @@ public class SellerResource {
     @GET
     @Path("/{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId, Seller.class);
         Seller seller =
                 sellerRepository.findById(sellerObjectId);
 
@@ -64,11 +63,24 @@ public class SellerResource {
     @Path("/@me")
     public Response getCurrentSeller(
             @HeaderParam("X-Seller-Id") String sellerId) {
-        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId);
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId, Seller.class);
         Seller seller = sellerRepository.findById(sellerObjectId);
 
         CurrentSellerResponse currentSellerResponse =
                 currentSellerAssembler.createCurrentSellerResponse(seller);
+
+        return Response.status(200).entity(currentSellerResponse).build();
+    }
+
+    @GET
+    @Path("/@me/views")
+    public Response getCurrentSellerViews(
+            @HeaderParam("X-Seller-Id") String sellerId) {
+        ObjectId sellerObjectId = ObjectIdUtil.createValidObjectId(sellerId, Seller.class);
+        Seller seller = sellerRepository.findById(sellerObjectId);
+
+        CurrentSellerResponse currentSellerResponse =
+                currentSellerAssembler.createCurrentSellerViewsResponse(seller);
 
         return Response.status(200).entity(currentSellerResponse).build();
     }
