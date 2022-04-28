@@ -1,14 +1,8 @@
 package ulaval.glo2003.product.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
-import ulaval.glo2003.product.exceptions.ProductNotFoundException;
 import ulaval.glo2003.product.ui.requests.FilteredProductRequest;
 
 public interface ProductRepository {
