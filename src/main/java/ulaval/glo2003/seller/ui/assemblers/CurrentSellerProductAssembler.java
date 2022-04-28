@@ -3,8 +3,6 @@ package ulaval.glo2003.seller.ui.assemblers;
 import static ulaval.glo2003.product.domain.ProductCategory.toStringList;
 
 import java.util.List;
-
-import org.bson.types.ObjectId;
 import ulaval.glo2003.product.domain.Product;
 import ulaval.glo2003.product.ui.assemblers.DetailedProductOffersAssembler;
 import ulaval.glo2003.product.ui.assemblers.DetailedProductViewsAssembler;
