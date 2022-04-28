@@ -28,6 +28,8 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bonne_question)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=bonne_question)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bonne_question)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=bonne_question)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=bonne_question)
 
 ## Requis
 
