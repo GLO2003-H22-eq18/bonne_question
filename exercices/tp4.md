@@ -26,6 +26,8 @@ En tant que vendeur, j'aimerais pouvoir consulter le nombre de visionnements de 
 
 ### Réponse
 
+#### 200 ok
+
 #### Body
 
 ```ts
