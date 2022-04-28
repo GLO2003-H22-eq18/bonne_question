@@ -4,7 +4,7 @@
 
 ### Le projet consiste au développement d'un site de vente anynonyme au Québec.
 
-![LOGO](https://github.com/GLO2003-H22-eq18/bonne_question/blob/main/bonne_question_logo.png) <br></br>
+![LOGO](https://github.com/GLO2003-H22-eq18/bonne_question/blob/main/logo.png) <br></br>
 
 ## Liens utiles
 
