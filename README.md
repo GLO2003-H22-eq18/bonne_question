@@ -1,10 +1,9 @@
-# Bonne Question
+# ![BONNE QUESTION](https://github.com/GLO2003-H22-eq18/bonne_question/blob/main/logo.png)
 
-### Bonne Question est un projet développé dans le cadre du cours GLO-2003 à la session d'hiver 2022 à l'université Laval.
+ Bonne question est un projet développé dans le cadre du cours GLO-2003 à la session d'hiver 2022 à l'université Laval.
+ Le projet consiste au développement d'un site de vente anynonyme au Québec.
 
-### Le projet consiste au développement d'un site de vente anynonyme au Québec.
 
-![LOGO](https://github.com/GLO2003-H22-eq18/bonne_question/blob/main/logo.png) <br></br>
 
 ## Liens utiles
 
