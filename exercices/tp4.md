@@ -235,3 +235,46 @@ La license se trouve dans le fichier LICENSE. Celle qui a été choisit est la l
   distribution et le développement du code source.
 - __Simple d'utilisation__: un projet qui possède cette license ont très peu de restrictions (comparément à d'autres licenses) et peuvent ainsi travailler sans crainte de faire une action interdite. Par exemple, la license Apache oblige un individu à indiquer quels changements ont été appliqués au code source dans le cas où cet individu souhaite republier le même code. Tiré de [https://apache.org/licenses/](https://apache.org/licenses/).
 - __Protège les développeurs et le fondateur du projet__: si l'on décide de ne pas utiliser une license, tous les individus contribuant au projet deviennent un propriétaire exclusif de leur travail, et seulement de celui-ci. Cela signifie que personne ne peut copier, utiliser, distribuer ou modifier les contributions des autres, et cela s'applique également au fondateur du projet. Tiré de [https://opensource.guide/legal/](https://opensource.guide/legal/).
+
+
+### Planification du travail sur Github
+
+#### Projet:
+![Projects](https://user-images.githubusercontent.com/73801331/165775677-0e5530f1-5cba-46cb-8bee-22a65ed94242.PNG)
+
+
+#### Milestone:
+![Milestone](https://user-images.githubusercontent.com/73801331/165775653-d8784996-c9f0-4244-a9a6-0c6e06b9b0b8.PNG)
+
+
+#### Issues:
+No.1
+![Issue1](https://user-images.githubusercontent.com/73801331/165775544-470c3cee-0419-42c3-90a2-604abb5da95f.PNG)
+
+
+No.2
+![Issue2](https://user-images.githubusercontent.com/73801331/165775554-a704614a-d3ac-4910-8c3c-027000478003.PNG)
+
+
+No.3
+![Issue3](https://user-images.githubusercontent.com/73801331/165775573-74296a11-22b1-4470-a35b-016dfe230315.PNG)
+
+
+#### Pull Request (PR):
+No.1
+![PR1 1](https://user-images.githubusercontent.com/73801331/165775592-436c1621-61c4-4e09-ab2a-24db06138f8b.PNG)
+![PR1 2](https://user-images.githubusercontent.com/73801331/165775595-f13f17fa-588f-4f9c-b7c3-08849ff138f9.PNG)
+
+
+No.2
+![PR2 1](https://user-images.githubusercontent.com/73801331/165775620-87264b47-8a1c-4238-a82e-8a482ef4df10.PNG)
+![PR2 2](https://user-images.githubusercontent.com/73801331/165775621-2ef56866-a6c1-4595-8eb7-87d654201fba.PNG)
+
+
+No.3
+![PR3](https://user-images.githubusercontent.com/73801331/165775635-a328e3e9-e69e-4325-a4f7-0bdea8855fbc.PNG)
+
+
+#### Arbre des commits et de branches:
+![GitBranches](https://user-images.githubusercontent.com/73801331/165775521-32d71bef-e452-4403-8965-d03d93ee4068.PNG)
+
