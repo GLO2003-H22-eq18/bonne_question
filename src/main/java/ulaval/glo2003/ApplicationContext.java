@@ -10,6 +10,8 @@ import com.mongodb.connection.ClusterSettings;
 import com.mongodb.connection.ConnectionPoolSettings;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationContext {
@@ -44,7 +46,8 @@ public class ApplicationContext {
     }
 
     private String getConnectionString() {
-        return System.getenv("MONGO_CONNECTION");
+        return Objects.requireNonNullElse(System.getenv("MONGO_CONNECTION"),
+                        "mongodb://localhost:27017/?w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&directConnection=true&ssl=false");
     }
 
     public Datastore getDatastore() {
