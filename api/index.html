@@ -68,11 +68,89 @@
     color: #fff;
     top: 5px;
   }
-
   #flatdoc-intro {
     font-size: 1.3em;
     font-family: Open Sans,sans-serif;
     font-weight: 300;
+  }
+  .title-card>.in {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .title-area>div {
+    position: relative;
+    z-index: 1;
+  }
+  .title-card {
+    background: #1d3b47 center center;
+    background-size: cover;
+    color: #ccc;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: table;
+    text-rendering: optimizeLegibility!important;
+    -webkit-font-smoothing: antialiased!important;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .title-area {
+    min-height: 100px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    text-align: center;
+    border-bottom: solid 1px #dfe2e7;
+    overflow: hidden;
+  }
+
+  .title-card .headline {
+    vertical-align: middle;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 40px;
+    padding-right: 40px;
+    max-width: 800px;
+    line-height: 1.7;
+  }
+  .title-card h1 {
+    font-family: open sans,sans-serif;
+    font-size: 3.3em;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 0.5em;
+    color: #fff;
+  }
+  .title-card p {
+    font-family: montserrat,sans-serif;
+    color: #b8eaea;
+    font-weight: 700;
+    font-size: 1.3em;
+  }
+
+  .title-card h5 {
+    margin-top: 150px;
+    font-family: montserrat,sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.8em;
+  }
+
+  .title-card h5 span {
+    display: inline-block;
+    padding: 5px 20px;
+    border: solid 3px #fff;
+  }
+
+  @media (max-width: 768px) {
+    .title-card h5 {
+      margin-top: 100px;
+    }
   }
   </style>
   <!-- Initializer -->
@@ -83,6 +161,15 @@
   </script>
 </head>
 <body role="flatdoc" class='big-h3 no-literate large-brief'>
+<div class="title-area title-card" style="background-image: url('background_img.jpg'); height: 1319px;">
+<div class="in">
+  <div class="headline">
+    <h1>La vente est facile.</h1>
+    <p>Le meilleur outil de vente anonyme du Québec!</p>
+    <h5><span>Bonne Question</span></h5>
+  </div>
+</div>
+</div>
 <div class="header">
   <div class="left">
     <h1>Bonne Question</h1>
