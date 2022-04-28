@@ -25,6 +25,7 @@
 ![CD Staging](https://github.com/GLO2003-H22-eq18/bonne_question/actions/workflows/cd_staging.yml/badge.svg) <br></br>
 ![CD Production](https://github.com/GLO2003-H22-eq18/bonne_question/actions/workflows/cd_production.yml/badge.svg) <br></br>
 ![CI](https://github.com/GLO2003-H22-eq18/bonne_question/actions/workflows/ci.yml/badge.svg) <br></br>
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bonne_question)
 
 ## Requis
 
