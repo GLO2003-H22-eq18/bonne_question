@@ -7,7 +7,6 @@ import ulaval.glo2003.exceptions.MissingArgumentException;
 public class ObjectIdUtil {
 
 
-
     private static final int OBJECT_ID_LENGTH = 24;
 
     public static class MissingObjectIdException extends MissingArgumentException {

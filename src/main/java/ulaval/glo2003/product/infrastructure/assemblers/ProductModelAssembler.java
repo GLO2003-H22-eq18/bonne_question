@@ -19,7 +19,8 @@ public class ProductModelAssembler {
     private final OfferModelAssembler offerModelAssembler;
     private final ViewModelAssembler viewModelAssembler;
 
-    public ProductModelAssembler(OfferModelAssembler offerModelAssembler, ViewModelAssembler viewModelAssembler) {
+    public ProductModelAssembler(OfferModelAssembler offerModelAssembler,
+                                 ViewModelAssembler viewModelAssembler) {
         this.offerModelAssembler = offerModelAssembler;
         this.viewModelAssembler = viewModelAssembler;
     }

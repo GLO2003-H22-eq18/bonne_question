@@ -20,7 +20,8 @@ public class ProductModel {
     private List<OfferModel> offers;
     private List<ViewModel> views;
 
-    public ProductModel() {}
+    public ProductModel() {
+    }
 
     public ProductModel(
             String title,

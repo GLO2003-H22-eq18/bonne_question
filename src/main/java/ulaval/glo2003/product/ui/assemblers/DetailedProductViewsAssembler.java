@@ -1,15 +1,9 @@
 package ulaval.glo2003.product.ui.assemblers;
 
-import static java.lang.Double.MAX_VALUE;
-
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import ulaval.glo2003.product.domain.Offer;
 import ulaval.glo2003.product.domain.View;
-import ulaval.glo2003.product.ui.responses.DetailedProductOffersResponse;
 import ulaval.glo2003.product.ui.responses.DetailedProductViewsResponse;
-import ulaval.glo2003.product.ui.responses.OfferResponse;
 import ulaval.glo2003.product.ui.responses.ViewResponse;
 
 public class DetailedProductViewsAssembler {

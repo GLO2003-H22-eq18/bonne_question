@@ -10,7 +10,8 @@ public class ViewModel {
     private ObjectId id;
     private String createdAt;
 
-    public ViewModel() {}
+    public ViewModel() {
+    }
 
     public ViewModel(
             ObjectId id, String createdAt) {

@@ -36,7 +36,9 @@ public class MongoSellersRepository implements SellerRepository {
     private final SellerModelAssembler sellerModelAssembler;
     private final ProductModelAssembler productModelAssembler;
 
-    public MongoSellersRepository(ApplicationContext applicationContext, SellerModelAssembler sellerModelAssembler, ProductModelAssembler productModelAssembler) {
+    public MongoSellersRepository(ApplicationContext applicationContext,
+                                  SellerModelAssembler sellerModelAssembler,
+                                  ProductModelAssembler productModelAssembler) {
 
         this.sellerModelAssembler = sellerModelAssembler;
         this.productModelAssembler = productModelAssembler;
@@ -50,7 +52,8 @@ public class MongoSellersRepository implements SellerRepository {
             throw new SellerNotFoundException();
         }
 
-        SellerModel sellerModel = datastore.find(SellerModel.class).filter(eq("_id", sellerId)).first();
+        SellerModel sellerModel =
+                datastore.find(SellerModel.class).filter(eq("_id", sellerId)).first();
 
         if (sellerModel == null) {
             throw new SellerNotFoundException();
@@ -89,16 +92,17 @@ public class MongoSellersRepository implements SellerRepository {
         }
 
         ProductModel productModel = productModelAssembler.createProductModel(product);
-        List<ProductModel> products = Objects.requireNonNullElse(sellerModel.getProducts(), new ArrayList<>());
+        List<ProductModel> products =
+                Objects.requireNonNullElse(sellerModel.getProducts(), new ArrayList<>());
         products.add(productModel);
 
         datastore.find(SellerModel.class)
                 .filter(eq("_id", product.getSellerId()))
                 .update(
-                    UpdateOperators.set(
-                            "products",
-                            products
-                    )
+                        UpdateOperators.set(
+                                "products",
+                                products
+                        )
                 )
                 .execute();
     }

@@ -15,7 +15,8 @@ public class OfferModel {
     private String email;
     private String phoneNumber;
 
-    public OfferModel() {}
+    public OfferModel() {
+    }
 
     public OfferModel(
             ObjectId id,

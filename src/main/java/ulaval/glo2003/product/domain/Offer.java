@@ -1,9 +1,7 @@
 package ulaval.glo2003.product.domain;
 
-import org.bson.types.ObjectId;
-
-import java.time.Clock;
 import java.time.OffsetDateTime;
+import org.bson.types.ObjectId;
 
 public class Offer {
     private final ObjectId id;

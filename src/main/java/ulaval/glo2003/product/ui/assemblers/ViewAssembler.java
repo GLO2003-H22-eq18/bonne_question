@@ -5,7 +5,8 @@ import ulaval.glo2003.product.ui.responses.ViewResponse;
 
 public class ViewAssembler {
 
-    public ViewAssembler() {}
+    public ViewAssembler() {
+    }
 
     public ViewResponse createViewResponse(View view) {
         String id = view.getId().toString();

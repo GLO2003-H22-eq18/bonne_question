@@ -1,7 +1,5 @@
 package ulaval.glo2003.product.ui.responses;
 
-import org.bson.types.ObjectId;
-
 public class ProductSellerResponse {
     public String id;
     public String name;

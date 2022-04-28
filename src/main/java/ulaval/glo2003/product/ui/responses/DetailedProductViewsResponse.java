@@ -11,7 +11,8 @@ public class DetailedProductViewsResponse {
         super();
     }
 
-    public DetailedProductViewsResponse(String mostRecentView, Integer count, List<ViewResponse> items) {
+    public DetailedProductViewsResponse(String mostRecentView, Integer count,
+                                        List<ViewResponse> items) {
         this.mostRecentView = mostRecentView;
         this.count = count;
         this.items = items;

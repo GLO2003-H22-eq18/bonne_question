@@ -42,7 +42,8 @@ public class Main {
                 new MongoSellersRepository(applicationContext, sellerModelAssembler,
                         productModelAssembler);
         ProductRepository productRepository =
-                new MongoProductsRepository(applicationContext, offerModelAssembler, viewModelAssembler, productModelAssembler);
+                new MongoProductsRepository(applicationContext, offerModelAssembler,
+                        viewModelAssembler, productModelAssembler);
 
         SellerFactory sellerFactory = new SellerFactory();
         SellerAssembler sellerAssembler = new SellerAssembler();

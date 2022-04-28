@@ -33,7 +33,10 @@ public class MongoProductsRepository implements ProductRepository {
     private final ViewModelAssembler viewModelAssembler;
     private final ProductModelAssembler productModelAssembler;
 
-    public MongoProductsRepository(ApplicationContext applicationContext, OfferModelAssembler offerModelAssembler, ViewModelAssembler viewModelAssembler, ProductModelAssembler productModelAssembler) {
+    public MongoProductsRepository(ApplicationContext applicationContext,
+                                   OfferModelAssembler offerModelAssembler,
+                                   ViewModelAssembler viewModelAssembler,
+                                   ProductModelAssembler productModelAssembler) {
 
         this.offerModelAssembler = offerModelAssembler;
         this.viewModelAssembler = viewModelAssembler;
@@ -50,7 +53,8 @@ public class MongoProductsRepository implements ProductRepository {
 
     @Override
     public Product findById(ObjectId productId) {
-        ProductModel productModel = datastore.find(ProductModel.class).filter(eq("_id", productId)).first();
+        ProductModel productModel =
+                datastore.find(ProductModel.class).filter(eq("_id", productId)).first();
 
         if (productModel == null) {
             throw new ProductNotFoundException();
@@ -67,27 +71,31 @@ public class MongoProductsRepository implements ProductRepository {
             filteredProductsList = getProductsFilterBySellerId(filteredProductRequest.sellerId);
         } else {
             filteredProductsList = datastore.find(ProductModel.class)
-                                            .stream()
-                                            .map(productModelAssembler::createProduct)
-                                            .collect(Collectors.toList());
+                    .stream()
+                    .map(productModelAssembler::createProduct)
+                    .collect(Collectors.toList());
         }
 
         if (filteredProductRequest.title != null) {
-            filteredProductsList = getProductsFilterByTitle(filteredProductsList, filteredProductRequest.title);
+            filteredProductsList =
+                    getProductsFilterByTitle(filteredProductsList, filteredProductRequest.title);
         }
 
         if (!filteredProductRequest.categories.isEmpty()) {
-            filteredProductsList = getProductsFilterByCategories(filteredProductsList, filteredProductRequest.categories);
+            filteredProductsList = getProductsFilterByCategories(filteredProductsList,
+                    filteredProductRequest.categories);
         }
 
         if (filteredProductRequest.minPrice != null) {
             filteredProductsList =
-                    getMinPriceFilteredProducts(filteredProductsList, filteredProductRequest.minPrice);
+                    getMinPriceFilteredProducts(filteredProductsList,
+                            filteredProductRequest.minPrice);
         }
 
         if (filteredProductRequest.maxPrice != null) {
             filteredProductsList =
-                    getMaxPriceFilteredProducts(filteredProductsList, filteredProductRequest.maxPrice);
+                    getMaxPriceFilteredProducts(filteredProductsList,
+                            filteredProductRequest.maxPrice);
         }
 
         return filteredProductsList;
@@ -141,7 +149,8 @@ public class MongoProductsRepository implements ProductRepository {
         }
 
         OfferModel offerModel = offerModelAssembler.createOfferModel(offer);
-        List<OfferModel> offers = Objects.requireNonNullElse(productModel.getOffers(), new ArrayList<>());
+        List<OfferModel> offers =
+                Objects.requireNonNullElse(productModel.getOffers(), new ArrayList<>());
         offers.add(offerModel);
 
 
@@ -167,7 +176,8 @@ public class MongoProductsRepository implements ProductRepository {
         }
 
         ViewModel viewModel = viewModelAssembler.createViewModel(view);
-        List<ViewModel> views = Objects.requireNonNullElse(productModel.getViews(), new ArrayList<>());
+        List<ViewModel> views =
+                Objects.requireNonNullElse(productModel.getViews(), new ArrayList<>());
         views.add(viewModel);
 
         datastore.find(ProductModel.class)

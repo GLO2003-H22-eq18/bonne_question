@@ -27,7 +27,9 @@ public class SellerModelAssembler {
         String birthDate = seller.getBirthDate().toString();
         String name = seller.getName().toString();
         String bio = seller.getBio().toString();
-        List<ProductModel> products = seller.getProducts().stream().map(productModelAssembler::createProductModel).collect(Collectors.toList());
+        List<ProductModel> products =
+                seller.getProducts().stream().map(productModelAssembler::createProductModel)
+                        .collect(Collectors.toList());
 
         return new SellerModel(id, createdAt, birthDate, name, bio, products);
     }
@@ -41,7 +43,8 @@ public class SellerModelAssembler {
 
         List<Product> products;
         if (sellerModel.getProducts() != null) {
-            products = sellerModel.getProducts().stream().map(productModelAssembler::createProduct).collect(Collectors.toList());
+            products = sellerModel.getProducts().stream().map(productModelAssembler::createProduct)
+                    .collect(Collectors.toList());
         } else {
             products = new ArrayList<>();
         }

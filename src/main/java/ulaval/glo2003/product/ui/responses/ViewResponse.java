@@ -9,7 +9,7 @@ public class ViewResponse {
     }
 
     public ViewResponse(String id,
-                         String createdAt) {
+                        String createdAt) {
         this.id = id;
         this.createdAt = createdAt;
     }

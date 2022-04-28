@@ -1,11 +1,8 @@
 package ulaval.glo2003.product.domain;
 
-import org.bson.types.ObjectId;
-
-import java.time.Clock;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 public class Product {
     private final ObjectId id;

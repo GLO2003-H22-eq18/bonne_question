@@ -19,7 +19,8 @@ public class SellerModel {
     @Reference
     private List<ProductModel> products;
 
-    public SellerModel() {}
+    public SellerModel() {
+    }
 
     public SellerModel(
             ObjectId id,
