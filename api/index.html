@@ -21,10 +21,54 @@
 
   <!-- Meta -->
   <meta content="Bonne Question API" property="og:title">
-  <meta content="Bonne Question consiste au développement d'un site de vente anynonyme au Québec.
+  <meta content="Bonne Question consiste au développement d'un site de vente anynonyme au Québec." name="description">
 
- " name="description">
+  <!-- Icons -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
+  <!-- Style -->
+  <style>
+  #return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
+    display: none;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  #return-to-top i {
+    color: #fff;
+    margin: 0;
+    position: relative;
+    left: 14px;
+    top: 14px;
+    font-size: 19px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  #return-to-top:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  #return-to-top:hover i {
+    color: #fff;
+    top: 5px;
+  }
+  </style>
   <!-- Initializer -->
   <script>
     Flatdoc.run({
@@ -33,7 +77,6 @@
   </script>
 </head>
 <body role="flatdoc" class='big-h3 no-literate large-brief'>
-
 <div class="header">
   <div class="left">
     <h1>Bonne Question</h1>
@@ -54,18 +97,25 @@
   </div>
   <div role="flatdoc-content" class="content">
     <h1 id="how-to-get-started">How to get started</h1>
+    <!-- Return to Top -->
+    <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+
     <p>Bienvenue sur le meilleur site de vente anonyme au Québec! Le projet a été développé dans le cadre du cours GLO-2003 à la session d'hiver 2022 à l'Université Laval.</p>
     <h2 id="how-to-get-started-requis">Requis</h2>
     <ul>
     <li>Java 11</li>
     <li>Maven</li>
-  </ul><h2 id="how-to-get-started-setup">Setup</h2><h3 id="how-to-get-started-setup-compilation">Compilation</h3><pre><code>mvn clean install</code></pre><h3 id="how-to-get-started-setup-execution">Exécution</h3><pre><code>mvn exec:java</code></pre><h1 id="documentation">Documentation</h1><h2 id="documentation-services">Services</h2><ul>
+  </ul><h2 id="how-to-get-started-setup">Setup</h2><h3 id="how-to-get-started-setup-compilation">Compilation</h3><pre><code>mvn clean install</code></pre><h3 id="how-to-get-started-setup-execution">Exécution</h3><pre><code>mvn exec:java</code></pre>
+
+    <h1 id="documentation">Documentation</h1>
+    <h2 id="documentation-services">Services</h2><ul>
     <li>Health</li>
     <li>Vendeur</li>
     <li>Produit</li>
     <li>Offre</li>
     <li>Vente</li>
-  </ul><h2 id="documentation-types-generaux">Types généraux</h2><pre><code class="lang-ts">type DateTime: date et heure selon ISO-<span class="number">8601</span>/RFC-<span class="number">3339</span> (au timezone UTC)
+  </ul>
+    <h2 id="documentation-types-generaux">Types généraux</h2><pre><code class="lang-ts">type DateTime: date et heure selon ISO-<span class="number">8601</span>/RFC-<span class="number">3339</span> (au timezone UTC)
 type Date: date (sans heures) selon ISO-<span class="number">8601</span>/RFC-<span class="number">3339</span>
 type Amount: float/double positif arrondi à <span class="number">2</span> décimales
 type Email: &lt;identifiant&gt;@&lt;service&gt;.&lt;extension&gt; (ex: <span class="string">"john.doe<span class="number">1</span>@gmail.com"</span>)
@@ -519,5 +569,18 @@ Headers:
     <li><strong>0.1.0</strong> </li>
   </ul></div>
 </div>
+<script>// ===== Scroll to Top ====
+$(window).scroll(function() {
+  if ($(this).scrollTop() >= 50) {        // If page is scrolled more than 50px
+    $('#return-to-top').fadeIn(200);    // Fade in the arrow
+  } else {
+    $('#return-to-top').fadeOut(200);   // Else fade out the arrow
+  }
+});
+$('#return-to-top').click(function() {      // When arrow is clicked
+  $('body,html').animate({
+    scrollTop : 0                       // Scroll to top of body
+  }, 500);
+});</script>
 </body>
 </html>
