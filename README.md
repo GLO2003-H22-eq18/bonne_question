@@ -7,6 +7,9 @@
 
 ## Liens utiles
 
+### Documentation de l'API:
+*[DOCUMENTATION API](https://staging-bonne-question.herokuapp.com/)* <br></br>
+
 ### Code de conduite:
 *[CODE OF CONDUCT](https://github.com/GLO2003-H22-eq18/bonne_question/blob/main/code-of-conduct.md)* <br></br>
 
