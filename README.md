@@ -4,6 +4,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bonne_question)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=bonne_question)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=bonne_question)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bonne_question&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bonne_question)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)<br></br>
  #### Bonne question est un projet développé dans le cadre du cours GLO-2003 à la session d'hiver 2022 à l'université Laval.
  #### Le projet consiste au développement d'un site de vente anynonyme au Québec.
